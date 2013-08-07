@@ -212,7 +212,7 @@
         これらは SAML <xref target="OASIS.saml-core-2.0-os"/> や WS-Federation <xref target="WS-Federation"/> などのセキュリティトークンや CAP 緊急アラートフォーマット <xref target="CAP"/> での利用を想定して定義されたものである.
         しかし現実には XML ベースのセキュアオブジェクトフォーマットは ASN.1 と同レベルの複雑性を持ち, ASN.1 を扱えない / 扱いたくないデベロッパーがこういった XML ベースのセキュリティメカニズムを利用することは考えづらい.
         こういった背景が, JSON ベースのセキュアオブジェクトフォーマット策定に至る動機となっている.
-        JSON ベースであれば, 実装や利用も容易であり, デベロッパーは少ない労力や単純なツールで採用可能となるであろう.
+        JSON ベースであれば, 実装や利用も容易であり, 開発者はわずかな労力とツールのみでそれを取り入れることができるであろう.
       </t>
       <!--
       <t>Some systems that use XML have specified the use of XML-based
