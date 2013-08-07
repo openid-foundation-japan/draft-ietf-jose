@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="US-ASCII"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- This template is for creating an Internet Draft using xml2rfc,
      which is available here: http://xml.resource.org. -->
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
@@ -95,6 +95,13 @@
          keywords will be used for the search engine. -->
 
     <abstract>
+      <t>
+        多くのインターネット上のアプリケーションは, ネットワークレイヤーやトランスポートレイヤーでのセキュリティメカニズムに加えて, Objectベースのセキュリティメカニズムを必要とする.
+        かつては Cryptographic Message Syntax (CMS) が ASN.1 に基づいたバイナリレベルでのセキュアオブジェクトフォーマットを提供していた.
+        しかしながら時代の変化とともに ASN.1 のようなバイナリオブジェクトエンコーディングは時代遅れとなり, JSON などのテキストベースエンコーディングが主流となった.
+        本ドキュメントでは, 現在実用化されている様々なアプリケーションレイヤーセキュリティメカニズムをもとに, JSON ベースのセキュアオブジェクトフォーマットの各種ユースケースと要件をまとめる.
+      </t>
+      <!--
       <t>Many Internet applications have a need for object-based security
       mechanisms in addition to security mechanisms at the network layer or
       transport layer. In the past, the Cryptographic Message Syntax (CMS) has
@@ -104,11 +111,23 @@
       document defines a set of use cases and requirements for a secure object
       format encoded using JavaScript Object Notation (JSON), drawn from a variety of
       application security mechanisms currently in development.</t>
+      -->
     </abstract>
   </front>
 
   <middle>
     <section anchor="intro-sec" title="Introduction">
+      <t>
+        インターネット上のアプリケーションは, インターネットを構成する各レイヤーにおけるセキュリティメカニズムを活用できる.
+        多くのアプリケーションは, IPSec や TLS などの, チャネルベースのセキュリティに大きく依存している.
+        これらのセキュリティメカニズムは, アプリケーションデータが流れる IP レイヤーやトランスポートレイヤーにおいてセキュアチャネルを確立するものである.
+        <xref target="RFC4301"/>
+        <xref target="RFC5246"/>
+        しかしながらこれらのセキュリティメカニズムは状況によっては end-to-end のセキュリティを保証しない.
+        例えば, アプリケーションレイヤーに仲介者が存在する場合は, チャネルベースのセキュリティプロトコルでは, 仲介者同士の間を流れるメッセージを改竄しようとするアタッカーからの攻撃は防ぐことができても, 仲介者自身がメッセージを改竄 / 盗聴することは防げない.
+        こういったケースでは, オブジェクトベースのセキュリティメカニズムを用いてアプリケーションデータをセキュアオブジェクトに埋め込み, 信頼できない主体がデータを扱ってもセキュリティを確保できるようにする必要がある.
+      </t>
+      <!--
       <t>Internet applications rest on the layered architecture of the
       Internet, and take advantage of security mechanisms at all layers. Many
       applications rely primarily on channel-based security technologies such as
@@ -122,7 +141,15 @@
       themselves. These cases require object-based security technologies,
       which embed application data within a secure object that can be safely
       handled by untrusted entities.</t>
+      -->
 
+      <t>
+        上記のようなプロトコルとして現在最も広く利用されているのは, Secure/Multipurpose Internet Mail Extensions (S/MIME) である.
+        Email メッセージは, 通常一連の Mail Transfer Agents (MTAs) を仲介者として, 受信者に届けられる.
+        これら MTAs は通常チャネルベースのセキュリティメカニズムを用いて通信を保護する (例: STARTTLS <xref target="RFC3207"/>) が, こういった仕組みは MTAs 自身がメッセージを改竄 / 盗聴することを防ぐものではない.
+        信頼できない MTAs が存在する状況でも end-to-end のセキュリティを確保するには, S/MIME を利用してメッセージボディーをセキュアオブジェクトに内包し, 情報の秘匿性 (confidentiality), 完全性 (integrity), 送信者認証 (data origin authentication) を確保することが有効である.
+      </t>
+      <!--
       <t>The most well-known example of such a protocol today is the use of
       Secure/Multipurpose Internet Mail Extensions (S/MIME) protections within
       the email system <xref target="RFC5751"/><xref target="RFC5322"/>. An
@@ -134,7 +161,15 @@
       security protections in the presence of untrusted MTAs, mail users can
       use S/MIME to embed message bodies in a secure object format that can
       provide confidentiality, integrity, and data origin authentication.</t>
+      -->
 
+      <t>
+        S/MIME は Cryptographic Message Syntax for secure objects (CMS) <xref target="RFC5652"/> をベースにしている.
+        CMS は Abstract Syntax Notation 1 (ASN.1) を用いて定義され, 慣習的に ASN.1 Distinguished Encoding Rules (DER) でエンコードされる.
+        DER では保護されるメッセージと関連パラメーターはバイナリエンコーディングされる. <xref target="ITU.X690.2002"/>
+        近年では ASN.1 (やその他の汎用オブジェクトに対するバイナリエンコーディング) が利用されるケースは減少し, Extensible Markup Language (XML) <xref target="W3C.REC-xml"/> や JavaScript Object Notation (JSON) <xref target="RFC4627"/> といったテキストベースのフォーマットの利用が増加している.
+      </t>
+      <!--
       <t>S/MIME is based on the Cryptographic Message Syntax for secure
       objects (CMS) <xref target="RFC5652"/>. CMS is defined using Abstract
       Syntax Notation 1 (ASN.1) and traditionally encoded using the ASN.1
@@ -145,7 +180,16 @@
       applications have come to rely on text-based formats such as the
       Extensible Markup Language (XML) <xref target="W3C.REC-xml"/> or the JavaScript Object Notation
       (JSON) <xref target="RFC4627"/>.</t>
+      -->
 
+      <t>
+        最近の多くのアプリケーションは ASN.1 オブジェクトよりも遥かにテキストベースフォーマットのオブジェクトの処理に長けており, そもそも ASN.1 オブジェクトを処理できないものも多い.
+        オブジェクトベースのセキュリティの実装を単純化するため, IETF JSON Object Signing and Encryption (JOSE) ワーキンググループでは JSON ベースのセキュアオブジェクトフォーマットを策定している.
+        その名前が示す通り, ここで策定されているのは JSON エンコードされたオブジェクトの秘匿性 (confidentiality), 完全性 (integrity) を確保するためのフォーマットである.
+        しかしながら, ワーキンググループ内での議論の結果, JOSE で定義されるフォーマットを利用するアプリケーションごとに, そのフォーマットに対する要件が異なることも分かった.
+        よって本ドキュメントでは, JOSE フォーマットを利用する潜在的アプリケーションを想定し, セキュリティメカニズムとオブジェクトエンコーディングに対する要件をまとめる.
+      </t>
+      <!--
       <t>Many current applications thus have much more robust support for
       processing objects in these text-based formats than ASN.1 objects;
       indeed, many lack the ability to process ASN.1 objects at all. To
@@ -159,7 +203,18 @@
       different requirements. This document summarizes the use cases for JOSE
       envisioned by those potential applications and the resulting requirements for
       security mechanisms and object encodings.</t>
+      -->
 
+      <t>
+        XML を利用するシステムでは, XML ベースのオブジェクトベースセキュリティメカニズムである XML Digital Signatures およびoyobi XML Encryption を利用するものもある.
+        <xref target="W3C.xmldsig-core"/>
+        <xref target="W3C.xmlenc-core"/>
+        これらは SAML <xref target="OASIS.saml-core-2.0-os"/> や WS-Federation <xref target="WS-Federation"/> などのセキュリティトークンや CAP 緊急アラートフォーマット <xref target="CAP"/> での利用を想定して定義されたものである.
+        しかし現実には XML ベースのセキュアオブジェクトフォーマットは ASN.1 と同レベルの複雑性を持ち, ASN.1 を扱えない / 扱いたくないデベロッパーがこういった XML ベースのセキュリティメカニズムを利用することは考えづらい.
+        こういった背景が, JSON ベースのセキュアオブジェクトフォーマット策定に至る動機となっている.
+        JSON ベースであれば, 実装や利用も用意であり, デベロッパーは少ない労力や単純なツールで採用可能となるであろう.
+      </t>
+      <!--
       <t>Some systems that use XML have specified the use of XML-based
       security mechanisms for object security, namely XML Digital Signatures
       and XML Encryption <xref target="W3C.xmldsig-core"/><xref
@@ -174,6 +229,7 @@
       the creation of a JSON-based secure object format that is simple enough
       to implement and deploy that it can be easily adopted by developers with
       minimal effort and tools.</t>
+      -->
     </section>
 
     <section anchor="def-sec" title="Definitions">
@@ -202,7 +258,7 @@
       the "signed object format",
       the "encrypted object format",
       and the "key format", respectively.
-      The JOSE working group items intended to describe these formats are 
+      The JOSE working group items intended to describe these formats are
       JSON Web Signature (JWS), JSON Web Encryption (JWE), and JSON Web Key (JWK),
       respectively <xref target="I-D.ietf-jose-json-web-signature"/>
       <xref target="I-D.ietf-jose-json-web-encryption"/>
@@ -252,7 +308,7 @@
       <t>In some applications, the key used to process a JOSE object is indicated
       by application context, instead of directly in the JOSE object.  However,
       in order to avoid confusion, endpoints that lack the necessary context need
-      to be able to recognize this and fail cleanly.  Other than keys, JOSE objects 
+      to be able to recognize this and fail cleanly.  Other than keys, JOSE objects
       do not support pre-negotiation; all cryptographic parameters must be expressed
       directly in the JOSE object.
           <list style="symbols">
@@ -260,21 +316,21 @@
           by which an implementation recognizes whether it has the key required
           to process a given object, whether the key is specified by the
           object or by some out-of-band mechanism.</t>
-          <t>Each algorithm used for JOSE must define which parameters are 
+          <t>Each algorithm used for JOSE must define which parameters are
           required to be present in a JOSE object using that algorithm.</t>
           </list>
       </t>
 
       <t>In cases where two entities are going to be exchanging several JOSE
-      objects, it might be helpful to pre-negotiate some parameters so that 
+      objects, it might be helpful to pre-negotiate some parameters so that
       they do not have to be signaled in every JOSE object.  However,
       so as not to confuse endpoints that do not support pre-negotiation,
       it is useful to signal when pre-negotiated parameters are in use in those cases.
           <list style="symbols">
           <t>It should be possible to extend the base
 	  JOSE signed and encrypted object formats
-	  to indicate that pre-negotiated parameters are to be used to 
-          process the object.  This extension should also provide a means of indicating of 
+	  to indicate that pre-negotiated parameters are to be used to
+          process the object.  This extension should also provide a means of indicating of
           which parameters are to be used.</t>
           </list>
       </t>
@@ -295,7 +351,7 @@
 
     <section anchor="app-req-sec" title="Requirements on Application Protocols">
       <t>
-        The JOSE secure object formats describe how cryptographic processing is 
+        The JOSE secure object formats describe how cryptographic processing is
         done on secured content, ensuring that the recipient an object is able
         to properly decrypt an encrypted object or verify a signature.  In order
         to make use of JOSE, however, applications will need to specify several
@@ -304,7 +360,7 @@
           <t>What application content is to be protected</t>
           <t>Which cryptographic algorithms are to be used</t>
           <t>How application protocol entities establish keys</t>
-          <t>Whether keys are to be explicitly indicated in JOSE objects, or 
+          <t>Whether keys are to be explicitly indicated in JOSE objects, or
              associated by application context</t>
         </list>
       </t>
@@ -393,11 +449,11 @@
         <t>This application has two essential security requirements: Integrity
         and data origin authentication. Integrity protection is required so
         that the Resource Owner and the Client cannot modify the permission
-        encoded in the token.  Although the Resource Owner is ultimately 
+        encoded in the token.  Although the Resource Owner is ultimately
         the entity that grants authorization, it is not trusted to modify the
         authorization token, since this could, for example, grant access to
         resources not owned by the Resource Owner.</t>
-        
+
         <t>Data origin authentication is required so that
         the Resource Server can verify that the token was issued by a trusted
         Authorization Server. </t>
@@ -407,7 +463,7 @@
         permissions information to the Resource Owner or Client. For example,
         permissions related to social networking might be considered private
         information. Note, however, that OAuth already requires that the
-        underlying HTTP transactions be protected by TLS, so tokens are 
+        underlying HTTP transactions be protected by TLS, so tokens are
         already confidentiality-protected from entities other than
         the Resource Owner and Client.</t>
 
@@ -424,7 +480,7 @@
         the Authorization Server issuing a token to be identified by the key
         used to sign the token. This requires that the protocol carry either the
         public key of the Authorization Server or an identifier for the public
-        or symmetric key.  In OAuth, the <spanx style="verb">client_id</spanx> 
+        or symmetric key.  In OAuth, the <spanx style="verb">client_id</spanx>
         parameter identifies the key to be used.</t>
 
         <t>There may also be more advanced cases, where the Authorization
@@ -442,7 +498,7 @@
         having been base64url encoded <xref target="RFC4648"/>. While there is
         no specified limit on the length of URIs (and thus of query
         parameters), in practice, URIs of more than 2,048 characters are
-        rejected by some user agents.  For some mobile browsers, this limit is 
+        rejected by some user agents.  For some mobile browsers, this limit is
         even smaller. So this use case requires that a JOSE
         object have sufficiently small size even after signing, possibly
         encrypting, while still being simple to include in an HTTP URI query
@@ -450,7 +506,7 @@
       </section>
 
       <section anchor="fed-sec" title="Federation">
-        <t>Security tokens are used in two federated identity protocols, 
+        <t>Security tokens are used in two federated identity protocols,
         which have similar requirements to the general considerations discussed
         above:</t>
 
@@ -519,7 +575,7 @@
          | Alice |<->| Server A |<->| Server B |<->| Bob |
          +-------+   +----------+   +----------+   +-----+
              |             |              |           |
-             |------------Encrypted--message--------->|  
+             |------------Encrypted--message--------->|
              |             |              |           |
              |<---------------Public-key--------------|
              |             |              |           |
@@ -622,8 +678,8 @@
         JOSE encoding for certain "JSON-safe" cases.</t>
 
         <t>Finally, it may be desirable for ALTO to have a "detached signature"
-        mechanism, that is, a way to encode signature information separate 
-        from the protected content.  This would allow the ALTO protocol to 
+        mechanism, that is, a way to encode signature information separate
+        from the protected content.  This would allow the ALTO protocol to
         include the signature in an HTTPS header, with the signed content as
         the HTTPS entity body.</t>
       </section>
@@ -661,27 +717,27 @@
             <artwork><![CDATA[        +------------+    +------------+    +------------+
         | Originator |    | Originator |    | Originator |
         +------------+    +------------+    +------------+
-              |                 .                 .       
-              +-----------------+..................       
-                                |                         
-                                V                         
-                           +---------+                    
-                           | Gateway |                    
-                           +---------+                    
-                                |                         
-                   +------------+------------+            
-                   |                         |            
-                   V                         V            
-              +---------+               +---------+       
-              | Network |               | Network |       
-              +---------+               +---------+       
-                   |                         |            
-            +------+-----+            +------+-----+      
-            |            |            |            |      
-            V            V            V            V      
-        +--------+   +--------+   +--------+   +--------+ 
-        | Device |   | Device |   | Device |   | Device | 
-        +--------+   +--------+   +--------+   +--------+ 
+              |                 .                 .
+              +-----------------+..................
+                                |
+                                V
+                           +---------+
+                           | Gateway |
+                           +---------+
+                                |
+                   +------------+------------+
+                   |                         |
+                   V                         V
+              +---------+               +---------+
+              | Network |               | Network |
+              +---------+               +---------+
+                   |                         |
+            +------+-----+            +------+-----+
+            |            |            |            |
+            V            V            V            V
+        +--------+   +--------+   +--------+   +--------+
+        | Device |   | Device |   | Device |   | Device |
+        +--------+   +--------+   +--------+   +--------+
 
 ]]></artwork>
           </figure></t>
@@ -705,84 +761,84 @@
 
       <section anchor="webcrypto-sec" title="Web Cryptography">
       <t>The W3C Web Cryptography API defines a standard cryptographic API for the
-      Web <xref target="WebCrypto"></xref>.  If a browser exposes this API, then 
-      JavaScript provided as part of a Web page can ask the browser to perform 
+      Web <xref target="WebCrypto"></xref>.  If a browser exposes this API, then
+      JavaScript provided as part of a Web page can ask the browser to perform
       cryptographic operations, such as digest, MAC, encryption, or digital signing.</t>
 
-      <t>One of the key reasons to have the browser perform cryptographic operations  
+      <t>One of the key reasons to have the browser perform cryptographic operations
       is to avoid allowing JavaScript code to access the keying material used for these
       operations.  For example, this separation would prevent code injected through a
-      cross-site scripting (XSS) attack from reading and exfiltrating keys stored 
+      cross-site scripting (XSS) attack from reading and exfiltrating keys stored
       within a browser.  While the malicious code could still use the key while running
       in the browser, this vulnerability can only be exercised while the vulnerable
       page is active in a user's browser.</t>
 
-      <t>However, the WebCryptography API also provides a key export functionality, 
+      <t>However, the WebCryptography API also provides a key export functionality,
       which can allow JavaScript to extract a key from the API in wrapped form.  For
       example, the JavaScript might provide a public key for which the corresponding
-      private key is held by another device.  The wrapped key provided by the API 
+      private key is held by another device.  The wrapped key provided by the API
       could then be used to safely transport the key to the new device.  While this
       could potentially allow malicious code to export a key, the need for an explicit
       export operation provides a control point, allowing for user notification or
       consent verification.</t>
 
-      <t>The Web Cryptography API also allows browsers to impose limitations on the 
-      usage of the keys it handles.  For example, a symmetric key might be marked as 
-      usable only for encryption, and not for MAC.  When a key is exported in wrapped 
+      <t>The Web Cryptography API also allows browsers to impose limitations on the
+      usage of the keys it handles.  For example, a symmetric key might be marked as
+      usable only for encryption, and not for MAC.  When a key is exported in wrapped
       form, these attributes should be carried along with it.</t>
 
       <t>The Web Cryptography API thus requires formats to express several forms of
-      keys.  Obviously, the public key from an asymmetric key pair can be freely 
+      keys.  Obviously, the public key from an asymmetric key pair can be freely
       imported to and exported from the browser, so there needs to be a format for
       public keys.  There is also a need for a format to express private keys and
       symmetric keys.  For non-public keys, the primary need is for a wrapped form,
       where the confidentiality and integrity of the key is assured cryptographically;
       these protections should also apply to any attributes of the key.  It may also
-      be useful to define a direct, unwrapped format, for use within a security 
+      be useful to define a direct, unwrapped format, for use within a security
       boundary.</t>
       </section>
 
     <section title="Constrained Devices">
-   
-      <t>This section describes use cases for constrained devices as defined 
-      in <xref target="I-D.ietf-lwig-terminology"/>. Typical issues with this type of 
+
+      <t>This section describes use cases for constrained devices as defined
+      in <xref target="I-D.ietf-lwig-terminology"/>. Typical issues with this type of
       devices are limited memory, limited power supply, low processing
       power, and severe message size limitations for the communication
       protocols.</t>
-   
+
       <section title="Example: MAC based on ECDH-derived key">
 
         <t>Suppose a small, low power device maker has decided on using the output of
         the JOSE working group as their encryption and authentication
-        framework.  The device maker has a limited budget for both gates and 
+        framework.  The device maker has a limited budget for both gates and
         power.  For this reason there are a number of
         short cuts and design decisions that have been made in order to
         minimize these needs.</t>
-        
+
         <t>The design team has determined that the use of message authentication
         codes (MAC) is going to be sufficient to provide the necessary
         authentication.  However, although a MAC is going to be used, they do
         not want to use a single long term shared secret.  Instead they have
         adopted the following proposal for computing a shared secret that can
         be validated:</t>
-        
+
         <t><list style="symbols">
           <t>An Elliptic-Curve Diffie-Hellman (ECDH) key is generated for the
           device at the time of manufacturing.  (Or as part of the
           configuration process during installation.)</t>
-        
+
           <t>An ECDH public key for the controller is configured at the time of
           configuration.</t>
-        
+
           <t>The configuration system performs the ECDH computation and
           configures the device with the resulting shared secret.  This
           process eliminates the need for the device to be able to perform
           the required exponentiation processing.  The security requirements
           on protecting this computed shared secret are the same as the
           requirements on protecting the private ECDH key.</t>
-        
+
           <t>A counter and an increment value are configured onto the device.</t>
-        
+
           <t>When a message is to be sent by the device, the counter is
           incremented and a new MAC key is computed from the ECDH secret and
           the counter value.  A custom Key Derivation Function (KDF)
@@ -790,7 +846,7 @@
           the required MAC key.  The MAC key is then used to compute the MAC
           value for the message.</t>
         </list></t>
-        
+
         <t>In a similar manner the KDF function can used to compute an AEAD
         algorithm key when the system needs to provide confidentially for the
         message.  The controller, being a larger device will perform the
@@ -799,74 +855,74 @@
 
       </section>
       <section title="Object security for CoAP">
-    
+
         <t>This use case deals with constrained devices of class C0/C1 (see
         <xref target="I-D.ietf-lwig-terminology"/>). These devices communicate using RESTful
-        requests and responses transferred using the CoAP protocol 
+        requests and responses transferred using the CoAP protocol
         <xref target="I-D.ietf-core-coap"/>. To simplify matters, all communication is
-        assumed to be unicast, i.e. these security measures don't cover 
+        assumed to be unicast, i.e. these security measures don't cover
         multicast or broadcast.</t>
-        
-        <t>In this type of setting it may be too costly to use session 
+
+        <t>In this type of setting it may be too costly to use session
         based security (e.g. to run a 4 pass authentication protocol) since
         receiving and in particular sending consumes a lot of power, in
-        particular for wireless devices. Therefore to just secure the CoAP 
+        particular for wireless devices. Therefore to just secure the CoAP
         payload by replacing a plain text payload of a request or response
         with a JWE object is an important alternative solution, which
         allows a trade-off between protection (the CoAP headers are not
         protected) and performance.</t>
-        
+
         <t>In a simple setting, consider the payload of a CoAP GET response from
-        a sensor type device. The information in a sensor reading may be 
+        a sensor type device. The information in a sensor reading may be
         privacy or business sensitive and needs both integrity protection and
         encryption.</t>
-        
+
         <t>However some sensor readings are very short, say a few bytes, and in
-        this case default encryption and integrity protection algorithms 
+        this case default encryption and integrity protection algorithms
         (such as 128 bit AES with HMAC_SHA256) may cause a dramatic message
         expansion of the payload, even disregarding JWE headers.</t>
-        
+
         <t>Also the value of certain sensor readings may decline rapidly, e.g.
-        traffic or environmental measurements, so it must be possible to 
+        traffic or environmental measurements, so it must be possible to
         reduce the security overhead.</t>
-        
+
         <t>This leads to the following requirements which could be covered by
         specific JWE/JWS profiles:</t>
-        
+
         <t><list style="symbols">
           <t>The size of the secure object shall be as small as possible.
           Receiving an object may cost orders of magnitude more in terms of
-          power than performing say public key cryptography on the object, 
+          power than performing say public key cryptography on the object,
           in particular in a wireless setting.</t>
-        
-          <t>Integrity protection: 
+
+          <t>Integrity protection:
           The object shall be able to support integrity protection, i.e. have
-          a field containing a digital signature, both public key signatures 
+          a field containing a digital signature, both public key signatures
           and keyed message authentication codes shall be supported.</t>
-        
-          <t>Encryption: 
+
+          <t>Encryption:
           The object shall be able to support encryption as an optional
           addition to integrity protection. It shall be possible to exclude
-          certain fields from encryption which are needed before verifying 
+          certain fields from encryption which are needed before verifying
           integrity or decrypting the object.</t>
-        
+
           <t>Cipher suites:
           It should be possible to support a variety of cipher suites to
           support the constrained devices use cases. For example:
             <list style="symbols">
               <t>Block ciphers with block sizes of e.g. 96 bits, in addition to
               the standard 128 bits</t>
-              <t>Modes of operation for block ciphers that do not expand the 
+              <t>Modes of operation for block ciphers that do not expand the
               message size to a block boundary, such as AES-GCM.</t>
-              <t>Cipher suites that support combined encryption and MAC 
+              <t>Cipher suites that support combined encryption and MAC
               calculation (i.e., AEAD modes for block ciphers).</t>
             </list>
           </t>
         </list></t>
-    
+
       </section>
     </section>
-    
+
     </section>
 
     <section anchor="req-sec" title="Requirements">
@@ -885,35 +941,35 @@
             <t>Message authentication (integrity/authentication under a symmetric key)</t>
             <t>Authenticated encryption</t>
             </list>
-          That is, the secure objects defined by this working group should provide 
-          equivalent security properties to the CMS SignedData, AuthenticatedData, 
+          That is, the secure objects defined by this working group should provide
+          equivalent security properties to the CMS SignedData, AuthenticatedData,
           EnvelopedData, and AuthEnveloped data objects <xref target="RFC5652"></xref>
           <xref target="RFC5083"></xref>.</t>
-          <t hangText="F2">Define a format for public keys and private keys for 
+          <t hangText="F2">Define a format for public keys and private keys for
           asymmetric cryptographic algorithms, with associated attributes, including a
           wrapped form for private keys.</t>
           <t hangText="F3">Define a format for symmetric keys with associated attributes,
           allowing for both wrapped and unwrapped keys.</t>
           -->
           <t hangText="F4">Define a JSON serialization for each of the above objects.  An object
-          in this encoding must be valid according to the JSON ABNF syntax 
+          in this encoding must be valid according to the JSON ABNF syntax
           <xref target="RFC4627"></xref>.</t>
-          <t hangText="F5">Define a compact, URL-safe text serialization for the encrypted 
+          <t hangText="F5">Define a compact, URL-safe text serialization for the encrypted
           signed object formats.</t>
-          <t hangText="F6">Allow for attributes associated to wrapped keys to be bound 
+          <t hangText="F6">Allow for attributes associated to wrapped keys to be bound
           to them cryptographically</t>
-          <t hangText="F7">Allow for wrapped keys to be separated from a secure object 
-          that uses a symmetric key.  In such cases, cryptographic components of the 
+          <t hangText="F7">Allow for wrapped keys to be separated from a secure object
+          that uses a symmetric key.  In such cases, cryptographic components of the
           secure object other than the wrapped key (e.g., ciphertext, MAC values) must
           be independent of the wrapped form of the key.  For example, if an encrypted
           object is prepared for multiple recipients, then only the wrapped key may vary,
           not the ciphertext.</t>
-          <t hangText="F8">Do not impose more overhead than is required to meet the 
+          <t hangText="F8">Do not impose more overhead than is required to meet the
           requirements in this document, especially when a large amount of application
           content is being protected.</t>
         </list></t>
       </section>
-      
+
       <section anchor="sec-req-sec" title="Security Requirements">
         <t><list style="hanging">
         <t hangText="S1">Provide mechanisms to avoid repeated use of the same symmetric
@@ -933,11 +989,11 @@
         key management practices, such as the need to limit key lifetimes.</t>
 
         <t hangText="S3">Use cryptographic algorithms in a manner compatible with
-        major validation processes.  For example, if a FIPS standard allows 
+        major validation processes.  For example, if a FIPS standard allows
         algorithm A to be used for purpose X but not purpose Y, then JOSE should
         not recommend using algorithm A for purpose Y.</t>
-        
-        <t hangText="S4">Support operation with or without pre-negotiation.  
+
+        <t hangText="S4">Support operation with or without pre-negotiation.
         It must be possible to create or process secure objects without
         any configuration beyond key provisioning.  If it is possible for keys
         to be derived from application context, it must be possible for a recipient
@@ -947,21 +1003,21 @@
 
       <section anchor="desiderata-sec" title="Desiderata">
         <t><list style="hanging">
-          <t hangText="D1">Maximize compatibility with the W3C WebCrypto 
+          <t hangText="D1">Maximize compatibility with the W3C WebCrypto
           specifications, e.g., by coordinating with the WebCrypto working group
           to encourage alignment of algorithms and algorithm identifiers. </t>
 
           <t hangText="D2">Avoid JSON canonicalization to the extent possible.
-	  That is, all other things being equal, techniques that rely 
-          on fixing a serialization of an object (e.g., by base64url encoding it) 
-          are preferred over those that require converting an object to a 
+	  That is, all other things being equal, techniques that rely
+          on fixing a serialization of an object (e.g., by base64url encoding it)
+          are preferred over those that require converting an object to a
           canonical form.</t>
 
           <t hangText="D3">Maximize the extent to which the inputs and outputs of
           JOSE cryptographic operations can be controlled by the applications, as
           opposed to involving processing specific to JOSE.  This allows JOSE the
-          flexibility to address the needs of many cryptographic protocols.  
-          For example, in some cases, might allow JOSE objects to be translated to 
+          flexibility to address the needs of many cryptographic protocols.
+          For example, in some cases, might allow JOSE objects to be translated to
           legacy formats such as CMS without the need for re-encryption or re-signing.</t>
         </list></t>
       </section>
@@ -1087,7 +1143,7 @@
           <author fullname="" initials="M" surname="Miller" />
           <date month='February' day='25' year='2013' />
       </front>
-      
+
       <seriesInfo name='Internet-Draft' value='draft-miller-xmpp-e2e-06' />
       <format type='TXT'
               target='http://www.ietf.org/internet-drafts/draft-miller-xmpp-e2e-06.txt' />
@@ -1182,7 +1238,7 @@
     <section anchor="ack-sec" title="Acknowledgements">
       <t>Thanks to Matt Miller for discussions related to XMPP end-to-end
       security model, and to Mike Jones for considerations related to security
-      tokens and XML security.  Thanks to Mark Watson for raising the need for 
+      tokens and XML security.  Thanks to Mark Watson for raising the need for
       representing symmetric keys and binding attributes to them.  Thanks to
       Ludwig Seitz for contributing the constrained device use case.</t>
     </section>
@@ -1240,7 +1296,7 @@
           </t>
         </list>
       </t>
-    </section>     
+    </section>
 
   </back>
 </rfc>
