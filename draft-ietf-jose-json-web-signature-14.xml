@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="US-ASCII"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 <?xml-stylesheet type='text/xsl' href='http://xml.resource.org/authoring/rfc2629.xslt' ?>
 
@@ -386,7 +386,7 @@
       </t>
       <t>
 	Implementations are required to understand
-	the specific header parameters defined by this specification 
+	the specific header parameters defined by this specification
 	that are designated as "MUST be understood"
 	and process them in the manner defined in this specification.
 	All other header parameters defined by this specification that
@@ -1075,7 +1075,7 @@
 	  values are exactly as defined in the rest of this specification.
 	  They are interpreted and validated in the same manner,
 	  with each corresponding
-	  Encoded JWS Signature and 
+	  Encoded JWS Signature and
 	  set of header parameter values
 	  being created and validated together.
 	  The JWS Header values used are the union of the header parameters in the
@@ -2795,7 +2795,7 @@
 	  <t>
 	    The JWS Protected Header value used for the first signature is:
 	  </t>
-	  
+
 	  <figure><artwork><![CDATA[
   {"alg":"RS256"}
 ]]></artwork></figure>
@@ -2812,7 +2812,7 @@
 	  <t>
 	    The JWS Protected Header value used for the second signature is:
 	  </t>
-	  
+
 	  <figure><artwork><![CDATA[
   {"alg":"ES256"}
 ]]></artwork></figure>
@@ -3540,7 +3540,7 @@
 	  </t>
         </list>
       </t>
-    </section>     
+    </section>
 
   </back>
 </rfc>
