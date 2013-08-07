@@ -145,9 +145,9 @@
 
       <t>
         上記のようなプロトコルとして現在最も広く利用されているのは, Secure/Multipurpose Internet Mail Extensions (S/MIME) である.
-        Email メッセージは, 通常一連の Mail Transfer Agents (MTAs) を仲介者として, 受信者に届けられる.
-        これら MTAs は通常チャネルベースのセキュリティメカニズムを用いて通信を保護する (例: STARTTLS <xref target="RFC3207"/>) が, こういった仕組みは MTAs 自身がメッセージを改竄 / 盗聴することを防ぐものではない.
-        信頼できない MTAs が存在する状況でも end-to-end のセキュリティを確保するには, S/MIME を利用してメッセージボディーをセキュアオブジェクトに内包し, 情報の秘匿性 (confidentiality), 完全性 (integrity), 送信者認証 (data origin authentication) を確保することが有効である.
+        Email メッセージは, 通常一連の Mail Transfer Agents (MTA) を仲介者として, 受信者に届けられる.
+        これら MTA は通常チャネルベースのセキュリティメカニズムを用いて通信を保護する (例: STARTTLS <xref target="RFC3207"/>) が, こういった仕組みは MTA 自身がメッセージを改竄 / 盗聴することを防ぐものではない.
+        信頼できない MTA が存在する状況でも end-to-end のセキュリティを確保するには, S/MIME を利用してメッセージボディーをセキュアオブジェクトに内包し, 情報の秘匿性 (confidentiality), 完全性 (integrity), 送信者認証 (data origin authentication) を確保することが有効である.
       </t>
       <!--
       <t>The most well-known example of such a protocol today is the use of
