@@ -240,21 +240,35 @@
       target="RFC2119">RFC 2119</xref>.</t>
       -->
 
+      <t>この文書は<xref target="RFC4949"/>に記載される標準セキュリティ用語を広範囲に活用するものである。
+          JOSEとCMSのユースケースは似ていることから、いくつかのCMSコンセプトについて<xref target="RFC5652"/>を例に説明する。</t>
+      <!--
       <t>This document makes extensive use of standard security terminology
       <xref target="RFC4949"/>. In addition, because the use cases for JOSE
       and CMS are similar, we will sometimes make analogies to some CMS
       concepts <xref target="RFC5652"/>.</t>
+      -->
 
+      <t>JOSEワーキンググループでは３つのJSONオブジェクトフォーマットを定義する。
+      <!--
       <t>The JOSE working group charter calls for the group to define three
-      basic JSON object formats:<list style="numbers">
-          <t>Confidentiality-protected object format</t>
+      basic JSON object formats:
+      -->
+      <list style="numbers">
+          <t>機密性保護オブジェクトフォーマット</t>
+          <!--<t>Confidentiality-protected object format</t>-->
 
-          <t>Integrity-protected object format</t>
+          <t>完全性保護オブジェクトフォーマット</t>
+          <!--<t>Integrity-protected object format</t>-->
 
-          <t>A format for expressing keys</t>
-        </list>
+          <t>鍵表現フォーマット</t>
+          <!--<t>A format for expressing keys</t>-->
+      </list>
 
-      In this document, we will refer to these as
+      この文書では、上記をそれぞれ"署名済みオブジェクトフォーマット"、"暗号化オブジェクトフォーマット"、"鍵フォーマット"と呼ぶ。
+      これらのフォーマットを表現することを目的としたJOSEワーキンググループの仕様はそれぞれJSON Web Signature (JWS)<xref target="I-D.ietf-jose-json-web-signature"/>, JSON Web Encryption (JWE)<xref target="I-D.ietf-jose-json-web-encryption"/>, JSON Web Key (JWK)<xref target="I-D.ietf-jose-json-web-key"/>である。
+      JWS, JWE, JWKで使用されるアルゴリズムやアルゴリズム識別子はJSON Web Alogrithms (JWA) <xref target="I-D.ietf-jose-json-web-algorithms"/> で定義されている。
+      <!--In this document, we will refer to these as
       the "signed object format",
       the "encrypted object format",
       and the "key format", respectively.
@@ -264,22 +278,27 @@
       <xref target="I-D.ietf-jose-json-web-encryption"/>
       <xref target="I-D.ietf-jose-json-web-key"/>.
       Algorithms and algorithm identifiers used by JWS, JWE, and JWK are defined in
-      JSON Web Algorithms (JWA) <xref target="I-D.ietf-jose-json-web-algorithms"/>.
+      JSON Web Algorithms (JWA) <xref target="I-D.ietf-jose-json-web-algorithms"/>.-->
       </t>
 
-      <t>In general, where there is no need to distinguish between asymmetric and
+      <t>通常、非対称/対称な処理を区別する必要がない場面では、共通鍵を使ったメッセージ認証コード(MACs) と公開鍵暗号を含むデジタル署名についても同様に"署名"、"シグネチャ"などの用語を用いる</t>
+      <!--<t>In general, where there is no need to distinguish between asymmetric and
       symmetric operations, we will use the terms "signing", "signature", etc.
       to denote both true digital signatures involving asymmetric cryptography
-      as well as message authentication codes using symmetric keys (MACs).</t>
+      as well as message authentication codes using symmetric keys (MACs).</t>-->
 
-      <t>In the lifespan of a secure object, there are two basic roles, an
+      <t>セキュアオブジェクトの存続期間には、オブジェクトを生成するエンティティ（例：ペイロードを暗号化もしくは署名する側）とオブジェクトを利用するエンティティ（例：復号化、検証をする側）の２つの基本的なロールが存在する。
+          これらのロールをそれぞれ"送信者"、"受信者"と呼ぶことにする。
+          いくつかの要件やユースケースではこれらを一つのエンティティとしてみなされるが、各ロールにおいて各オブジェクトは複数のエンティティを持つかもしれないことに注意すること。
+          例として、メッセージは複数の送信者によって署名されたり、複数の受信者によって復号化される可能性がある。</t>
+      <!--<t>In the lifespan of a secure object, there are two basic roles, an
       entity that creates the object (e.g., encrypting or signing a payload),
       and an entity that uses the object (decrypting, verifying). We will
       refer to these roles as "sender" and "recipient", respectively. Note
       that while some requirements and use cases may refer to these as single
       entities, each object may have multiple entities in each role. For
       example, a message may be signed by multiple senders, or decrypted by
-      multiple recipients.</t>
+      multiple recipients.</t>-->
     </section>
 
     <section anchor="basic-sec" title="Basic Requirements">
