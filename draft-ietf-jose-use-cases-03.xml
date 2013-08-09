@@ -241,7 +241,7 @@
       -->
 
       <t>この文書は<xref target="RFC4949"/>に記載される標準セキュリティ用語を広範囲に活用するものである。
-          JOSEとCMSのユースケースは似ていることから、いくつかのCMSコンセプトについて<xref target="RFC5652"/>を例に説明する。</t>
+          JOSEとCMSのユースケースは似ていることから、いくつかのCMSのコンセプトについて<xref target="RFC5652"/>を例に説明する。</t>
       <!--
       <t>This document makes extensive use of standard security terminology
       <xref target="RFC4949"/>. In addition, because the use cases for JOSE
@@ -281,7 +281,7 @@
       JSON Web Algorithms (JWA) <xref target="I-D.ietf-jose-json-web-algorithms"/>.-->
       </t>
 
-      <t>通常、非対称/対称な処理を区別する必要がない場面では、共通鍵を使ったメッセージ認証コード(MACs) と公開鍵暗号を含むデジタル署名についても同様に"署名"、"シグネチャ"などの用語を用いる</t>
+      <t>通常、非対称/対称な処理を区別する必要がない場面では、共通鍵を使ったメッセージ認証コード(MAC) と公開鍵暗号を含むデジタル署名についても同様に"署名"、"シグネチャ"などの用語を用いる</t>
       <!--<t>In general, where there is no need to distinguish between asymmetric and
       symmetric operations, we will use the terms "signing", "signature", etc.
       to denote both true digital signatures involving asymmetric cryptography
@@ -289,8 +289,8 @@
 
       <t>セキュアオブジェクトの存続期間には、オブジェクトを生成するエンティティ（例：ペイロードを暗号化もしくは署名する側）とオブジェクトを利用するエンティティ（例：復号化、検証をする側）の２つの基本的なロールが存在する。
           これらのロールをそれぞれ"送信者"、"受信者"と呼ぶことにする。
-          いくつかの要件やユースケースではこれらを一つのエンティティとしてみなされるが、各ロールにおいて各オブジェクトは複数のエンティティを持つかもしれないことに注意すること。
-          例として、メッセージは複数の送信者によって署名されたり、複数の受信者によって復号化される可能性がある。</t>
+          要件やユースケースによってはこれらのロールを単一エンティティが担うことが明記されるかもしれないが、同一ロールに複数のエンティティが存在する可能性があることに留意すること。
+          たとえば、メッセージは複数の送信者によって署名されたり、複数の受信者によって復号化される可能性がある。</t>
       <!--<t>In the lifespan of a secure object, there are two basic roles, an
       entity that creates the object (e.g., encrypting or signing a payload),
       and an entity that uses the object (decrypting, verifying). We will
