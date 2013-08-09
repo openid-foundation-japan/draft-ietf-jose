@@ -529,6 +529,16 @@
 
 	<section title='"x5c" (X.509 Certificate Chain) Header Parameter' anchor="x5cDef">
 	  <t>
+	    <spanx style="verb">x5c</spanx> (X.509証明書チェーン) ヘッダパラメータは, JWSにデジタル署名するために用いる鍵に対応するX.509公開鍵証明書もしくは証明書チェーン <xref target="RFC5280"/> を含む. 
+        証明書や証明書チェーンは, 証明書の文字列のJSON配列として表される. 
+        配列中のそれぞれの文字列はBase64エンコード(<xref target="RFC4648"/> 4節 -- Base64 URLエンコードではない)されているDER <xref target="ITU.X690.1994"/> PKIX証明書の値である. 
+        JWSにデジタル署名するために用いる鍵に対応する公開鍵の証明書は第1証明書でなければならない (MUST). 
+        それぞれの以降の証明書は前のものを保証するのに用いられており, これの後にさらなる証明書が続いても良い (MAY). 
+        受け手は証明書チェーンを <xref target="RFC5280"/> に沿って確認し, もし検証エラーが起こったらそのJWSを拒否しなければならない (MUST). 
+        このヘッダパラメータの利用は任意 (OPTIONAL) である.
+	  </t>
+      <!--
+	  <t>
 	    The <spanx style="verb">x5c</spanx> (X.509 Certificate Chain)
 	    header parameter contains the X.509 public key
 	    certificate or certificate chain <xref target="RFC5280"/>
@@ -551,10 +561,16 @@
 	    validation failure occurs.
 	    Use of this header parameter is OPTIONAL.
 	  </t>
+      -->
+	  <t>
+	    <spanx style="verb">x5c</spanx> の例については <xref target="x5cExample"/> を参照. 
+	  </t>
+      <!--
 	  <t>
 	    See <xref target="x5cExample"/> for an example
 	    <spanx style="verb">x5c</spanx> value.
 	  </t>
+      -->
 	</section>
 
 	<section title='"kid" (Key ID) Header Parameter' anchor="kidDef">
