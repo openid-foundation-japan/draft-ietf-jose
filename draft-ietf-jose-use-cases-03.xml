@@ -147,7 +147,7 @@
         上記のようなプロトコルとして現在最も広く利用されているのは, Secure/Multipurpose Internet Mail Extensions (S/MIME) である.
         Email メッセージは, 通常一連の Mail Transfer Agents (MTA) を仲介者として, 受信者に届けられる.
         これら MTA は通常チャネルベースのセキュリティメカニズムを用いて通信を保護する (例: STARTTLS <xref target="RFC3207"/>) が, こういった仕組みは MTA 自身がメッセージを改竄 / 盗聴することを防ぐものではない.
-        信頼できない MTA が存在する状況でも end-to-end のセキュリティを確保するには, S/MIME を利用してメッセージボディーをセキュアオブジェクトに内包し, 情報の秘匿性 (confidentiality), 完全性 (integrity), 送信者認証 (data origin authentication) を確保することが有効である.
+        信頼できない MTA が存在する状況でも end-to-end のセキュリティを確保するには, S/MIME を利用してメッセージボディーをセキュアオブジェクトに内包し, 情報の機密性 (confidentiality), 完全性 (integrity), 送信者認証 (data origin authentication) を確保することが有効である.
       </t>
       <!--
       <t>The most well-known example of such a protocol today is the use of
@@ -185,7 +185,7 @@
       <t>
         最近の多くのアプリケーションは ASN.1 オブジェクトよりも遥かにテキストベースフォーマットのオブジェクトの処理に長けており, そもそも ASN.1 オブジェクトを処理できないものも多い.
         オブジェクトベースのセキュリティの実装を単純化するため, IETF JSON Object Signing and Encryption (JOSE) ワーキンググループでは JSON ベースのセキュアオブジェクトフォーマットを策定している.
-        その名前が示す通り, ここで策定されているのは JSON エンコードされたオブジェクトの秘匿性 (confidentiality), 完全性 (integrity) を確保するためのフォーマットである.
+        その名前が示す通り, ここで策定されているのは JSON エンコードされたオブジェクトの機密性 (confidentiality), 完全性 (integrity) を確保するためのフォーマットである.
         しかしながら, ワーキンググループ内での議論の結果, JOSE で定義されるフォーマットを利用するアプリケーションごとに, そのフォーマットに対する要件が異なることも分かった.
         よって本ドキュメントでは, JOSE フォーマットを利用する可能性のあるアプリケーションを想定し, セキュリティメカニズムとオブジェクトエンコーディングに対する要件をまとめる.
       </t>
