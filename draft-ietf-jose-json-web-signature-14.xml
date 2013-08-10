@@ -374,6 +374,13 @@
     <section title="JWS Header" anchor="Header">
 
       <t>
+        JWSヘッダを表わすJSONオブジェクトのメンバは, エンコードJWSヘッダ, エンコード済JWSペイロード, およびJWSのオプショナルプロパティーに適用されたデジタル署名ないしMACを記述する.
+        JWSヘッダ内のヘッダパラメータ名はユニークでなければならない (MUST).
+        受け手は重複したヘッダパラメータ名を持つJWSを, 拒否するか, または以下の動作をするJSONパーザを使用しなければならない (MUST).
+        すなわち, 重複したメンバー名に対して字面上で最後の(lexically last)もののみを返すようなJSONパーザである(この動作はECMAScript 5.1 <xref target="ECMAScript"/> Section 15.12 (The JSON Object)で定義されている). 
+      </t>
+      <!--
+      <t>
 	The members of the JSON object(s) representing the JWS Header describe the
 	digital signature or MAC applied to the
 	Encoded JWS Header and the Encoded JWS Payload and optionally
@@ -384,6 +391,13 @@
 	as specified in Section 15.12 (The JSON Object) of
 	ECMAScript 5.1 <xref target="ECMAScript"/>.
       </t>
+      -->
+      <t>
+        実装は本仕様において「解釈できなければならない (MUST)」と定義されているヘッダパラメータを解釈し, 本仕様に定義されている方法で処理することが要求される.
+        本仕様で定義されており, かつMUSTでないヘッダパラメータは, 理解できなかった場合にはすべて無視しなければならない (MUST).
+        <xref target="critDef"/>によってクリティカルヘッダパラメータとして列挙されている場合を除き, 本仕様で定義されていないヘッダパラメータは, 理解できなかった場合にはすべて無視しなければならない (MUST). 
+      </t>
+      <!--
       <t>
 	Implementations are required to understand
 	the specific header parameters defined by this specification
@@ -395,13 +409,24 @@
 	all header parameters not defined by this specification
 	MUST be ignored when not understood.
       </t>
+      -->
+      <t>
+        ヘッダパラメータ名には3つのクラスがある. すなわち, 予約済ヘッダパラメータ名, パブリックヘッダパラメータ名, およびプライベートヘッダパラメータ名である. 
+      </t>
+      <!--
       <t>
         There are three classes of Header Parameter Names:
 	Reserved Header Parameter Names, Public Header Parameter Names,
 	and Private Header Parameter Names.
       </t>
+      -->
 
       <section title="Reserved Header Parameter Names" anchor="ReservedHeaderParameterName">
+	<t>
+          以下に示すヘッダパラメータ名は予約済とし, その意味を以下で定義する.
+          これらのパラメータ名は短いが, それは本仕様の主目的として, JWS Compact Serialization方式による生成結果を小さくするためである. 
+	</t>
+        <!--
 	<t>
 	  The following Header Parameter Names are reserved
 	  with meanings as defined below.
@@ -409,6 +434,12 @@
 	  is for the resulting representations
 	  using the JWS Compact Serialization to be compact.
 	</t>
+        -->
+	<t>
+          追加の予約済ヘッダパラメータ名が定義される場合は, IANAによって JSON Web Signature and Encryption Header Parameters レジストリ <xref target="HdrReg"/>に追加される.
+          レジストリが共通であることから示されるとおり, JWSとJWEはヘッダパラメータ空間を共有する. あるパラメターが両方の仕様で使われる場合, その使い方は2つの仕様の間で互換でなればならない. 
+	</t>
+        <!--
 	<t>
 	  Additional reserved Header Parameter Names can be defined
 	  via the IANA
@@ -419,8 +450,20 @@
 	  both specifications, its usage must be compatible
 	  between the specifications.
 	</t>
+        -->
 
 	<section title='"alg" (Algorithm) Header Parameter' anchor="algDef">
+	  <t>
+	    <spanx style="verb">alg</spanx> (algorithm) ヘッダパラメータはJWSの署名に使われる暗号アルゴリズムを指定する.
+            受け手は以下の場合にはJWSを拒否しなければならない (MUST): <spanx style="verb">alg</spanx>の値がサポートするアルゴリズムを表わしていない場合, またはデジタル署名ないしMACを行ったパーティーの有効な鍵がない場合. 
+	    <spanx style="verb">alg</spanx>の値はIANA
+	    JSON Web Signature and Encryption Algorithms レジストリ
+	    <xref target="JWA" /> に登録されているか, またはCollision Resistant Namespaceを含んでいるべきである (SHOULD). 
+	    <spanx style="verb">alg</spanx>の値はStringOrURIを表わす文字列であり, 大文字・小字文は区別される.
+            このヘッダパラメータの利用は必須である (REQUIRED).
+            このヘッダパラメータはすべての実装で解釈可能でなければならない (MUST).
+	  </t>
+          <!--
 	  <t>
 	    The <spanx style="verb">alg</spanx> (algorithm) header
 	    parameter identifies a cryptographic algorithm used to
@@ -439,7 +482,13 @@
 	    Use of this header parameter is REQUIRED.
 	    This header parameter MUST be understood by implementations.
 	  </t>
+          -->
 	  <t>
+            定義済の<spanx style="verb">alg</spanx>値は IANA JSON Web Signature and Encryption Algorithms レジストリ <xref target="JWA" />に一覧されている.
+            このレジストリの初期の内容はJSON Web Algorithms (JWA) <xref target="JWA" />仕様のSection 3.1で定義されている. 
+	  </t>
+	  <!--
+          <t>
 	    A list of defined <spanx style="verb">alg</spanx> values can be found
 	    in the IANA JSON Web Signature and Encryption Algorithms registry
 	    <xref target="JWA" />;
@@ -447,9 +496,19 @@
 	    Section 3.1 of the
 	    JSON Web Algorithms (JWA) <xref target="JWA" /> specification.
 	  </t>
+          -->
 	</section>
 
 	<section title='"jku" (JWK Set URL) Header Parameter' anchor="jkuDef">
+	  <t>
+	    <spanx style="verb">jku</spanx> (JWK Set URL)ヘッダパラメータはURI<xref target="RFC3986"/>であり, JSONでエンコードされた公開鍵セットのリソースを参照する. そのうちのひとつがJWSをデジタル署名するために用いられる. 
+	    鍵は JSON Web Key Set (JWK Set) <xref target="JWK" />にしたがってエンコードされていなければならない (MUST).
+            リソースを取得するために使用するプロトコルは整合性を保証しなければならない (MUST). 
+            HTTP GETリクエストによってJWK Setを取得する場合にはTLS<xref target="RFC2818"/> <xref target="RFC5246"/>を使用しなければならない (MUST).
+            サーバーのアイデンティティーはHTTP Over TLS <xref target='RFC2818'/>のSection 3.1で定義されるとおりに検証されなければならない (MUST)
+            このヘッダパラメータの利用は任意 (OPTIONAL) である.
+	  </t>
+          <!--
 	  <t>
 	    The <spanx style="verb">jku</spanx> (JWK Set URL)
 	    header parameter is a URI <xref target="RFC3986"/> that refers to a
@@ -464,9 +523,16 @@
 	    Section 3.1 of HTTP Over TLS <xref target='RFC2818'/>.
 	    Use of this header parameter is OPTIONAL.
 	  </t>
+          -->
 	</section>
 
 	<section title='"jwk" (JSON Web Key) Header Parameter' anchor="jwkDef">
+	  <t>
+	    <spanx style="verb">jwk</spanx> (JSON Web Key)ヘッダパラメータはJWSにデジタル署名するために用いる鍵である.
+            鍵は JSON Web Key <xref target="JWK" />形式で表わされる.
+            このヘッダパラメータの利用は任意 (OPTIONAL) である.
+	  </t>
+          <!--
 	  <t>
 	    The <spanx style="verb">jwk</spanx> (JSON Web Key)
 	    header parameter is the public key
@@ -475,9 +541,21 @@
 	    This key is represented as a JSON Web Key <xref target="JWK" />.
 	    Use of this header parameter is OPTIONAL.
 	  </t>
+          -->
 	</section>
 
 	<section title='"x5u" (X.509 URL) Header Parameter' anchor="x5uDef">
+	  <t>
+	    <spanx style="verb">x5u</spanx> (X.509 URL)ヘッダパラメータはURIであり, JWSにデジタル署名するために用いる鍵に対応するX.509公開鍵証明書もしくは証明書チェーン <xref target="RFC5280"/> リソースを参照する. 
+            リソースは証明書または証明書チェーンを表わし, <xref target="RFC5280">RFC 5280</xref>仕様を満たすPEMフォーマット<xref target="RFC1421"/>でなければならない (MUST).
+            JWSのデジタル署名に使用する鍵に対応する公開鍵の証明書は第1証明書でなければならない (MUST).
+            これの後にさらなる証明書が続いても良く(MAY), それぞれの証明書は直前のものを保証する. 
+            リソースを取得するために使用するプロトコルは整合性を保証しなければならない (MUST). 
+            HTTP GETリクエストによってJWK Setを取得する場合にはTLS<xref target="RFC2818"/> <xref target="RFC5246"/>を使用しなければならない (MUST).
+            サーバーのアイデンティティーはHTTP Over TLS <xref target='RFC2818'/>のSection 3.1で定義されるとおりに検証されなければならない (MUST)
+            このヘッダパラメータの利用は任意 (OPTIONAL) である.
+	  </t>
+          <!--
 	  <t>
 	    The <spanx style="verb">x5u</spanx> (X.509 URL) header
 	    parameter is a URI <xref target="RFC3986"/> that refers to a resource for
@@ -502,9 +580,15 @@
 	    Section 3.1 of HTTP Over TLS <xref target='RFC2818'/>.
 	    Use of this header parameter is OPTIONAL.
 	  </t>
+          -->
 	</section>
 
 	<section title='"x5t" (X.509 Certificate Thumbprint) Header Parameter' anchor="x5tDef">
+	  <t>
+	    <spanx style="verb">x5t</spanx> (X.509証明書拇印)ヘッダパラメータは, JWSにデジタル署名するために用いる鍵に対応するX.509証明書<xref target="RFC5280"/>をDER形式で表わし, そのSHA-1拇印(ダイジェスト)をBase64 URLエンコードしたものである. 
+            このヘッダパラメータの利用は任意 (OPTIONAL) である.
+	  </t>
+          <!--
 	  <t>
 	    The <spanx style="verb">x5t</spanx> (X.509 Certificate Thumbprint)
 	    header parameter is a base64url encoded
@@ -514,6 +598,12 @@
 	    used to digitally sign the JWS.
 	    Use of this header parameter is OPTIONAL.
 	  </t>
+          -->
+	  <t>
+            将来, 証明書拇印をSHA-1以外のハッシュ関数によって計算する必要が発生した場合, その目的のために追加のヘッダパラメータを定義することが望ましい.
+            例えば, 新しい<spanx style="verb">x5t#S256</spanx> (SHA-256によるX.509証明書拇印)というヘッダパラメータをIANA JSON Web Signature and Encryption Header Parameters レジストリに <xref target="HdrReg" />登録することが望ましい. 
+	  </t>
+          <!--
 	  <t>
 	    If, in the future, certificate thumbprints need to be
 	    computed using hash functions other than SHA-1, it is
@@ -525,6 +615,7 @@
 	    JSON Web Signature and Encryption Header Parameters
 	    registry <xref target="HdrReg" />.
 	  </t>
+          -->
 	</section>
 
 	<section title='"x5c" (X.509 Certificate Chain) Header Parameter' anchor="x5cDef">
@@ -533,7 +624,7 @@
         証明書や証明書チェーンは, 証明書の文字列のJSON配列として表される. 
         配列中のそれぞれの文字列はBase64エンコード(<xref target="RFC4648"/> 4節 -- Base64 URLエンコードではない)されているDER <xref target="ITU.X690.1994"/> PKIX証明書の値である. 
         JWSにデジタル署名するために用いる鍵に対応する公開鍵の証明書は第1証明書でなければならない (MUST). 
-        それぞれの以降の証明書は前のものを保証するのに用いられており, これの後にさらなる証明書が続いても良い (MAY). 
+        これの後にさらなる証明書が続いても良く(MAY), それぞれの証明書は直前のものを保証する. 
         受け手は証明書チェーンを <xref target="RFC5280"/> に沿って確認し, もし検証エラーが起こったらそのJWSを拒否しなければならない (MUST). 
         このヘッダパラメータの利用は任意 (OPTIONAL) である.
 	  </t>
