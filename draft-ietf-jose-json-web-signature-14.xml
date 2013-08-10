@@ -547,7 +547,7 @@
 	    The certificate or certificate chain is represented as
 	    a JSON array of certificate value strings.
 	    Each string in the array is a base64 encoded
-	    (<xref target="RFC4648"/> Section 4 -- not base64url encoded)
+	    (<xref target="RFC4648"/> Section 4 - not base64url encoded)
 	    DER <xref target="ITU.X690.1994"/> PKIX certificate value.
 	    The certificate containing the public key
 	    corresponding to the key
