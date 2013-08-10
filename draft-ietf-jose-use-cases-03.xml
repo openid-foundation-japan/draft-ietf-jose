@@ -302,6 +302,28 @@
     </section>
 
     <section anchor="basic-sec" title="Basic Requirements">
+      <t>
+        言うまでもなく、 暗号化および署名済みオブジェクトフォーマットに対し、機密性のためには対称あるいは非対称暗号化、完全性保護のためにはMACあるいはデジタル署名といった、適切な暗号メカニズムを用いることで、必要な保護が形成される。
+        両方のケースで、対称および非対称処理の両方のサポートがJOSEフォーマットには必要である。
+        <list style="symbols">
+          <t>
+            JOSE暗号化オブジェクトフォーマットは、送信者と受信者が対称鍵を共有しているケースでのオブジェクト暗号化をサポートしなければならない。
+          </t>
+
+          <t>
+            JOSE暗号化オブジェクトフォーマットは、送信者が受信者の公開鍵のみを所持しているケースでのオブジェクト暗号化をサポートしなければならない。
+          </t>
+
+          <t>
+            JOSE署名済みオブジェクトフォーマットは、送信者と受信者が対称鍵のみを共有しているケースでのメッセージ認証コード (MAC) を用いた完全性保護をサポートしなければならない。
+          </t>
+
+          <t>
+            JOSE署名済みオブジェクトフォーマットは、受信者が送信者の公開鍵のみを所持しているケースでのデジタル署名を用いた完全性保護をサポートしなければならない。
+          </t>
+        </list>
+      </t>
+      <!--
       <t>Obviously, for the encrypted and signed object formats, the necessary
       protections will be created using appropriate cryptographic mechanisms:
       symmetric or asymmetric encryption for confidentiality and MACs or
@@ -323,7 +345,22 @@
           digital signatures, for the case where the receiver has only a
           public key for the sender.</t>
         </list></t>
-
+      -->
+      <t>
+        いくつかのアプリケーションでは、JOSEオブジェクトの処理に用いる鍵が、JOSEオブジェクトの中で直接提示されるのではなく、アプリケーションのコンテキストを通じて提示される。
+        しかし、混乱を避けるために、必要なコンテキストが不足しているエンドポイントは、不足を認識し、問題なく失敗処理を行える必要がある。
+        鍵以外、JOSEオブジェクトは事前ネゴシエーションをサポートしない。
+        全ての暗号パラメータはJOSEオブジェクトの中に直接記述されなければならない。
+        <list style="symbols">
+          <t>
+             JOSE署名済みおよび暗号化オブジェクトフォーマットは、対象のオブジェクトの処理に必要な鍵を持っているかどうか、そしてその鍵はそのオブジェクト自身によって提示されているか、あるいはなんらかのout-of-bandメカニズムによって提示されているかどうかについて実装が認識するためのプロセスを定義しなければならない。
+          </t>
+          <t>
+            JOSEで使用される各々のアルゴリズムは、そのアルゴリズムを使用しているJOSEオブジェクト内にどのようなパラメータが必要かを定義しなければならない。
+          </t>
+        </list>
+      </t>
+      <!--
       <t>In some applications, the key used to process a JOSE object is indicated
       by application context, instead of directly in the JOSE object.  However,
       in order to avoid confusion, endpoints that lack the necessary context need
@@ -339,7 +376,18 @@
           required to be present in a JOSE object using that algorithm.</t>
           </list>
       </t>
-
+      -->
+      <t>
+        二つのエンティティが複数のJOSEオブジェクトを交換しようとするケースで、全てのJOSEオブジェクトで個々にパラメータを記述しなくても済むように、いくつかのパラメータについて事前にネゴシエーションをすることは有用かもしれない。
+        しかし、事前ネゴシエーションをサポートしないエンドポイントを混乱させないように、これらのケースでは事前にネゴシエーションされたパラメータを使用していることを示すことは有益である。
+        <list style="symbols">
+          <t>
+            オブジェクトの処理に事前ネゴシエーションされたパラメータが使用されることを示すことができるように、基本のJOSE署名済みおよび暗号化オブジェクトフォーマットを拡張できるようにすべきである。
+            この拡張は、どのパラメータが使用されるのかを示す手段も提供すべきである。
+          </t>
+        </list>
+      </t>
+      <!--
       <t>In cases where two entities are going to be exchanging several JOSE
       objects, it might be helpful to pre-negotiate some parameters so that
       they do not have to be signaled in every JOSE object.  However,
@@ -353,12 +401,28 @@
           which parameters are to be used.</t>
           </list>
       </t>
+      -->
 
+      <t>
+        鍵フォーマットの目的は、暗号メッセージ処理用の符号化された鍵を使用するために十分な情報を受信者に提供することである。
+        そのため、時には純粋な鍵だけではなく追加のパラメータを含める必要がある。
+      </t>
+      <!--
       <t>The purpose of the key format is to provide the recipient with
       sufficient information to use the encoded key to process cryptographic
       messages. Thus it is sometimes necessary to include additional parameters along
       with the bare key.</t>
+      -->
 
+      <t>
+        <list style="symbols">
+          <t>
+            JOSE鍵フォーマットは符号化された鍵を使用するために必要な全てのアルゴリズムパラメータを含めることが出来なければならない。
+            そのパラメータには、アルゴリズムで必要となる追加のパラメータ (例: 楕円曲線パラメータ) とともに、その鍵が使用されるアルゴリズムの識別子も含まれる。
+          </t>
+        </list>
+      </t>
+      <!--  
       <t><list style="symbols">
           <t>The JOSE key format must enable inclusion of all algorithm parameters
           necessary to use the encoded key, including an identifier for the
@@ -366,6 +430,7 @@
           parameters required by the algorithm (e.g., elliptic curve
           parameters).</t>
         </list></t>
+      -->
     </section>
 
     <section anchor="app-req-sec" title="Requirements on Application Protocols">
