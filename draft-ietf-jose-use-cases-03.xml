@@ -423,7 +423,7 @@
           </t>
         </list>
       </t>
-      <!--  
+      <!--
       <t><list style="symbols">
           <t>The JOSE key format must enable inclusion of all algorithm parameters
           necessary to use the encoded key, including an identifier for the
@@ -436,12 +436,12 @@
 
     <section anchor="app-req-sec" title="Requirements on Application Protocols">
       <t>
-        各 JOSE セキュアオブジェクトフォーマット仕様は, 保護対象コンテンツに対する暗号処理を詳細に定め, JOSE オブジェクトの受信者が, 適切に暗号化されたオブジェクトを複合したりし, 署名を検証したりできることを保証する.
+        各 JOSE セキュアオブジェクトフォーマット仕様は, 保護対象コンテンツに対する暗号処理を詳細に定め, JOSE オブジェクトの受信者が, 適切に暗号化されたオブジェクトを復号したり, 署名を検証したりできることを保証する.
         しかしながら, JOSE を利用する各アプリケーション側でも, 以下のような点については独自に定める必要がある.
         <list style="symbols">
           <t>保護対象となるアプリケーションコンテンツ</t>
           <t>利用される暗号アルゴリズム</t>
-          <t>エンティティ間での鍵交換手法</t>
+          <t>エンティティ間での鍵確立手法</t>
           <t>利用される鍵が JOSE オブジェクト内に明示的に示されているのか, アプリケーションのコンテキストにより決まるのか</t>
         </list>
       </t>
