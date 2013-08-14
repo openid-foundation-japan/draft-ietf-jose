@@ -896,7 +896,13 @@
 
       <section title="Public Header Parameter Names" anchor="PublicHeaderParameterName">
 
-        <t>
+    <t>
+      JWSを利用するものにより, 追加のヘッダパラメータ名が定義されることができる. 
+      しかしながら, 衝突を防ぐためにどんな新しいヘッダパラメータ名はIANA JSON Web SignatureとJSON Web Encryptionヘッダパラメータレジストリ <xref target="HdrReg"> の両方に登録されるか, 衝突耐性を持つネームスペースを含む公的な名前となるべきである (SHOULD).
+      それぞれのケースにおいて, 名前もしくは値の定義者は彼らがヘッダパラメータ名を定義するために用いるネームスペースの一部を管理下におくために適切な予防策を必要とする. 
+	</t>
+    <!--
+    <t>
 	  Additional Header Parameter Names can be defined by those
 	  using JWSs. However, in order to prevent collisions, any new
 	  Header Parameter Name SHOULD either be registered in the IANA
@@ -908,14 +914,25 @@
 	  are in control of the part of the namespace they use to
 	  define the Header Parameter Name.
 	</t>
+    -->
+	<t>
+      新しいヘッダパラメータはそれらが非互換なJWSが生じえるため, 慎重に導入されるべきである. 
+	</t>
+    <!--
 	<t>
 	  New header parameters should be introduced sparingly, as
 	  they can result in non-interoperable JWSs.
 	</t>
+    -->
       </section>
 
       <section title="Private Header Parameter Names" anchor="PrivateHeaderParameterName">
 
+	<t>
+      JWSの生産者と消費者は, 予約された名前 <xref target="ReservedHeaderParameterName"></xref> や公的な名前 <xref target="PublicHeaderParameterName"></xref> ではない私的な名前であるヘッダパラメータを用いることに同意してもよい. 
+      公的な名前とは異なり, 私的な名前は衝突しやすく注意して利用すべきである. 
+	</t>
+    <!--
 	<t>
 	  A producer and consumer of a JWS may agree to use Header Parameter Names
 	  that are Private Names:  names that are
@@ -924,7 +941,7 @@
 	  Unlike Public Names, Private Names are subject to collision and
 	  should be used with caution.
 	</t>
-
+    -->
       </section>
     </section>
 
