@@ -464,23 +464,30 @@
     </section>
 
     <section anchor="use-cases-sec" title="Use Cases">
-      <t>Several working groups developing application-layer protocols
+        <t>アプリケーションレイヤーのプロトコルについて策定しているワーキンググループにはJOSEデータフォーマットをエンドツーエンドのセキュリティ機能の設計で利用したいという要望を表明しているところもある。
+            この章では、このようなグループが提案したユースケースをとりまとめ、JOSEオブジェクトフォーマットに求められる要件について説明する。</t>
+      <!--<t>Several working groups developing application-layer protocols
       have expressed a desire to use the JOSE data formats in their
       designs for end-to-end security features. In this section, we summarize
       the use cases proposed by these groups and discuss the requirements that
-      they imply for the JOSE object formats.</t>
+      they imply for the JOSE object formats.</t>-->
 
       <section anchor="sec-token-sec" title="Security Tokens">
-        <t>Security tokens are a common use case for object-based security,
+        <t>セキュリティトークンはオブジェクトベースのセキュリティではよくあるユースケースである。例えばSAMLのアサーション <xref target="OASIS.saml-core-2.0-os"/>がある。
+            セキュリティトークンは発行者から受信者へ対象のエンティティ（"クレーム"または"アサーション"）に関する情報を渡すために使われる。
+            トークンフォーマットのセキュリティ機能により、受信者はクレームが発行者により発行され、完全性が保護されているオブジェクトの場合は他のパーティから読み取れないことを検証することができる。</t>
+        <!--<t>Security tokens are a common use case for object-based security,
         for example, SAML assertions <xref target="OASIS.saml-core-2.0-os"/>.
         Security tokens are used to convey information about a subject entity
         ("claims" or "assertions") from an issuer to a recipient. The security
         features of a token format enable the recipient to verify that the
         claims came from the issuer and, if the object is
         confidentiality-protected, that they were not visible to other
-        parties.</t>
+        parties.</t>-->
 
-        <t>Security tokens are used in federation protocols such as SAML 2.0
+        <t>セキュリティトークンはOAuth2.0<xref target="RFC6749"/>とそれに含まれるOAuth bearer tokens <xref target="RFC6750"/> などのリソース認可のプロトコルだけでなく、SAML 2.0 <xref target="OASIS.saml-core-2.0-os"/>, WS-Federation <xref target="WS-Federation"/>, Mozilla Persona <xref target="Persona"/>, OpenID Connect <xref target="OpenID.Messages"/> などのフェデレーションプロトコルで利用される。
+            あるケースでは、セキュリティトークンはクライアント認証やアクセス制御 <xref target="I-D.ietf-oauth-jwt-bearer"/><xref target="I-D.ietf-oauth-saml2-bearer"/>に利用される。</t>
+        <!--<t>Security tokens are used in federation protocols such as SAML 2.0
 	<xref target="OASIS.saml-core-2.0-os"/>,
         WS-Federation <xref target="WS-Federation"/>,
 	Mozilla Persona <xref target="Persona"/>,
@@ -490,16 +497,18 @@
 	including for OAuth bearer tokens <xref target="RFC6750"/>. In some cases,
         security tokens are used for client authentication and for access
         control <xref target="I-D.ietf-oauth-jwt-bearer"/><xref
-        target="I-D.ietf-oauth-saml2-bearer"/>.</t>
+        target="I-D.ietf-oauth-saml2-bearer"/>.</t>-->
 
-	<t>JSON Web Token (JWT) <xref target="I-D.ietf-oauth-json-web-token"/>
+	<t>JSON Web Token (JWT) <xref target="I-D.ietf-oauth-json-web-token"/> はJSONおよびJOSEをベースとしたセキュリティートークンフォーマットである。
+        JWTはMozilla Persona, OpenID Connect, OAuthと共に利用される. 
+        JWTは限定された場面（例: HTTPクエリパラメータ）で主に利用されていたためJWTの主要な要件となり、それゆえJOSEは短くURLセーフな形式になっている。</t>
+	<!--<t>JSON Web Token (JWT) <xref target="I-D.ietf-oauth-json-web-token"/>
 	is a security token format
 	based on JSON and JOSE. It is used with Mozilla Persona,
 	OpenID Connect, and OAuth. Because JWTs are often used in contexts
 	with limited space (e.g., HTTP query parameters), it is a core
 	requirement for JWTs, and thus JOSE, to have a compact, URL-safe
-	representation.</t>
-
+	representation.</t>-->
       </section>
 
       <section anchor="oauth-sec" title="OAuth">
