@@ -501,7 +501,7 @@
 
 	<section title='"jku" (JWK Set URL) Header Parameter' anchor="jkuDef">
 	  <t>
-	    <spanx style="verb">jku</spanx> (JWK Set URL)ヘッダパラメータはURI<xref target="RFC3986"/>であり, JSONでエンコードされた公開鍵セットのリソースを参照する. そのうちのひとつがJWSをデジタル署名するために用いられる. 
+	    <spanx style="verb">jku</spanx> (JWK Set URL)ヘッダパラメータはURI<xref target="RFC3986"/>であり, JSONでエンコードされた公開鍵セットのリソースを参照する. そのうちのひとつがJWSにデジタル署名をするときに用いる秘密鍵と対応する.
 	    鍵は JSON Web Key Set (JWK Set) <xref target="JWK" />にしたがってエンコードされていなければならない (MUST).
             リソースを取得するために使用するプロトコルは整合性を保証しなければならない (MUST). 
             HTTP GETリクエストによってJWK Setを取得する場合にはTLS<xref target="RFC2818"/> <xref target="RFC5246"/>を使用しなければならない (MUST).
@@ -528,7 +528,7 @@
 
 	<section title='"jwk" (JSON Web Key) Header Parameter' anchor="jwkDef">
 	  <t>
-	    <spanx style="verb">jwk</spanx> (JSON Web Key)ヘッダパラメータはJWSにデジタル署名するために用いる鍵である.
+	    <spanx style="verb">jwk</spanx> (JSON Web Key)ヘッダパラメータはJWSにデジタル署名をするときに用いる秘密鍵と対応する公開鍵である.
             鍵は JSON Web Key <xref target="JWK" />形式で表わされる.
             このヘッダパラメータの利用は任意 (OPTIONAL) である.
 	  </t>
@@ -548,9 +548,9 @@
 	  <t>
 	    <spanx style="verb">x5u</spanx> (X.509 URL)ヘッダパラメータはURIであり, JWSにデジタル署名するために用いる鍵に対応するX.509公開鍵証明書もしくは証明書チェーン <xref target="RFC5280"/> リソースを参照する. 
             リソースは証明書または証明書チェーンを表わし, <xref target="RFC5280">RFC 5280</xref>仕様を満たすPEMフォーマット<xref target="RFC1421"/>でなければならない (MUST).
-            JWSのデジタル署名に使用する鍵に対応する公開鍵の証明書は第1証明書でなければならない (MUST).
-            これの後にさらなる証明書が続いても良く(MAY), それぞれの証明書は直前のものを保証する. 
-            リソースを取得するために使用するプロトコルは整合性を保証しなければならない (MUST). 
+            JWSのデジタル署名に使用する鍵に対応する公開鍵の証明書は先頭の証明書でなければならない (MUST).
+            これの後にさらなる証明書が続いても良く(MAY), それぞれの証明書は直前のものを証明する. 
+            リソースを取得するために使用するプロトコルは完全性を保証しなければならない (MUST). 
             HTTP GETリクエストによってJWK Setを取得する場合にはTLS<xref target="RFC2818"/> <xref target="RFC5246"/>を使用しなければならない (MUST).
             サーバーのアイデンティティーはHTTP Over TLS <xref target='RFC2818'/>のSection 3.1で定義されるとおりに検証されなければならない (MUST)
             このヘッダパラメータの利用は任意 (OPTIONAL) である.
@@ -585,7 +585,7 @@
 
 	<section title='"x5t" (X.509 Certificate Thumbprint) Header Parameter' anchor="x5tDef">
 	  <t>
-	    <spanx style="verb">x5t</spanx> (X.509証明書拇印)ヘッダパラメータは, JWSにデジタル署名するために用いる鍵に対応するX.509証明書<xref target="RFC5280"/>をDER形式で表わし, そのSHA-1拇印(ダイジェスト)をBase64 URLエンコードしたものである. 
+	    <spanx style="verb">x5t</spanx> (X.509証明書フィンガープリント)ヘッダパラメータは, JWSにデジタル署名するために用いる鍵に対応するX.509証明書<xref target="RFC5280"/>をDER形式で表わし, そのSHA-1フィンガープリント(ダイジェスト)をBase64 URLエンコードしたものである. 
             このヘッダパラメータの利用は任意 (OPTIONAL) である.
 	  </t>
           <!--
@@ -600,8 +600,8 @@
 	  </t>
           -->
 	  <t>
-            将来, 証明書拇印をSHA-1以外のハッシュ関数によって計算する必要が発生した場合, その目的のために追加のヘッダパラメータを定義することが望ましい.
-            例えば, 新しい<spanx style="verb">x5t#S256</spanx> (SHA-256によるX.509証明書拇印)というヘッダパラメータをIANA JSON Web Signature and Encryption Header Parameters レジストリに <xref target="HdrReg" />登録することが望ましい. 
+            将来, 証明書フィンガープリントをSHA-1以外のハッシュ関数によって計算する必要が発生した場合, その目的のために追加のヘッダパラメータを定義することが望ましい.
+            例えば, 新しい<spanx style="verb">x5t#S256</spanx> (SHA-256によるX.509証明書フィンガープリント)というヘッダパラメータをIANA JSON Web Signature and Encryption Header Parameters レジストリに <xref target="HdrReg" />登録することが望ましい. 
 	  </t>
           <!--
 	  <t>
@@ -623,8 +623,8 @@
 	    <spanx style="verb">x5c</spanx> (X.509証明書チェーン) ヘッダパラメータは, JWSにデジタル署名するために用いる鍵に対応するX.509公開鍵証明書もしくは証明書チェーン <xref target="RFC5280"/> を含む. 
         証明書や証明書チェーンは, 証明書の文字列のJSON配列として表される. 
         配列中のそれぞれの文字列はBase64エンコード(<xref target="RFC4648"/> 4節 -- Base64 URLエンコードではない)されているDER <xref target="ITU.X690.1994"/> PKIX証明書の値である. 
-        JWSにデジタル署名するために用いる鍵に対応する公開鍵の証明書は第1証明書でなければならない (MUST). 
-        これの後にさらなる証明書が続いても良く(MAY), それぞれの証明書は直前のものを保証する. 
+        JWSにデジタル署名するために用いる鍵に対応する公開鍵の証明書は先頭の証明書でなければならない (MUST). 
+        これの後にさらなる証明書が続いても良く(MAY), それぞれの証明書は直前のものを証明する. 
         受け手は証明書チェーンを <xref target="RFC5280"/> に沿って確認し, もし検証エラーが起こったらそのJWSを拒否しなければならない (MUST). 
         このヘッダパラメータの利用は任意 (OPTIONAL) である.
 	  </t>
