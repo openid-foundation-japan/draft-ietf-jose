@@ -624,8 +624,8 @@
         証明書や証明書チェーンは, 証明書の文字列のJSON配列として表される. 
         配列中のそれぞれの文字列はBase64エンコード(<xref target="RFC4648"/> 4節 -- Base64 URLエンコードではない)されているDER <xref target="ITU.X690.1994"/> PKIX証明書の値である. 
         JWSにデジタル署名するために用いる鍵に対応する公開鍵の証明書は第1証明書でなければならない (MUST). 
-        これの後にさらなる証明書が続いても良く(MAY), それぞれの証明書は直前のものを保証する. 
-        受け手は証明書チェーンを <xref target="RFC5280"/> に沿って確認し, もし検証エラーが起こったらそのJWSを拒否しなければならない (MUST). 
+        これの後にさらなる証明書が続いても良く(MAY), それぞれの証明書は直前のものを証明する. 
+        受信者は証明書チェーンを <xref target="RFC5280"/> に沿って確認し, もし検証エラーが起こったらそのJWSを拒否しなければならない (MUST). 
         このヘッダパラメータの利用は任意 (OPTIONAL) である.
 	  </t>
       <!--
@@ -666,6 +666,15 @@
 
 	<section title='"kid" (Key ID) Header Parameter' anchor="kidDef">
 	  <t>
+	    <spanx style="verb">kid</spanx> (key ID)ヘッダパラメータはJWSを保護するためにどの鍵が使用されたかを示しているヒントである. 
+        このパラメータは発信者が鍵の変更を受信者に明確に示すことを許す. 
+        受信者が <spanx style="verb">kid</spanx> の値に一致する鍵を見つけることができないならば, その状態をエラーとして扱うべきである (SHOULD).
+        <spanx style="verb">kid</spanx> の値の説明は記載しない. 
+        その値は文字列でなければならない (MUST).
+        このヘッダパラメータの利用は任意 (OPTIONAL) である.
+	  </t>
+      <!--
+	  <t>
 	    The <spanx style="verb">kid</spanx> (key ID) header
 	    parameter is a hint indicating which key
 	    was used to secure the JWS.
@@ -679,14 +688,30 @@
 	    Its value MUST be a string.
 	    Use of this header parameter is OPTIONAL.
 	  </t>
+      -->
+	  <t>
+        JWKを利用する場合, <spanx style="verb">kid</spanx> の値はJWK <spanx style="verb">kid</spanx> パラメータの値と一致するように利用できる. 
+	  </t>
+      <!--
 	  <t>
 	    When used with a JWK, the <spanx style="verb">kid</spanx>
 	    value can be used to match a JWK <spanx style="verb">kid</spanx>
 	    parameter value.
 	  </t>
+      -->
 	</section>
 
 	<section title='"typ" (Type) Header Parameter' anchor="typDef">
+	  <t>
+	    <spanx style="verb">typ</spanx> (type) ヘッダパラメータは, これがアプリケーションにとって有用かどうかという文脈の中でアプリケーションに特化した方法でこの完全なJWSオブジェクトの種類を表すために用いられてもよい (MAY).
+        このパラメータはJWSの処理に影響を及ぼさない. 
+	    <spanx style="verb">JOSE</spanx> という値はアプリケーションによりこのオブジェクトがJWS Compact Serializationを用いたJWSもしくはJWE Compact Serializationを用いたJWEであることを示すために用いられてもよい (MAY).
+	    <spanx style="verb">JOSE+JSON</spanx> という値はアプリケーションによりこのオブジェクトがJWS JSON Serialiationを用いたJWSもしくはJWE JSON Serializationを用いたJWEであることを示すために用いられてもよい (MAY).
+        その他の値も用いられても良く(MAY), もし理解されなかった場合は無視されるべきである (SHOULD).
+	    <spanx style="verb">typ</spanx> の値は大文字・小文字を区別する. 
+        このヘッダパラメータの利用は任意 (OPTIONAL) である.
+	  </t>
+      <!--
 	  <t>
 	    The <spanx style="verb">typ</spanx> (type) header
 	    parameter MAY be used to declare the type of
@@ -706,10 +731,20 @@
 	    The <spanx style="verb">typ</spanx> value is a case sensitive string.
 	    Use of this header parameter is OPTIONAL.
 	  </t>
+      -->
+	  <t>
+	    MIME Media Type <xref target="RFC2046"/> の値は <spanx style="verb">typ</spanx> の値として用いられてもよい (MAY).
+	  </t>
+      <!--
 	  <t>
 	    MIME Media Type <xref target="RFC2046"/>
 	    values MAY be used as <spanx style="verb">typ</spanx> values.
 	  </t>
+      -->
+	  <t>
+	    <spanx style="verb">typ</spanx> の値はIANA JSON Web SignatureレジストリとIANA JSON Web Encryptionレジストリ <xref target="TypReg" /> に登録されるか衝突耐性を持つ名前空間を含む値であるべきである (SHOULD).
+	  </t>
+      <!--
 	  <t>
 	    <spanx style="verb">typ</spanx> values SHOULD either be
 	    registered in the IANA
@@ -717,9 +752,18 @@
 	    <xref target="TypReg" /> or be
 	    a value that contains a Collision Resistant Namespace.
 	  </t>
+      -->
 	</section>
 
 	<section title='"cty" (Content Type) Header Parameter' anchor="ctyDef">
+	  <t>
+	    <spanx style="verb">cty</spanx> (content type) ヘッダパラメータは, これがアプリケーションにとって有用かどうかという文脈の中でアプリケーションに特化した方法で保護されているコンテント(ペイロード)の種類を表すために用いられてもよい (MAY).
+        このパラメータはJWSの処理に影響を及ぼさない. 
+        コンテントタイプの値が理解されなかった場合は無視されるべきである (SHOULD).
+	    <spanx style="verb">cty</spanx> の値は大文字・小文字を区別する. 
+        このヘッダパラメータの利用は任意 (OPTIONAL) である.
+	  </t>
+      <!--
 	  <t>
 	    The <spanx style="verb">cty</spanx> (content type) header
 	    parameter MAY be used to declare the type of
@@ -731,15 +775,33 @@
 	    The <spanx style="verb">cty</spanx> value is a case sensitive string.
 	    Use of this header parameter is OPTIONAL.
 	  </t>
+      -->
+	  <t>
+	    <spanx style="verb">cty</spanx> ヘッダパラメータに用いられる値は <spanx style="verb">typ</spanx> ヘッダパラメータと同じ値空間となり, 同じ規則が適用される. 
+	  </t>
+      <!--
 	  <t>
 	    The values used for the <spanx style="verb">cty</spanx>
 	    header parameter come from the same value space as the
 	    <spanx style="verb">typ</spanx> header parameter,
 	    with the same rules applying.
 	  </t>
+      -->
 	</section>
 
 	<section title='"crit" (Critical) Header Parameter' anchor="critDef">
+	  <t>
+	    <spanx style="verb">crit</spanx> (critical) ヘッダパラメータは必ず理解され処理されなければならない (MUST) この仕様に対する拡張を示す.
+        その値はJWSヘッダ内で用いられるこれらの拡張機能によって定義されたヘッダパラメータ名が記載された配列である. 
+        もし記載された拡張ヘッダパラメータが受信者により理解されずサポートされない場合, そのJWSは無視されなければならない (MUST).
+        送信者はこの仕様もしくはJWS利用のために <xref target="JWA" /> により定義されているヘッダパラメータ, 重複した名前, JWSヘッダに現れないヘッダパラメータ名を <spanx style="verb">crit</spanx> リストに含んではいけない (MUST NOT).
+        送信者は <spanx style="verb">crit</spanx> の値に空のリスト <spanx style="verb">[]</spanx> を用いてはいけない (MUST NOT).
+        もしcriticalリストがこの仕様もしくはJWS利用のために <xref target="JWA" /> で定義されている, その利用が違反であるその他の制約により定義されている任意のヘッダパラメータを含むとき, 受信者はそのJWSを拒否してもよい (MAY).
+        このヘッダパラメータは完全に保護されなければならず (MUST), 従って利用されるときは必ずJWS Protected Headerのみに現れなければならない (MUST).
+        このヘッダパラメータの利用は任意 (OPTIONAL) である.
+        このヘッダパラメータは実装者に理解される必要がある (MUST).
+	  </t>
+      <!--
 	  <t>
 	    The <spanx style="verb">crit</spanx> (critical) header parameter
 	    indicates that extensions to [[ this specification ]] are being used
@@ -764,6 +826,23 @@
 	    Use of this header parameter is OPTIONAL.
 	    This header parameter MUST be understood by implementations.
 	  </t>
+      -->
+	  <t>
+	    <figure>
+	      <preamble>
+          <spanx style="verb">exp</spanx> (expiration-time)フィールドを加えたと仮定した使用例 : 
+		An example use, along with a hypothetical
+		<spanx style="verb">exp</spanx> (expiration-time) field is:
+	      </preamble>
+	      <artwork><![CDATA[
+  {"alg":"ES256",
+   "crit":["exp"],
+   "exp":1363284000
+  }
+]]></artwork>
+	    </figure>
+	  </t>
+      <!--
 	  <t>
 	    <figure>
 	      <preamble>
@@ -778,6 +857,7 @@
 ]]></artwork>
 	    </figure>
 	  </t>
+      -->
 	</section>
 
       </section>
