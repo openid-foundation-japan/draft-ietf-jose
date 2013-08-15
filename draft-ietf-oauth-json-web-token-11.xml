@@ -541,9 +541,16 @@
       </section>
     </section>
 
-    <section title="JWT Header" anchor="Header">
+    <section title="JWT ヘッダ" anchor="Header">
+    <!-- <section title="JWT Header" anchor="Header"> -->
 
       <t>
+	JWTヘッダ内のJSONオブジェクトのメンバは, JWTに適用される暗号化オペレーション, および任意でJWTの追加プロパティを表している.
+	JWTヘッダ内のメンバ名はヘッダ・パラメータ名として参照される.
+	それらの名前はユニークである必要があり (MUST) ,
+	受信者は重複するヘッダ・パラメータ名を持つJWTを拒否するか, ECMAScript 5.1 <xref target="ECMAScript"/> のセクション 15.12 (JSONオブジェクト) に指定されているとおり語彙的に最後の重複メンバ名だけを返却するJSONパーサを利用しなければならない (MUST).
+	対応する値はヘッダ・パラメータ値として参照される.
+	<!--
 	The members of the JSON object represented by the JWT Header
 	describe the cryptographic operations applied to the JWT and
 	optionally, additional properties of the JWT.
@@ -555,17 +562,30 @@
 	as specified in Section 15.12 (The JSON Object) of
 	ECMAScript 5.1 <xref target="ECMAScript"/>.
 	The corresponding values are referred to as Header Parameter Values.
+	-->
       </t>
       <t>
+	JWSヘッダ・パラメータは<xref target="JWS" />で定義されている.
+	JWEヘッダ・パラメータは<xref target="JWE" />で定義されている.
+	更にこの仕様は, JWTがJWSである場合とJWTがJWEである場合の両方のケースにおいて続くヘッダ・パラメータが利用されることを明示する.
+	<!--
 	JWS Header Parameters are defined by <xref target="JWS" />.
 	JWE Header Parameters are defined by <xref target="JWE" />.
 	This specification further specifies the use of the following
 	header parameter in both the cases where the JWT is a JWS and
 	where it is a JWE.
+	-->
       </t>
 
-      <section title='"typ" (Type) Header Parameter' anchor="typHdrDef">
+      <section title='"typ" (Type) ヘッダ・パラメータ' anchor="typHdrDef">
+      <!-- <section title='"typ" (Type) Header Parameter' anchor="typHdrDef"> -->
 	<t>
+	  <spanx style="verb">typ</spanx> (type) ヘッダ・パラメータはアプリケーションにとって有用なコンテキストにおいて, アプリケーション固有の方法で, このJWTの形式を記述するために利用してもよい (MAY).
+	  このパラメータはJWTの処理に影響を及ぼさない.
+	  もしパラメータが存在した場合, その値はそのオブジェクトがJWTであることを示すため, <spanx style="verb">JWT</spanx>もしくは<spanx style="verb">urn:ietf:params:oauth:token-type:jwt</spanx>を指定することが推奨される (RECOMMENDED).
+	  <spanx style="verb">typ</spanx>の値は大文字小文字を区別する文字列である.
+	  このヘッダ・パラメータの利用は任意である (OPTIONAL).
+	<!--
 	  The <spanx style="verb">typ</spanx> (type) header parameter
 	  MAY be used to declare the type of this JWT
 	  in an application-specific manner
@@ -577,6 +597,7 @@
 	  to indicate that this object is a JWT.
 	  The <spanx style="verb">typ</spanx> value is a case sensitive string.
 	  Use of this header parameter is OPTIONAL.
+	-->
 	</t>
       </section>
 
