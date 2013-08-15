@@ -541,15 +541,15 @@
       </section>
     </section>
 
-    <section title="JWT �w�b�_" anchor="Header">
+    <section title="JWT ヘッダ" anchor="Header">
     <!-- <section title="JWT Header" anchor="Header"> -->
 
       <t>
-	JWT�w�b�_����JSON�I�u�W�F�N�g�̃����o��, JWT�ɓK�p�����Í����I�y���[�V����, ����єC�ӂ�JWT�̒ǉ��v���p�e�B��\���Ă���.
-	JWT�w�b�_���̃����o���̓w�b�_�E�p�����[�^���Ƃ��ĎQ�Ƃ����.
-	�����̖��O�̓��j�[�N�ł���K�v������ (MUST) ,
-	��M�҂͏d������w�b�_�E�p�����[�^��������JWT�����ۂ��邩, ECMAScript 5.1 <xref target="ECMAScript"/> �̃Z�N�V���� 15.12 (JSON�I�u�W�F�N�g) �Ɏw�肳��Ă���Ƃ����b�I�ɍŌ�̏d�������o��������ԋp����JSON�p�[�T�𗘗p���Ȃ���΂Ȃ�Ȃ� (MUST).
-	�Ή�����l�̓w�b�_�E�p�����[�^�l�Ƃ��ĎQ�Ƃ����.
+	JWTヘッダ内のJSONオブジェクトのメンバは, JWTに適用される暗号化オペレーション, および任意でJWTの追加プロパティを表している.
+	JWTヘッダ内のメンバ名はヘッダ・パラメータ名として参照される.
+	それらの名前はユニークである必要があり (MUST) ,
+	受信者は重複するヘッダ・パラメータ名を持つJWTを拒否するか, ECMAScript 5.1 <xref target="ECMAScript"/> のセクション 15.12 (JSONオブジェクト) に指定されているとおり語彙的に最後の重複メンバ名だけを返却するJSONパーサを利用しなければならない (MUST).
+	対応する値はヘッダ・パラメータ値として参照される.
 	<!--
 	The members of the JSON object represented by the JWT Header
 	describe the cryptographic operations applied to the JWT and
@@ -565,9 +565,9 @@
 	-->
       </t>
       <t>
-	JWS�w�b�_�E�p�����[�^��<xref target="JWS" />�Œ�`����Ă���.
-	JWE�w�b�_�E�p�����[�^��<xref target="JWE" />�Œ�`����Ă���.
-	�X�ɂ��̎d�l��, JWT��JWS�ł���ꍇ��JWT��JWE�ł���ꍇ�̗����̃P�[�X�ɂ����đ����w�b�_�E�p�����[�^�����p����邱�Ƃ𖾎�����.
+	JWSヘッダ・パラメータは<xref target="JWS" />で定義されている.
+	JWEヘッダ・パラメータは<xref target="JWE" />で定義されている.
+	更にこの仕様は, JWTがJWSである場合とJWTがJWEである場合の両方のケースにおいて続くヘッダ・パラメータが利用されることを明示する.
 	<!--
 	JWS Header Parameters are defined by <xref target="JWS" />.
 	JWE Header Parameters are defined by <xref target="JWE" />.
@@ -577,14 +577,14 @@
 	-->
       </t>
 
-      <section title='"typ" (Type) �w�b�_�E�p�����[�^' anchor="typHdrDef">
+      <section title='"typ" (Type) ヘッダ・パラメータ' anchor="typHdrDef">
       <!-- <section title='"typ" (Type) Header Parameter' anchor="typHdrDef"> -->
 	<t>
-	  <spanx style="verb">typ</spanx> (type) �w�b�_�E�p�����[�^�̓A�v���P�[�V�����ɂƂ��ėL�p�ȃR���e�L�X�g�ɂ�����, �A�v���P�[�V�����ŗL�̕��@��, ����JWT�̌`�����L�q���邽�߂ɗ��p���Ă��悢 (MAY).
-	  ���̃p�����[�^��JWT�̏����ɉe�����y�ڂ��Ȃ�.
-	  �����p�����[�^�����݂����ꍇ, ���̒l�͂��̃I�u�W�F�N�g��JWT�ł��邱�Ƃ���������, <spanx style="verb">JWT</spanx>��������<spanx style="verb">urn:ietf:params:oauth:token-type:jwt</spanx>���w�肷�邱�Ƃ���������� (RECOMMENDED).
-	  <spanx style="verb">typ</spanx>�̒l�͑啶������������ʂ��镶����ł���.
-	  ���̃w�b�_�E�p�����[�^�̗��p�͔C�ӂł��� (OPTIONAL).
+	  <spanx style="verb">typ</spanx> (type) ヘッダ・パラメータはアプリケーションにとって有用なコンテキストにおいて, アプリケーション固有の方法で, このJWTの形式を記述するために利用してもよい (MAY).
+	  このパラメータはJWTの処理に影響を及ぼさない.
+	  もしパラメータが存在した場合, その値はそのオブジェクトがJWTであることを示すため, <spanx style="verb">JWT</spanx>もしくは<spanx style="verb">urn:ietf:params:oauth:token-type:jwt</spanx>を指定することが推奨される (RECOMMENDED).
+	  <spanx style="verb">typ</spanx>の値は大文字小文字を区別する文字列である.
+	  このヘッダ・パラメータの利用は任意である (OPTIONAL).
 	<!--
 	  The <spanx style="verb">typ</spanx> (type) header parameter
 	  MAY be used to declare the type of this JWT
