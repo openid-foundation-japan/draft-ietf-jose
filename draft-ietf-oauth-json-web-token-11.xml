@@ -601,13 +601,23 @@
 	</t>
       </section>
 
-      <section title='"cty" (Content Type) Header Parameter' anchor="ctyHdrDef">
+      <section title='"cty" (Content Type) ヘッダ・パラメータ' anchor="ctyHdrDef">
+      <!-- <section title='"cty" (Content Type) Header Parameter' anchor="ctyHdrDef"> -->
 	<t>
+	  <spanx style="verb">cty</spanx> (content type) ヘッダ・パラメータはJWTの構造情報を記述するために用いられる.
+	  値は文字列でなければならない (MUST).
+	<!--
 	  The <spanx style="verb">cty</spanx> (content type) header parameter
 	  is used to declare structural information about the JWT.
 	  Its value MUST be a string.
+	-->
 	</t>
 	<t>
+	  署名の入れ子もしくは暗号化オペレーションが使用されない通常時, このヘッダ・パラメータの使用は推奨されない (NOT RECOMMENDED).
+	  署名の入れ子もしくは暗号化オペレーションが使用される場合, このヘッダ・パラメータの使用は必須である (REQUIRED).
+	  この場合, このJWTの中に入れ子となるJWTが含まれることを示すため, 値は<spanx style="verb">JWT</spanx>でなければならない (MUST).
+	  入れ子のJWTの例は<xref target="NestedJWTExample"/>を参照のこと.
+	<!--
 	  In the normal case where nested signing or encryption
 	  operations are not employed, the use of this header
 	  parameter is NOT RECOMMENDED.
@@ -616,24 +626,37 @@
 	  this case, the value MUST be <spanx style="verb">JWT</spanx>, to indicate that
 	  a Nested JWT is carried in this JWT.
 	  See <xref target="NestedJWTExample"/> for an example of a Nested JWT.
+	-->
 	</t>
 	<t>
+	  <spanx style="verb">cty</spanx>ヘッダ・パラメータに使用された値は, <spanx style="verb">typ</spanx>ヘッダ・パラメータと同じ値空間から同じ規則が適用されて使用される.
+	<!--
 	  The values used for the <spanx style="verb">cty</spanx>
 	  header parameter come from the same value space as the
 	  <spanx style="verb">typ</spanx> header parameter,
 	  with the same rules applying.
+	-->
 	</t>
       </section>
 
-      <section title="Replicating Claims as Header Parameters" anchor="ClaimsAsHeaders">
+      <section title="ヘッダ・パラメータとしてクレームを複製する" anchor="ClaimsAsHeaders">
+      <!-- <section title="Replicating Claims as Header Parameters" anchor="ClaimsAsHeaders"> -->
 	<t>
+	  暗号化されたJWTを使ういくつかのアプリケーションでは, 暗号化されていない状態のいくつかのクレームを持つことは有用である.
+	  例えばこれはアプリケーションがJWTを復号する前にそれををどのように処理するかを決定するためのルールを処理する際に使用される.
+	<!--
 	  In some applications using encrypted JWTs, it is useful to
 	  have an unencrypted representation of some Claims.
 	  This might be used, for instance, in application processing rules
 	  to determine whether and how to process the JWT before
 	  it is decrypted.
+	-->
 	</t>
 	<t>
+	  本仕様はアプリケーションの要求によっては, JWEであるJWTの中のヘッダ・パラメータとして複製されたJWTクレーム・セットの中にクレームが存在することを許可している.
+	  もしそのように複製されたクレームが存在する場合, それらを受け取るアプリケーションはそれらの値が同一であることを確認すべきである (SHOULD).
+	  暗号化されずに送信されることが安全なクレームだけがJWTの中のヘッダ・パラメータ値として複製されたことを確認するのはアプリケーションの責任である.
+	<!--
 	  This specification allows Claims present in the JWT Claims Set
 	  to be replicated as Header Parameters in a JWT that is a JWE,
 	  as needed by the application.
@@ -642,8 +665,12 @@
 	  It is the responsibility of the application to ensure that
 	  only claims that are safe to be transmitted in an unencrypted manner
 	  are replicated as Header Parameter values in the JWT.
+	-->
 	</t>
 	<t>
+	  本仕様はそれらを必要とするアプリケーションのために, 暗号化されたJWTの中のクレームの暗号化されていない複製を提供する目的で<spanx style="verb">iss</spanx> (issuer), <spanx style="verb">sub</spanx> (subject), <spanx style="verb">aud</spanx> (audience) ヘッダ・パラメータ名を予約する.
+	  他の仕様においても同様に必要があればヘッダ・パラメータ名として予約されたクレーム名として他の名前を予約してもよい (MAY).
+	<!--
 	  This specification reserves the
 	  <spanx style="verb">iss</spanx> (issuer),
 	  <spanx style="verb">sub</spanx> (subject), and
@@ -653,6 +680,7 @@
 	  for applications that need them.
 	  Other specifications MAY similarly reserve other names
 	  that are reserved Claim Names as Header Parameter Names, as needed.
+	-->
 	</t>
       </section>
 
