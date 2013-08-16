@@ -679,11 +679,23 @@
       </section>
 
       <section anchor="fed-sec" title="Federation">
+        <t>
+          セキュリティトークンは2つのアイデンティティフェデレーションプロトコルで用いられている.
+          これら2つの要件は, 前節で述べたものと似ている.
+        </t>
+        <!--
         <t>Security tokens are used in two federated identity protocols,
         which have similar requirements to the general considerations discussed
         above:</t>
+        -->
 
         <t><list style="symbols">
+          <t>
+            OpenID Connect <xref target="OpenID.Messages"/> は, OAuth 2.0 をベースとした REST/JSON ベースのシンプルなアイデンティティフェデレーションプロトコルである.
+            OpenID Connect では, JWT および JOSE フォーマットがセキュリティトークンおよびその他のプロトコルメッセージの保護 (署名およびオプショナルで暗号化) の為に利用されている.
+            OpenID Connect は, 暗号アルゴリズムのネゴシエーションや鍵情報の配送の為に, JWT/JOSE ヘッダーパラメーターとしては定義されていない要素を利用している.
+          </t>
+      <!--
 	    <t>The OpenID Connect protocol <xref target="OpenID.Messages"/>
 	    is a simple, REST/JSON-based
 	    identity federation protocol layered on OAuth 2.0.
@@ -693,7 +705,13 @@
 	    OpenID Connect negotiates the algorithms to be used and distributes
 	    information about the keys to be used using protocol elements
 	    that are not part of the JWT and JOSE header parameters.</t>
+      -->
 
+          <t>
+            Mozilla Persona <xref target="Persona"/> は, アイデンティティ情報やアプリケーション情報, 関与する各エンティティの鍵情報などの表現形式として, JOSE JWS オブジェクトとして署名された JWT を利用している.
+            Persona は鍵配送のために JOSE ヘッダーパラメータではなく JWT メッセージ中の属性を利用する.
+          </t>
+      <!--
 	    <t>The Mozilla Persona <xref target="Persona"/> system is a simple
 	    single-sign-on (SSO) protocol that uses JWTs that are signed
 	    JOSE JWS objects to represent information about identities,
@@ -701,6 +719,7 @@
 	    Persona distributes the keys used as claims in JWT messages
 	    and not by using JOSE header parameters.
 	    </t>
+      -->
           </list></t>
       </section>
 
