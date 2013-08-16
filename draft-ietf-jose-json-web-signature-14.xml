@@ -64,6 +64,12 @@
 
     <abstract>
       <t>
+        JSON Web Signature (JWS)は, JavaScript Object Notation (JSON)をベースとしたデータ構造を用いて, デジタル署名やMessage Authentication Codes (MACs)により保護されたコンテンツを表現するための手段である.
+        本仕様書で使用する暗号アルゴリズムと識別子はJSON Web Algorithms (JWA) で述べられている.
+        関連する暗号化の機能は, JSON Web Encryption (JWE) で述べられている.
+      </t>
+<!--
+      <t>
 	JSON Web Signature (JWS) is a means of
 	representing content secured with digital signatures or
 	Message Authentication Codes (MACs)
@@ -74,12 +80,18 @@
 	Related encryption capabilities are described in the separate
 	JSON Web Encryption (JWE) specification.
       </t>
+-->
     </abstract>
 
   </front>
 
   <middle>
     <section title="Introduction" anchor="Introduction">
+      <t>
+        JSON Web Signature (JWS)は, JavaScript Object Notation (JSON) <xref target="RFC4627"/> をベースとしたデータ構造を用いて, デジタル署名やMessage Authentication Codes (MACs)により保護されたコンテンツを表現するための手段である.
+        JWSの暗号化メカニズムは任意のオクテット列に対して完全性保護を提供する.
+      </t>
+<!--
       <t>
 	JSON Web Signature (JWS) is a means of
 	representing content secured with digital signatures or
@@ -89,6 +101,14 @@
 	The JWS cryptographic mechanisms provide integrity protection for
 	arbitrary sequences of octets.
       </t>
+-->
+      <t>
+        JWSオブジェクトのために2つの密接に関連する表現が定義されている
+        JWS Compact Serializationはコンパクトであり, HTTP Authorization ヘッダーやURIクエリパラメータのようなスペースが制約された環境を意図したURL-safeな表現である.
+        JWS JSON SerializationはJSONオブジェクトとしてJWSオブジェクトを表現し, 同じコンテンツに対して複数の署名とMACsの両方, またはいずれかを適用することができる.
+        両方とも, 同じ暗号基盤を共有します.
+      </t>
+<!--
       <t>
 	Two closely related representations for JWS objects are defined.
 	The JWS Compact Serialization is a compact, URL-safe representation
@@ -98,6 +118,12 @@
 	enables multiple signatures and/or MACs to be applied to the same content.
 	Both share the same cryptographic underpinnings.
       </t>
+-->
+      <t>
+        本仕様書で使用する暗号アルゴリズムと識別子はJSON Web Algorithms (JWA) <xref target="JWA" />で述べられている.
+        関連する暗号化の機能は, JSON Web Encryption (JWE) <xref target="JWE" />で述べられている.
+      </t>
+<!--
       <t>
 	Cryptographic algorithms and identifiers for use with this
 	specification are described in the separate
@@ -105,8 +131,13 @@
 	Related encryption capabilities are described in the separate
 	JSON Web Encryption (JWE) <xref target="JWE" /> specification.
       </t>
+-->
 
       <section title="Notational Conventions" anchor="NotationalConventions">
+        <t>
+          本仕様書で用いられる各キーワード「MUST (しなければならない)」, 「MUST NOT (してはならない)」, 「REQUIRED (必須である)」, 「SHALL (するものとする)」, 「SHALL NOT (しないものとする)」, 「SHOULD (すべきである)」, 「SHOULD NOT (すべきではない)」, 「RECOMMENDED (推奨される)」, 「MAY (してもよい)」, 「OPTIONAL (任意である)」は <xref target='RFC2119' /> で述べられている通りに解釈されるべきものである.
+        </t>
+<!--
         <t>
           The key words "MUST", "MUST NOT", "REQUIRED", "SHALL",
           "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY",
@@ -114,6 +145,7 @@
           described in
 	  Key words for use in RFCs to Indicate Requirement Levels <xref target='RFC2119' />.
         </t>
+-->
       </section>
 
     </section>
