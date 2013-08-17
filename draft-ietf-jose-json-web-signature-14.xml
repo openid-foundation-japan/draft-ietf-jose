@@ -155,20 +155,40 @@
 	<list style="hanging">
 
           <t hangText="JSON Web Signature (JWS)">
+        デジタル署名もしくはMAC化されたメッセージを表現するデータ構造.
+        この構造は次の3つの値を表す:
+        JWS ヘッダ,
+        JWS ペイロード,
+        JWS 署名
+	  </t>
+<!--
+          <t hangText="JSON Web Signature (JWS)">
 	    A data structure representing a digitally signed or MACed message.
 	    The structure represents three values:
 	    the JWS Header,
 	    the JWS Payload, and
 	    the JWS Signature.
 	  </t>
+-->
 
  	  <t hangText="JSON Text Object">
+        JSONオブジェクトを表現するUTF-8 <xref target="RFC3629"/>で符号化された文字列.
+        JSONオブジェクトの構文は<xref target="RFC4627"/>のSection 2.2で定義されている.
+	  </t>
+<!--
+	  <t hangText="JSON Text Object">
 	    A UTF-8 <xref target="RFC3629"/>
 	    encoded text string representing a JSON object;
 	    the syntax of JSON objects is defined in
 	    Section 2.2 of <xref target="RFC4627"/>.
 	  </t>
+-->
 
+          <t hangText="JWS Header">
+        JWS 署名値を作成するために使用したデジタル署名やMACの操作を説明するJSONテキストオブジェクト(もしくはJWS JSON Serializationを用いたJSONテキストオブジェクト).
+        JWS ヘッダオブジェクトのメンバーはヘッダパラメータである.
+	  </t>
+<!--
           <t hangText="JWS Header">
 	    A JSON Text Object
 	    (or JSON Text Objects, when using the JWS JSON Serialization)
@@ -177,10 +197,22 @@
 	    create the JWS Signature value.
 	    The members of the JWS Header object(s) are Header Parameters.
 	  </t>
+-->
+          <t hangText="JWS Payload">
+        保護されたオクテット列であり, メッセージとも呼ばれる.
+        ペイロードは任意のオクテット列を含むことが出来る.
+	  </t>
+<!--
           <t hangText="JWS Payload">
 	    The sequence of octets to be secured -- a.k.a., the message.
 	    The payload can contain an arbitrary sequence of octets.
 	  </t>
+-->
+          <t hangText="JWS Signature">
+        JWS プロテクトヘッダとJWS ペイロードの完全性を保証する暗号を含んだオクテット列.
+        JWS 署名値はJWS ヘッダで指定されたパラメータを使いJWS Signing Inputから計算されたデジタル署名やMACの値である.
+	  </t>
+<!--
           <t hangText="JWS Signature">
 	    A sequence of octets containing the cryptographic material that
 	    ensures the integrity of
@@ -190,24 +222,51 @@
 	    calculated over the JWS Signing Input using the parameters
 	    specified in the JWS Header.
 	  </t>
+-->
 
+          <t hangText="JWS Protected Header">
+        完全性が保護されたJWS ヘッダの部分を含むJSON テキストオブジェクト.
+        JWS Compact Serializationについては、これは完全なJWS ヘッダを含む.
+        JWS JSON Serializationについては、これはJWSヘッダのコンポーネントの1つである.
+	  </t>
+<!--
           <t hangText="JWS Protected Header">
 	    A JSON Text Object that contains the portion of the
 	    JWS Header that is integrity protected.
 	    For the JWS Compact Serialization, this comprises the entire JWS Header.
 	    For the JWS JSON Serialization, this is one component of the JWS Header.
 	  </t>
+-->
 
+	  <t hangText="Header Parameter">
+        JWSヘッダのメンバーである名前と値のペア.
+	  </t>
+<!--
 	  <t hangText="Header Parameter">
 	    A name/value pair that is member of the JWS Header.
 	  </t>
+-->
+	  <t hangText="Header Parameter Name">
+        JWSヘッダのメンバーの名前.
+	  </t>
+<!--
 	  <t hangText="Header Parameter Name">
 	    The name of a member of the JWS Header.
 	  </t>
+-->
+	  <t hangText="Header Parameter Value">
+        JWSヘッダのメンバーの値.
+	  </t>
+<!--
 	  <t hangText="Header Parameter Value">
 	    The value of a member of the JWS Header.
 	  </t>
+-->
 
+          <t hangText="Base64url Encoding">
+        <xref target="RFC4648">RFC 4648</xref>のSection 3.2で許可されているように, Section 5で述べられているURL-safeでない穴埋め文字'='を除いた, URL-safeかつfilename-safeであるBase64エンコーディング. (穴埋め無しのbase64urlエンコーディングの実装に関する注意事項については<xref target="base64urlnotes" />を参照.)
+	  </t>
+<!--
           <t hangText="Base64url Encoding">
 	    The URL- and filename-safe Base64 encoding
 	    described in <xref target="RFC4648">RFC 4648</xref>,
@@ -216,22 +275,48 @@
 	    target="base64urlnotes" /> for notes on implementing
 	    base64url encoding without padding.)
 	  </t>
+-->
 
+          <t hangText="Encoded JWS Header">
+        Base64urlで符号化されたJWS プロテクトヘッダ.
+	  </t>
+<!--
           <t hangText="Encoded JWS Header">
 	    Base64url encoding of the JWS Protected Header.
 	  </t>
+-->
+          <t hangText="Encoded JWS Payload">
+        Base64urlで符号化されたJWS ペイロード.
+	  </t>
+<!--
           <t hangText="Encoded JWS Payload">
 	    Base64url encoding of the JWS Payload.
 	  </t>
+-->
+          <t hangText="Encoded JWS Signature">
+        Base64urlで符号化されたJWS 署名.
+	  </t>
+<!--
           <t hangText="Encoded JWS Signature">
 	    Base64url encoding of the JWS Signature.
 	  </t>
+-->
 
+	  <t hangText="JWS Signing Input">
+        符号化されたJWSヘッダ, ピリオド('.'), および符号化されたJWSペイロードを連結したもの.
+	  </t>
+<!--
 	  <t hangText="JWS Signing Input">
 	    The concatenation of the Encoded JWS Header, a period ('.')
 	    character, and the Encoded JWS Payload.
 	  </t>
+-->
 
+	  <t hangText="JWS Compact Serialization">
+        符号化されたJWS ヘッダ, 符号化されたJWS ペイロード, 符号化されたJWS 署名を順番通りに, 3つの文字列を2つのピリオド('.')で区切り連結したJWSの表現.
+        この表現はコンパクトでありURL-safeである.
+	  </t>
+<!--
 	  <t hangText="JWS Compact Serialization">
 	    A representation of the JWS as the concatenation of
 	    the Encoded JWS Header,
@@ -241,7 +326,18 @@
 	    by two period ('.') characters.
 	    This representation is compact and URL-safe.
 	  </t>
+-->
 
+	  <t hangText="JWS JSON Serialization">
+	    JWS ヘッダ,
+	    符号化された JWS ペイロード,
+	    符号化された JWS 署名値
+        を含むJSON構造であるJWSの表現.
+        JWS Compact Serializationと異なり,
+        JWS JSON Serializationは同じコンテンツに対して複数の署名とMACsの両方, またはいずれかを適用することができる.
+        この表現はコンパクトでもなくURL-safeでもない.
+	  </t>
+<!--
 	  <t hangText="JWS JSON Serialization">
 	    A representation of the JWS as a JSON structure containing
 	    JWS Header,
@@ -253,7 +349,19 @@
 	    be applied to the same content.
 	    This representation is neither compact nor URL-safe.
 	  </t>
+-->
 
+	  <t hangText="Collision Resistant Namespace">
+        他の名前と衝突することが極めて低くなるように名前を割り当てることを可能にする名前空間.
+        例えば, 衝突耐性は名前空間の部分の管理を委譲することで, または衝突耐性のある名前割り当て関数の利用することで実現できる.
+        Collision Resistant Namespaceの例:
+        ドメイン名,
+        ITU-T X.660とX.670 Recommendation seriesで定義されたObject Identifiers (OIDs),
+        Universally Unique IDentifiers (UUIDs)
+        <xref target="RFC4122"/>.
+        管理上委譲された名前空間を使用する場合, 名前を定義する際に, 名前を定義するために使用する名前空間の一部を制限していることを保証するために適切な注意を払う必要がある.
+	  </t>
+<!--
 	  <t hangText="Collision Resistant Namespace">
 	    A namespace that allows names to be allocated in a manner
 	    such that they are highly unlikely to collide with other names.
@@ -271,7 +379,13 @@
 	    reasonable precautions to ensure they are in control of
 	    the portion of the namespace they use to define the name.
 	  </t>
+-->
 
+	  <t hangText="StringOrURI">
+        任意の文字列が使用されるかもしれない(MAY)が, ":"を含む文字列はURI<xref target="RFC3986"/>でなければならない(MUST)という要件が追加されたJSON文字列.
+        StringOrURIの値は変換や正規化は適用されずcase-sensitiveな文字列として比較される.
+	  </t>
+<!--
 	  <t hangText="StringOrURI">
 	    A JSON string value, with the additional requirement that
 	    while arbitrary string values MAY be used, any value
@@ -280,6 +394,7 @@
 	    StringOrURI values are compared as case-sensitive strings
 	    with no transformations or canonicalizations applied.
 	  </t>
+-->
 
         </list>
       </t>
