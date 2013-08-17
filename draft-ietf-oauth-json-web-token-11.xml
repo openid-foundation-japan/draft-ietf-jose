@@ -1313,22 +1313,35 @@
 
     <section title="Security Considerations" anchor="Security">
       <t>
+	どんな暗号化アプリケーションが直面したすべてのセキュリティ問題はJWT/JWS/JWE/JWKエージェントによって直面しなければならない.
+	これらの問題の中には, ユーザのプライベート鍵および対称鍵を保護し, 様々な攻撃を防ぎ, ユーザが間違った受信者のためのメッセージを不注意に暗号化するような間違いを避けることを助ける.
+	セキュリティに関する検討項目の全てのリストを挙げることは本ドキュメントの範囲外である.
+	<!--
 	All of the security issues faced by any cryptographic application
 	must be faced by a JWT/JWS/JWE/JWK agent.  Among these issues are protecting
 	the user's private and symmetric keys, preventing various attacks, and helping the
 	user avoid mistakes such as inadvertently encrypting a message for
 	the wrong recipient.  The entire list of security considerations is
 	beyond the scope of this document.
+	-->
       </t>
       <t>
+	JWSの仕様のすべてのセキュリティに関する検討項目は, 暗号化が使用される際のJWEのセキュリティに関する検討項目と同様に, JWTにも当てはまる.
+	特に, JWSのJSONのセキュリティに関する検討項目とUnicode比較のセキュリティに関する検討項目はJWSヘッダに適用されるのと同様にJWTクレームセットにも等しく適用される.
+	<!--
 	All the security considerations in the JWS specification also
 	apply to JWT, as do the JWE security considerations when
 	encryption is employed.  In particular, the JWS
 	JSON Security Considerations and Unicode Comparison Security Considerations
 	apply equally to the JWT Claims Set in the same manner that
 	they do to the JWS Header.
+	-->
       </t>
       <t>
+	構文上, 入れ子のJWTのための署名と暗号化のオペレーションは任意の順番に適用してもよいが, 通常送信者はメッセージに署名してからその結果を暗号化するべきである (したがって, 署名を暗号化する).
+	これはメッセージを暗号化されたままにするので, 署名者にプライバシーを提供するのと同様に, 署名を暴かれる攻撃を防ぐ.
+	更に, 暗号化されたテキストに対する署名は多くのルール上, 有効であるとは考えられてはいない.
+	<!--
 	While syntactically, the signing and encryption operations for
 	Nested JWTs may be applied in any order,
 	normally senders should sign the message and then encrypt the
@@ -1337,8 +1350,12 @@
 	message, as well as providing privacy for the signer.
 	Furthermore, signatures over encrypted text are not considered
 	valid in many jurisdictions.
+	-->
       </t>
       <t>
+	署名と暗号化オペレーションの順序に関連するセキュリティ問題に関する潜在的な懸念は, 既にJWSとJWEの仕様に取り込まれていることに留意すること.
+	特に, JWEは認証された暗号化アルゴリズムの利用のみをサポートしているため, 多くのコンテキストで適用される暗号化後の署名に関する潜在的な必要性についての暗号化関連の懸念事項は, 本仕様には適用されない.
+	<!--
 	Note that potential concerns about security issues related to
 	the order of signing and encryption operations are already
 	addressed by the underlying JWS and JWE specifications;
@@ -1346,6 +1363,7 @@
 	authenticated encryption algorithms, cryptographic concerns
 	about the potential need to sign after encryption that apply
 	in many contexts do not apply to this specification.
+	-->
       </t>
     </section>
   </middle>
