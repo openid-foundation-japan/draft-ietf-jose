@@ -1728,8 +1728,14 @@
 
     </section>
 
-    <section title="Relationship of JWTs to SAML Assertions" anchor="SAMLRelationship">
+    <section title="JWTとSAMLアサーションの関係" anchor="SAMLRelationship">
+    <!-- <section title="Relationship of JWTs to SAML Assertions" anchor="SAMLRelationship"> -->
       <t>
+	<xref target="OASIS.saml-core-2.0-os">SAML 2.0</xref>はJWTによってサポートされるものよりもより多くの表現とセキュリティ・オプションを持ってセキュリティ・トークンを生成するための標準を提供する.
+	しかしながら, この柔軟性と表現の豊かさの代償はサイズと複雑性の両方である.
+	SAMLのXML <xref target="W3C.CR-xml11-20021015"/>とXML DSIG <xref target="RFC3275"/>の使用はSAMLアサーションのサイズを大きくしている.
+	そのXMLの使用と特にXML正規化 <xref target="W3C.REC-xml-c14n-20010315"/>がその複雑性を増大させている.
+	<!--
 	<xref target="OASIS.saml-core-2.0-os">SAML 2.0</xref> provides
 	a standard for creating security tokens with greater expressivity
 	and more security options than supported by JWTs. However, the
@@ -1739,8 +1745,13 @@
 	of SAML assertions; its use of XML and especially
 	XML Canonicalization <xref target="W3C.REC-xml-c14n-20010315"/>
 	contributes to their complexity.
+	-->
       </t>
       <t>
+	JWTはHTTPヘッダとURIのクエリ引数に収まるだけの大きさの単純なセキュリティ・トークン・フォーマットを提供する様に意図されている.
+	それは, SAMLよりはるかに単純なトークン・モデルをサポートすることにより実現しており, <xref target="RFC4627">JSON</xref>オブジェクト・エンコーディングの構文を使用する.
+	更にそれは, メッセージ認証コード (MAC) とXML DSIGより小さい (それほど柔軟ではない) フォーマットを使用するデジタル署名を利用するセキュリティ・トークンをサポートしている.
+	<!--
 	JWTs are intended to provide a simple security token format that is
 	small enough to fit into HTTP headers and query arguments in
 	URIs. It does this by supporting a much simpler token model
@@ -1749,25 +1760,39 @@
 	Message Authentication Codes (MACs) and digital
 	signatures using a smaller (and less flexible) format than XML
 	DSIG.
+	-->
       </t>
       <t>
+	したがって, JWTはSAMLアサーションが行うことのうち幾らかを実現することが出来るが, JWTはSAMLアサーションのすべてを置き換えるのではなく, 導入の容易さ, もしくはコンパクトさが考慮される様な場合に使われるトークン・フォーマットとして意図されている.
+	<!--
 	Therefore, while JWTs can do some of the things SAML assertions
 	do, JWTs are not intended as a full replacement for SAML
 	assertions, but rather as a token format to be used
 	when ease of implementation or compactness are considerations.
+	-->
       </t>
       <t>
+	SAMLアサーションは常にサブジェクトに関するエンティティによって発行されるステートメントである.
+	しばしばJWTも, エンティティが<spanx style="verb">iss</spanx> (issuer) クレームによってあらわされ, サブジェクトが<spanx style="verb">sub</spanx> (subject) クレームによってあらわされるステートメントを生成することにより, それと同じ方法で使用される.
+	しかしながら, これらのクレームはオプションなので, JWTフォーマットは他の用途でも用いることが出来る.
+	<!--
 	SAML Assertions are always statements made by an entity about a subject.
 	JWTs are often used in the same manner, with the entity making the
 	statements being represented by the <spanx style="verb">iss</spanx> (issuer) claim, and
 	the subject being represented by the <spanx style="verb">sub</spanx> (subject) claim.
 	However, with these claims being optional, other uses of the JWT format are also permitted.
+	-->
       </t>
     </section>
 
-    <section title="Relationship of JWTs to Simple Web Tokens (SWTs)" anchor="SWTRelationship">
+    <section title="JWTとシンプル・ウェブ・トークン (SWT) の関係" anchor="SWTRelationship">
+    <!-- <section title="Relationship of JWTs to Simple Web Tokens (SWTs)" anchor="SWTRelationship"> -->
 
       <t>
+	中核おいて, JWTとシンプル・ウェブ・トークン<xref target="SWT">SWT</xref>は両方とも, アプリケーション間でクレームのセットのやり取りを可能にする.
+	SWTについては, クレーム名とクレーム値の両方が文字列であり, JWTはクレーム名が文字列である一方でクレーム値が任意のJSON型であることが出来る.
+	両方のトークンの型は暗号化を使った内容の保護を提供している. SWTはHMAC SHA-256を, JWTは署名, MAC, 暗号化アルゴリズムを含むアルゴリズムを選択することが出来る.
+	<!--
 	Both JWTs and Simple Web Tokens <xref target="SWT">SWT</xref>,
 	at their core, enable sets of claims to be communicated
 	between applications.  For SWTs, both the claim names and
@@ -1776,6 +1801,7 @@
 	offer cryptographic protection of their content: SWTs with
 	HMAC SHA-256 and JWTs with a choice of algorithms, including
 	signature, MAC, and encryption algorithms.
+	-->
       </t>
 
     </section>
