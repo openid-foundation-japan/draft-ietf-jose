@@ -500,7 +500,7 @@
         target="I-D.ietf-oauth-saml2-bearer"/>.</t>-->
 
 	<t>JSON Web Token (JWT) <xref target="I-D.ietf-oauth-json-web-token"/> はJSONおよびJOSEをベースとしたセキュリティートークンフォーマットである。
-        JWTはMozilla Persona, OpenID Connect, OAuthと共に利用される. 
+        JWTはMozilla Persona, OpenID Connect, OAuthと共に利用される.
         JWTは限定された場面（例: HTTPクエリパラメータ）で主に利用されていたためJWTの主要な要件となり、それゆえJOSEは短くURLセーフな形式になっている。</t>
 	<!--<t>JSON Web Token (JWT) <xref target="I-D.ietf-oauth-json-web-token"/>
 	is a security token format
@@ -531,7 +531,7 @@
         validity of the token before providing access to the protected
         resource.</t>
         -->
-          
+
         <figure anchor="figOAuth" title="The OAuth process">
           <artwork><![CDATA[              +---------------+          +---------------+
               |               |          |               |
@@ -583,7 +583,7 @@
         authorization token, since this could, for example, grant access to
         resources not owned by the Resource Owner.</t>
         -->
-          
+
         <t>
           データ生成元の認証は、トークンが信頼できる認可サーバーによって生成されたものかどうかをリソースサーバーが検証できるようにするために必要である。
         </t>
@@ -592,7 +592,7 @@
         the Resource Server can verify that the token was issued by a trusted
         Authorization Server. </t>
         -->
-          
+
         <t>
           認可サーバーがリソースオーナーやクライアントに対してパーミッション情報を不可視としたい場合、機密性保護も必要となるかもしれない。
           例えば、ソーシャルネットワーキングに関連したパーミッションはプライベートな情報と見なされるかもしれない。
@@ -609,7 +609,7 @@
         already confidentiality-protected from entities other than
         the Resource Owner and Client.</t>
         -->
-          
+
         <t>
           署名と暗号化が対称暗号または非対称暗号のいずれを用いて提供されるのかに関わらず、機密性および完全性のニーズは、署名済みおよび暗号化オブジェクトフォーマットの基本要件に合致している。
           どちらのメカニズムを採用するかの選択は、二つのサーバ間の関係、すなわちそれらが対称鍵を共有するのか、公開鍵のみを共有するのかに依存するだろう。
@@ -622,7 +622,7 @@
         the relationship between the two servers, namely whether they share a
         symmetric key or only public keys.</t>
         -->
-          
+
         <t>
           認証の要件はデプロイの特性にも依存するだろう。
           リソースサーバーと認可サーバーの結びつけが相対的に強いところでは、トークンを発行した認可サーバを識別するにはトークンの署名に用いた鍵だけで十分かもしれない。
@@ -639,7 +639,7 @@
         or symmetric key.  In OAuth, the <spanx style="verb">client_id</spanx>
         parameter identifies the key to be used.</t>
         -->
-          
+
         <t>
           リソースサーバーは事前に認可サーバーの鍵を知らないといったような、より高度なケースも存在するかもしれない。
           例えば一つのエンティティが(負荷分散のために)複数の認可サーバーをインスタンス化する場合、それらが個々に独立した鍵ペアを持っている例が挙げられる。
@@ -655,7 +655,7 @@
         Server, so that the Resource Server can verify that the Authorization
         Server is an entity that it trusts.</t>
         -->
-          
+
         <t>
           OAuthにとってHTTPトランスポートはエンコーディングに関して特定の制約を課している。
           OAuthプロトコルでは、base64urlエンコーディング <xref target="RFC4648"/> が実施された上で、トークンはHTTP URI <xref target="RFC2616"/> 内のクエリーパラメータとして頻繁にやり取りされる。
@@ -708,7 +708,7 @@
       -->
 
           <t>
-            Mozilla Persona <xref target="Persona"/> は, アイデンティティ情報やアプリケーション情報, 関与する各エンティティの鍵情報などの表現形式として, JOSE JWS オブジェクトとして署名された JWT を利用している.
+            Mozilla Persona <xref target="Persona"/> は, アイデンティティ情報やアプリケーション情報, 関与する各エンティティの鍵情報などの表現形式として, JOSE JWS オブジェクトとして署名された JWT を利用した, シンプルなシングルサインオン (SSO) プロトコルである.
             Persona は鍵配送のために JOSE ヘッダーパラメータではなく JWT メッセージ中の属性を利用する.
           </t>
       <!--
