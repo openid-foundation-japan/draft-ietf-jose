@@ -1013,7 +1013,7 @@
 
     <t>
       JWSを利用するものにより, 追加のヘッダパラメータ名が定義されることができる. 
-      しかしながら, 衝突を防ぐためにどんな新しいヘッダパラメータ名はIANA JSON Web SignatureとJSON Web Encryptionヘッダパラメータレジストリ <xref target="HdrReg"> の両方に登録されるか, 衝突耐性を持つネームスペースを含む公的な名前となるべきである (SHOULD).
+      しかしながら, 衝突を防ぐためにどんな新しいヘッダパラメータ名はIANA JSON Web SignatureとJSON Web Encryptionヘッダパラメータレジストリ <xref target="HdrReg"/> の両方に登録されるか, 衝突耐性を持つネームスペースを含む公的な名前となるべきである (SHOULD).
       それぞれのケースにおいて, 名前もしくは値の定義者は彼らがヘッダパラメータ名を定義するために用いるネームスペースの一部を管理下におくために適切な予防策を必要とする. 
 	</t>
     <!--
@@ -1064,6 +1064,47 @@
 
       <section title="Message Signing or MACing" anchor="MessageSigning">
 	<t>
+	  JWSを作成するためには, 以下の手順を踏まなければならない (MUST).
+      手順の順序は, それぞれの手順の入力と出力の間に依存関係がない場合には重要ではない.
+
+	  <list style="numbers">
+
+	    <t>
+	      JWSペイロードとして利用されるコンテンツを作成する.
+	    </t>
+	    <t>
+          JWSペイロードのオクテット列をbase64urlエンコードする. このエンコード結果がエンコード済みJWSペイロードとなる.
+	    </t>
+	    <t>
+	      希望のヘッダパラメータのセットを含んだJWSヘッダを作成する. 空白がその表現の中に存在することが明示的に許可されること, そしてエンコード前に正規化が必要ないことに注意する.
+	    </t>
+	    <t>
+	      JWSプロテクトヘッダのUTF-8表現のオクテット列をbase64urlエンコードし, エンコード済みJWSヘッダを作成する.
+	      JWSプロテクトヘッダが存在しない場合(JWS JSON Serializationを利用していて, <spanx style="verb">protected</spanx> 要素が存在しない場合のみに発生する),
+	      エンコード済みJWSヘッダは空文字列にする.
+	    </t>
+	    <t>
+	      JWS署名の入力(エンコード済みJWSヘッダ, ピリオド ('.'), そしてエンコード済みJWSペイロードの連結文字列)に対して適用される特定のアルゴリズムで定義されている方法でJWS署名を算出する.
+	      <spanx style="verb">alg</spanx> (アルゴリズム)ヘッダパラメータは, JWS署名を生成する為に利用されるアルゴリズムを正確に表すアルゴリズム名とともにJWSヘッダに含まれなければならない (MUST).
+	    </t>
+	    <t>
+	      JWS署名をbase64urlエンコードし, エンコード済みJWS署名を作成する.
+	    </t>
+	    <t>
+	      これらの３つのエンコード部分がJWS Compact Serialization表現とJWS JSON Serialization表現の双方で利用される結果値となる.
+	    </t>
+	    <t>
+	      JWS JSON Serializationが利用される場合には, 適用対象となる各デジタル署名, もしくはMAC値毎にこのプロセスを繰り返す.
+	    </t>
+	    <t>
+	      希望の形式のシリアライズ結果を作成する.
+	      結果のJWS Compact Serializationは, エンコード済みJWSヘッダとエンコード済みJWSペイロード, そしてエンコード済みJWS署名をこの順で連結したもので,
+	      この３つの文字列は２つのピリオド('.')で分けられる.
+	      JWS JSON Serializationについては <xref target="JSONSerialization"/>で述べられる.
+	    </t>
+	  </list>
+	</t>
+	<!-- <t>
 	  To create a JWS, one MUST perform these steps.
 	  The order of the steps is not significant in cases where
 	  there are no dependencies between the inputs and outputs of the steps.
@@ -1125,11 +1166,64 @@
 	      The JWS JSON Serialization is described in <xref target="JSONSerialization"/>.
 	    </t>
 	  </list>
-	</t>
+	</t> -->
       </section>
 
       <section title="Message Signature or MAC Validation" anchor="MessageValidation">
-	<t>
+    <t>
+      JWSの正当性を評価する時には, 以下の手順を踏まなければならない (MUST).
+      手順の順序は, それぞれの手順の入力と出力に依存関係がない場合には重要ではない.
+      列挙されている手順のいづれかで異常が発生した場合には, JWSは拒否されなければならない (MUST).
+    </t>
+    <t>
+      <list style="numbers">
+        <t>
+          シリアライズされた入力をパーズしJWSヘッダ, エンコード済みJWSペイロード, そしてエンコード済みJWS署名の値を確定する.
+          JWS Compact Serializationを利用している場合には, エンコード済みJWSヘッダ, エンコード済みJWSペイロード, そしてエンコード済みJWS署名が, この順で二つのピリオド('.')によって分けられた文字列として表される.
+          JWS JSON Serializationについては <xref target="JSONSerialization"/>で述べられる.
+        </t>
+        <t>
+          エンコード済みJWSヘッダは, 穴埋め文字は利用されないというこの仕様の制約に従ってbase64urlデコードされなければならない (MUST).
+        </t>
+        <t>
+          エンコード済みJWSヘッダをbase64urlでデコードした結果を, JWSプロテクトヘッダ値とする.
+        </t>
+        <t>
+          結果として得られたJWSプロテクトヘッダは, <xref target="RFC4627">RFC 4627</xref>に従った完全に有効なJSONオブジェクトでなければならない (MUST).
+        </t>
+        <t>
+          JWS Compact Serializationを利用している場合, JWSプロテクトヘッダをJWSヘッダとする;
+          さもなければ, JWS JSON Serializationを利用して,
+          JWSヘッダを, 対応する <spanx style="verb">protected</spanx>ヘッダパラメータの値と <spanx style="verb">header</spanx>ヘッダパラメータの値の和集合とし,
+          すべてを完全に有効なJSONオブジェクトとしなければならない.
+        </t>
+        <t>
+          結果のJWSヘッダは重複したヘッダパラメータ名を含んではならない (MUST NOT).
+          JWS JSON Serializationを利用する場合は, この制約は, 共にJWSヘッダを含んだ、それぞれ別個のJSON Textオブジェクトの中に同じヘッダパラメータ名は存在してはならないことも含む (MUST NOT).
+        </t>
+        <t>
+          結果のJWSヘッダは, シンタックスやセマンティックスが解釈され, かつサポートされている, もしくは解釈されない場合には無視するよう指定されたパラメータやその値のみ含んでいることを確認されなければならない (MUST).
+        </t>
+        <t>
+          エンコード済みJWSペイロードは穴埋め文字は利用されないというこの仕様の制約に従ってbase64urlデコードされなければならない (MUST).
+        </t>
+        <t>
+          エンコード済みJWS署名は穴埋め文字は利用されないというこの仕様の制約に従ってbase64urlデコードされなければならない (MUST).
+        </t>
+        <t>
+          JWS署名は, JWS署名の入力(エンコード済みJWSヘッダ, ピリオド ('.'), そしてエンコード済みJWSペイロードの連結文字列)に対して適用されているアルゴリズムで定義された方法で正当性が立証されなければならない (MUST).
+          アルゴリズムは <spanx style="verb">alg</spanx>(アルゴリズム)ヘッダパラメータの値として正確に示されなければならない (MUST).
+          このヘッダパラメータは存在していなければならない (MUST).
+        </t>
+        <t>
+          JWS JSON Serializationが利用されている場合には, 含まれている各デジタル署名, もしくはMAC値毎にこのプロセスを繰り返す.
+        </t>
+      </list>
+    </t>
+
+
+
+    <!-- <t>
 	  When validating a JWS, the following steps MUST be taken.
 	  The order of the steps is not significant in cases where
 	  there are no dependencies between the inputs and outputs of the steps.
@@ -1210,12 +1304,40 @@
 	      for each digital signature or MAC value contained in the representation.
 	    </t>
 	  </list>
-	</t>
+	</t>-->
       </section>
 
       <section title="String Comparison Rules" anchor="StringComparison">
+    <t>
+      JWSの処理は必然的に既知の文字列とJSONオブジェクトの値を比較することを要求する. 例えばアルゴリズムが何であるかをチェックする場合, <spanx style="verb">alg</spanx>をエンコードしたUnicode文字列がJWSヘッダの要素名と照合され,
+      マッチするヘッダパラメータ名があるかどうかを確かめる.
+      同様のプロセスが <spanx style="verb">alg</spanx>ヘッダパラメータの値がサポートされているアルゴリズムであるかどうか判定するときにも発生する.
+    </t>
+    <t>
+      JSON文字列とその他のUnicode文字列の比較は以下の手順で実施されなければならない (MUST):
 
-	<t>
+      <list style="numbers">
+
+        <t>
+          JSONのエスケープを入力JSON文字列から取り除き, その文字列をUnicodeの符号位置列に変換する.
+        </t>
+        <t>
+          同様に比較対象文字列をUnicodeの符号位置列に変換する.
+        </t>
+        <t>
+          Unicode正規化 <xref target="USA15"/>はJSON文字列, もしくはそれと比較される文字列について, いかなる時点においても適用されるべきではない (MUST NOT).
+        </t>
+        <t>
+          二つの文字列の比較はUnicodeの符号位置どうしの等価比較として実行されなければならない (MUST).
+          (もともと異なるUnicodeの符号化方式(UTF-8, UTF-16, など.)を利用していた値どうしはそれぞれ同じ符号位置になる可能性があることに注意する.)
+        </t>
+
+      </list>
+    </t>
+    <t>
+      JSONのセキュリティ考慮事項 <xref target="JSONSecCon"/>とUnicodeのセキュリティ考慮事項 <xref target="UnicodeSecCon"/>も参照すること.
+    </t>
+	<!-- <t>
 	  Processing a JWS inevitably requires comparing known strings
 	  to values in JSON objects. For example, in checking what the
 	  algorithm is, the Unicode string encoding
@@ -1258,6 +1380,7 @@
 	  Also, see the JSON security considerations in <xref target="JSONSecCon"/> and
 	  the Unicode security considerations in <xref target="UnicodeSecCon"/>.
 	</t>
+	-->
       </section>
 
     </section>
