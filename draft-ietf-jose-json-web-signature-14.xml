@@ -403,6 +403,16 @@
     <section title="JSON Web Signature (JWS) Overview" anchor="Overview">
 
       <t>
+        JWSはJSONデータ構造とbase64urlエンコーディングを用いてデジタル署名, もしくはMACを行ったコンテンツを表現する.
+        JWSでは次の3つの値が表現される:
+        JWSヘッダ,
+        JWSペイロード,
+        JWS署名.
+        Compact Serializationでは3つの値はデータ転送のためにBase64urlでエンコードされ, またエンコードされた文字列を順番通りに, 3つの文字列を2つのピリオド('.')で区切りで連結したものとして表現される.
+        JSON Serializationの情報は<xref target="JSONSerialization"/>で定義されている.
+      </t>
+<!--
+      <t>
 	JWS represents digitally signed or MACed content using JSON data
 	structures and base64url encoding.
 	Three values are represented in a JWS:
@@ -416,21 +426,34 @@
 	A JSON Serialization for this information is also defined in
 	<xref target="JSONSerialization"/>.
       </t>
+-->
+      <t>
+        JWSヘッダは採用した署名もしくはMACの手法とパラメーターを記述する.
+        JWSペイロードは保護されるメッセージコンテンツである.
+        JWS署名はJWSプロテクトヘッダとJWSヘッダ両方の完全性を保証する.
+      </t>
+<!--
       <t>
         The JWS Header describes the signature or MAC method and parameters employed.
 	The JWS Payload is the message content to be secured.
 	The JWS Signature ensures the integrity of
 	both the JWS Protected Header and the JWS Payload.
       </t>
+-->
 
       <section title="Example JWS" anchor="ExampleJWS">
 
+	<t>
+      以下に示す例では, JWSヘッダはエンコードされたオブジェクトがJSON Web Token (JWT) <xref target="JWT" />であり, JWSヘッダとJWSペイロードがHMAC SHA-256アルゴリズムで保護されていることを示している:
+	</t>
+<!--
 	<t>
 	  The following example JWS Header declares that the
 	  encoded object is a JSON Web Token (JWT) <xref target="JWT" />
 	  and the JWS Header and the JWS Payload are
 	  secured using the HMAC SHA-256 algorithm:
 	</t>
+-->
 
 	<figure><artwork><![CDATA[
   {"typ":"JWT",
@@ -438,19 +461,29 @@
 ]]></artwork></figure>
 
 	<t>
+      JWSヘッダのUTF-8で表現されたオクテットをBase64urlエンコーディングすることで, このエンコードされたJWSヘッダの値が得られる:
+	</t>
+<!--
+	<t>
 	  Base64url encoding the octets of the UTF-8 representation of
 	  the JWS Header yields this Encoded JWS Header value:
 	</t>
+-->
 
 	<figure><artwork><![CDATA[
   eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9
 ]]></artwork></figure>
 
 	<t>
+      以下はJWSペイロードとして用いることの出来るJSONオブジェクトの例である.(ペイロードは任意のコンテンツになり得り, JSONオブジェクト表現である必要は無いことに注意する.)
+	</t>
+<!--
+	<t>
 	  The following is an example of a JSON object that can be
 	  used as a JWS Payload.  (Note that the payload can be any
 	  content, and need not be a representation of a JSON object.)
 	</t>
+-->
 
 	<figure><artwork><![CDATA[
   {"iss":"joe",
@@ -459,24 +492,39 @@
 ]]></artwork></figure>
 
 	<t>
+      上記のJSONオブジェクトのUTF-8表現である以下のオクテット列が, JWSペイロードである:
+	</t>
+<!--
+	<t>
 	  The following octet sequence, which is the UTF-8 representation
 	  of the JSON object above, is the JWS Payload:
 	</t>
+-->
 	<t>
 
 [123, 34, 105, 115, 115, 34, 58, 34, 106, 111, 101, 34, 44, 13, 10, 32, 34, 101, 120, 112, 34, 58, 49, 51, 48, 48, 56, 49, 57, 51, 56, 48, 44, 13, 10, 32, 34, 104, 116, 116, 112, 58, 47, 47, 101, 120, 97, 109, 112, 108, 101, 46, 99, 111, 109, 47, 105, 115, 95, 114, 111, 111, 116, 34, 58, 116, 114, 117, 101, 125]
 
 	</t>
 	<t>
+      JWSペイロードをBase64urlエンコーディングすることで, このエンコードされたJWSペイロードが得られる
+      (改行は掲載上の都合による):
+	</t>
+<!--
+	<t>
 	  Base64url encoding the JWS Payload yields this Encoded JWS Payload
 	  (with line breaks for display purposes only):
 	</t>
+-->
 
 	<figure><artwork><![CDATA[
   eyJpc3MiOiJqb2UiLA0KICJleHAiOjEzMDA4MTkzODAsDQogImh0dHA6Ly9leGFt
   cGxlLmNvbS9pc19yb290Ijp0cnVlfQ
 ]]></artwork></figure>
 
+	<t>
+      JWS Signing input(エンコードされたJWSヘッダ, ピリオド('.'), エンコードされたJWSペイロードを連結したもの)をASCII <xref target="USASCII"/> で表現したオクテットのHMACを<xref target="HS256Example" />で指定されたキーを用いてHMAC SHA-256アルゴリズムで計算し, base64urlで結果をエンコードする事で, このエンコードされたJWS署名値が得られる:
+	</t>
+<!--
 	<t>
 	  Computing the HMAC of the octets of the ASCII <xref target="USASCII"/>
 	  representation of the JWS Signing Input
@@ -487,11 +535,17 @@
 	  and base64url encoding the result
 	  yields this Encoded JWS Signature value:
 	</t>
+-->
 
 	<figure><artwork><![CDATA[
   dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk
 ]]></artwork></figure>
 
+	<t>
+      これらの値をヘッダ.ペイロード.署名の順番で, パーツの間をピリオド('.')で連結することでJWS Compact Serializationを用いたこの完全なJWS表現が得られる
+      (改行は掲載上の都合による):
+	</t>
+<!--
 	<t>
 	  Concatenating these values in the order
 	  Header.Payload.Signature with period ('.') characters between the
@@ -499,6 +553,7 @@
 	  using the JWS Compact Serialization
 	  (with line breaks for display purposes only):
 	</t>
+-->
 
 	<figure><artwork><![CDATA[
   eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9
@@ -510,10 +565,16 @@
 ]]></artwork></figure>
 
 	<t>
+      この計算は<xref target="HS256Example"></xref>で更に詳細に示されている.
+      その他の例については<xref target="JWSExamples"/>を参照すること.
+	</t>
+<!--
+	<t>
 	  This computation is illustrated in more detail in <xref
 	  target="HS256Example"></xref>.
 	  See <xref target="JWSExamples"/> for additional examples.
 	</t>
+-->
 
       </section>
     </section>
