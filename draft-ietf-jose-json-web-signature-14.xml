@@ -226,8 +226,8 @@
 
           <t hangText="JWS Protected Header">
         完全性が保護されたJWS ヘッダの部分を含むJSON テキストオブジェクト.
-        JWS Compact Serializationについては、これは完全なJWS ヘッダを含む.
-        JWS JSON Serializationについては、これはJWSヘッダのコンポーネントの1つである.
+        JWS Compact Serializationについては, これは完全なJWS ヘッダを含む.
+        JWS JSON Serializationについては, これはJWSヘッダのコンポーネントの1つである.
 	  </t>
 <!--
           <t hangText="JWS Protected Header">
@@ -1199,7 +1199,7 @@
         </t>
         <t>
           結果のJWSヘッダは重複したヘッダパラメータ名を含んではならない (MUST NOT).
-          JWS JSON Serializationを利用する場合は, この制約は, 共にJWSヘッダを含んだ、それぞれ別個のJSON Textオブジェクトの中に同じヘッダパラメータ名は存在してはならないことも含む (MUST NOT).
+          JWS JSON Serializationを利用する場合は, この制約は, 共にJWSヘッダを含んだ, それぞれ別個のJSON Textオブジェクトの中に同じヘッダパラメータ名は存在してはならないことも含む (MUST NOT).
         </t>
         <t>
           結果のJWSヘッダは, シンタックスやセマンティックスが解釈され, かつサポートされている, もしくは解釈されない場合には無視するよう指定されたパラメータやその値のみ含んでいることを確認されなければならない (MUST).
@@ -1643,7 +1643,7 @@
       <section title="JSON Web Signature and Encryption Header Parameters Registry" anchor="HdrReg">
 	<t>
     この仕様は, JWSとJWEのヘッダパラメータ名の予約ための IANA JSON Web Signature and Encryption Header Parameters レジストリを定める.
-    レジストリは、予約されるヘッダパラメータ名とそれを定める仕様への参照を登録する. 
+    レジストリは, 予約されるヘッダパラメータ名とそれを定める仕様への参照を登録する. 
     パラメータの利用が仕様間で互換性を持つならば, 同じヘッダパラメータ名は複数回登録されても良い (MAY).
     同じヘッダパラメータ名の異なる登録は, 利用箇所が異なるのが一般的である.
 	</t>
