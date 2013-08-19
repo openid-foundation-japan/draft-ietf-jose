@@ -889,7 +889,7 @@
 	  </t>
       -->
 	  <t>
-	    <spanx style="verb">typ</spanx> の値はIANA JSON Web SignatureレジストリとIANA JSON Web Encryptionレジストリ <xref target="TypReg" /> に登録されるか衝突耐性を持つ名前空間を含む値であるべきである (SHOULD).
+	    <spanx style="verb">typ</spanx> の値は IANA JSON Web Signature and Encryption Type Values レジストリ <xref target="TypReg" /> に登録されるか衝突耐性を持つ名前空間を含む値であるべきである (SHOULD).
 	  </t>
       <!--
 	  <t>
@@ -1013,7 +1013,7 @@
 
     <t>
       JWSを利用するものにより, 追加のヘッダパラメータ名が定義されることができる. 
-      しかしながら, 衝突を防ぐためにどんな新しいヘッダパラメータ名はIANA JSON Web SignatureとJSON Web Encryptionヘッダパラメータレジストリ <xref target="HdrReg"/> の両方に登録されるか, 衝突耐性を持つネームスペースを含む公的な名前となるべきである (SHOULD).
+      しかしながら, 衝突を防ぐためにどんな新しいヘッダパラメータ名は IANA JSON Web Signature and Encryption Header Parameters レジストリ <xref target="HdrReg"/> の両方に登録されるか, 衝突耐性を持つネームスペースを含む公的な名前となるべきである (SHOULD).
       それぞれのケースにおいて, 名前もしくは値の定義者は彼らがヘッダパラメータ名を定義するために用いるネームスペースの一部を管理下におくために適切な予防策を必要とする. 
 	</t>
     <!--
@@ -1585,9 +1585,19 @@
 
     <section title="IANA Considerations" anchor="IANA">
       <t>
+      以下の登録手順は, この仕様によって定められる全てのレジストリで利用される.
+      </t>
+      <!--
+      <t>
 	The following registration procedure is used for all the
 	registries established by this specification.
       </t>
+      -->
+      <t>
+      値は1名以上の Designated Experts の勧告に従い, [TBD]@ietf.orgのメーリングリストで2週間のレビュー期間の後にSpecification Required <xref target="RFC5226"/> な状態で登録される.
+      しかしながら, 発行に先立ちそれらの値を割り当てることができるように Designated Expert(s) はそれらの値が公開できる状態になった時点で登録を許可することもありうる.
+      </t>
+      <!--
       <t>
 	Values are registered with a Specification Required
 	<xref target="RFC5226"/> after a two-week review period on the [TBD]@ietf.org mailing
@@ -1595,24 +1605,49 @@
 	allocation of values prior to publication, the Designated Expert(s) may approve
 	registration once they are satisfied that such a specification will be published.
       </t>
+      -->
+      <t>
+      登録要請は, 適切な件名 (例: "Request for access token type: example") で [TBD]@ietf.org のメーリングリストに通知しなければならず, そこでレビューとコメントが行われる.
+      [[ RFC-EDITORへの注意: メーリングリストの名前は, IESGとIANAと協議の上, 決定されるべきである. 提案される名前: jose-reg-review ]]
+      </t>
+      <!--
       <t>
 	Registration requests must be sent to the [TBD]@ietf.org mailing list for review and
 	comment, with an appropriate subject (e.g., "Request for access token type: example").
 	[[ Note to RFC-EDITOR: The name of the mailing list should be determined in consultation
 	with the IESG and IANA. Suggested name: jose-reg-review. ]]
       </t>
+      -->
+      <t>
+      Designated Expert(s) はレビュー期間内に登録申請を承認または拒否し, レビューが行われるメーリングリストおよび IANA へその決定を告げる. 
+      要請が拒否された場合は, その理由が通知され, 可能な場合は申請の成功に向けた提案が行われるべきである.
+      </t>
+      <!--
       <t>
 	Within the review period, the Designated Expert(s) will either approve or
 	deny the registration request, communicating this decision to the review list and IANA.
 	Denials should include an explanation and, if applicable, suggestions as to how to make
 	the request successful.
       </t>
+      -->
+      <t>
+      IANA は Designated Expert(s) からのレジストリ更新のみを受け付けなければならず, 登録のために全ての申請をレビューが行われるメーリングリストに送られるべきである.
+      </t>
+      <!--
       <t>
 	IANA must only accept registry updates from the Designated Expert(s) and should direct
 	all requests for registration to the review mailing list.
       </t>
+      -->
 
       <section title="JSON Web Signature and Encryption Header Parameters Registry" anchor="HdrReg">
+	<t>
+    この仕様は, JWSとJWEのヘッダパラメータ名の予約ための IANA JSON Web Signature and Encryption Header Parameters レジストリを定める.
+    レジストリは、予約されるヘッダパラメータ名とそれを定める仕様への参照を登録する. 
+    パラメータの利用が仕様間で互換性を持つならば, 同じヘッダパラメータ名は複数回登録されても良い (MAY).
+    同じヘッダパラメータ名の異なる登録は, 利用箇所が異なるのが一般的である.
+	</t>
+    <!--
 	<t>
 	  This specification establishes the
 	  IANA JSON Web Signature and Encryption Header Parameters registry
@@ -1626,34 +1661,64 @@
 	  will typically use different
 	  Header Parameter Usage Location(s) values.
 	</t>
+    -->
 
         <section title="Registration Template" anchor="HdrTemplate">
           <t>
             <list style='hanging'>
               <t hangText='Header Parameter Name:'>
                 <vspace />
+                申請された名前 (例: "example").
+                この名前は大文字・小文字を区別する.
+                大文字・小文字を区別しながら他に登録されている名前と一致するものは受け入れられるべきではない (SHOULD NOT).
+              </t>
+              <!--
+              <t hangText='Header Parameter Name:'>
+                <vspace />
                 The name requested (e.g., "example").
 		This name is case sensitive.  Names that match other registered names
 		in a case insensitive manner SHOULD NOT be accepted.
               </t>
+              -->
+              <t hangText='Header Parameter Usage Location(s):'>
+                <vspace />
+                ヘッダパラメータの使用箇所は <spanx style="verb">JWS</spanx> もしくは <spanx style="verb">JWE</spanx> のうちの1つ以上であるべき.
+              </t>
+              <!--
               <t hangText='Header Parameter Usage Location(s):'>
                 <vspace />
                 The header parameter usage locations, which should be one or more of the values
 		<spanx style="verb">JWS</spanx> or
 		<spanx style="verb">JWE</spanx>.
               </t>
+              -->
+              <t hangText='Change Controller:'>
+                <vspace />
+                標準化過程のRFCについては, "IETF"とする.
+                その他については, 責任を追う団体の名前を与える.
+                その他の詳細情報 (例: 郵便番号, メールアドレス, ホームページURI) も含まれても良い.
+              </t>
+              <!--
               <t hangText='Change Controller:'>
                 <vspace />
                 For Standards Track RFCs, state "IETF". For others, give the name of the
                 responsible party. Other details (e.g., postal address, email address, home page
                 URI) may also be included.
               </t>
+              -->
+              <t hangText='Specification Document(s):'>
+                <vspace />
+                パラメータを規定するドキュメントの参照であり, そのドキュメントの複製を取得するために利用可能なURIを含むことが望ましい. 
+                関連する節の表示も含まれて良いが, 必須ではない.
+              </t>
+              <!--
               <t hangText='Specification Document(s):'>
                 <vspace />
                 Reference to the document(s) that specify the parameter, preferably including URI(s) that
                 can be used to retrieve copies of the document(s). An indication of the relevant
                 sections may also be included but is not required.
               </t>
+              -->
             </list>
           </t>
         </section>
