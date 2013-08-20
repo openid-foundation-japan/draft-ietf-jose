@@ -204,7 +204,7 @@
 	  </t>
 <!--
           <t hangText="JWS Payload">
-	    The sequence of octets to be secured -- a.k.a., the message.
+	    The sequence of octets to be secured - a.k.a., the message.
 	    The payload can contain an arbitrary sequence of octets.
 	  </t>
 -->
