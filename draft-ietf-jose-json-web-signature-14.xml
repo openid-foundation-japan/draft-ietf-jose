@@ -1703,7 +1703,7 @@
 
       <section title="JSON Web Signature and Encryption Header Parameters Registry" anchor="HdrReg">
 	<t>
-    この仕様は, JWSとJWEのヘッダパラメータ名の予約ための IANA JSON Web Signature and Encryption Header Parameters レジストリを定める.
+    この仕様は, JWSとJWEのヘッダパラメータ名の予約ために IANA JSON Web Signature and Encryption Header Parameters レジストリを定める.
     レジストリは, 予約されるヘッダパラメータ名とそれを定める仕様への参照を登録する. 
     パラメータの利用が仕様間で互換性を持つならば, 同じヘッダパラメータ名は複数回登録されても良い (MAY).
     同じヘッダパラメータ名の異なる登録は, 利用箇所が異なるのが一般的である.
@@ -1729,7 +1729,7 @@
             <list style='hanging'>
               <t hangText='Header Parameter Name:'>
                 <vspace />
-                申請された名前 (例: "example").
+                申請される名前 (例: "example").
                 この名前は大文字・小文字を区別する.
                 大文字・小文字を区別しながら他に登録されている名前と一致するものは受け入れられるべきではない (SHOULD NOT).
               </t>
@@ -1786,9 +1786,14 @@
 
         <section title="Initial Registry Contents" anchor="HdrContents">
 	  <t>
+      本仕様はこのレジストリに <xref target="ReservedHeaderParameterName"/> にて定義されているヘッダパラメータ名を登録する.
+	  </t>
+      <!--
+	  <t>
 	    This specification registers the Header Parameter Names defined in
 	    <xref target="ReservedHeaderParameterName"/> in this registry.
 	  </t>
+      -->
 	  <t> <?rfc subcompact="yes"?>
             <list style='symbols'>
               <t>
@@ -1955,6 +1960,12 @@
 
       <section title="JSON Web Signature and Encryption Type Values Registry" anchor="TypReg">
 	<t>
+    この仕様は, JWSとJWEの <spanx style="verb">typ</spanx> (type) ヘッダパラメータ値の予約ために IANA JSON Web Signature and Encryption Type Values レジストリを定める.
+    全ての登録される <spanx style="verb">typ</spanx> の値は, それが短い名前として表すMIME Media Type <xref target="RFC2046"/> の値を含むことを推奨する (RECOMMENDED).
+    レジストリは, <spanx style="verb">typ</spanx> の値, それが省略形となる(ものがあれば) MIME type の値とそれを定める仕様への参照を登録する.
+	</t>
+    <!--
+	<t>
 	  This specification establishes the
 	  IANA JSON Web Signature and Encryption Type Values registry
 	  for values of the JWS and JWE
@@ -1969,6 +1980,12 @@
 	  the MIME type value that it is an abbreviation for (if any),
 	  and a reference to the specification that defines it.
 	</t>
+    -->
+	<t>
+	MIME Media Type <xref target="RFC2046"/> の値は新しい <spanx style="verb">typ</spanx> の値としてそのまま登録されてはならない (MUST NOT);
+    むしろ, 新しい <spanx style="verb">typ</spanx> の値は MIME Typesを短縮した名前として登録されても良い (MAY).
+	</t>
+    <!--
 	<t>
 	  MIME Media Type <xref target="RFC2046"/>
 	  values MUST NOT be directly registered as new
@@ -1976,42 +1993,77 @@
 	  <spanx style="verb">typ</spanx> values MAY be registered
 	  as short names for MIME types.
 	</t>
+    -->
 
         <section title="Registration Template" anchor="TypTemplate">
           <t>
             <list style='hanging'>
               <t hangText='"typ" Header Parameter Value:'>
                 <vspace />
+                申請される名前 (例: "example").
+                この名前は大文字・小文字を区別する.
+                大文字・小文字を区別しながら他に登録されている名前と一致するものは受け入れられるべきではない (SHOULD NOT).
+              </t>
+              <!--
+              <t hangText='"typ" Header Parameter Value:'>
+                <vspace />
                 The name requested (e.g., "example").
 		This name is case sensitive.  Names that match other registered names
 		in a case insensitive manner SHOULD NOT be accepted.
               </t>
+              -->
+              <t hangText='Abbreviation for MIME Type:'>
+                <vspace />
+                この名前が省略形となるMIME Type (例: "application/example").
+              </t>
+              <!--
               <t hangText='Abbreviation for MIME Type:'>
                 <vspace />
                 The MIME type that this name is an abbreviation for (e.g., "application/example").
               </t>
+              -->
+              <t hangText='Change Controller:'>
+                <vspace />
+                標準化過程のRFCについては, "IETF"とする.
+                その他については, 責任を追う団体の名前を与える.
+                その他の詳細情報 (例: 郵便番号, メールアドレス, ホームページURI) も含まれても良い.
+              </t>
+              <!--
               <t hangText='Change Controller:'>
                 <vspace />
                 For Standards Track RFCs, state "IETF". For others, give the name of the
                 responsible party. Other details (e.g., postal address, email address, home page
                 URI) may also be included.
               </t>
+              -->
+              <t hangText='Specification Document(s):'>
+                <vspace />
+                パラメータを規定するドキュメントの参照であり, そのドキュメントの複製を取得するために利用可能なURIを含むことが望ましい. 
+                関連する節の表示も含まれて良いが, 必須ではない.
+              </t>
+              <!--
               <t hangText='Specification Document(s):'>
                 <vspace />
                 Reference to the document(s) that specify the parameter, preferably including URI(s) that
                 can be used to retrieve copies of the document(s). An indication of the relevant
                 sections may also be included but is not required.
               </t>
+              -->
             </list>
           </t>
         </section>
 
 	<section title="Initial Registry Contents" anchor="TypContents">
 	  <t>
+      本仕様はこのレジストリで <spanx style='verb'>JOSE</spanx> と <spanx style='verb'>JOSE+JSON</spanx> というtype値を登録する.
+	  </t>
+      <!--
+	  <t>
 	    This specification registers the <spanx style='verb'>JOSE</spanx>
 	    and <spanx style='verb'>JOSE+JSON</spanx>
 	    type values in this registry:
 	  </t>
+      -->
 	  <t> <?rfc subcompact="yes"?>
 	    <list style='symbols'>
 	      <t>
@@ -2051,6 +2103,10 @@
       <section title="Media Type Registration" anchor="MediaReg">
 	<section title="Registry Contents" anchor="MediaContents">
 	  <t>
+      本仕様は, コンテンツがJWS Compact Serializationを利用するJWS もしくはJWE Compact Serializationを利用するJWEであることを示すために用いられる <spanx style="verb">application/jose</spanx> というMedia Type <xref target="RFC2046"/> をMIME Media Typeレジストリ <xref target="RFC4288"/> に登録し, コンテンツがJWS JSON Serializationを利用するJWSもしくはJWE JSON Serializationを利用するJWEであることを示すために用いられる <spanx style="verb">application/jose+json</spanx> というMedia TypeをMIME Media Typeレジストリに登録する. 
+	  </t>
+      <!--
+	  <t>
 	    This specification registers the
 	    <spanx style="verb">application/jose</spanx>
 	    Media Type <xref target="RFC2046"/>
@@ -2065,6 +2121,7 @@
 	    a JWS or JWE object using
 	    the JWS JSON Serialization or the JWE JSON Serialization.
 	  </t>
+      -->
 	  <t> <?rfc subcompact="yes"?>
 	    <list style="symbols">
 	      <t>
@@ -2081,10 +2138,16 @@
 	      </t>
 	      <t>
 		Encoding considerations:
+        application/joseの値は, ピリオド('.')文字により分割された(空の文字列であることもありうる)Base64 URLエンコードされた一連の文字列としてエンコードされる.
+	      </t>
+          <!--
+	      <t>
+		Encoding considerations:
 		application/jose values are encoded as a
 		series of base64url encoded values (some of which may be the
 		empty string) separated by period ('.') characters.
 	      </t>
+          -->
 	      <t>
 		Security considerations: See the Security Considerations section of [[ this document ]]
 	      </t>
@@ -2138,9 +2201,16 @@
 	      </t>
 	      <t>
 		Encoding considerations:
+        application/jose+jsonの値は, JSONオブジェクトとして表現される;
+        そのJSONオブジェクトのためにUTF-8エンコードが用いられるべき (SHOULD).
+	      </t>
+          <!--
+	      <t>
+		Encoding considerations:
 		application/jose+json values are represented as a JSON Object;
 		UTF-8 encoding SHOULD be employed for the JSON object.
 	      </t>
+          -->
 	      <t>
 		Security considerations: See the Security Considerations section of [[ this document ]]
 	      </t>
