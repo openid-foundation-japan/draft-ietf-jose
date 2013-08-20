@@ -584,7 +584,7 @@
       <t>
         JWSヘッダを表わすJSONオブジェクトのメンバは, エンコードJWSヘッダ, エンコード済JWSペイロード, およびJWSのオプショナルプロパティーに適用されたデジタル署名ないしMACを記述する.
         JWSヘッダ内のヘッダパラメータ名はユニークでなければならない (MUST).
-        受け手は重複したヘッダパラメータ名を持つJWSを, 拒否するか, または以下の動作をするJSONパーザを使用しなければならない (MUST).
+        受信者は重複したヘッダパラメータ名を持つJWSを, 拒否するか, または以下の動作をするJSONパーザを使用しなければならない (MUST).
         すなわち, 重複したメンバー名に対して字面上で最後の(lexically last)もののみを返すようなJSONパーザである(この動作はECMAScript 5.1 <xref target="ECMAScript"/> Section 15.12 (The JSON Object)で定義されている). 
       </t>
       <!--
@@ -663,7 +663,7 @@
 	<section title='"alg" (Algorithm) Header Parameter' anchor="algDef">
 	  <t>
 	    <spanx style="verb">alg</spanx> (algorithm) ヘッダパラメータはJWSの署名に使われる暗号アルゴリズムを指定する.
-            受け手は以下の場合にはJWSを拒否しなければならない (MUST): <spanx style="verb">alg</spanx>の値がサポートするアルゴリズムを表わしていない場合, またはデジタル署名ないしMACを行ったパーティーの有効な鍵がない場合. 
+            受信者は以下の場合にはJWSを拒否しなければならない (MUST): <spanx style="verb">alg</spanx>の値がサポートするアルゴリズムを表わしていない場合, またはデジタル署名ないしMACを行ったパーティーの有効な鍵がない場合. 
 	    <spanx style="verb">alg</spanx>の値はIANA
 	    JSON Web Signature and Encryption Algorithms レジストリ
 	    <xref target="JWA" /> に登録されているか, またはCollision Resistant Namespaceを含んでいるべきである (SHOULD). 
@@ -1448,6 +1448,22 @@
 
     <section title="Key Identification" anchor="IDingKeys">
       <t>
+        JWSの受信者は, デジタル署名またはMAC処理に使用された鍵を決定できる必要がある. 
+        適用された鍵は<xref target="ReservedHeaderParameterName" />で説明されているヘッダパラメータによって, まには本仕様のスコープ外の方法で識別することができる. 
+        特に, ヘッダパラメータ
+	<spanx style="verb">jku</spanx>,
+	<spanx style="verb">jwk</spanx>,
+	<spanx style="verb">x5u</spanx>,
+	<spanx style="verb">x5t</spanx>,
+	<spanx style="verb">x5c</spanx>,
+	および <spanx style="verb">kid</spanx>
+        は鍵の識別のために用意されている.
+        送信者は鍵を識別するために十分な情報をヘッダパラメータに含めるべきである(SHOULD).
+        ただし, アプリケーションが他の手段やコンベンションによって使用する鍵を識別する場合にはこの限りではない. 
+        受信者は, 指定されたアルゴリズムが鍵を必要とする場合であり(実際, <spanx style="verb">none</spanx>以外のすべてのアルゴリズムは鍵を必要とする), 使用する鍵が識別できない場合には, 入力を拒否しなければならない(MUST). 
+      </t>
+      <!--
+      <t>
 	It is necessary for the recipient of a JWS to be able to determine
 	the key that was employed for the digital signature or MAC operation.
 	The key employed can be identified using the
@@ -1470,10 +1486,17 @@
 	(which is true of all algorithms except for <spanx style="verb">none</spanx>) and
 	the key used cannot be determined.
       </t>
+      -->
     </section>
 
     <section title="Serializations" anchor="Serializations">
 
+      <t>
+	JWSオブジェクトは2通りのシリアライズ形式を使用する. JWS Compact Serialization および JWS JSON Serializationである.
+        JWS Compact Serializationの実装は必須である. 
+	JWS JSON Serializationの実装はオプショナルである(OPTIONAL). 
+      </t>
+      <!--
       <t>
 	JWS objects use one of two serializations, the
 	JWS Compact Serialization
@@ -1482,9 +1505,16 @@
 	The JWS Compact Serialization is mandatory to implement.
 	Implementation of the JWS JSON Serialization is OPTIONAL.
       </t>
+      -->
 
       <section title="JWS Compact Serialization" anchor="CompactSerialization">
 
+	<t>
+	  JWS Compact Serializationはデジタル署名された, またはMACを行ったコンテンツをコンパクトなURL-safe文字列として表現したものである.
+          この文字列は, エンコード済JWSヘッダ, エンコード済JWSペイロード, およびエンコード済JWS署名を, この順序で2つのピリオド('.')文字を区切り文字として連結したものである. 
+          JWS Compact Serializationでサポートされる署名ないしMACはひとつだけである. 
+	</t>
+        <!--
 	<t>
 	  The JWS Compact Serialization represents digitally signed or MACed
 	  content as a compact URL-safe string.
@@ -1497,11 +1527,17 @@
 	  by two period ('.') characters.
 	  Only one signature/MAC is supported by the JWS Compact Serialization.
 	</t>
+        -->
 
       </section>
 
       <section title="JWS JSON Serialization" anchor="JSONSerialization">
 
+	<t>
+	  JWS JSON Serializationははデジタル署名された, またはMACを行ったコンテンツをJSONオブジェクトとして表現したものである.
+	  JWS Compact Serializationとは違い, JWS JSON Serializationを使用したコンテンツは複数のデジタル署名および/またはMAC値で保護することができる. 
+	</t>
+        <!--
 	<t>
 	  The JWS JSON Serialization represents digitally signed or MACed
 	  content as a JSON object.
@@ -1509,12 +1545,21 @@
 	  the JWS JSON Serialization can be secured with more than one
 	  digital signature and/or MAC value.
 	</t>
+        -->
 	<t>
+          JWS JSON Serializationの表現はJWS Compact Serializationで使われる表現と強く関連しており, 以下の点に違いがある:	  
+          <!--
 	  The representation is closely related to that used in the
 	  JWS Compact Serialization,
 	  with the following differences for the
 	  JWS JSON Serialization:
+          -->
 	  <list style="symbols">
+	    <t>
+	      JWS JSON Serializationの中にある値は, ピリオド('.')文字を区切りとしたbase64url文字列としてではなく, JSONオブジェクトのメンバとして表現される. 
+              (ただし, バイナリ値および完全に保護された値はbase64urlエンコードされる.)
+	    </t>
+            <!--
 	    <t>
 	      Values in the JWS JSON Serialization are represented as members of
 	      a JSON object, rather than as base64url encoded strings
@@ -1522,10 +1567,24 @@
 	      (However binary values and values that are integrity protected
 	      are still base64url encoded.)
 	    </t>
+            -->
+	    <t>
+	      エンコード済JWSペイロード値は<spanx style="verb">payload</spanx>メンバに格納される. 
+	    </t>
+            <!--
 	    <t>
 	      The Encoded JWS Payload value is stored in the
 	      <spanx style="verb">payload</spanx> member.
 	    </t>
+            -->
+	    <t>
+              署名および/またはMAC値は, ひとつに限らず, 複数存在してもよい. 
+              <spanx style="verb">signatures</spanx>メンバはJSON配列であり, 
+              特定の署名またはMAC算出に使われる値を格納するために使われる.
+              配列の1要素が署名/MACひとつに対応する.
+              これらの要素はそれぞれJSONオブジェクトである. 
+	    </t>
+            <!--
 	    <t>
 	      There can be multiple signature and/or MAC values, rather than just one.
 	      A JSON array in the <spanx style="verb">signatures</spanx> member
@@ -1534,11 +1593,21 @@
 	      with one array element per signature/MAC represented.
 	      These array elements are JSON objects.
 	    </t>
+            -->
+	    <t>
+              各エンコード済JWS署名値は, 空でない限り, <spanx style="verb">signatures</spanx>配列の要素であるJSONオブジェクトの<spanx style="verb">signature</spanx>メンバに格納される. 
+	    </t>
+            <!--
 	    <t>
 	      Each Encoded JWS Signature value, if non-empty, is stored in the
 	      <spanx style="verb">signature</spanx> member of a JSON object
 	      that is an element of the <spanx style="verb">signatures</spanx> array.
 	    </t>
+            -->
+	    <t>
+              各エンコード済JWSヘッダ値は, 署名/MAC算出に用いるヘッダパラメータ値の集合をbase64urlエンコードしたものであり, 空でない限り, <spanx style="verb">signatures</spanx>配列の対応する要素オブジェクトの<spanx style="verb">protected</spanx>メンバに格納される. 
+	    </t>
+            <!--
 	    <t>
 	      Each Encoded JWS Header value,
 	      which is a base64url encoded set of header parameter values
@@ -1547,6 +1616,12 @@
 	      <spanx style="verb">protected</spanx> member of the corresponding
 	      element of the <spanx style="verb">signatures</spanx> array.
 	    </t>
+            -->
+	    <t>
+	      JWS Compact Serializationとは違い, JWS JSON Serializationは署名/MAC算出に用いられないヘッダパラメータ値を含むこともできる.
+              これらの保護されないヘッダパラメータ値は, 存在すれば, エンコードされないJSONテキストオブジェクトとして, <spanx style="verb">signatures</spanx>配列の対応する要素オブジェクトの<spanx style="verb">header</spanx>メンバに格納される. 
+	    </t>
+            <!--
 	    <t>
 	      Unlike the JWS Compact Serialization, in the JWS JSON Serialization
 	      there can also be header parameter values that are not included
@@ -1556,6 +1631,15 @@
 	      <spanx style="verb">header</spanx> member of the corresponding
 	      element of the <spanx style="verb">signatures</spanx> array.
 	    </t>
+            -->
+	    <t>
+              それぞれの署名またはMAC値の算出ないし検証に使用されるヘッダパラメータ値は, 以下の2つのヘッダパラメータ値の和集合である:
+              (1)完全に保護された署名/MACごとの値であり, 署名/MACに対応する配列要素の<spanx style="verb">protected</spanx>メンバに格納されている, 
+              (2)完全な保護のなされていない署名/MACごとの値であり, 署名/MACに対応する配列要素の<spanx style="verb">header</spanx>メンバに格納されている,
+              これらのヘッダパラメータ値の和集合がJWSヘッダとなる.
+              2つの場所にあるヘッダパラメータ名は共通するものがあってはならない(MUST be disjoint). 
+	    </t>
+            <!--
 	    <t>
 	      The header parameter values used when creating or validating
 	      individual signature or MAC values are
@@ -1569,13 +1653,33 @@
 	      The union of these sets of header parameters comprises the JWS Header.
 	      The header parameter names in the two locations MUST be disjoint.
 	    </t>
+            -->
 	  </list>
 	</t>
 
 	<figure>
 	  <preamble>
+	    JWS JSON Serializationを用いたJWSの形式は以下の通りである:
+	  </preamble>
+          <!--
+	  <preamble>
 	    The syntax of a JWS using the JWS JSON Serialization is as follows:
 	  </preamble>
+          -->
+	  <artwork><![CDATA[
+  {
+   "payload":"<ペイロードコンテンツ>"
+   "signatures":[
+    {"protected":<完全に保護されたヘッダ 1 のコンテンツ>",
+     "header":"<完全な保護のないヘッダ 1 のコンテンツ>",
+     "signature":"<署名 1 のコンテンツ>"},
+    ...
+    {"protected":<完全に保護されたヘッダ N のコンテンツ>",
+     "header":"<完全な保護のないヘッダ N のコンテンツ>",
+     "signature":"<署名 N のコンテンツ>"}],
+  }
+]]></artwork></figure>
+          <!--
 	  <artwork><![CDATA[
   {
    "payload":"<payload contents>"
@@ -1589,7 +1693,17 @@
      "signature":"<signature N contents>"}],
   }
 ]]></artwork></figure>
+          -->
 
+	<t>
+          これらのメンバのうち, 
+	  <spanx style="verb">payload</spanx>,
+	  <spanx style="verb">signatures</spanx>,
+	  および<spanx style="verb">signature</spanx>は存在しなければならない(MUST). 
+	  <spanx style="verb">protected</spanx>および
+	  <spanx style="verb">header</spanx>の少なくとも一方は存在しなければならず(MUST), 各署名/MAC算出に対応する<spanx style="verb">alg</spanx>ヘッダパラメータ値に相当する. 
+	</t>
+        <!--
 	<t>
 	  Of these members, only the
 	  <spanx style="verb">payload</spanx>,
@@ -1603,6 +1717,13 @@
 	  so that an <spanx style="verb">alg</spanx>
 	  header parameter value is conveyed.
 	</t>
+        -->
+	<t>
+          エンコード済JWSペイロード値およびエンコード済JWS署名値のコンテンツは, 正確に本仕様の他の部分で定義されるとおりである. 
+          これらの値は, 対応するエンコード済JWS署名およびヘッダパラメータ値の集合が生成・検証される場合と同じ方法で解釈・検証される. 
+          使用されるJWSヘッダ値は, 上述のとおり, 対応する<spanx style="verb">protected</spanx>および <spanx style="verb">header</spanx>メンバの和集合である. 
+	</t>
+        <!--
 	<t>
 	  The contents of the
 	  Encoded JWS Payload and
@@ -1618,6 +1739,13 @@
 	  <spanx style="verb">header</spanx> members,
 	  as described earlier.
 	</t>
+        -->
+	<t>
+          各JWS署名値はJWS署名の入力に対し, 対応するJWSヘッダ値をJWS Compact Serializationの場合と同様の方法で適用して算出する. 
+          これにより, <spanx style="verb">signatures</spanx>配列内のエンコード済JWS署名値が, JWS Compact Serializationにおいて同一のパラメータを用いた場合に得られるであろう値と一致するという望ましい特性が得られる. 
+          これはその署名/MACの算出に用いられるエンコード済JWSヘッダ値(つまり完全に保護されたヘッダパラメータ値を表現したもの)が, JWS Compact Serializationで用いられるものと一致する限りにおいて正しい. 
+	</t>
+        <!--
 	<t>
 	  Each JWS Signature value is computed on the
 	  JWS Signing Input using the
@@ -1635,10 +1763,16 @@
 	  matches that used in
 	  the JWS Compact Serialization.
 	</t>
+        -->
+	<t>
+          JWS JSON Serializationを用いたJWSの算出例については <xref target="JSONSerializationExample"/> を参照.
+	</t>
+        <!--
 	<t>
 	  See <xref target="JSONSerializationExample"/> for an example
 	  of computing a JWS using the JWS JSON Serialization.
 	</t>
+        -->
 
       </section>
 
