@@ -1114,28 +1114,74 @@
 
     <section title="Constrained Devices">
 
+      <t>
+        このセクションでは <xref target="I-D.ietf-lwig-terminology"/> に定義されている制約のあるデバイスでのユースケースを示す。
+        このタイプのデバイスでの典型的な問題には、限られたメモリ、限られた電源、低い処理能力、そして通信プロトコルでの厳しいサイズ制限が挙げられる。
+      </t>
+      <!--
       <t>This section describes use cases for constrained devices as defined
       in <xref target="I-D.ietf-lwig-terminology"/>. Typical issues with this type of
       devices are limited memory, limited power supply, low processing
       power, and severe message size limitations for the communication
       protocols.</t>
+      -->
 
       <section title="Example: MAC based on ECDH-derived key">
 
+        <t>
+          小さく低電力なデバイスのメーカーがJOSEワーキンググループの成果を暗号化や認証のフレームワークとして採用することを決定したとしよう。
+          このデバイスメーカーではゲートと電力の双方に関して共に予算の限りがある。
+          このため、これらの必要量を最小化するために多数のショートカットと設計決定がなされてきた。
+        </t>
+        <!--
         <t>Suppose a small, low power device maker has decided on using the output of
         the JOSE working group as their encryption and authentication
         framework.  The device maker has a limited budget for both gates and
         power.  For this reason there are a number of
         short cuts and design decisions that have been made in order to
         minimize these needs.</t>
+        -->
 
+        <t>
+          設計チームは、メッセージ認証コード (MAC) を使用することで必要な認証の提供には十分だろうと決定した。
+          しかし彼らはMACは使用するが、単一の共有秘密鍵を長期間使用することは望まない。
+          代わりに、彼らは以下に提案する検証可能な共有秘密鍵を計算により求める方式を採用する。
+        </t>
+        <!--
         <t>The design team has determined that the use of message authentication
         codes (MAC) is going to be sufficient to provide the necessary
         authentication.  However, although a MAC is going to be used, they do
         not want to use a single long term shared secret.  Instead they have
         adopted the following proposal for computing a shared secret that can
         be validated:</t>
+        -->
 
+        <t><list style="symbols">
+          <t>
+            Elliptic-Curve Diffie-Hellman (ECDH) 鍵は、デバイスの製造時に (もしくは導入時の設定処理の一環として) 生成される。
+          </t>
+
+          <t>
+            コントローラー用のECDH公開鍵は、設定時にセットされる。
+          </t>
+
+          <t>
+            設定システムは、ECDHの計算を行い、結果の共有秘密鍵をデバイスに設定する。
+            このプロセスは、必要な指数計算をデバイス上で実施する必要をなくす。
+            この計算された共有秘密鍵の保護に関するセキュリティ要件は、ECDH秘密鍵の保護に関する要件と同等である。
+          </t>
+
+          <t>
+            カウンターと増分値はデバイス上に設定される。
+          </t>
+
+          <t>
+            デバイスがメッセージを送信する際、カウンターはインクリメントされ、新たなMAC鍵がECDH秘密鍵とカウンター値から計算される。
+            必要なMAC鍵を導出するために、AES-CBCをベースとした独自の鍵導出関数 (KDF) を用いる。
+            そしてMAC鍵は、メッセージのMAC値を計算するのに用いられる。
+          </t>
+        </list></t>
+        <!--
         <t><list style="symbols">
           <t>An Elliptic-Curve Diffie-Hellman (ECDH) key is generated for the
           device at the time of manufacturing.  (Or as part of the
@@ -1160,12 +1206,19 @@
           the required MAC key.  The MAC key is then used to compute the MAC
           value for the message.</t>
         </list></t>
+        -->
 
+        <t>
+          システムがメッセージの機密性を提供する必要があるとき、同様の方法でKDFは、AEADアルゴリズム鍵を計算するためにも利用できる。
+          より大きなデバイスのコントローラーでは、指数計算のステップを実施したり、送信元ナンス値を生成するために乱数生成器を使用するだろう。
+        </t>
+        <!--
         <t>In a similar manner the KDF function can used to compute an AEAD
         algorithm key when the system needs to provide confidentially for the
         message.  The controller, being a larger device will perform the
         exponentiation step and use a random number generator to generate the
         sender nonce value.</t>
+        -->
 
       </section>
       <section title="Object security for CoAP">
