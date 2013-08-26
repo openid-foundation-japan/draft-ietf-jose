@@ -319,9 +319,15 @@
       </t>
     </section>
 
-    <section title="JSON Web Token (JWT) Overview" anchor="Overview">
+    <section title="JSON Web Token (JWT) 概要" anchor="Overview">
+    <!-- <section title="JSON Web Token (JWT) Overview" anchor="Overview"> -->
 
       <t>
+	JWTは, JWSおよび/またはJWE構造の中にエンコードされるJSONオブジェクトとしてクレームのセットを表す.
+	このJSONオブジェクトはJWTクレーム・セットである.
+	<xref target="RFC4627">RFC 4627</xref>のSection 2.2の通り, JSONオブジェクトは0以上の名前/値のペア(もしくはメンバ)から構成され, その名前は文字列であり値は任意のJSON値である.
+	これらのメンバはJWTによって表されるクレームである.
+	<!--
 	JWTs represent a set of claims as a JSON object that is
 	encoded in a JWS and/or JWE structure.
 	This JSON object is the  JWT Claims Set.
@@ -330,13 +336,22 @@
 	name/value pairs (or members), where the names are strings and
 	the values are arbitrary JSON values.
 	These members are the claims represented by the JWT.
+	-->
       </t>
       <t>
+	JWTクレームセットの中のメンバ名はクレーム名として参照される. 対応する値はクレーム値として参照される.
+	<!--
 	The member names within the JWT Claims Set are
 	referred to as Claim Names.  The
 	corresponding values are referred to as Claim Values.
+	-->
       </t>
       <t>
+	JWTヘッダの内容は, JWTクレーム・セットに適用される暗号化オペレーションについて記述している.
+	JWTヘッダがJWSヘッダである場合, そのJWTはJWSペイロードとなるJWTクレーム・セットと共にJWSとして表され, クレームはデジタル署名もしくはメッセージ認証符号化される.
+	JWTヘッダがJWEヘッダである場合, そのJWTは平文入力となるJWTクレーム・セットと共にJWEとして表され, クレームは暗号化される.
+	JWTはJWEやJWS構造の中に含まれ入れ子のJWTを構成することが出来, 入れ子の署名や暗号化を実施することが出来る.
+	<!--
 	The contents of the JWT Header describe the cryptographic
 	operations applied to the JWT Claims Set.
 	If the JWT Header is a JWS Header, the JWT is represented as a JWS,
@@ -348,8 +363,13 @@
 	A JWT may be enclosed in another JWE or JWS structure
 	to create a Nested JWT,
 	enabling nested signing and encryption to be performed.
+	-->
       </t>
       <t>
+	JWTはピリオド('.')によって分割されたURLとして安全な文字列として表される.
+	それぞれのパートはBase64urlエンコードされた値を含む.
+	JWTの中のパートの数はJWSコンパクト・シリアライゼーションもしくはJWEコンパクト・シリアライゼーションを使った結果のJWSもしくはJWEオブジェクトの表現に依存する.
+	<!--
 	A JWT is represented as a sequence of URL-safe parts
 	separated by period ('.') characters.
 	Each part contains a base64url encoded value.
@@ -357,14 +377,19 @@
 	the representation of the resulting JWS or JWE
 	object using the JWS Compact Serialization
 	or the JWE Compact Serialization.
+	-->
       </t>
 
-      <section title="Example JWT" anchor="ExampleJWT">
+      <section title="JWTの例" anchor="ExampleJWT">
+      <!-- <section title="Example JWT" anchor="ExampleJWT"> -->
 
 	<t>
+	  下記のJWTヘッダはエンコードされたオブジェクトはJSON Web Token (JWT) であり, そのJWTはHMAC SHA-256アルゴリズムを使ってメッセージ認証符号化されていることを表す.
+	  <!--
 	  The following example JWT Header declares that the
 	  encoded object is a JSON Web Token (JWT) and the JWT is
 	  MACed using the HMAC SHA-256 algorithm:
+	  -->
 	</t>
 
 	<figure><artwork><![CDATA[
@@ -373,9 +398,12 @@
 ]]></artwork></figure>
 
 	<t>
+	  JWTヘッダのUTF-8のオクテットをBase64urlエンコードすると, このエンコードされたJWSヘッダの値が作られ, それはエンコードされたJWTヘッダとして使われる.
+	  <!--
 	  Base64url encoding the octets of the UTF-8 representation of
 	  the JWT Header yields this Encoded JWS Header value,
 	  which is used as the Encoded JWT Header:
+	  -->
 	</t>
 
 	<figure><artwork><![CDATA[
@@ -383,7 +411,10 @@
 ]]></artwork></figure>
 
 	<t>
+	  下記がJWTクレーム・セットの例である.
+	  <!--
 	  The following is an example of a JWT Claims Set:
+	  -->
 	</t>
 
 	<figure><artwork><![CDATA[
@@ -393,8 +424,11 @@
 ]]></artwork></figure>
 
 	<t>
+	  下記のオクテット配列は, 上記JWTクレーム・セットをUTF-8で表したものであり, JWSペイロードである.
+	  <!--
 	  The following octet sequence, which is the UTF-8 representation
 	  of the JWT Claims Set above, is the JWS Payload:
+	  -->
 	</t>
 	<t>
 
@@ -403,8 +437,12 @@
 	</t>
 
 	<t>
+	  JWSペイロードをBase64urlエンコードするとこのエンコードされたJWSペイロードが作り出せる.
+	  (表示上の都合で改行を含む)
+	  <!--
 	  Base64url encoding the JWS Payload yields this Encoded JWS Payload
 	  (with line breaks for display purposes only):
+	  -->
 	</t>
 
 	<figure><artwork><![CDATA[
@@ -413,10 +451,13 @@
 ]]></artwork></figure>
 
 	<t>
+	  エンコードされたJWSヘッダとエンコードされたJWSペイロードをHMAC SHA-256アルゴリズムで署名し, <xref target="JWS" />に指定された形で署名をBase64urlエンコードすると, このエンコードされたJWS署名を作り出せる.
+	  <!--
 	  Signing the Encoded JWS Header and Encoded JWS Payload with
 	  the HMAC SHA-256 algorithm and base64url encoding the
 	  signature in the manner specified in <xref target="JWS" />,
 	  yields this Encoded JWS Signature:
+	  -->
 	</t>
 
 	<figure><artwork><![CDATA[
@@ -424,10 +465,14 @@
 ]]></artwork></figure>
 
 	<t>
+	  これら3つのパートをこの順に各パートの間をピリオド('.')で連結すると完全なJWTが作り出せる.
+	  (表示上の都合で改行を含む)
+	  <!--
 	  Concatenating these parts in this order
 	  with period ('.') characters between the
 	  parts yields this complete JWT (with line breaks for
 	  display purposes only):
+	  -->
 	</t>
 
 	<figure><artwork><![CDATA[
@@ -440,10 +485,14 @@
 ]]></artwork></figure>
 
 	<t>
+	  この計算についての詳細は<xref target="JWS" />のAppendix A.1に記載されている.
+	  暗号化されたJWTについては<xref target="EncryptedJWTExample"/>を参照のこと.
+	  <!--
 	  This computation is illustrated in more detail in
 	  Appendix A.1 of <xref target="JWS" />.
 	  See <xref target="EncryptedJWTExample"/> for an example of
 	  an encrypted JWT.
+	  -->
 	</t>
 
       </section>
