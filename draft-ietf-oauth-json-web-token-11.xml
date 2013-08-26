@@ -131,81 +131,148 @@
 
     </section>
 
-    <section title="Terminology" anchor="Terminology"> 
+    <section title="用語集" anchor="Terminology"> 
+    <!-- <section title="Terminology" anchor="Terminology"> -->
       <t>
 	<list style="hanging">
 
           <t hangText="JSON Web Token (JWT)">
+	    JSONオブジェクトとしてクレームのセットを表現する文字列はJWSもしくはJWEの中ではエンコードされ, クレームがデジタル署名もしくはメッセージ認証符号化, そして/または暗号化されることを可能にする.
+	    <!--
 	    A string representing a set of claims as a JSON object that is
 	    encoded in a JWS or JWE,
 	    enabling the claims to be digitally signed or MACed and/or encrypted.
+	    -->
 	  </t>
 
-          <t hangText="Base64url Encoding">
+          <t hangText="Base64urlエンコーディング">
+          <!-- <t hangText="Base64url Encoding"> -->
+	    <!--
+	    <xref target="RFC4648">RFC 4648</xref>のセクション5で説明されているURLおよびファイル名として安全なBase64エンコーディングであり, Section 3.2で許可されているように (URLとして安全ではない) '=' パディング文字が省略されている.
+	    (パディングなしのBase64urlエンコーディングの導入についての注意事項は<xref target="JWS" />のAppendix Cを参照のこと)
 	    The URL- and filename-safe Base64 encoding
 	    described in <xref target="RFC4648">RFC 4648</xref>,
 	    Section 5, with the (non URL-safe) '=' padding characters
 	    omitted, as permitted by Section 3.2.  (See Appendix C of
 	    <xref target="JWS" /> for notes on implementing base64url
 	    encoding without padding.)
+	    -->
 	  </t>
 
- 	  <t hangText="JSON Text Object">
+ 	  <t hangText="JSONテキストオブジェクト">
+ 	  <!-- <t hangText="JSON Text Object"> -->
+	    UTF-8 <xref target="RFC3629"/>エンコードされたテキストでありJSONオブジェクトを表現する.
+	    JSONオブジェクトの構文は<xref target="RFC4627"/>のSection 2.2で定義されている.
+	    <!--
 	    A UTF-8 <xref target="RFC3629"/>
 	    encoded text string representing a JSON object;
 	    the syntax of JSON objects is defined in
 	    Section 2.2 of <xref target="RFC4627"/>.
+	    -->
 	  </t>
 
-          <t hangText="JWT Header">
+          <t hangText="JWTヘッダ">
+          <!-- <t hangText="JWT Header"> -->
+	    JWTに適用される暗号化オペレーションについて記述しているJSONテキストオブジェクト.
+	    JWTがデジタル署名もしくはメッセージ認証符号化されている場合, JWTヘッダはJWSヘッダである.
+	    JWTが暗号化されている場合, JWTヘッダはJWEヘッダである.
+	    <!--
 	    A JSON Text Object that
 	    describes the cryptographic operations applied to the JWT.
 	    When the JWT is digitally signed or MACed, the JWT Header is a JWS Header.
 	    When the JWT is encrypted, the JWT Header is a JWE Header.
+	    -->
 	  </t>
 
-	  <t hangText="Header Parameter Name">
+	  <t hangText="ヘッダ・パラメータ名">
+	  <!-- <t hangText="Header Parameter Name"> -->
+	    JWTヘッダのメンバの名前.
+	    <!--
 	    The name of a member of the JWT Header.
+	    -->
 	  </t>
-	  <t hangText="Header Parameter Value">
+	  <t hangText="ヘッダ・パラメータ値">
+	  <!-- <t hangText="Header Parameter Value"> -->
+	    JWTヘッダのメンバの値.
+	    <!--
 	    The value of a member of the JWT Header.
+	    -->
 	  </t>
 
-          <t hangText="JWT Claims Set">
+          <t hangText="JWTクレームセット">
+          <!-- <t hangText="JWT Claims Set"> -->
+	    JWTによって伝搬されるクレームを含むJSONテキストオブジェクト.
+	    <!--
 	    A JSON Text Object that
 	    contains the Claims conveyed by the JWT.
+	    -->
 	  </t>
 
-	  <t hangText="Claim">
+	  <t hangText="クレーム">
+	  <!-- <t hangText="Claim"> -->
+	    主体に関連して表現される情報の一部.
+	    クレームはクレーム名とクレーム値から構成される名前と値のペアで表現される.
+	    <!--
 	    A piece of information asserted about a subject.
 	    A Claim is represented as a name/value pair
 	    consisting of a Claim Name and a Claim Value.
+	    -->
 	  </t>
 
-	  <t hangText="Claim Name">
+	  <t hangText="クレーム名">
+	  <!-- <t hangText="Claim Name"> -->
+	    クレーム表現の中の名前の部分.
+	    クレーム名は常に文字列である.
+	    <!--
 	    The name portion of a Claim representation.
 	    A Claim Name is always a string.
+	    -->
 	  </t>
-	  <t hangText="Claim Value">
+	  <t hangText="クレーム値">
+	  <!-- <t hangText="Claim Value"> -->
+	    クレーム表現の中の値の部分.
+	    クレーム値は任意のJSON値であり得る.
+	    <!--
 	    The value portion of a Claim representation.
 	    A Claim Value can be any JSON value.
+	    -->
 	  </t>
 
-          <t hangText="Encoded JWT Header">
+          <t hangText="エンコードされたJWTヘッダ">
+          <!-- <t hangText="Encoded JWT Header"> -->
+	    JWTヘッダをBase64urlエンコードしたもの.
+	    <!--
 	    Base64url encoding of the JWT Header.
+	    -->
 	  </t>
 
-	  <t hangText="Nested JWT">
+	  <t hangText="入れ子にされたJWT">
+	  <!-- <t hangText="Nested JWT"> -->
+	    署名かつ/もしくは暗号化が適用されたJWTに入れ子にされているJWT.
+	    入れ子にされたJWTでは, JWTはそれぞれペイロードもしくはJWSもしくはJWE構造の中の平文の値として利用される.
+	    <!--
 	    A JWT in which nested signing and/or encryption are employed.
 	    In nested JWTs, a JWT is used as the payload or plaintext value
 	    of an enclosing JWS or JWE structure, respectively.
+	    -->
 	  </t>
 
-	  <t hangText="Plaintext JWT">
+	  <t hangText="平文のJWT">
+	  <!-- <t hangText="Plaintext JWT"> -->
+	    まったく保護もしくは暗号化されていないクレームを持つJWT.
+	    <!--
 	    A JWT whose Claims are not integrity protected or encrypted.
+	    -->
 	  </t>
 
-	  <t hangText="Collision Resistant Namespace">
+	  <t hangText="耐衝突性を持つ名前空間">
+	  <!-- <t hangText="Collision Resistant Namespace"> -->
+	    他の名前空間とほとんど衝突しない様に割り当てられた名前空間.
+	    例えば、耐衝突性は名前空間の一部の管理を移譲したり, 耐衝突性を持つ名前の割り付け機能の利用によって達成することが出来る.
+	    耐衝突性を持つ名前空間の例は次のものを含んでいる.
+	    ドメイン名, ITU-T X.600とX.670推奨シリーズで定義されているオブジェクト識別子 (OID), ユニバーサル・ユニーク識別子 (UUID)<xref target="RFC4122"/>.
+	    管理を移譲された名前空間を利用する場合, 名前を定義する人は定義するための名前空間の一部を管理していることを保証するために合理的な予防措置を講ずる必要がある.
+	    <!--
 	    A namespace that allows names to be allocated in a manner
 	    such that they are highly unlikely to collide with other names.
 	    For instance, collision resistance can be achieved through
@@ -221,22 +288,31 @@
 	    the definer of a name needs to take
 	    reasonable precautions to ensure they are in control of
 	    the portion of the namespace they use to define the name.
+	    -->
 	  </t>
 
 	  <t hangText="StringOrURI">
+	    任意の文字列を使っても良い一方で, ":"を含むどのような値もURI<xref target="RFC3986"/>でなければならない, という追加の要求があるJSON文字列の値.
+	    StringOrURIの値には変形や正規化が適用されず, 大文字・小文字を区別する文字列として比較される.
+	    <!--
 	    A JSON string value, with the additional requirement that
 	    while arbitrary string values MAY be used, any value
 	    containing a ":" character MUST be a URI
 	    <xref target="RFC3986"/>.
 	    StringOrURI values are compared as case-sensitive strings
 	    with no transformations or canonicalizations applied.
+	    -->
 	  </t>
 
 	  <t hangText="IntDate">
+	    1970-01-01T0:0:0Z UTCから指定されたUTCの日付/時刻まで秒の数を表わすJSON数値.
+	    日付/時刻に関する詳細は<xref target="RFC3339">RFC 3339</xref>の全般と, 特にUTCを参照すること.
+	    <!--
 	    A JSON numeric value representing the number of seconds
 	    from 1970-01-01T0:0:0Z UTC until the specified UTC date/time.
 	    See <xref target="RFC3339">RFC 3339</xref> for details
 	    regarding date/times in general and UTC in particular.
+	    -->
 	  </t>
 
         </list>
