@@ -2459,12 +2459,25 @@
 
       <section title="JSON Security Considerations" anchor="JSONSecCon">
 	<t>
+      厳密なJSONのバリデーションはセキュリティ上必要である.
+      不正な形式のJSONを受け取った場合, 送信者の意図を確実に識別することは不可能である.
+      使用されるJSONパーサーが不正な構文のJSONを拒否しない場合, 不明瞭かつ潜在的に悪用可能な状況が起こりうる.
+	</t>
+<!--
+	<t>
 	  Strict JSON validation is a security requirement.
 	  If malformed JSON is received, then the intent of the sender
 	  is impossible to reliably discern.
 	  Ambiguous and potentially exploitable situations could arise
 	  if the JSON parser used does not reject malformed JSON syntax.
 	</t>
+-->
+	<t>
+      本仕様書では"オブジェクト内のヘッダパラメータ名はユニークでなければならない(MUST). つまり, 受信者はヘッダパラメータ名が重複したJWSを拒否するか, ECMAScript 5.1 <xref target="ECMAScript"/>のSection 15.12で規定されているように, 重複したメンバー名から辞書的に最後のもののみを返すJSONパーサーを使うかのどちらかをしなければいけない(MUST)"と述べているのに対し, JavaScript Object Notation (JSON) 仕様書 <xref target="RFC4627"/>のSection 2.2では"オブジェクト内の名前はユニークであるべき (SHOULD)"と述べられている.
+      したがって, 本仕様書では, Section 2.2内の"SHOULD"は送信者により"MUST"として扱われ, 受信者により"MUST"として扱われるか, もしくはECMAScript 5.1で規定されている方法で扱われることを必要としている.
+      使用されるJSONパーサーがメンバー名のユニーク性を強制しない, もしくは重複したメンバー名から予測不可能な値を返す場合, 不明瞭かつ潜在的に悪用可能な状況が起こりうる.
+	</t>
+<!--
 	<t>
 	  Section 2.2 of the JavaScript Object Notation (JSON)
 	  specification <xref target="RFC4627"/> states "The names
@@ -2482,6 +2495,13 @@
 	  if the JSON parser used does not enforce the uniqueness of member names
 	  or returns an unpredictable value for duplicate member names.
 	</t>
+-->
+	<t>
+      一部のJSONパーサーは有効な入力の後に意味ありげな文字が余分に含まれている入力を拒否しないかもしれない.
+      例えば, <spanx style="verb">{"tag":"value"}ABCD</spanx>という入力は有効なJSONオブジェクトの後に余分な文字である<spanx style="verb">ABCD</spanx>を含んでいる.
+      このような入力は全体が拒否されないければならない(MUST).
+	</t>
+<!--
 	<t>
 	  Some JSON parsers might not reject input that contains extra
 	  significant characters after a valid input.  For instance,
@@ -2490,9 +2510,16 @@
 	  the extra characters <spanx style="verb">ABCD</spanx>.
 	  Such input MUST be rejected in its entirety.
 	</t>
+-->
       </section>
 
       <section title="Unicode Comparison Security Considerations" anchor="UnicodeSecCon">
+        <t>
+          ヘッダパラメータ名とアルゴリズム名はUnicode文字列である.
+          セキュリティ上の理由から, これらの名前の表現は任意のエスケープ処理(<xref target="RFC4627">RFC 4627</xref>のSection 2.5に従う)を行った後, 一語一語比較されなければいけない.
+          つまり, 例えばJSON文字列("sig", "\u0073ig")は等しいものとして比較されなければいけない一方, ("SIG", "Sig", "si\u0047")は前述のセットと, またお互いにも等しくないものとして比較されなければいけない.
+	</t>
+<!--
         <t>
 	  Header Parameter Names and algorithm names are Unicode strings.  For
 	  security reasons, the representations of these names must be
@@ -2503,6 +2530,14 @@
 	  must all compare as being not equal to the first set or to
 	  each other ("SIG", "Sig", "si\u0047").
 	</t>
+-->
+	<t>
+      JSON文字列はUnicodeの基本多言語面外の文字を含むことが出来る.
+      例えば, ト音記号 (U+1D11E)はJSON文字列中に"\uD834\uDD1E"として表すことが出来る.
+      理想的には, JWSの実装は基本多言語面外の文字が正確に保存され比較されることを保証するべき(SHOULD)である.
+      しかし一方で, これらの文字のせいで基礎となるJSONの実装に存在する制限を実行出来ない場合は, これらの文字を含む入力は拒否されなければいけない(MUST).
+	</t>
+<!--
 	<t>
 	  JSON strings can contain characters outside the Unicode
 	  Basic Multilingual Plane.  For instance, the G clef
@@ -2514,10 +2549,17 @@
 	  present in the underlying JSON implementation, then input
 	  containing them MUST be rejected.
 	</t>
+-->
 
       </section>
 
       <section anchor="TLS_requirements" title="TLS Requirements">
+	<t>
+      実装はTLSをサポートしなければいけない(MUST).
+      実装されるべきバージョンは導入が広がりや, 実装時点で既知のセキュリティの脆弱性に依存し, 時間とともに変化する.
+      TLS version 1.0 <xref target='RFC2246' />はもっとも広く導入されているバージョンであり, 広範な相互運用性を提供する.
+	</t>
+<!--
 	<t>
 	  Implementations MUST support TLS.
 	  Which version(s) ought to be implemented will vary over
@@ -2532,16 +2574,27 @@
 	  is the most widely deployed version, and will give the
 	  broadest interoperability.
 	</t>
+-->
+	<t>
+      情報取得や改ざんから保護するために, 機密保護にはTLSを使用して機密性と完全性保護を提供するciphersuiteが適用されなければいけない(MUST).
+	</t>
+<!--
 	<t>
 	  To protect against information disclosure and tampering,
 	  confidentiality protection MUST be applied using TLS
 	  with a ciphersuite that provides confidentiality and
 	  integrity protection.
 	</t>
+-->
+	<t>
+      TLSが使用されるときは常に<xref target="RFC6125">RFC 6125</xref>に従いTLSサーバー証明書のチェックが実行されなければいけない(MUST).
+	</t>
+<!--
 	<t>
 	  Whenever TLS is used, a TLS server certificate check
 	  MUST be performed, per <xref target="RFC6125">RFC 6125</xref>.
 	</t>
+-->
       </section>
 
     </section>

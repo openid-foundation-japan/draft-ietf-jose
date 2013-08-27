@@ -131,81 +131,148 @@
 
     </section>
 
-    <section title="Terminology" anchor="Terminology"> 
+    <section title="用語集" anchor="Terminology"> 
+    <!-- <section title="Terminology" anchor="Terminology"> -->
       <t>
 	<list style="hanging">
 
           <t hangText="JSON Web Token (JWT)">
+	    JSONオブジェクトとしてクレームのセットを表現する文字列はJWSもしくはJWEの中ではエンコードされ, クレームがデジタル署名もしくはメッセージ認証符号化, そして/または暗号化されることを可能にする.
+	    <!--
 	    A string representing a set of claims as a JSON object that is
 	    encoded in a JWS or JWE,
 	    enabling the claims to be digitally signed or MACed and/or encrypted.
+	    -->
 	  </t>
 
-          <t hangText="Base64url Encoding">
+          <t hangText="Base64urlエンコーディング">
+          <!-- <t hangText="Base64url Encoding"> -->
+	    <!--
+	    <xref target="RFC4648">RFC 4648</xref>のセクション5で説明されているURLおよびファイル名として安全なBase64エンコーディングであり, Section 3.2で許可されているように (URLとして安全ではない) '=' パディング文字が省略されている.
+	    (パディングなしのBase64urlエンコーディングの導入についての注意事項は<xref target="JWS" />のAppendix Cを参照のこと)
 	    The URL- and filename-safe Base64 encoding
 	    described in <xref target="RFC4648">RFC 4648</xref>,
 	    Section 5, with the (non URL-safe) '=' padding characters
 	    omitted, as permitted by Section 3.2.  (See Appendix C of
 	    <xref target="JWS" /> for notes on implementing base64url
 	    encoding without padding.)
+	    -->
 	  </t>
 
- 	  <t hangText="JSON Text Object">
+ 	  <t hangText="JSONテキストオブジェクト">
+ 	  <!-- <t hangText="JSON Text Object"> -->
+	    UTF-8 <xref target="RFC3629"/>エンコードされたテキストでありJSONオブジェクトを表現する.
+	    JSONオブジェクトの構文は<xref target="RFC4627"/>のSection 2.2で定義されている.
+	    <!--
 	    A UTF-8 <xref target="RFC3629"/>
 	    encoded text string representing a JSON object;
 	    the syntax of JSON objects is defined in
 	    Section 2.2 of <xref target="RFC4627"/>.
+	    -->
 	  </t>
 
-          <t hangText="JWT Header">
+          <t hangText="JWTヘッダ">
+          <!-- <t hangText="JWT Header"> -->
+	    JWTに適用される暗号化オペレーションについて記述しているJSONテキストオブジェクト.
+	    JWTがデジタル署名もしくはメッセージ認証符号化されている場合, JWTヘッダはJWSヘッダである.
+	    JWTが暗号化されている場合, JWTヘッダはJWEヘッダである.
+	    <!--
 	    A JSON Text Object that
 	    describes the cryptographic operations applied to the JWT.
 	    When the JWT is digitally signed or MACed, the JWT Header is a JWS Header.
 	    When the JWT is encrypted, the JWT Header is a JWE Header.
+	    -->
 	  </t>
 
-	  <t hangText="Header Parameter Name">
+	  <t hangText="ヘッダ・パラメータ名">
+	  <!-- <t hangText="Header Parameter Name"> -->
+	    JWTヘッダのメンバの名前.
+	    <!--
 	    The name of a member of the JWT Header.
+	    -->
 	  </t>
-	  <t hangText="Header Parameter Value">
+	  <t hangText="ヘッダ・パラメータ値">
+	  <!-- <t hangText="Header Parameter Value"> -->
+	    JWTヘッダのメンバの値.
+	    <!--
 	    The value of a member of the JWT Header.
+	    -->
 	  </t>
 
-          <t hangText="JWT Claims Set">
+          <t hangText="JWTクレームセット">
+          <!-- <t hangText="JWT Claims Set"> -->
+	    JWTによって伝搬されるクレームを含むJSONテキストオブジェクト.
+	    <!--
 	    A JSON Text Object that
 	    contains the Claims conveyed by the JWT.
+	    -->
 	  </t>
 
-	  <t hangText="Claim">
+	  <t hangText="クレーム">
+	  <!-- <t hangText="Claim"> -->
+	    主体に関連して表現される情報の一部.
+	    クレームはクレーム名とクレーム値から構成される名前と値のペアで表現される.
+	    <!--
 	    A piece of information asserted about a subject.
 	    A Claim is represented as a name/value pair
 	    consisting of a Claim Name and a Claim Value.
+	    -->
 	  </t>
 
-	  <t hangText="Claim Name">
+	  <t hangText="クレーム名">
+	  <!-- <t hangText="Claim Name"> -->
+	    クレーム表現の中の名前の部分.
+	    クレーム名は常に文字列である.
+	    <!--
 	    The name portion of a Claim representation.
 	    A Claim Name is always a string.
+	    -->
 	  </t>
-	  <t hangText="Claim Value">
+	  <t hangText="クレーム値">
+	  <!-- <t hangText="Claim Value"> -->
+	    クレーム表現の中の値の部分.
+	    クレーム値は任意のJSON値であり得る.
+	    <!--
 	    The value portion of a Claim representation.
 	    A Claim Value can be any JSON value.
+	    -->
 	  </t>
 
-          <t hangText="Encoded JWT Header">
+          <t hangText="エンコードされたJWTヘッダ">
+          <!-- <t hangText="Encoded JWT Header"> -->
+	    JWTヘッダをBase64urlエンコードしたもの.
+	    <!--
 	    Base64url encoding of the JWT Header.
+	    -->
 	  </t>
 
-	  <t hangText="Nested JWT">
+	  <t hangText="入れ子にされたJWT">
+	  <!-- <t hangText="Nested JWT"> -->
+	    署名かつ/もしくは暗号化が適用されたJWTに入れ子にされているJWT.
+	    入れ子にされたJWTでは, JWTはそれぞれペイロードもしくはJWSもしくはJWE構造の中の平文の値として利用される.
+	    <!--
 	    A JWT in which nested signing and/or encryption are employed.
 	    In nested JWTs, a JWT is used as the payload or plaintext value
 	    of an enclosing JWS or JWE structure, respectively.
+	    -->
 	  </t>
 
-	  <t hangText="Plaintext JWT">
+	  <t hangText="平文のJWT">
+	  <!-- <t hangText="Plaintext JWT"> -->
+	    まったく保護もしくは暗号化されていないクレームを持つJWT.
+	    <!--
 	    A JWT whose Claims are not integrity protected or encrypted.
+	    -->
 	  </t>
 
-	  <t hangText="Collision Resistant Namespace">
+	  <t hangText="耐衝突性を持つ名前空間">
+	  <!-- <t hangText="Collision Resistant Namespace"> -->
+	    他の名前空間とほとんど衝突しない様に割り当てられた名前空間.
+	    例えば、耐衝突性は名前空間の一部の管理を移譲したり, 耐衝突性を持つ名前の割り付け機能の利用によって達成することが出来る.
+	    耐衝突性を持つ名前空間の例は次のものを含んでいる.
+	    ドメイン名, ITU-T X.600とX.670推奨シリーズで定義されているオブジェクト識別子 (OID), ユニバーサル・ユニーク識別子 (UUID)<xref target="RFC4122"/>.
+	    管理を移譲された名前空間を利用する場合, 名前を定義する人は定義するための名前空間の一部を管理していることを保証するために合理的な予防措置を講ずる必要がある.
+	    <!--
 	    A namespace that allows names to be allocated in a manner
 	    such that they are highly unlikely to collide with other names.
 	    For instance, collision resistance can be achieved through
@@ -221,31 +288,46 @@
 	    the definer of a name needs to take
 	    reasonable precautions to ensure they are in control of
 	    the portion of the namespace they use to define the name.
+	    -->
 	  </t>
 
 	  <t hangText="StringOrURI">
+	    任意の文字列を使っても良い一方で, ":"を含むどのような値もURI<xref target="RFC3986"/>でなければならない, という追加の要求があるJSON文字列の値.
+	    StringOrURIの値には変形や正規化が適用されず, 大文字・小文字を区別する文字列として比較される.
+	    <!--
 	    A JSON string value, with the additional requirement that
 	    while arbitrary string values MAY be used, any value
 	    containing a ":" character MUST be a URI
 	    <xref target="RFC3986"/>.
 	    StringOrURI values are compared as case-sensitive strings
 	    with no transformations or canonicalizations applied.
+	    -->
 	  </t>
 
 	  <t hangText="IntDate">
+	    1970-01-01T0:0:0Z UTCから指定されたUTCの日付/時刻まで秒の数を表わすJSON数値.
+	    日付/時刻に関する詳細は<xref target="RFC3339">RFC 3339</xref>の全般と, 特にUTCを参照すること.
+	    <!--
 	    A JSON numeric value representing the number of seconds
 	    from 1970-01-01T0:0:0Z UTC until the specified UTC date/time.
 	    See <xref target="RFC3339">RFC 3339</xref> for details
 	    regarding date/times in general and UTC in particular.
+	    -->
 	  </t>
 
         </list>
       </t>
     </section>
 
-    <section title="JSON Web Token (JWT) Overview" anchor="Overview">
+    <section title="JSON Web Token (JWT) 概要" anchor="Overview">
+    <!-- <section title="JSON Web Token (JWT) Overview" anchor="Overview"> -->
 
       <t>
+	JWTは, JWSおよび/またはJWE構造の中にエンコードされるJSONオブジェクトとしてクレームのセットを表す.
+	このJSONオブジェクトはJWTクレーム・セットである.
+	<xref target="RFC4627">RFC 4627</xref>のSection 2.2の通り, JSONオブジェクトは0以上の名前/値のペア(もしくはメンバ)から構成され, その名前は文字列であり値は任意のJSON値である.
+	これらのメンバはJWTによって表されるクレームである.
+	<!--
 	JWTs represent a set of claims as a JSON object that is
 	encoded in a JWS and/or JWE structure.
 	This JSON object is the  JWT Claims Set.
@@ -254,13 +336,22 @@
 	name/value pairs (or members), where the names are strings and
 	the values are arbitrary JSON values.
 	These members are the claims represented by the JWT.
+	-->
       </t>
       <t>
+	JWTクレームセットの中のメンバ名はクレーム名として参照される. 対応する値はクレーム値として参照される.
+	<!--
 	The member names within the JWT Claims Set are
 	referred to as Claim Names.  The
 	corresponding values are referred to as Claim Values.
+	-->
       </t>
       <t>
+	JWTヘッダの内容は, JWTクレーム・セットに適用される暗号化オペレーションについて記述している.
+	JWTヘッダがJWSヘッダである場合, そのJWTはJWSペイロードとなるJWTクレーム・セットと共にJWSとして表され, クレームはデジタル署名もしくはメッセージ認証符号化される.
+	JWTヘッダがJWEヘッダである場合, そのJWTは平文入力となるJWTクレーム・セットと共にJWEとして表され, クレームは暗号化される.
+	JWTはJWEやJWS構造の中に含まれ入れ子のJWTを構成することが出来, 入れ子の署名や暗号化を実施することが出来る.
+	<!--
 	The contents of the JWT Header describe the cryptographic
 	operations applied to the JWT Claims Set.
 	If the JWT Header is a JWS Header, the JWT is represented as a JWS,
@@ -272,8 +363,13 @@
 	A JWT may be enclosed in another JWE or JWS structure
 	to create a Nested JWT,
 	enabling nested signing and encryption to be performed.
+	-->
       </t>
       <t>
+	JWTはピリオド('.')によって分割されたURLとして安全な文字列として表される.
+	それぞれのパートはBase64urlエンコードされた値を含む.
+	JWTの中のパートの数はJWSコンパクト・シリアライゼーションもしくはJWEコンパクト・シリアライゼーションを使った結果のJWSもしくはJWEオブジェクトの表現に依存する.
+	<!--
 	A JWT is represented as a sequence of URL-safe parts
 	separated by period ('.') characters.
 	Each part contains a base64url encoded value.
@@ -281,14 +377,19 @@
 	the representation of the resulting JWS or JWE
 	object using the JWS Compact Serialization
 	or the JWE Compact Serialization.
+	-->
       </t>
 
-      <section title="Example JWT" anchor="ExampleJWT">
+      <section title="JWTの例" anchor="ExampleJWT">
+      <!-- <section title="Example JWT" anchor="ExampleJWT"> -->
 
 	<t>
+	  下記のJWTヘッダはエンコードされたオブジェクトはJSON Web Token (JWT) であり, そのJWTはHMAC SHA-256アルゴリズムを使ってメッセージ認証符号化されていることを表す.
+	  <!--
 	  The following example JWT Header declares that the
 	  encoded object is a JSON Web Token (JWT) and the JWT is
 	  MACed using the HMAC SHA-256 algorithm:
+	  -->
 	</t>
 
 	<figure><artwork><![CDATA[
@@ -297,9 +398,12 @@
 ]]></artwork></figure>
 
 	<t>
+	  JWTヘッダのUTF-8のオクテットをBase64urlエンコードすると, このエンコードされたJWSヘッダの値が作られ, それはエンコードされたJWTヘッダとして使われる.
+	  <!--
 	  Base64url encoding the octets of the UTF-8 representation of
 	  the JWT Header yields this Encoded JWS Header value,
 	  which is used as the Encoded JWT Header:
+	  -->
 	</t>
 
 	<figure><artwork><![CDATA[
@@ -307,7 +411,10 @@
 ]]></artwork></figure>
 
 	<t>
+	  下記がJWTクレーム・セットの例である.
+	  <!--
 	  The following is an example of a JWT Claims Set:
+	  -->
 	</t>
 
 	<figure><artwork><![CDATA[
@@ -317,8 +424,11 @@
 ]]></artwork></figure>
 
 	<t>
+	  下記のオクテット配列は, 上記JWTクレーム・セットをUTF-8で表したものであり, JWSペイロードである.
+	  <!--
 	  The following octet sequence, which is the UTF-8 representation
 	  of the JWT Claims Set above, is the JWS Payload:
+	  -->
 	</t>
 	<t>
 
@@ -327,8 +437,12 @@
 	</t>
 
 	<t>
+	  JWSペイロードをBase64urlエンコードするとこのエンコードされたJWSペイロードが作り出せる.
+	  (表示上の都合で改行を含む)
+	  <!--
 	  Base64url encoding the JWS Payload yields this Encoded JWS Payload
 	  (with line breaks for display purposes only):
+	  -->
 	</t>
 
 	<figure><artwork><![CDATA[
@@ -337,10 +451,13 @@
 ]]></artwork></figure>
 
 	<t>
+	  エンコードされたJWSヘッダとエンコードされたJWSペイロードをHMAC SHA-256アルゴリズムで署名し, <xref target="JWS" />に指定された形で署名をBase64urlエンコードすると, このエンコードされたJWS署名を作り出せる.
+	  <!--
 	  Signing the Encoded JWS Header and Encoded JWS Payload with
 	  the HMAC SHA-256 algorithm and base64url encoding the
 	  signature in the manner specified in <xref target="JWS" />,
 	  yields this Encoded JWS Signature:
+	  -->
 	</t>
 
 	<figure><artwork><![CDATA[
@@ -348,10 +465,14 @@
 ]]></artwork></figure>
 
 	<t>
+	  これら3つのパートをこの順に各パートの間をピリオド('.')で連結すると完全なJWTが作り出せる.
+	  (表示上の都合で改行を含む)
+	  <!--
 	  Concatenating these parts in this order
 	  with period ('.') characters between the
 	  parts yields this complete JWT (with line breaks for
 	  display purposes only):
+	  -->
 	</t>
 
 	<figure><artwork><![CDATA[
@@ -364,10 +485,14 @@
 ]]></artwork></figure>
 
 	<t>
+	  この計算についての詳細は<xref target="JWS" />のAppendix A.1に記載されている.
+	  暗号化されたJWTについては<xref target="EncryptedJWTExample"/>を参照のこと.
+	  <!--
 	  This computation is illustrated in more detail in
 	  Appendix A.1 of <xref target="JWS" />.
 	  See <xref target="EncryptedJWTExample"/> for an example of
 	  an encrypted JWT.
+	  -->
 	</t>
 
       </section>
