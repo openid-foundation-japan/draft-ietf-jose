@@ -1074,34 +1074,59 @@
       </section>
 
       <section anchor="webcrypto-sec" title="Web Cryptography">
-      <t>The W3C Web Cryptography API defines a standard cryptographic API for the
+          <t>W3C Web Cryptography APIではWeb用の標準暗号API <xref target="WebCrypto"></xref>を定義している。
+              もしブラウザがこのAPIを使えるようにした場合、ウェブページの一部として実行されたJavaScriptがブラウザにダイジェスト、MAC、暗号化、デジタル署名などの処理を実行させることが可能となる。</t>
+      <!--<t>The W3C Web Cryptography API defines a standard cryptographic API for the
       Web <xref target="WebCrypto"></xref>.  If a browser exposes this API, then
       JavaScript provided as part of a Web page can ask the browser to perform
-      cryptographic operations, such as digest, MAC, encryption, or digital signing.</t>
+      cryptographic operations, such as digest, MAC, encryption, or digital signing.</t>-->
 
-      <t>One of the key reasons to have the browser perform cryptographic operations
+      <t>
+          ブラウザが暗号処理を実行することの主要な理由の一つに、JavaScriptコードによって暗号処理に利用されるの鍵の素材にアクセスできないようにすることが挙げられる。
+          例えば、この分離によって、クロスサイトスクリプティング(XSS)によって注入されたコードがブラウザ内に保持された鍵を読み取ったり抜き取ったりすることを防げるだろう。
+          悪意のあるコードがブラウザ上で実行し続けている間は鍵を依然として利用可能である一方、この脆弱性はユーザのブラウザ上で脆弱なページがアクティブな間のみ有効である。
+      </t>
+      <!--<t>One of the key reasons to have the browser perform cryptographic operations
       is to avoid allowing JavaScript code to access the keying material used for these
       operations.  For example, this separation would prevent code injected through a
       cross-site scripting (XSS) attack from reading and exfiltrating keys stored
       within a browser.  While the malicious code could still use the key while running
       in the browser, this vulnerability can only be exercised while the vulnerable
-      page is active in a user's browser.</t>
+      page is active in a user's browser.</t>-->
 
-      <t>However, the WebCryptography API also provides a key export functionality,
+      <t>
+          しかしながら、WebCryptGraphy API は鍵のエクスポート機能も提供する。それによりJavascriptでAPIを隠蔽した形式で鍵を抜き出すことができる。
+          例えば、JavaScriptは別のデバイスが保持する対になる秘密鍵の代わりに公開鍵を提供したかもしれない。
+          それにより、APIが提供する隠蔽された鍵は新しいデバイスへ安全に鍵を転送するのに使うことができる。
+          こうして悪意のあるコードが鍵をエクスポートできるようにする可能性があるが、ユーザへの通知や同意の検証を考慮にいれても、明示的なエクスポート処理を必要とすることが制御のポイントとなっている。
+      </t>
+      <!--<t>However, the WebCryptography API also provides a key export functionality,
       which can allow JavaScript to extract a key from the API in wrapped form.  For
       example, the JavaScript might provide a public key for which the corresponding
       private key is held by another device.  The wrapped key provided by the API
       could then be used to safely transport the key to the new device.  While this
       could potentially allow malicious code to export a key, the need for an explicit
       export operation provides a control point, allowing for user notification or
-      consent verification.</t>
+      consent verification.</t>-->
 
-      <t>The Web Cryptography API also allows browsers to impose limitations on the
+      <t>
+          Web CryptGraphy API はブラウザが自身の扱う鍵の利用を制限することを強いることも許可している。
+          例えば、対象鍵は暗号化のみでMACには利用できないこと注目されがちである。
+          鍵が隠蔽された形式でエクスポートされる際、これらの属性は鍵と一緒にもっていかれるべきである。
+      </t>
+      <!--<t>The Web Cryptography API also allows browsers to impose limitations on the
       usage of the keys it handles.  For example, a symmetric key might be marked as
       usable only for encryption, and not for MAC.  When a key is exported in wrapped
-      form, these attributes should be carried along with it.</t>
+      form, these attributes should be carried along with it.</t>-->
 
-      <t>The Web Cryptography API thus requires formats to express several forms of
+      <t>
+          Web CryptGraphy API はこのようにして、いくつかの鍵の形式を表現するフォーマットが必要とされる。
+          言うまでもなく、非対称な鍵のペアから公開鍵は自由にインポートでき、ブラウザよりエクスポート可能であるため、公開鍵を表現するためのフォーマットが必要である。
+          秘密鍵や対象鍵を表現できるようなフォーマットもまた必要とされている。
+          非公開鍵のために、まず第一に必要なものは鍵を暗号的に機密性および完全性が保証されている、隠蔽された形式である。
+          ダイレクトで隠蔽されていないフォーマットを定義することもまた、セキュリティの境目での利用に有用であるかもしれない。
+      </t>
+      <!--<t>The Web Cryptography API thus requires formats to express several forms of
       keys.  Obviously, the public key from an asymmetric key pair can be freely
       imported to and exported from the browser, so there needs to be a format for
       public keys.  There is also a need for a format to express private keys and
@@ -1109,7 +1134,7 @@
       where the confidentiality and integrity of the key is assured cryptographically;
       these protections should also apply to any attributes of the key.  It may also
       be useful to define a direct, unwrapped format, for use within a security
-      boundary.</t>
+      boundary.</t>-->
       </section>
 
     <section title="Constrained Devices">
