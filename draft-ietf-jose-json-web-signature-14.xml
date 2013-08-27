@@ -2826,7 +2826,7 @@
 
       <t>
       本節では, いくつかのJWSの例を提供する.
-      はじめの3例はJSON Web Token (JWT) <xref target="JWT"> を表しているが, <xref target="ES512Example"/> に見られるように, ペイロードは任意のオクテット列を含むことが出来る.
+      はじめの3例はJSON Web Token (JWT) <xref target="JWT" /> を表しているが, <xref target="ES512Example"/> に見られるように, ペイロードは任意のオクテット列を含むことが出来る.
       </t>
       <!--
       <t>
@@ -2841,7 +2841,7 @@
       <section title="Example JWS using HMAC SHA-256" anchor="HS256Example">
 	<section title="Encoding" anchor="HS256Encoding">
 	  <t>
-      以下に示すJWS Headerの例では, データ構造がJSON Web Token (JWT) <xref target="JWT"> であり, JWS Signing InputはHMAC SHA-256アルゴリズムにより保護されていることを示している.
+      以下に示すJWS Headerの例では, データ構造がJSON Web Token (JWT) <xref target="JWT" /> であり, JWS Signing InputはHMAC SHA-256アルゴリズムにより保護されていることを示している.
 	  </t>
       <!--
 	  <t>
@@ -2970,7 +2970,7 @@
 	  </t>
 	  <t>
       HMACは鍵を用いて生成される.
-      この例では次のようなJSON Web Key <xref target="JWK"> フォーマットで表現される対象鍵を用いる
+      この例では次のようなJSON Web Key <xref target="JWK" /> フォーマットで表現される対象鍵を用いる
       (改行は掲載上の都合による):
 	  </t>
       <!--
