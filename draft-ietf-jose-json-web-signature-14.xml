@@ -2772,21 +2772,32 @@
     <section title="JWS Examples" anchor="JWSExamples">
 
       <t>
+      本節では, いくつかのJWSの例を提供する.
+      はじめの3例はJSON Web Token (JWT) <xref target="JWT"> を表しているが, <xref target="ES512Example"/> に見られるように, ペイロードは任意のオクテット列を含むことが出来る.
+      </t>
+      <!--
+      <t>
 	This section provides several examples of JWSs.
 	While the first three
 	examples all represent JSON Web Tokens (JWTs) <xref
 	target="JWT" />, the payload can be any
 	octet sequence, as shown in <xref target="ES512Example"/>.
       </t>
+      -->
 
       <section title="Example JWS using HMAC SHA-256" anchor="HS256Example">
 	<section title="Encoding" anchor="HS256Encoding">
+	  <t>
+      以下に示すJWS Headerの例では, データ構造がJSON Web Token (JWT) <xref target="JWT"> であり, JWS Signing InputはHMAC SHA-256アルゴリズムにより保護されていることを示している.
+	  </t>
+      <!--
 	  <t>
 	    The following example JWS Header declares that the
 	    data structure is a JSON Web Token (JWT) <xref target="JWT" />
 	    and the JWS Signing Input is secured using
 	    the HMAC SHA-256 algorithm.
 	  </t>
+      -->
 
 	  <figure><artwork><![CDATA[
   {"typ":"JWT",
@@ -2794,23 +2805,38 @@
 ]]></artwork></figure>
 
 	  <t>
+      以下に示すオクテット列は, JWS HeaderのUTF-8表現を含む: 
+	  </t>
+      <!--
+	  <t>
 	    The following octet sequence contains the UTF-8 representation of
 	    the JWS Header:
 	  </t>
+      -->
 	  <t>
 
 [123, 34, 116, 121, 112, 34, 58, 34, 74, 87, 84, 34, 44, 13, 10, 32, 34, 97, 108, 103, 34, 58, 34, 72, 83, 50, 53, 54, 34, 125]
 
 	  </t>
 	  <t>
+      これらのオクテット列をBase64 URLエンコードすることで, Encoded JWS Headerの値が生成される:
+	  </t>
+      <!--
+	  <t>
 	    Base64url encoding these octets yields this
 	    Encoded JWS Header value:
 	  </t>
+      -->
 
 	  <figure><artwork><![CDATA[
   eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9
 ]]></artwork></figure>
 
+	  <t>
+      この例で使用されるJWS Payloadは以下のJSONオブジェクトでUTF-8で表現したオクテット列である.
+      (このペイロードはBase64 URL エンコードされたJSONオブジェクトである必要はなく, 任意のBase64URLエンコードされたオクテット列でもよいことに注意)
+	  </t>
+      <!--
 	  <t>
 	    The JWS Payload used in this example
 	    is the octets of the UTF-8 representation of the JSON object below.
@@ -2818,6 +2844,7 @@
 	    encoded octet sequence, and need not be a base64url encoded JSON
 	    object.)
 	  </t>
+      -->
 
 	  <figure><artwork><![CDATA[
   {"iss":"joe",
@@ -2826,18 +2853,29 @@
 ]]></artwork></figure>
 
 	  <t>
+      以下に示すオクテット列は上記のJSONオブジェクトのUTF-8表現であり, これがJWS Payloadである: 
+	  </t>
+      <!--
+	  <t>
 	     The following octet sequence, which is the UTF-8 representation
 	     of the JSON object above, is the JWS Payload:
 	  </t>
+      -->
 	  <t>
 
 [123, 34, 105, 115, 115, 34, 58, 34, 106, 111, 101, 34, 44, 13, 10, 32, 34, 101, 120, 112, 34, 58, 49, 51, 48, 48, 56, 49, 57, 51, 56, 48, 44, 13, 10, 32, 34, 104, 116, 116, 112, 58, 47, 47, 101, 120, 97, 109, 112, 108, 101, 46, 99, 111, 109, 47, 105, 115, 95, 114, 111, 111, 116, 34, 58, 116, 114, 117, 101, 125]
 
 	  </t>
 	  <t>
+      JWS PayloadをBase64 URLエンコードすることで, Encoded JWS Payloadの値が生成される
+      (改行は掲載上の都合による):
+	  </t>
+      <!--
+	  <t>
 	    Base64url encoding the JWS Payload yields this Encoded JWS Payload value
 	    (with line breaks for display purposes only):
 	  </t>
+      -->
 
           <figure><artwork><![CDATA[
   eyJpc3MiOiJqb2UiLA0KICJleHAiOjEzMDA4MTkzODAsDQogImh0dHA6Ly9leGFt
@@ -2845,10 +2883,16 @@
 ]]></artwork></figure>
 
 	  <t>
+      Encoded JWS HeaderとEncoded JWS Payloadをピリオド('.')文字で連結することで, JWS Signing Inputの値が生成される
+      (改行は掲載上の都合による):
+	  </t>
+      <!--
+	  <t>
 	    Concatenating the Encoded JWS Header, a period ('.') character,
 	    and the Encoded JWS Payload yields this JWS Signing Input
 	    value (with line breaks for display purposes only):
 	  </t>
+      -->
 
 	  <figure><artwork><![CDATA[
   eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9
@@ -2858,20 +2902,32 @@
 ]]></artwork></figure>
 
 	  <t>
+      JWS Signing InputのASCII表現が以下のオクテット列となる:
+	  </t>
+      <!--
+	  <t>
 	    The ASCII representation of the JWS Signing Input
 	    is the following octet sequence:
 	  </t>
+      -->
 	  <t>
 
 [101, 121, 74, 48, 101, 88, 65, 105, 79, 105, 74, 75, 86, 49, 81, 105, 76, 65, 48, 75, 73, 67, 74, 104, 98, 71, 99, 105, 79, 105, 74, 73, 85, 122, 73, 49, 78, 105, 74, 57, 46, 101, 121, 74, 112, 99, 51, 77, 105, 79, 105, 74, 113, 98, 50, 85, 105, 76, 65, 48, 75, 73, 67, 74, 108, 101, 72, 65, 105, 79, 106, 69, 122, 77, 68, 65, 52, 77, 84, 107, 122, 79, 68, 65, 115, 68, 81, 111, 103, 73, 109, 104, 48, 100, 72, 65, 54, 76, 121, 57, 108, 101, 71, 70, 116, 99, 71, 120, 108, 76, 109, 78, 118, 98, 83, 57, 112, 99, 49, 57, 121, 98, 50, 57, 48, 73, 106, 112, 48, 99, 110, 86, 108, 102, 81]
 
 	  </t>
 	  <t>
+      HMACは鍵を用いて生成される.
+      この例では次のようなJSON Web Key <xref target="JWK"> フォーマットで表現される対象鍵を用いる
+      (改行は掲載上の都合による):
+	  </t>
+      <!--
+	  <t>
 	    HMACs are generated using keys.
 	    This example uses the symmetric key
 	    represented in JSON Web Key <xref target="JWK" /> format below
 	    (with line breaks for display purposes only):
 	  </t>
+      -->
 	  <figure><artwork><![CDATA[
   {"kty":"oct",
    "k":"AyM1SysPpbyDfgZld3umj1qzKObwVMkoqQ-EstJQLr_T-1qS0gZH75
@@ -2879,24 +2935,39 @@
   }
 ]]></artwork></figure>
 	  <t>
+      JWS Signing InputのASCII表現であるオクテット列にこの鍵を用いてHMAC SHA-256アルゴリズムを実行することで, オクテット列が生成される.
+	  </t>
+      <!--
+	  <t>
 	    Running the HMAC SHA-256 algorithm on the octets of the ASCII representation
 	    of the JWS Signing Input
 	    with this key yields this octet sequence:
 	  </t>
+      -->
 	  <t>
 
 [116, 24, 223, 180, 151, 153, 224, 37, 79, 250, 96, 125, 216, 173, 187, 186, 22, 212, 37, 77, 105, 214, 191, 240, 91, 88, 5, 88, 83, 132, 141, 121]
 
 	  </t>
 	  <t>
+      上記のオクテット列をBase64 URLエンコードすることで, Encoded JWS Signatureの値が生成される.
+	  </t>
+      <!--
+	  <t>
 	    Base64url encoding the above HMAC output yields this
 	    Encoded JWS Signature value:
 	  </t>
+      -->
 
 	  <figure><artwork><![CDATA[
   dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk
 ]]></artwork></figure>
 
+	<t>
+    ピリオド('.')文字をパーツ間の区切りとしてこれらの値をHeader.Payload.Signatureの順番で連結することで, JSON Compact Seriali完全なJWS表現が生成される.
+    (改行は掲載上の都合による):
+	</t>
+    <!--
 	<t>
 	  Concatenating these values in the order
 	  Header.Payload.Signature with period ('.') characters between the
@@ -2904,6 +2975,7 @@
 	  using the JWS Compact Serialization
 	  (with line breaks for display purposes only):
 	</t>
+    -->
 
 	<figure><artwork><![CDATA[
   eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9
@@ -2918,26 +2990,49 @@
 	<section title="Decoding" anchor="HS256Decoding">
 
 	  <t>
+      JWSのデコードは, JWS Header, JWS Payload, JWS Signatureのオクテット列を生成するためにEncoded JWS Header, Encoded JWS Payload, Encoded JWS SignatureのBase64 URLデコードを必要とする.
+      JWS HeaderのUTF-8表現を含むオクテット列がJWS Header文字列にデコードされる.
+	  </t>
+      <!--
+	  <t>
 	    Decoding the JWS requires base64url decoding the Encoded JWS Header,
 	    Encoded JWS Payload, and Encoded JWS Signature to produce the
 	    JWS Header, JWS Payload, and JWS Signature octet sequences.
 	    The octet sequence containing the UTF-8 representation
 	    of the JWS Header is decoded into the JWS Header string.
 	  </t>
+      -->
 
 	</section>
 	<section title="Validating" anchor="HS256Validating">
 
+	  <t>
+      次に, 私たちはデコード結果を検証する.
+	  ヘッダ中の <spanx style="verb">alg</spanx> パラメータが"HS256"であるため, JWS Signatureに含まれるHMAC SHA-256の値を検証する.
+      もし検証に失敗した場合, このJWSは拒否されなければならない (MUST).
+	  </t>
+      <!--
 	  <t>
 	    Next we validate the decoded results.  Since the <spanx style="verb">alg</spanx>
 	    parameter in the header is "HS256", we validate the HMAC SHA-256
 	    value contained in the JWS Signature.
 	    If any of the validation steps fail, the JWS MUST be rejected.
 	  </t>
+      -->
+	  <t>
+      初めに, JWS Header文字列が正しいJSONであることを検証する.
+	  </t>
+      <!--
 	  <t>
 	    First, we validate that the JWS Header
 	    string is legal JSON.
 	  </t>
+      -->
+          <t>
+          HMAC値を検証するために, 正しい鍵を用いてJWS Signing InputのASCII表現をHMAC SHA-256アルゴリズムの入力として上記のプロセスを繰りかえし, 出力されたものがJWS Signatureと一致するかが決定される.
+          もしそれが正確に一致していた場合, HMACの検証は完了する.
+	  </t>
+      <!--
           <t>
 	    To validate the HMAC value, we repeat the previous process
 	    of using the correct key and the ASCII representation of
@@ -2947,6 +3042,7 @@
 	    the JWS Signature.  If it matches exactly,
 	    the HMAC has been validated.
 	  </t>
+      -->
 	</section>
       </section>
 
