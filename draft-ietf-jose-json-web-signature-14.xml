@@ -2392,69 +2392,106 @@
 
       <section title="Cryptographic Security Considerations" anchor="CryptoSecCon">
 	<t>
-	  All of the security issues faced by any cryptographic application
-	  must be faced by a JWS/JWE/JWK agent.  Among these issues are protecting
-	  the user's private and symmetric keys, preventing various attacks, and helping the
-	  user avoid mistakes such as inadvertently encrypting a message for
-	  the wrong recipient.  The entire list of security considerations is
-	  beyond the scope of this document, but some significant concerns are
-	  listed here.
+	  どんな暗号化アプリケーションも直面するセキュリティ上の課題すべてに, JWS/JWE/JWKエージェントも立ち向かわなければならない. なかでもユーザの秘密鍵と共通鍵を保護すること, さまざま攻撃を阻止すること, そして不注意で間違った受信者へのメッセージを暗号化するような誤操作を避ける手助けをすることが課題である. セキュティ上の考慮事項の完全なリスト化は本ドキュメントの範囲外がであるが, ここにいくつかの重要な事項を列挙する.
 	</t>
+    <!--      <t>
+              All of the security issues faced by any cryptographic application
+              must be faced by a JWS/JWE/JWK agent.  Among these issues are protecting
+              the user's private and symmetric keys, preventing various attacks, and helping the
+              user avoid mistakes such as inadvertently encrypting a message for
+              the wrong recipient.  The entire list of security considerations is
+              beyond the scope of this document, but some significant concerns are
+              listed here.
+          </t>
+     -->
 	<t>
-	  All the security considerations in
-	  <xref target="W3C.CR-xmldsig-core2-20120124">XML DSIG 2.0</xref>,
-	  also apply to this specification, other than those that are XML specific.
-	  Likewise, many of the best practices documented in
-	  <xref target="W3C.WD-xmldsig-bestpractices-20110809">XML Signature Best Practices</xref>
-	  also apply to this specification,
-	  other than those that are XML specific.
+	  <xref target="W3C.CR-xmldsig-core2-20120124">XML DSIG 2.0</xref>にあるすべてのセキュリティ上考慮すべき事項は, XMLに特化したもの以外はすべて本仕様にも当てはまる. 同様に<xref target="W3C.WD-xmldsig-bestpractices-20110809">XML Signature Best Practices</xref>に記載されているベストプラクティスの多くも, XMLに特化したもの以外は本仕様に適用できる.
 	</t>
+    <!--      <t>
+              All the security considerations in
+              <xref target="W3C.CR-xmldsig-core2-20120124">XML DSIG 2.0</xref>,
+              also apply to this specification, other than those that are XML specific.
+              Likewise, many of the best practices documented in
+              <xref target="W3C.WD-xmldsig-bestpractices-20110809">XML Signature Best Practices</xref>
+              also apply to this specification,
+              other than those that are XML specific.
+          </t>
+    -->
 	<t>
-	  Keys are only as strong as the amount of entropy used to
-	  generate them.  A minimum of 128 bits of entropy should be
-	  used for all keys, and depending upon the application context,
-	  more may be required.
-	  In particular, it may be difficult to generate sufficiently
-	  random values in some browsers and application environments.
+	  鍵は生成するために使われるエントロピー量と同じ強度にしかならない. 最低128ビットのエントロピーがすべての鍵に利用されるべきである. アプリケーションコンテクストによってはもっと多くのエントロピーが必要になるかもしれない. 特にいくつかのブラウザやアプリケーション環境では十分ランダムな数値を生成するのが難しいかもしれない.
 	</t>
+    <!--  <t>
+              Keys are only as strong as the amount of entropy used to
+              generate them.  A minimum of 128 bits of entropy should be
+              used for all keys, and depending upon the application context,
+              more may be required.
+              In particular, it may be difficult to generate sufficiently
+              random values in some browsers and application environments.
+          </t>
+    -->
 	<t>
-	  Creators of JWSs should not allow third parties to insert
-	  arbitrary content into the message without adding entropy
-	  not controlled by the third party.
+	  JWSの作成者は, 第三者によって制御されないエントロピーを追加することをせずに第三者が任意のコンテンツをメッセージに挿入することを許すべきではない.
 	</t>
+    <!--  <t>
+              Creators of JWSs should not allow third parties to insert
+              arbitrary content into the message without adding entropy
+              not controlled by the third party.
+          </t>
+    -->
 	<t>
-	  When utilizing TLS to retrieve information, the authority
-	  providing the resource MUST be authenticated and the
-	  information retrieved MUST be free from modification.
+	  情報取得のためにTLSを利用する場合には, リソースを提供する機関は本物であることを証明されなければならない(MUST).
+	  そして引き出される情報は更新されるべきではない (MUST).
 	</t>
+    <!--  <t>
+              When utilizing TLS to retrieve information, the authority
+              providing the resource MUST be authenticated and the
+              information retrieved MUST be free from modification.
+          </t>
+    -->
 	<t>
-	  When cryptographic algorithms are implemented in such a way
-	  that successful operations take a different amount of time
-	  than unsuccessful operations, attackers may be able to
-	  use the time difference to obtain information about the keys
-	  employed.  Therefore, such timing differences must be avoided.
+	  暗号化アルゴリズムが成功時と失敗時で処理時間に差があるように実装されている場合, 攻撃者は処理時間の差を利用して利用されている鍵についての情報を取得することができかもしれない. 故にそのような処理時間の差は避けなければならない.
 	</t>
+    <!--  <t>
+              When cryptographic algorithms are implemented in such a way
+              that successful operations take a different amount of time
+              than unsuccessful operations, attackers may be able to
+              use the time difference to obtain information about the keys
+              employed.  Therefore, such timing differences must be avoided.
+          </t>
+    -->
 	<t>
-	  A SHA-1 hash is used when computing
-	  <spanx style="verb">x5t</spanx> (x.509 certificate thumbprint) values,
-	  for compatibility reasons.  Should an effective means of producing
-	  SHA-1 hash collisions be developed, and should an attacker wish to
-	  interfere with the use of a known certificate on a given system,
-	  this could be accomplished by creating another certificate whose
-	  SHA-1 hash value is the same and adding it to the certificate
-	  store used by the intended victim.  A prerequisite to this
-	  attack succeeding is the attacker having write access to the
-	  intended victim's certificate store.
+	  互換性の理由からSHA-1ハッシュが <spanx style="verb">x5t</spanx> (x.509証明書の拇印) の値を算出するのに利用される.
+	  SHA-1ハッシュ値の衝突を引き起こす効率的な方法が開発され, 攻撃者が任意のシステムの既知の証明書の利用を妨害したい場合,
+	  SHA-1ハッシュの値が同じ証明書をもう一つ作成し, それを狙われた被害者の証明書ストアに加えることで妨害は実現される可能性がある.
+      この攻撃の前提は攻撃者が狙われた被害者の証明書ストアへの書き込み権限をもつことである.
 	</t>
+    <!--      <t>
+              A SHA-1 hash is used when computing
+              <spanx style="verb">x5t</spanx> (x.509 certificate thumbprint) values,
+              for compatibility reasons.  Should an effective means of producing
+              SHA-1 hash collisions be developed, and should an attacker wish to
+              interfere with the use of a known certificate on a given system,
+              this could be accomplished by creating another certificate whose
+              SHA-1 hash value is the same and adding it to the certificate
+              store used by the intended victim.  A prerequisite to this
+              attack succeeding is the attacker having write access to the
+              intended victim's certificate store.
+          </t>
+    -->
 	<t>
-	  If, in the future, certificate thumbprints need to be
-	  computed using hash functions other than SHA-1, it is
-	  suggested that additional related header parameters be
-	  defined for that purpose.  For example, it is suggested
-	  that a new <spanx style="verb">x5t#S256</spanx> (X.509
-	  Certificate Thumbprint using SHA-256) header parameter
-	  could be defined and used.
+	  将来, 証明書の拇印をSHA-1以外のハッシュ関数で算出する必要が出てきた場合, そのために追加の関連ヘッダパラメータを定義することが推奨される. 例えば,
+	  新しい <spanx style="verb">x5t#S256</spanx> (SHA-256を使ったX.509証明書の拇印)というヘッダパラメータを定義して利用することが推奨される.
 	</t>
+    <!--  <t>
+              If, in the future, certificate thumbprints need to be
+              computed using hash functions other than SHA-1, it is
+              suggested that additional related header parameters be
+              defined for that purpose.  For example, it is suggested
+              that a new <spanx style="verb">x5t#S256</spanx> (X.509
+              Certificate Thumbprint using SHA-256) header parameter
+              could be defined and used.
+          </t>
+     -->
       </section>
 
       <section title="JSON Security Considerations" anchor="JSONSecCon">
