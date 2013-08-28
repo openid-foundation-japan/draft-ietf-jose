@@ -826,10 +826,18 @@
       </section>
 
     </section>
+	
+	<section title="プレーンテキストJWT" anchor="Plaintext">
+    <!-- <section title="Plaintext JWTs" anchor="Plaintext"> -->
 
-    <section title="Plaintext JWTs" anchor="Plaintext">
-
-      <t>
+	<t>
+     JWTコンテンツが署名と暗号化のどちらか, 
+	 または両方がJWT(例えばJWTを含むデータ構造の署名など)中に含まれる以外の方法でセキュアな状態となるユースケースをサポートするために, 
+	 JWTも署名または暗号化なしで作成されるかもしれない.(MAY)
+     プレーンテキストJWTはJSON Web Algorithms(JWA)で定義されたJWSのalgヘッダパラメータにnoneを使用したJWSであり, 
+     それはJWSの署名値に空の文字列を持つJWSである.      
+    </t> 
+     <!-- <t>
 	To support use cases where the JWT content is secured by a
 	means other than a signature and/or encryption contained
 	within the JWT (such as a signature on a data structure
@@ -839,59 +847,84 @@
 	style="verb">alg</spanx> header parameter value defined in
 	JSON Web Algorithms (JWA) <xref target="JWA" />; it is a JWS
 	with the empty string for its JWS Signature value.
-      </t>
+      </t> -->
 
-      <section title="Example Plaintext JWT" anchor="ExamplePlaintextJWT">
+	  <section title="プレーンテキストJWTの例" anchor="ExamplePlaintextJWT">
+      <!-- <section title="Example Plaintext JWT" anchor="ExamplePlaintextJWT"> -->
 
-	<t>
+     <t>
+      次の例ではJWTヘッダがエンコードされたオブジェクトがプレーンテキストJWTであることを宣言する.
+     </t>
+	<!-- <t>
 	  The following example JWT Header declares that the
 	  encoded object is a Plaintext JWT:
-	</t>
+	</t> -->
 
 	<figure><artwork><![CDATA[
   {"alg":"none"}
 ]]></artwork></figure>
 
-	<t>
+    <t>
+      JWTヘッダのUTF-8表現のオクテットをBase64urlエンコーディングし, 
+      このエンコードされたJWTヘッダを得る.
+    </t>
+	<!-- <t>
 	  Base64url encoding the octets of the UTF-8 representation of
 	  the JWT Header yields this Encoded JWT Header:
-	</t>
+	</t> -->
 
 	<figure><artwork><![CDATA[
   eyJhbGciOiJub25lIn0
 ]]></artwork></figure>
 
-	<t>
+     <t>
+      次はJWTクレームセットの例である.
+     </t> 
+	<!-- <t>
 	  The following is an example of a JWT Claims Set:
-	</t>
+	</t> -->
 
 	<figure><artwork><![CDATA[
   {"iss":"joe",
    "exp":1300819380,
    "http://example.com/is_root":true}
 ]]></artwork></figure>
-
-	<t>
+	
+     <t>
+      JWTクレームセットのUTF-8表現のオクテットをBase64urlエンコードし, 
+      このエンコードされたJWSペイロードを得る.
+      (表示目的のための改行を含む)
+     </t>
+	<!-- <t>
 	  Base64url encoding the octets of the UTF-8 representation of
 	  the JWT Claims Set yields this Encoded JWS Payload
 	  (with line breaks for display purposes only):
-	</t>
+	</t> -->
 
 	<figure><artwork><![CDATA[
   eyJpc3MiOiJqb2UiLA0KICJleHAiOjEzMDA4MTkzODAsDQogImh0dHA6Ly9leGFt
   cGxlLmNvbS9pc19yb290Ijp0cnVlfQ
 ]]></artwork></figure>
 
-	<t>
+	
+    <t>
+      エンコードされたJWS署名は空文字列である.
+    </t>
+	<!-- <t>
 	  The Encoded JWS Signature is the empty string.
-	</t>
+	</t> -->
 
-	<t>
+
+    <t>
+	  パーツ間をピリオド文字('.') でこの順序で連結することで, 完全なJWTとなる. 
+	  (表示目的のための改行を含む) 
+    </t>
+	<!-- <t>
 	  Concatenating these parts in this order
 	  with period ('.') characters between the
 	  parts yields this complete JWT (with line breaks for
 	  display purposes only):
-	</t>
+	</t> -->
 
 	<figure><artwork><![CDATA[
   eyJhbGciOiJub25lIn0
@@ -1711,42 +1744,72 @@
 	Appendices A.1, A.2, and A.3 of <xref target="JWS"/>.
       </t>
 
-      <section title="Example Encrypted JWT" anchor="EncryptedJWTExample">
-	<t>
+	  <section title="暗号化されたJWTの例" anchor="EncryptedJWTExample">
+      <!-- <section title="Example Encrypted JWT" anchor="EncryptedJWTExample"> -->
+	
+    <t>     
+      この例では、RSAES-PKCS1-V1_5とAES_128_CBC_HMAC_SHA_256を使用して, 
+      受信者に<xref target="ExampleJWT"/>で使用したものと同じクレームを暗号化する.
+    </t>
+	<!-- <t>
 	  This example encrypts the same claims as used in <xref target="ExampleJWT"/>
 	  to the recipient using RSAES-PKCS1-V1_5 and AES_128_CBC_HMAC_SHA_256.
-	</t>
-	<t>
+	</t> -->
+	
+ 	<t>
+      次の例ではJWEヘッダ(表示目的のための改行を含む)を宣言する.
+      <list style="symbols">
+	<!-- <t>
 	  The following example JWE Header (with line breaks for display purposes only) declares that:
-	  <list style="symbols">
-	    <t>
+	  <list style="symbols"> -->
+	    
+      	<t>
+          暗号化鍵コンテンツは, JWE暗号化鍵を生成するために, 
+          RSAES-PKCS1-V1_5アルゴリズムを用いて受信者によって暗号化され, 
+      	</t>
+	    <!-- <t>
 	      the Content Encryption Key is encrypted to the recipient
 	      using the RSAES-PKCS1-V1_5 algorithm to produce
 	      the JWE Encrypted Key and
-	    </t>
-	    <t>
+	    </t> -->
+		
+     	<t>
+          平文は暗号文を生成するためにAES_128_CBC_HMAC_SHA_256アルゴリズムを用いて暗号化される.
+      	</t>
+	    <!-- <t>
 	      the Plaintext is encrypted using the AES_128_CBC_HMAC_SHA_256
 	      algorithm to produce the Ciphertext.
-	    </t>
+	    </t> -->
 	  </list>
-	</t>
+	</t> 
 
 	<figure><artwork><![CDATA[
   {"alg":"RSA1_5","enc":"A128CBC-HS256"}
 ]]></artwork></figure>
 
-	<t>
+	
+    <t>
+      平文の値として<xref target="ExampleJWT"/>のJWTクレームセットのUTF-8表現のオクテットを利用するほか, 
+      このJWTの計算は使用される鍵を含む<xref target="JWE"/>のAppendix A.2に記載されているJWEの計算と同じである
+     </t>
+	<!-- <t>
 	  Other than using the octets of the UTF-8 representation of
 	  the JWT Claims Set from <xref target="ExampleJWT"/>
 	  as the plaintext value, the computation of this JWT is
 	  identical to the computation of the JWE in
 	  Appendix A.2 of <xref target="JWE"/>,
 	  including the keys used.
-	</t>
-	<t>
+	</t> -->
+	
+	
+    <t>
+      この例の最終的な結果は以下の様になる.
+      (表示目的のための改行を除く)
+    </t>    
+	<!-- <t>
 	  The final result in this example
 	  (with line breaks for display purposes only) is:
-	</t>
+	</t> -->
 	<figure><artwork><![CDATA[
   eyJhbGciOiJSU0ExXzUiLCJlbmMiOiJBMTI4Q0JDLUhTMjU2In0.
   QR1Owv2ug2WyPBnbQrRARTeEk9kDO2w8qDcjiHnSJflSdv1iNqhWXaKH4MqAkQtM
