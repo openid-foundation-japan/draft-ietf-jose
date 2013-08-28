@@ -724,10 +724,12 @@
       </section>
 
       <section anchor="xmpp-sec" title="XMPP">
-          <t>Extensible Messaging and Presence Protocol (XMPP) は末端のクライアントから他の端末へXMPP servers <xref target="RFC6120"/>の仕様に従ってメッセージを送信するプロトコルである。
-              一般的には任意の送信メッセージに2つのサーバが含まれる。
-              あるクライアント(Alice) は他のクライアント (Bob) 宛のメッセージをサーバ(A)へ送信する。サーバAはBobのIDとDNSによってBobのドメイン(B)を持つサーバの特定し、そしてメッセージをそのサーバへ送信する。
-              サーバBはそれによりBobへメッセージを送信する </t>
+          <t>
+              Extensible Messaging and Presence Protocol (XMPP) は末端のクライアントから他の端末へXMPP serversの仕様に従ってメッセージを送信するプロトコルである。<xref target="RFC6120"/>
+              一般的には任意の送信メッセージに2つのサーバが関与する。
+              あるクライアント(Alice) は他のクライアント (Bob) 宛のメッセージをサーバ(A)へ送信する。
+              サーバAはBobのIDとDNSによってBobのドメイン(B)を持つサーバを特定し、メッセージをそのサーバへ送信する。その後サーバBはBobへメッセージを送信する。
+          </t>
         <!--<t>The Extensible Messaging and Presence Protocol (XMPP) routes
         messages from one end client to another by way of XMPP servers <xref
         target="RFC6120"/>. There are typically two servers involved in
@@ -744,7 +746,8 @@
          +-------+   +----------+   +----------+   +-----+]]></artwork>
         </figure>
 
-        <t>信頼できない中継の問題については特にXMPPにとって深刻である。なぜならば、現時点で多くの適用例では、XMPPドメインの所有者がドメインのサーバの処理で他のエンティティに委託しているためである。
+        <t>
+            信頼できない中間者の問題については特にXMPPにとって深刻である。なぜならば、現時点で多くの適用例では、XMPPドメインの所有者がドメインのサーバの処理を他のエンティティに委託しているためである。
             この環境では、ドメイン所有者の個人情報がドメインのオペレーターに露出してしまう明白なリスクが存在する。
             XMPPはS/MIMEを利用して端末間セキュリティのメカニズム<xref target="RFC3923"/>を既に定義しているが、キー管理の問題やS/MIMEオブジェクトの処理が難しいこともあり、普及させることはできなかった。</t>
         <!--<t>The untrusted-intermediary problems are especially acute for XMPP
@@ -757,7 +760,8 @@
         target="RFC3923"/>, in part because of key management challenges and
         because of the difficulty of processing S/MIME objects.</t>-->
 
-        <t>XMPPワーキンググループはJOSEベースのエンコーディングとより明快なキー管理のシステム<xref target="I-D.miller-xmpp-e2e"/>を利用した新しい端末間暗号化システムの策定に取り組んでいる。
+        <t>
+            XMPPワーキンググループはJOSEベースのエンコーディングとより明快なキー管理のシステムを利用した新しい端末間暗号化システムの策定に取り組んでいる。<xref target="I-D.miller-xmpp-e2e"/>
             このシステム上で暗号化メッセージを送信するプロセスは２つのステップからなる。
             1つ目は、送信者は対象な Content Encryption Key (CEK)を生成してメッセージコンテンツを暗号化して、暗号メッセージを届けたい先の受信者へ送信する。 
             2つ目は、各受信者は自身の公開鍵を提示することで受信者へ「コールバック」を行い、送信者は受信者の公開鍵で変換された関連のあるCEKを受け取る。
@@ -790,10 +794,11 @@
              |             |              |           |]]></artwork>
         </figure>
 
-        <t>このシステムがJOSEフォーマットから要求する主要な事項は、コンテンツ部の暗号化による機密性保護に加え、共有鍵より導出したMACによる完全性の検証機能である。
+        <t>
+            このシステムがJOSEフォーマットから要求する主要な事項は、コンテンツ部の暗号化による機密性保護に加え、共有鍵より導出したMACによる完全性の検証機能である。
             しかしながら、暗号コンテンツの送受信での鍵交換を区別するためには、JOSE暗号化オブジェクトフォーマットに暗号ペイロードとは区別して共通鍵を含むメッセージを伝達できるような仕組みが要求される。
             さらに、暗号オブジェクトにはコンテンツの暗号化に利用した鍵のタグが必要になる。そうすることで受信者(Bob)は送信者(Alice)へ鍵を含んだメッセージを送信する際にタグを提示することができる。
-        key.</t>
+        </t>
         <!--<t>The main thing that this system requires from the JOSE formats is
         confidentiality protection via content encryption, plus an integrity
         check via a MAC derived from the same symmetric key. The separation of
@@ -824,10 +829,10 @@
 
         <t>
             XMPPの端末間セキュリティシステムの最新のドラフトでは、各パーティはXMPPメッセージ伝達システム内にある他パーティの信用情報にもとづいて認証される。
-            送信者は、"Alice"という識別子宛のメッセージ（具体的には、鍵交換のためのリクエスト）を受け取ることができるため、受信者に認証される。
-            同様に、受信者はオリジナルの暗号メッセージと元の鍵交換のリクエストを受け取ることができるため、送信者に認証される
+            送信者は、"Alice"という識別子宛のメッセージ（具体的には、隠蔽された鍵交換のためのリクエスト）を受け取ることができ、またその識別子宛のメッセージ（隠蔽された鍵情報）を送信できるため、受信者に認証される。
+            同様に、受信者はオリジナルの暗号メッセージと元の鍵交換のリクエストを送ることができるため、送信者に認証される。
             そのため、ここでの認証で要求されるのはXMPPのルーティングが正しく行われることだけでなく、TLSが全てのホップにおいて使われることである。
-            それに加えて、３ホップ中いずれかの中間者によってBobになりすまして暗号メッセージの鍵の元を取得できてしまうため、強い認証強度のTLSチャネルが要求される。
+            それに加えて、３ホップ中いずれかにおいて中間者によってBobになりすまして暗号メッセージの鍵情報を取得できてしまうため、強い認証強度のTLSチャネルが要求される。
         </t>
         <!--<t>In the current draft of the XMPP end-to-end security system, each
         party is authenticated by virtue of the other party's trust in the
@@ -844,7 +849,7 @@
         obtain the key material for an encrypted message.</t>-->
 
         <t>
-            この認証は比較的脆弱（TLSを用いた３つのホップに依存しているため）でエンドポイントでは検証できないため、これらのクレデンシャルをJOSEオブジェクトと関連付ける方法も必要であろう場合に末端の受信者のクレデンシャル相当のものをXMPPワーキンググループが策定することも可能である。
+            この認証は比較的脆弱（TLSを用いた３つのホップに依存しているため）でエンドポイントでは検証できない。 そのためXMPPワーキンググループは最終受信者のためになんらかのクレデンシャルを導入することも考えられる。 そのようなケースでは、そういったクレデンシャルをJOSEオブジェクトと関連づける方法も必要となるであろう。
         </t>
         <!--<t>Because this authentication is quite weak (depending on the use of
         transport-layer security on three hops) and unverifiable by the
@@ -855,9 +860,9 @@
         <t>
             最終的に、XMPPがJSONではなくXMLベースであることに意味はない。
             そのため、JOSEを利用するときは、XMPPはXML内にJSONオブジェクトを含めて送信される。
-            したがって、JOSEオブジェクトのプロパティにXMLに含まれても問題ないようにするために、このような方法でエンコードされることが望ましい。
+            したがって、JOSEオブジェクトはXMLに含まれても問題ないような方法でエンコードされることが望ましい。
             そうでなければ、XMLとしてパースされないように明示するため、明示的なCDATAの指定をパーサーに対して行わければならない。
-            この要件を満たすひとつの方法としては、base64urlエンコードをかけることがあげられるが、中から大きめのサイズのXMPPメッセージにとっては、これによりかなりのオーバーヘッドを強いる可能性がある。
+            この要件を満たすひとつの方法としては、base64urlエンコードをかけることがあげられるが、中〜大サイズのXMPPメッセージにとっては、これによりかなりのオーバーヘッドを強いる可能性がある。
         </t>
         <!--<t>Finally, it's worth noting that XMPP is based on XML, not JSON. So
         by using JOSE, XMPP will be carrying JSON objects within XML. It is
@@ -1082,7 +1087,7 @@
       cryptographic operations, such as digest, MAC, encryption, or digital signing.</t>-->
 
       <t>
-          ブラウザが暗号処理を実行することの主要な理由の一つに、JavaScriptコードによって暗号処理に利用されるの鍵の素材にアクセスできないようにすることが挙げられる。
+          ブラウザが暗号処理を実行することの主要な理由の一つに、JavaScriptコードによって暗号処理に利用されるの鍵情報にアクセスできないようにすることが挙げられる。
           例えば、この分離によって、クロスサイトスクリプティング(XSS)によって注入されたコードがブラウザ内に保持された鍵を読み取ったり抜き取ったりすることを防げるだろう。
           悪意のあるコードがブラウザ上で実行し続けている間は鍵を依然として利用可能である一方、この脆弱性はユーザのブラウザ上で脆弱なページがアクティブな間のみ有効である。
       </t>
