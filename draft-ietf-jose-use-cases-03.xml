@@ -1513,22 +1513,42 @@
 
       <section anchor="desiderata-sec" title="Desiderata">
         <t><list style="hanging">
+          <t hangText="D1">
+            W3C WebCrypto 仕様との互換性を最大化する.
+            WebCrypto ワーキンググループと協調し, サポートするアルゴリズムの選択やアルゴリズム識別子の決定を行うことなどが考えられる.
+          </t>
+          <!--
           <t hangText="D1">Maximize compatibility with the W3C WebCrypto
           specifications, e.g., by coordinating with the WebCrypto working group
           to encourage alignment of algorithms and algorithm identifiers. </t>
+          -->
 
+          <t hangText="D2">
+            可能な限り JSON 正規化を避ける.
+            その他の条件が同じであれば, オブジェクトを正規化するよりも, Base64 URL エンコーディングなどでオブジェクトをシリアライゼーションする方が好まれる.
+          </t>
+          <!--
           <t hangText="D2">Avoid JSON canonicalization to the extent possible.
 	  That is, all other things being equal, techniques that rely
           on fixing a serialization of an object (e.g., by base64url encoding it)
           are preferred over those that require converting an object to a
           canonical form.</t>
+          -->
 
+          <t hangText="D3">
+            可能な限り JOSE 暗号処理の入出力をアプリケーションによってコントロール可能にする.
+            JOSE 特有の手順は可能な限り減らすべきである.
+            こうすることにより JOSE のフレキシビリティは向上し, 多くの暗号プロトコルが持つ多様なニーズに応えられるようになる.
+            例えば, 再暗号化や再署名の処理無しに JOSE オブジェクトを CMS などのレガシーフォーマットに変換する, といったニーズも発生するかもしれない.
+          </t>
+          <!--
           <t hangText="D3">Maximize the extent to which the inputs and outputs of
           JOSE cryptographic operations can be controlled by the applications, as
           opposed to involving processing specific to JOSE.  This allows JOSE the
           flexibility to address the needs of many cryptographic protocols.
           For example, in some cases, might allow JOSE objects to be translated to
           legacy formats such as CMS without the need for re-encryption or re-signing.</t>
+          -->
         </list></t>
       </section>
     </section>
