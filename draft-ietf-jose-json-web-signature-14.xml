@@ -2392,69 +2392,106 @@
 
       <section title="Cryptographic Security Considerations" anchor="CryptoSecCon">
 	<t>
-	  All of the security issues faced by any cryptographic application
-	  must be faced by a JWS/JWE/JWK agent.  Among these issues are protecting
-	  the user's private and symmetric keys, preventing various attacks, and helping the
-	  user avoid mistakes such as inadvertently encrypting a message for
-	  the wrong recipient.  The entire list of security considerations is
-	  beyond the scope of this document, but some significant concerns are
-	  listed here.
+	  どんな暗号化アプリケーションも直面するセキュリティ上の課題すべてに, JWS/JWE/JWKエージェントも立ち向かわなければならない. なかでもユーザの秘密鍵と共通鍵を保護すること, さまざま攻撃を阻止すること, そして不注意で間違った受信者へのメッセージを暗号化するような誤操作を避ける手助けをすることが課題である. セキュティ上の考慮事項の完全なリスト化は本ドキュメントの範囲外がであるが, ここにいくつかの重要な事項を列挙する.
 	</t>
+    <!--      <t>
+              All of the security issues faced by any cryptographic application
+              must be faced by a JWS/JWE/JWK agent.  Among these issues are protecting
+              the user's private and symmetric keys, preventing various attacks, and helping the
+              user avoid mistakes such as inadvertently encrypting a message for
+              the wrong recipient.  The entire list of security considerations is
+              beyond the scope of this document, but some significant concerns are
+              listed here.
+          </t>
+     -->
 	<t>
-	  All the security considerations in
-	  <xref target="W3C.CR-xmldsig-core2-20120124">XML DSIG 2.0</xref>,
-	  also apply to this specification, other than those that are XML specific.
-	  Likewise, many of the best practices documented in
-	  <xref target="W3C.WD-xmldsig-bestpractices-20110809">XML Signature Best Practices</xref>
-	  also apply to this specification,
-	  other than those that are XML specific.
+	  <xref target="W3C.CR-xmldsig-core2-20120124">XML DSIG 2.0</xref>にあるすべてのセキュリティ上考慮すべき事項は, XMLに特化したもの以外はすべて本仕様にも当てはまる. 同様に<xref target="W3C.WD-xmldsig-bestpractices-20110809">XML Signature Best Practices</xref>に記載されているベストプラクティスの多くも, XMLに特化したもの以外は本仕様に適用できる.
 	</t>
+    <!--      <t>
+              All the security considerations in
+              <xref target="W3C.CR-xmldsig-core2-20120124">XML DSIG 2.0</xref>,
+              also apply to this specification, other than those that are XML specific.
+              Likewise, many of the best practices documented in
+              <xref target="W3C.WD-xmldsig-bestpractices-20110809">XML Signature Best Practices</xref>
+              also apply to this specification,
+              other than those that are XML specific.
+          </t>
+    -->
 	<t>
-	  Keys are only as strong as the amount of entropy used to
-	  generate them.  A minimum of 128 bits of entropy should be
-	  used for all keys, and depending upon the application context,
-	  more may be required.
-	  In particular, it may be difficult to generate sufficiently
-	  random values in some browsers and application environments.
+	  鍵は生成するために使われるエントロピー量と同じ強度にしかならない. 最低128ビットのエントロピーがすべての鍵に利用されるべきである. アプリケーションコンテクストによってはもっと多くのエントロピーが必要になるかもしれない. 特にいくつかのブラウザやアプリケーション環境では十分ランダムな数値を生成するのが難しいかもしれない.
 	</t>
+    <!--  <t>
+              Keys are only as strong as the amount of entropy used to
+              generate them.  A minimum of 128 bits of entropy should be
+              used for all keys, and depending upon the application context,
+              more may be required.
+              In particular, it may be difficult to generate sufficiently
+              random values in some browsers and application environments.
+          </t>
+    -->
 	<t>
-	  Creators of JWSs should not allow third parties to insert
-	  arbitrary content into the message without adding entropy
-	  not controlled by the third party.
+	  JWSの作成者は, 第三者によって制御されないエントロピーを追加することをせずに第三者が任意のコンテンツをメッセージに挿入することを許すべきではない.
 	</t>
+    <!--  <t>
+              Creators of JWSs should not allow third parties to insert
+              arbitrary content into the message without adding entropy
+              not controlled by the third party.
+          </t>
+    -->
 	<t>
-	  When utilizing TLS to retrieve information, the authority
-	  providing the resource MUST be authenticated and the
-	  information retrieved MUST be free from modification.
+	  情報取得のためにTLSを利用する場合には, リソースを提供する機関は本物であることを証明されなければならない(MUST).
+	  そして引き出される情報は更新されるべきではない (MUST).
 	</t>
+    <!--  <t>
+              When utilizing TLS to retrieve information, the authority
+              providing the resource MUST be authenticated and the
+              information retrieved MUST be free from modification.
+          </t>
+    -->
 	<t>
-	  When cryptographic algorithms are implemented in such a way
-	  that successful operations take a different amount of time
-	  than unsuccessful operations, attackers may be able to
-	  use the time difference to obtain information about the keys
-	  employed.  Therefore, such timing differences must be avoided.
+	  暗号化アルゴリズムが成功時と失敗時で処理時間に差があるように実装されている場合, 攻撃者は処理時間の差を利用して利用されている鍵についての情報を取得することができかもしれない. 故にそのような処理時間の差は避けなければならない.
 	</t>
+    <!--  <t>
+              When cryptographic algorithms are implemented in such a way
+              that successful operations take a different amount of time
+              than unsuccessful operations, attackers may be able to
+              use the time difference to obtain information about the keys
+              employed.  Therefore, such timing differences must be avoided.
+          </t>
+    -->
 	<t>
-	  A SHA-1 hash is used when computing
-	  <spanx style="verb">x5t</spanx> (x.509 certificate thumbprint) values,
-	  for compatibility reasons.  Should an effective means of producing
-	  SHA-1 hash collisions be developed, and should an attacker wish to
-	  interfere with the use of a known certificate on a given system,
-	  this could be accomplished by creating another certificate whose
-	  SHA-1 hash value is the same and adding it to the certificate
-	  store used by the intended victim.  A prerequisite to this
-	  attack succeeding is the attacker having write access to the
-	  intended victim's certificate store.
+	  互換性の理由からSHA-1ハッシュが <spanx style="verb">x5t</spanx> (x.509証明書の拇印) の値を算出するのに利用される.
+	  SHA-1ハッシュ値の衝突を引き起こす効率的な方法が開発され, 攻撃者が任意のシステムの既知の証明書の利用を妨害したい場合,
+	  SHA-1ハッシュの値が同じ証明書をもう一つ作成し, それを狙われた被害者の証明書ストアに加えることで妨害は実現される可能性がある.
+      この攻撃の前提は攻撃者が狙われた被害者の証明書ストアへの書き込み権限をもつことである.
 	</t>
+    <!--      <t>
+              A SHA-1 hash is used when computing
+              <spanx style="verb">x5t</spanx> (x.509 certificate thumbprint) values,
+              for compatibility reasons.  Should an effective means of producing
+              SHA-1 hash collisions be developed, and should an attacker wish to
+              interfere with the use of a known certificate on a given system,
+              this could be accomplished by creating another certificate whose
+              SHA-1 hash value is the same and adding it to the certificate
+              store used by the intended victim.  A prerequisite to this
+              attack succeeding is the attacker having write access to the
+              intended victim's certificate store.
+          </t>
+    -->
 	<t>
-	  If, in the future, certificate thumbprints need to be
-	  computed using hash functions other than SHA-1, it is
-	  suggested that additional related header parameters be
-	  defined for that purpose.  For example, it is suggested
-	  that a new <spanx style="verb">x5t#S256</spanx> (X.509
-	  Certificate Thumbprint using SHA-256) header parameter
-	  could be defined and used.
+	  将来, 証明書の拇印をSHA-1以外のハッシュ関数で算出する必要が出てきた場合, そのために追加の関連ヘッダパラメータを定義することが推奨される. 例えば,
+	  新しい <spanx style="verb">x5t#S256</spanx> (SHA-256を使ったX.509証明書の拇印)というヘッダパラメータを定義して利用することが推奨される.
 	</t>
+    <!--  <t>
+              If, in the future, certificate thumbprints need to be
+              computed using hash functions other than SHA-1, it is
+              suggested that additional related header parameters be
+              defined for that purpose.  For example, it is suggested
+              that a new <spanx style="verb">x5t#S256</spanx> (X.509
+              Certificate Thumbprint using SHA-256) header parameter
+              could be defined and used.
+          </t>
+     -->
       </section>
 
       <section title="JSON Security Considerations" anchor="JSONSecCon">
@@ -2826,7 +2863,7 @@
 
       <t>
       本節では, いくつかのJWSの例を提供する.
-      はじめの3例はJSON Web Token (JWT) <xref target="JWT"> を表しているが, <xref target="ES512Example"/> に見られるように, ペイロードは任意のオクテット列を含むことが出来る.
+      はじめの3例はJSON Web Token (JWT) <xref target="JWT" /> を表しているが, <xref target="ES512Example"/> に見られるように, ペイロードは任意のオクテット列を含むことが出来る.
       </t>
       <!--
       <t>
@@ -2841,7 +2878,7 @@
       <section title="Example JWS using HMAC SHA-256" anchor="HS256Example">
 	<section title="Encoding" anchor="HS256Encoding">
 	  <t>
-      以下に示すJWS Headerの例では, データ構造がJSON Web Token (JWT) <xref target="JWT"> であり, JWS Signing InputはHMAC SHA-256アルゴリズムにより保護されていることを示している.
+      以下に示すJWS Headerの例では, データ構造がJSON Web Token (JWT) <xref target="JWT" /> であり, JWS Signing InputはHMAC SHA-256アルゴリズムにより保護されていることを示している.
 	  </t>
       <!--
 	  <t>
@@ -2970,7 +3007,7 @@
 	  </t>
 	  <t>
       HMACは鍵を用いて生成される.
-      この例では次のようなJSON Web Key <xref target="JWK"> フォーマットで表現される対象鍵を用いる
+      この例では次のようなJSON Web Key <xref target="JWK" /> フォーマットで表現される対象鍵を用いる
       (改行は掲載上の都合による):
 	  </t>
       <!--
@@ -3559,69 +3596,109 @@
       <section title="Example JWS using ECDSA P-521 SHA-512" anchor="ES512Example">
 	<section title="Encoding" anchor="ES512Encoding">
 	  <t>
+            この例のJWSヘッダは直前の例と異なり, ECDSA曲線とハッシュ関数を使っている. 使用われるJWSヘッダは以下の通り:
+	  </t>
+          <!--
+	  <t>
 	    The JWS Header for this example differs from
 	    the previous example because different ECDSA curves
 	    and hash functions are used.  The JWS Header used is:
 	  </t>
+          -->
 
 	  <figure><artwork><![CDATA[
   {"alg":"ES512"}
 ]]></artwork></figure>
 
 	  <t>
+            以下のオクテット列はJWSヘッダのUTF-8表現である:
+	  </t>
+          <!--
+	  <t>
 	    The following octet sequence contains the UTF-8 representation of
 	    the JWS Header:
 	  </t>
+          -->
 	  <t>
 [123, 34, 97, 108, 103, 34, 58, 34, 69, 83, 53, 49, 50, 34, 125]
 	  </t>
 	  <t>
+            これらのオクテットをbase64urlエンコードすると, 以下のエンコード済JWSヘッダ値を得る:
+	  </t>
+          <!--
+	  <t>
 	    Base64url encoding these octets yields this
 	    Encoded JWS Header value:
 	  </t>
+          -->
 
 	  <figure><artwork><![CDATA[
   eyJhbGciOiJFUzUxMiJ9
 ]]></artwork></figure>
 
 	  <t>
+            この例のJWSペイロードは, アスキー文字列の "Payload" である. この文字列の表現は以下のオクテット列である:
+	  </t>
+          <!--
+	  <t>
 	    The JWS Payload used in this example, is the ASCII string "Payload".
 	    The representation of this string is the octet sequence:
 	  </t>
+          -->
 	  <t>
 [80, 97, 121, 108, 111, 97, 100]
 	  </t>
 	  <t>
+            これらのオクテットをbase64urlエンコードすると, 以下のエンコード済JWSペイロード値を得る:
+	  </t>
+          <!--
+	  <t>
 	    Base64url encoding these octets yields this Encoded JWS Payload value:
 	  </t>
+          -->
 
 	  <figure><artwork><![CDATA[
   UGF5bG9hZA
 ]]></artwork></figure>
 
 	  <t>
+            エンコード済JWSヘッダ, ピリオド文字('.'), エンコード済JWSペイロードを連結することにより, 以下のJWS署名入力値を得る:
+	  </t>
+          <!--
+	  <t>
 	    Concatenating the Encoded JWS Header, a period ('.') character,
 	    and the Encoded JWS Payload yields this JWS Signing Input
 	    value:
 	  </t>
+          -->
 
 	  <figure><artwork><![CDATA[
   eyJhbGciOiJFUzUxMiJ9.UGF5bG9hZA
 ]]></artwork></figure>
 
 	  <t>
+            このJWS署名入力値のアスキー表現は以下のオクテット列である:
+	  </t>
+          <!--
+	  <t>
 	    The ASCII representation of the JWS Signing Input
 	    is the following octet sequence:
 	  </t>
+          -->
 	  <t>
 [101, 121, 74, 104, 98, 71, 99, 105, 79, 105, 74, 70, 85, 122, 85, 120, 77, 105, 74, 57, 46, 85, 71, 70, 53, 98, 71, 57, 104, 90, 65]
 	  </t>
 
+          <t>
+            この例では, 以下のJSON Web Key <xref target="JWK" />フォーマットで表現された楕円曲線を使う(改行は掲載上の都合による):
+          </t>
+          <!--
 	  <t>
 	    This example uses the elliptic curve key
 	    represented in JSON Web Key <xref target="JWK" /> format below
 	    (with line breaks for display purposes only):
 	  </t>
+          -->
 	  <figure><artwork><![CDATA[
   {"kty":"EC",
    "crv":"P-521",
@@ -3635,6 +3712,10 @@
 ]]></artwork></figure>
 
 	  <t>
+            ECDSA秘密部 d , 曲線タイプ P-521, ハッシュタイプ SHA-512, およびJWS署名入力のアスキー表現オクテット列が, 入力としてECDSA署名関数に渡される. デジタル署名結果はEC点 (R, S)であり, ここで R および S は符号なし整数である. この例では, R と S の値をビッグエンディアン整数として表現するオクテット列となる:
+	  </t>
+          <!--
+	  <t>
 	    The ECDSA private part d is then passed to an ECDSA
 	    signing function, which also takes the curve type, P-521,
 	    the hash type, SHA-512, and the octets of the ASCII representation of
@@ -3644,10 +3725,15 @@
 	    unsigned integers.  In this example, the R and S values,
 	    given as octet sequences representing big endian integers are:
 	  </t>
+          -->
 
 	  <texttable>
+	    <ttcol align="left">結果名</ttcol>
+	    <ttcol align="left">値</ttcol>
+            <!--
 	    <ttcol align="left">Result Name</ttcol>
 	    <ttcol align="left">Value</ttcol>
+            -->
 
 	    <c>R</c>
 	    <c>
@@ -3669,11 +3755,16 @@
 	  </texttable>
 
 	  <t>
+            S配列をR配列の末尾に連結し base64urlエンコーディングを施すとと以下のエンコード済JWS署名を得る(改行は掲載上の都合による):
+	  </t>
+          <!--
+	  <t>
 	    Concatenating the S array to the end of the R array and
 	    base64url encoding the result produces this value for the
 	    Encoded JWS Signature
 	    (with line breaks for display purposes only):
 	  </t>
+          -->
 
 	  <figure><artwork><![CDATA[
   AdwMgeerwtHoh-l192l60hp9wAHZFVJbLfD_UxMi70cwnZOYaRI1bKPWROc-mZZq
@@ -3682,12 +3773,17 @@
 ]]></artwork></figure>
 
 	<t>
+	  これらの値を Header.Payload.Signature の順でピリオド文字 ('.') を区切りとして連結することで, 以下のJWSコンパクトシリアライゼーション形式を用いた完全なJWS表現を得る(改行は掲載上の都合による):
+	</t>
+        <!--
+	<t>
 	  Concatenating these values in the order
 	  Header.Payload.Signature with period ('.') characters between the
 	  parts yields this complete JWS representation
 	  using the JWS Compact Serialization
 	  (with line breaks for display purposes only):
 	</t>
+        -->
 
 	<figure><artwork><![CDATA[
   eyJhbGciOiJFUzUxMiJ9
@@ -3704,26 +3800,45 @@
 	<section title="Decoding" anchor="ES512Decoding">
 
 	  <t>
+            JWSのデコードは, エンコード済JWSヘッダ, エンコード済JWSペイロード, エンコード済JWS署名をbase64urlデコードし, JWSヘッダ, JWSペイロード, およびJWS署名のオクテット列を得る必要がある. JWSヘッダのUTF-8表現を含むオクテット列をデコードし, JWSヘッダ文字列を得る. 
+	  </t>
+          <!--
+	  <t>
 	    Decoding the JWS requires base64url decoding the Encoded JWS Header,
 	    Encoded JWS Payload, and Encoded JWS Signature to produce the
 	    JWS Header, JWS Payload, and JWS Signature octet sequences.
 	    The octet sequence containing the UTF-8 representation
 	    of the JWS Header is decoded into the JWS Header string.
 	  </t>
+          -->
 
 	</section>
 	<section title="Validating" anchor="ES512Validating">
 
+	  <t>
+	    ヘッダの<spanx style="verb">alg</spanx>パラメータが "ES512" であることから, JWS署名に格納されている ECDSA P-521 SHA-512 デジタル署名を検証する. いずれかの検証ステップに失敗した場合は, JWSは拒否されなければならない (MUST). 
+	  </t>
+          <!--
 	  <t>
 	    Since the <spanx style="verb">alg</spanx> parameter in the header is "ES512", we
 	    validate the ECDSA P-521 SHA-512 digital signature contained in
 	    the JWS Signature.
 	    If any of the validation steps fail, the JWS MUST be rejected.
 	  </t>
+          -->
+	  <t>
+            最初に, JWSヘッダ文字列が正しいJSONであるか検証する. 
+	  </t>
+          <!--
 	  <t>
 	    First, we validate that the JWS Header
 	    string is legal JSON.
 	  </t>
+          -->
+	  <t>
+            JWS署名の検証は直前の例と同様である. まず, 直前の例と同じく, エンコード済JWS署名をbase64urlデコードする. 次に132オクテットある列を2つの長さ66オクテットの列に分割する必要がある. 最初がRであり次がSである. そして, (x, y), (R, S)およびJWS署名入力のアスキー表現オクテットを, ECDSA署名検証器に入力として与える. この検証器はP-521曲線およびSHA-512ハッシュ関数として設定されたものである. 
+	  </t>
+          <!--
 	  <t>
 	    Validating the JWS Signature is similar to the previous example.
 	    First, we base64url decode the Encoded JWS Signature as in the previous examples but we then
@@ -3735,7 +3850,12 @@
 	    has been configured to use the P-521 curve with the
 	    SHA-512 hash function.
 	  </t>
+          -->
 	  <t>
+            JSON Web Algorithms (JWA)<xref target="JWA" />仕様の3.4節で説明されているとおり, ECDSAにおいてK値を用いるということは, HMACの正当性検証と同じ方法ではデジタル署名の正しさを検証できないことを意味する. 実装はECDSA検証器を使ってデジタル署名を検証しなければならない(MUST). 
+	  </t>
+	  <!--
+          <t>
 	    As explained in Section 3.4 of the
 	    JSON Web Algorithms (JWA) <xref target="JWA" /> specification, the
 	    use of the K value in ECDSA means that we cannot validate
@@ -3744,6 +3864,7 @@
 	    implementations MUST use an ECDSA validator to validate
 	    the digital signature.
 	  </t>
+          -->
 
 	</section>
       </section>

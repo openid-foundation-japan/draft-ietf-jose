@@ -724,10 +724,12 @@
       </section>
 
       <section anchor="xmpp-sec" title="XMPP">
-          <t>Extensible Messaging and Presence Protocol (XMPP) は末端のクライアントから他の端末へXMPP servers <xref target="RFC6120"/>の仕様に従ってメッセージを送信するプロトコルである。
-              一般的には任意の送信メッセージに2つのサーバが含まれる。
-              あるクライアント(Alice) は他のクライアント (Bob) 宛のメッセージをサーバ(A)へ送信する。サーバAはBobのIDとDNSによってBobのドメイン(B)を持つサーバの特定し、そしてメッセージをそのサーバへ送信する。
-              サーバBはそれによりBobへメッセージを送信する </t>
+          <t>
+              Extensible Messaging and Presence Protocol (XMPP) は末端のクライアントから他の端末へXMPP serversの仕様に従ってメッセージを送信するプロトコルである。<xref target="RFC6120"/>
+              一般的には任意の送信メッセージに2つのサーバが関与する。
+              あるクライアント(Alice) は他のクライアント (Bob) 宛のメッセージをサーバ(A)へ送信する。
+              サーバAはBobのIDとDNSによってBobのドメイン(B)を持つサーバを特定し、メッセージをそのサーバへ送信する。その後サーバBはBobへメッセージを送信する。
+          </t>
         <!--<t>The Extensible Messaging and Presence Protocol (XMPP) routes
         messages from one end client to another by way of XMPP servers <xref
         target="RFC6120"/>. There are typically two servers involved in
@@ -744,7 +746,8 @@
          +-------+   +----------+   +----------+   +-----+]]></artwork>
         </figure>
 
-        <t>信頼できない中継の問題については特にXMPPにとって深刻である。なぜならば、現時点で多くの適用例では、XMPPドメインの所有者がドメインのサーバの処理で他のエンティティに委託しているためである。
+        <t>
+            信頼できない中間者の問題については特にXMPPにとって深刻である。なぜならば、現時点で多くの適用例では、XMPPドメインの所有者がドメインのサーバの処理を他のエンティティに委託しているためである。
             この環境では、ドメイン所有者の個人情報がドメインのオペレーターに露出してしまう明白なリスクが存在する。
             XMPPはS/MIMEを利用して端末間セキュリティのメカニズム<xref target="RFC3923"/>を既に定義しているが、キー管理の問題やS/MIMEオブジェクトの処理が難しいこともあり、普及させることはできなかった。</t>
         <!--<t>The untrusted-intermediary problems are especially acute for XMPP
@@ -757,9 +760,10 @@
         target="RFC3923"/>, in part because of key management challenges and
         because of the difficulty of processing S/MIME objects.</t>-->
 
-        <t>XMPPワーキンググループはJOSEベースのエンコーディングとより明快なキー管理のシステム<xref target="I-D.miller-xmpp-e2e"/>を利用した新しい端末間暗号化システムの策定に取り組んでいる。
+        <t>
+            XMPPワーキンググループはJOSEベースのエンコーディングとより明快なキー管理のシステムを利用した新しい端末間暗号化システムの策定に取り組んでいる。<xref target="I-D.miller-xmpp-e2e"/>
             このシステム上で暗号化メッセージを送信するプロセスは２つのステップからなる。
-            1つ目は、送信者は対象な Content Encryption Key (CEK)を生成してメッセージコンテンツを暗号化して、暗号メッセージを届けたい先の受信者へ送信する。 
+            1つ目は、送信者は対象な Content Encryption Key (CEK)を生成してメッセージコンテンツを暗号化して、暗号メッセージを届けたい先の受信者へ送信する。
             2つ目は、各受信者は自身の公開鍵を提示することで受信者へ「コールバック」を行い、送信者は受信者の公開鍵で変換された関連のあるCEKを受け取る。
         message to the desired set of recipients. Second, each recipient
         "dials back" to the sender, providing his public key; the sender then
@@ -790,10 +794,11 @@
              |             |              |           |]]></artwork>
         </figure>
 
-        <t>このシステムがJOSEフォーマットから要求する主要な事項は、コンテンツ部の暗号化による機密性保護に加え、共有鍵より導出したMACによる完全性の検証機能である。
+        <t>
+            このシステムがJOSEフォーマットから要求する主要な事項は、コンテンツ部の暗号化による機密性保護に加え、共有鍵より導出したMACによる完全性の検証機能である。
             しかしながら、暗号コンテンツの送受信での鍵交換を区別するためには、JOSE暗号化オブジェクトフォーマットに暗号ペイロードとは区別して共通鍵を含むメッセージを伝達できるような仕組みが要求される。
             さらに、暗号オブジェクトにはコンテンツの暗号化に利用した鍵のタグが必要になる。そうすることで受信者(Bob)は送信者(Alice)へ鍵を含んだメッセージを送信する際にタグを提示することができる。
-        key.</t>
+        </t>
         <!--<t>The main thing that this system requires from the JOSE formats is
         confidentiality protection via content encryption, plus an integrity
         check via a MAC derived from the same symmetric key. The separation of
@@ -824,10 +829,10 @@
 
         <t>
             XMPPの端末間セキュリティシステムの最新のドラフトでは、各パーティはXMPPメッセージ伝達システム内にある他パーティの信用情報にもとづいて認証される。
-            送信者は、"Alice"という識別子宛のメッセージ（具体的には、鍵交換のためのリクエスト）を受け取ることができるため、受信者に認証される。
-            同様に、受信者はオリジナルの暗号メッセージと元の鍵交換のリクエストを受け取ることができるため、送信者に認証される
+            送信者は、"Alice"という識別子宛のメッセージ（具体的には、隠蔽された鍵交換のためのリクエスト）を受け取ることができ、またその識別子宛のメッセージ（隠蔽された鍵情報）を送信できるため、受信者に認証される。
+            同様に、受信者はオリジナルの暗号メッセージと元の鍵交換のリクエストを送ることができるため、送信者に認証される。
             そのため、ここでの認証で要求されるのはXMPPのルーティングが正しく行われることだけでなく、TLSが全てのホップにおいて使われることである。
-            それに加えて、３ホップ中いずれかの中間者によってBobになりすまして暗号メッセージの鍵の元を取得できてしまうため、強い認証強度のTLSチャネルが要求される。
+            それに加えて、３ホップ中いずれかにおいて中間者によってBobになりすまして暗号メッセージの鍵情報を取得できてしまうため、強い認証強度のTLSチャネルが要求される。
         </t>
         <!--<t>In the current draft of the XMPP end-to-end security system, each
         party is authenticated by virtue of the other party's trust in the
@@ -844,7 +849,7 @@
         obtain the key material for an encrypted message.</t>-->
 
         <t>
-            この認証は比較的脆弱（TLSを用いた３つのホップに依存しているため）でエンドポイントでは検証できないため、これらのクレデンシャルをJOSEオブジェクトと関連付ける方法も必要であろう場合に末端の受信者のクレデンシャル相当のものをXMPPワーキンググループが策定することも可能である。
+            この認証は比較的脆弱（TLSを用いた３つのホップに依存しているため）でエンドポイントでは検証できない。 そのためXMPPワーキンググループは最終受信者のためになんらかのクレデンシャルを導入することも考えられる。 そのようなケースでは、そういったクレデンシャルをJOSEオブジェクトと関連づける方法も必要となるであろう。
         </t>
         <!--<t>Because this authentication is quite weak (depending on the use of
         transport-layer security on three hops) and unverifiable by the
@@ -855,9 +860,9 @@
         <t>
             最終的に、XMPPがJSONではなくXMLベースであることに意味はない。
             そのため、JOSEを利用するときは、XMPPはXML内にJSONオブジェクトを含めて送信される。
-            したがって、JOSEオブジェクトのプロパティにXMLに含まれても問題ないようにするために、このような方法でエンコードされることが望ましい。
+            したがって、JOSEオブジェクトはXMLに含まれても問題ないような方法でエンコードされることが望ましい。
             そうでなければ、XMLとしてパースされないように明示するため、明示的なCDATAの指定をパーサーに対して行わければならない。
-            この要件を満たすひとつの方法としては、base64urlエンコードをかけることがあげられるが、中から大きめのサイズのXMPPメッセージにとっては、これによりかなりのオーバーヘッドを強いる可能性がある。
+            この要件を満たすひとつの方法としては、base64urlエンコードをかけることがあげられるが、中〜大サイズのXMPPメッセージにとっては、これによりかなりのオーバーヘッドを強いる可能性がある。
         </t>
         <!--<t>Finally, it's worth noting that XMPP is based on XML, not JSON. So
         by using JOSE, XMPP will be carrying JSON objects within XML. It is
@@ -897,7 +902,7 @@
         able to validate the received ALTO information to ensure that it was
         generated by an appropriate ALTO server."</t>
         -->
-          
+
         <t>
           このケースでのセキュリティ要件は明確である。
           ALTOペイロードを搬送するJOSEオブジェクトは、オリジナルの送信元サーバーのデジタル署名が付随している必要があり、
@@ -1074,34 +1079,59 @@
       </section>
 
       <section anchor="webcrypto-sec" title="Web Cryptography">
-      <t>The W3C Web Cryptography API defines a standard cryptographic API for the
+          <t>W3C Web Cryptography APIではWeb用の標準暗号API <xref target="WebCrypto"></xref>を定義している。
+              もしブラウザがこのAPIを使えるようにした場合、ウェブページの一部として実行されたJavaScriptがブラウザにダイジェスト、MAC、暗号化、デジタル署名などの処理を実行させることが可能となる。</t>
+      <!--<t>The W3C Web Cryptography API defines a standard cryptographic API for the
       Web <xref target="WebCrypto"></xref>.  If a browser exposes this API, then
       JavaScript provided as part of a Web page can ask the browser to perform
-      cryptographic operations, such as digest, MAC, encryption, or digital signing.</t>
+      cryptographic operations, such as digest, MAC, encryption, or digital signing.</t>-->
 
-      <t>One of the key reasons to have the browser perform cryptographic operations
+      <t>
+          ブラウザが暗号処理を実行することの主要な理由の一つに、JavaScriptコードによって暗号処理に利用されるの鍵情報にアクセスできないようにすることが挙げられる。
+          例えば、この分離によって、クロスサイトスクリプティング(XSS)によって注入されたコードがブラウザ内に保持された鍵を読み取ったり抜き取ったりすることを防げるだろう。
+          悪意のあるコードがブラウザ上で実行し続けている間は鍵を依然として利用可能である一方、この脆弱性はユーザのブラウザ上で脆弱なページがアクティブな間のみ有効である。
+      </t>
+      <!--<t>One of the key reasons to have the browser perform cryptographic operations
       is to avoid allowing JavaScript code to access the keying material used for these
       operations.  For example, this separation would prevent code injected through a
       cross-site scripting (XSS) attack from reading and exfiltrating keys stored
       within a browser.  While the malicious code could still use the key while running
       in the browser, this vulnerability can only be exercised while the vulnerable
-      page is active in a user's browser.</t>
+      page is active in a user's browser.</t>-->
 
-      <t>However, the WebCryptography API also provides a key export functionality,
+      <t>
+          しかしながら、WebCryptGraphy API は鍵のエクスポート機能も提供する。それによりJavascriptでAPIを隠蔽した形式で鍵を抜き出すことができる。
+          例えば、JavaScriptは別のデバイスが保持する対になる秘密鍵の代わりに公開鍵を提供したかもしれない。
+          それにより、APIが提供する隠蔽された鍵は新しいデバイスへ安全に鍵を転送するのに使うことができる。
+          こうして悪意のあるコードが鍵をエクスポートできるようにする可能性があるが、ユーザへの通知や同意の検証を考慮にいれても、明示的なエクスポート処理を必要とすることが制御のポイントとなっている。
+      </t>
+      <!--<t>However, the WebCryptography API also provides a key export functionality,
       which can allow JavaScript to extract a key from the API in wrapped form.  For
       example, the JavaScript might provide a public key for which the corresponding
       private key is held by another device.  The wrapped key provided by the API
       could then be used to safely transport the key to the new device.  While this
       could potentially allow malicious code to export a key, the need for an explicit
       export operation provides a control point, allowing for user notification or
-      consent verification.</t>
+      consent verification.</t>-->
 
-      <t>The Web Cryptography API also allows browsers to impose limitations on the
+      <t>
+          Web CryptGraphy API はブラウザが自身の扱う鍵の利用を制限することを強いることも許可している。
+          例えば、対象鍵は暗号化のみでMACには利用できないこと注目されがちである。
+          鍵が隠蔽された形式でエクスポートされる際、これらの属性は鍵と一緒にもっていかれるべきである。
+      </t>
+      <!--<t>The Web Cryptography API also allows browsers to impose limitations on the
       usage of the keys it handles.  For example, a symmetric key might be marked as
       usable only for encryption, and not for MAC.  When a key is exported in wrapped
-      form, these attributes should be carried along with it.</t>
+      form, these attributes should be carried along with it.</t>-->
 
-      <t>The Web Cryptography API thus requires formats to express several forms of
+      <t>
+          Web CryptGraphy API はこのようにして、いくつかの鍵の形式を表現するフォーマットが必要とされる。
+          言うまでもなく、非対称な鍵のペアから公開鍵は自由にインポートでき、ブラウザよりエクスポート可能であるため、公開鍵を表現するためのフォーマットが必要である。
+          秘密鍵や対象鍵を表現できるようなフォーマットもまた必要とされている。
+          非公開鍵のために、まず第一に必要なものは鍵を暗号的に機密性および完全性が保証されている、隠蔽された形式である。
+          ダイレクトで隠蔽されていないフォーマットを定義することもまた、セキュリティの境目での利用に有用であるかもしれない。
+      </t>
+      <!--<t>The Web Cryptography API thus requires formats to express several forms of
       keys.  Obviously, the public key from an asymmetric key pair can be freely
       imported to and exported from the browser, so there needs to be a format for
       public keys.  There is also a need for a format to express private keys and
@@ -1109,7 +1139,7 @@
       where the confidentiality and integrity of the key is assured cryptographically;
       these protections should also apply to any attributes of the key.  It may also
       be useful to define a direct, unwrapped format, for use within a security
-      boundary.</t>
+      boundary.</t>-->
       </section>
 
     <section title="Constrained Devices">
@@ -1322,8 +1352,8 @@
 
           <t>
             暗号化:
-            暗号化およびオプションで完全性保護をサポートすべきである.
-            また特定のフィールドを暗号化対象から外して完全政検証および複合化を行える様にすべきである.
+            完全性保護の追加オプションとして暗号化をサポートすべきである.
+            また特定のフィールドを暗号化対象から外して完全性検証および復号化を行える様にすべきである.
           </t>
           <!--
           <t>Encryption:
@@ -1334,18 +1364,18 @@
           -->
 
           <t>
-            Cipher suite:
-            制約付きデバイスのユースケースをサポートするため, 多様な cipher suite をサポートすべきである.
+            暗号スイート:
+            制約付きデバイスのユースケースをサポートするため, 多様な暗号スイートをサポートすべきである.
             例えば
             <list style="symbols">
               <t>
                 複数のブロックサイズでのブロック暗号化 (標準の128bitに加えて96bitなど)
               </t>
               <t>
-                ブロック境界までメッセージサイズを広げない AES-GCM などのブロック暗号モード
+                ブロックサイズ調整のためのパディングでメッセージサイズを増大させることのない AES-GCM などのブロック暗号モード
               </t>
               <t>
-                暗号化と MAC 計算を同時にサポートする cipher suite (ブロック暗号の AEAD モード等)
+                暗号化と MAC 計算を同時にサポートする暗号スイート (ブロック暗号の AEAD モード等)
               </t>
             </list>
           </t>
@@ -1371,15 +1401,26 @@
     </section>
 
     <section anchor="req-sec" title="Requirements">
-      <t>This section summarizes the requirements from the above uses cases, and
+        <t>
+            この章では前章のユースケースの要件を要約を行い、またユースケースから直接的には得られないもう一歩進んだ要件を並べる。
+            JOSEのシステムが採用するのに依然として望ましい特長ではあるが、厳しい要件ではない制約もまたある。
+        </t>
+      <!--<t>This section summarizes the requirements from the above uses cases, and
       lists further requirements not directly derived from the above use cases.
       There are also some constraints that are not hard requirements, but which
-      are still desirable properties for the JOSE system to have.</t>
+      are still desirable properties for the JOSE system to have.</t>-->
 
       <section anchor="functional-sec" title="Functional Requirements">
         <t><list style="hanging">
-          <!--
-          <t hangText="F1">Define formats for secure objects that provide the following
+          <t hangText="F1">
+              下記のセキュリティ特性を備えたセキュアオブジェクトのためのフォーマットを定義すること
+            <list style="symbols">
+            <t>デジタル署名 (完全性/非対象鍵のペアによる認証)</t>
+            <t>メッセージ認証 (完全性/対象鍵による認証)</t>
+            <t>認証済み暗号化</t>
+            </list>
+            つまり、このワーキンググループによって定義されたセキュアオブジェクトはCMS 署名データ、認証データ、エンベロープデータ、認証エンベロープデータオブジェクトと同等のセキュリティ特性を提供するべきだ<xref target="RFC5652"></xref> <xref target="RFC5083"></xref>.</t>
+          <!--<t hangText="F1">Define formats for secure objects that provide the following
           security properties:
             <list style="symbols">
             <t>Digital signature (integrity/authentication under an asymmetric key pair)</t>
@@ -1389,29 +1430,53 @@
           That is, the secure objects defined by this working group should provide
           equivalent security properties to the CMS SignedData, AuthenticatedData,
           EnvelopedData, and AuthEnveloped data objects <xref target="RFC5652"></xref>
-          <xref target="RFC5083"></xref>.</t>
-          <t hangText="F2">Define a format for public keys and private keys for
+          <xref target="RFC5083"></xref>.</t>-->
+          <t hangText="F2">
+              非対称暗号アルゴリズムのための公開鍵と秘密鍵と関連付けられた属性を付帯し、隠蔽された形式の秘密鍵を含むフォーマットを定義すること。
+          </t>
+          <!--<t hangText="F2">Define a format for public keys and private keys for
           asymmetric cryptographic algorithms, with associated attributes, including a
-          wrapped form for private keys.</t>
-          <t hangText="F3">Define a format for symmetric keys with associated attributes,
-          allowing for both wrapped and unwrapped keys.</t>
-          -->
-          <t hangText="F4">Define a JSON serialization for each of the above objects.  An object
+          wrapped form for private keys.</t>-->
+          <t hangText="F3">
+              隠蔽された鍵とされていない鍵の両者を扱えるような関連属性を持つ対象鍵のためのフォーマットを定義すること。
+
+          </t>
+          <!--<t hangText="F3">Define a format for symmetric keys with associated attributes,
+          allowing for both wrapped and unwrapped keys.</t>-->
+          <t hangText="F4">
+              上記オブジェクト個別のJSONシリアライズ機能を定義すること。
+              JSON ABNF syntax <xref target="RFC4627"></xref> によると、この変換でのオブジェクトは正しくなければならない.
+          </t>
+          <!--<t hangText="F4">Define a JSON serialization for each of the above objects.  An object
           in this encoding must be valid according to the JSON ABNF syntax
-          <xref target="RFC4627"></xref>.</t>
-          <t hangText="F5">Define a compact, URL-safe text serialization for the encrypted
-          signed object formats.</t>
-          <t hangText="F6">Allow for attributes associated to wrapped keys to be bound
-          to them cryptographically</t>
-          <t hangText="F7">Allow for wrapped keys to be separated from a secure object
+          <xref target="RFC4627"></xref>.</t>-->
+          <t hangText="F5">
+              暗号化署名済みオブジェクトフォーマットのためのコンパクトでURLセーフなテキストシリアライズ機能を定義すること.
+          </t>
+          <!--<t hangText="F5">Define a compact, URL-safe text serialization for the encrypted
+          signed object formats.</t>-->
+          <t hangText="F6">
+              隠蔽された鍵と関連付けられた属性を暗号的にオブジェクトにひもづけられるようにすること.
+          </t>
+          <!--<t hangText="F6">Allow for attributes associated to wrapped keys to be bound
+          to them cryptographically</t>-->
+          <t hangText="F7">
+              隠蔽された鍵が対象鍵を利用するセキュアオブジェクトから区別されるようにすること。
+              そのようなケースでは、隠蔽された鍵（例：暗号文、MAC値）以外のセキュアオブジェクトの暗号コンポーネントは隠蔽された鍵形式とは非依存でなくてはならない。
+              例えば、暗号化オブジェクトが複数の受信者宛に準備された場合、暗号文ではなく隠蔽された鍵のみが変わる。
+          </t>
+          <!--<t hangText="F7">Allow for wrapped keys to be separated from a secure object
           that uses a symmetric key.  In such cases, cryptographic components of the
           secure object other than the wrapped key (e.g., ciphertext, MAC values) must
           be independent of the wrapped form of the key.  For example, if an encrypted
           object is prepared for multiple recipients, then only the wrapped key may vary,
-          not the ciphertext.</t>
-          <t hangText="F8">Do not impose more overhead than is required to meet the
+          not the ciphertext.</t>-->
+          <t hangText="F8">
+              この文書記載の要件に合わせようとして、特に大量のアプリケーションの内容が保護されるような場合に、余計なオーバーヘッドを強いないようにすること。
+          </t>
+          <!--<t hangText="F8">Do not impose more overhead than is required to meet the
           requirements in this document, especially when a large amount of application
-          content is being protected.</t>
+          content is being protected.</t>-->
         </list></t>
       </section>
 
@@ -1448,22 +1513,42 @@
 
       <section anchor="desiderata-sec" title="Desiderata">
         <t><list style="hanging">
+          <t hangText="D1">
+            W3C WebCrypto 仕様との互換性を最大化する.
+            WebCrypto ワーキンググループと協調し, サポートするアルゴリズムの選択やアルゴリズム識別子の決定を行うことなどが考えられる.
+          </t>
+          <!--
           <t hangText="D1">Maximize compatibility with the W3C WebCrypto
           specifications, e.g., by coordinating with the WebCrypto working group
           to encourage alignment of algorithms and algorithm identifiers. </t>
+          -->
 
+          <t hangText="D2">
+            可能な限り JSON 正規化を避ける.
+            その他の条件が同じであれば, オブジェクトを正規化するよりも, Base64 URL エンコーディングなどでオブジェクトをシリアライゼーションする方が好まれる.
+          </t>
+          <!--
           <t hangText="D2">Avoid JSON canonicalization to the extent possible.
 	  That is, all other things being equal, techniques that rely
           on fixing a serialization of an object (e.g., by base64url encoding it)
           are preferred over those that require converting an object to a
           canonical form.</t>
+          -->
 
+          <t hangText="D3">
+            可能な限り JOSE 暗号処理の入出力をアプリケーションによってコントロール可能にする.
+            JOSE 特有の手順は可能な限り減らすべきである.
+            こうすることにより JOSE のフレキシビリティは向上し, 多くの暗号プロトコルが持つ多様なニーズに応えられるようになる.
+            例えば, 再暗号化や再署名の処理無しに JOSE オブジェクトを CMS などのレガシーフォーマットに変換する, といったニーズも発生するかもしれない.
+          </t>
+          <!--
           <t hangText="D3">Maximize the extent to which the inputs and outputs of
           JOSE cryptographic operations can be controlled by the applications, as
           opposed to involving processing specific to JOSE.  This allows JOSE the
           flexibility to address the needs of many cryptographic protocols.
           For example, in some cases, might allow JOSE objects to be translated to
           legacy formats such as CMS without the need for re-encryption or re-signing.</t>
+          -->
         </list></t>
       </section>
     </section>
