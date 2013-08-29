@@ -89,8 +89,8 @@
     <!-- <section title="Introduction" anchor="Introduction"> -->
     <t> 
 	JSON Web Token(JWT)はHTTP認証ヘッダやURIクエリパラメータなどスペースに制約のある環境を意図したコンパクトな表現形式である.
-    JWTは、クレームのデジタル署名またはMACと暗号化の両方か, あるいはいずれか一方を可能にし, JSON Web Signature(JWS)<xref target="JWS"/>の構成のペイロードや, 
-	JSON Web Encryption(JWE)<xref target="JWE"/>の構成のプレーンテキストとして使用されるJavaScript Object Notation(JSON)<xref target="RFC4627"/>オブジェクトとして, 送信するクレームをエンコードする.
+    JWTは, クレームをJSON Web Signature(JWS)<xref target="JWS"/>のペイロードや
+	JSON Web Encryption(JWE)<xref target="JWE"/>のプレーンテキストとなるJavaScript Object Notation(JSON)<xref target="RFC4627"/>オブジェクトとしてエンコードし, クレームに対するデジタル署名やMAC, 暗号化などを可能にする.
 	JWTは常にJWSのコンパクトシリアライゼーションまたはJWEコンパクトシリアライゼーションを利用して表現される.
 	</t>
 	<!-- <t>
@@ -137,7 +137,7 @@
 	<list style="hanging">
 
           <t hangText="JSON Web Token (JWT)">
-	    JSONオブジェクトとしてクレームのセットを表現する文字列はJWSもしくはJWEの中ではエンコードされ, クレームがデジタル署名もしくはメッセージ認証符号化, そして/または暗号化されることを可能にする.
+        クレームのセットをJSONオブジェクトとして文字列表現にしてJWSやJWEにエンコードすることで, クレームに対するデジタル署名やメッセージ認証符号化, 暗号化が可能になる.
 	    <!--
 	    A string representing a set of claims as a JSON object that is
 	    encoded in a JWS or JWE,
@@ -147,9 +147,9 @@
 
           <t hangText="Base64urlエンコーディング">
           <!-- <t hangText="Base64url Encoding"> -->
-	    <!--
-	    <xref target="RFC4648">RFC 4648</xref>のセクション5で説明されているURLおよびファイル名として安全なBase64エンコーディングであり, Section 3.2で許可されているように (URLとして安全ではない) '=' パディング文字が省略されている.
+        <xref target="RFC4648">RFC 4648</xref>のセクション5で説明されているURLおよびファイル名として安全なBase64エンコーディングであり, Section 3.2で許可されているように (URLとして安全ではない) '=' パディング文字が省略されている.
 	    (パディングなしのBase64urlエンコーディングの導入についての注意事項は<xref target="JWS" />のAppendix Cを参照のこと)
+	    <!--
 	    The URL- and filename-safe Base64 encoding
 	    described in <xref target="RFC4648">RFC 4648</xref>,
 	    Section 5, with the (non URL-safe) '=' padding characters
@@ -210,7 +210,7 @@
 
 	  <t hangText="クレーム">
 	  <!-- <t hangText="Claim"> -->
-	    主体に関連して表現される情報の一部.
+	    ある主体に関するひとまとまりの情報.
 	    クレームはクレーム名とクレーム値から構成される名前と値のペアで表現される.
 	    <!--
 	    A piece of information asserted about a subject.
@@ -249,7 +249,7 @@
 	  <t hangText="入れ子にされたJWT">
 	  <!-- <t hangText="Nested JWT"> -->
 	    署名かつ/もしくは暗号化が適用されたJWTに入れ子にされているJWT.
-	    入れ子にされたJWTでは, JWTはそれぞれペイロードもしくはJWSもしくはJWE構造の中の平文の値として利用される.
+	    入れ子にされたJWTでは, JWTは内包されたJWS/JWEのペイロード/平文の値として利用される.
 	    <!--
 	    A JWT in which nested signing and/or encryption are employed.
 	    In nested JWTs, a JWT is used as the payload or plaintext value
@@ -259,7 +259,7 @@
 
 	  <t hangText="平文のJWT">
 	  <!-- <t hangText="Plaintext JWT"> -->
-	    まったく保護もしくは暗号化されていないクレームを持つJWT.
+	    完全性保護も暗号化もされていないクレームからなるJWT.
 	    <!--
 	    A JWT whose Claims are not integrity protected or encrypted.
 	    -->
