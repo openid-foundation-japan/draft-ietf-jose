@@ -2955,7 +2955,7 @@
 ]]></artwork></figure>
 
 	  <t>
-      JWS Signing InputのASCII表現が以下のオクテット列となる:
+      JWS Signing InputのASCII表現が以下に示すオクテット列となる:
 	  </t>
       <!--
 	  <t>
@@ -3280,39 +3280,61 @@
       <section title="Example JWS using ECDSA P-256 SHA-256" anchor="ES256Example">
 	<section title="Encoding" anchor="ES256Encoding">
 	  <t>
+      異なるアルゴリズムが利用されているため, この例のJWS Headerは前の例と異なる.
+      利用されるJWS Header: 
+	  </t>
+      <!--
+	  <t>
 	    The JWS Header for this example differs from
 	    the previous example because a different algorithm is
 	    being used.  The JWS Header used is:
 	  </t>
+      -->
 
 	  <figure><artwork><![CDATA[
   {"alg":"ES256"}
 ]]></artwork></figure>
 
 	  <t>
+      以下に示すオクテット列はJSON HeaderのUTF-8表現である: 
+	  </t>
+      <!--
+	  <t>
 	    The following octet sequence contains the UTF-8 representation of
 	    the JWS Header:
 	  </t>
+      -->
 	  <t>
 
 [123, 34, 97, 108, 103, 34, 58, 34, 69, 83, 50, 53, 54, 34, 125]
 
 	  </t>
 	  <t>
+      これらのオクテット列をBase64 URLエンコードするとこのようなEncoded JWS Headerの値が生成される.
+	  </t>
+      <!--
+	  <t>
 	    Base64url encoding these octets yields this
 	    Encoded JWS Header value:
 	  </t>
+      -->
 
 	  <figure><artwork><![CDATA[
   eyJhbGciOiJFUzI1NiJ9
 ]]></artwork></figure>
 
 	  <t>
+      以下に示す, この例で用いられるJWS Payloadは前の例のものと同一である.
+      したがって, Encoded JWS Payloadもまた同一であるため, ここではその計算を繰りかえさない.
+	  </t>
+      <!--
+	  <t>
 	    The JWS Payload used in this example, which
 	    follows, is the same as in the previous examples.  Since
 	    the Encoded JWS Payload will therefore be the same, its
 	    computation is not repeated here.
 	  </t>
+      -->
 
 	  <figure><artwork><![CDATA[
   {"iss":"joe",
@@ -3321,10 +3343,16 @@
 ]]></artwork></figure>
 
 	  <t>
+      Encoded JWS HeaderとEncoded JWS Payloadをピリオド('.')文字で連結することで, JWS Signing Inputの値が生成される
+      (改行は掲載上の都合による):
+	  </t>
+      <!--
+	  <t>
 	    Concatenating the Encoded JWS Header, a period ('.') character,
 	    and the Encoded JWS Payload yields this JWS Signing Input
 	    value (with line breaks for display purposes only):
 	  </t>
+      -->
 
 	  <figure><artwork><![CDATA[
   eyJhbGciOiJFUzI1NiJ9
@@ -3334,9 +3362,14 @@
 ]]></artwork></figure>
 
 	  <t>
+      JWS Signing InputのASCII表現が以下に示すオクテット列となる:
+	  </t>
+      <!--
+	  <t>
 	    The ASCII representation of the JWS Signing Input
 	    is the following octet sequence:
 	  </t>
+      -->
 	  <t>
 
 [101, 121, 74, 104, 98, 71, 99, 105, 79, 105, 74, 70, 85, 122, 73, 49, 78, 105, 74, 57, 46, 101, 121, 74, 112, 99, 51, 77, 105, 79, 105, 74, 113, 98, 50, 85, 105, 76, 65, 48, 75, 73, 67, 74, 108, 101, 72, 65, 105, 79, 106, 69, 122, 77, 68, 65, 52, 77, 84, 107, 122, 79, 68, 65, 115, 68, 81, 111, 103, 73, 109, 104, 48, 100, 72, 65, 54, 76, 121, 57, 108, 101, 71, 70, 116, 99, 71, 120, 108, 76, 109, 78, 118, 98, 83, 57, 112, 99, 49, 57, 121, 98, 50, 57, 48, 73, 106, 112, 48, 99, 110, 86, 108, 102, 81]
@@ -3344,9 +3377,14 @@
 	  </t>
 
 	  <t>
+      この例は以下のJSON Web Key <xref target="JWK" /> フォーマットで表現された楕円曲線鍵を用いる:
+	  </t>
+      <!--
+	  <t>
 	    This example uses the elliptic curve key
 	    represented in JSON Web Key <xref target="JWK" /> format below:
 	  </t>
+      -->
 	  <figure><artwork><![CDATA[
   {"kty":"EC",
    "crv":"P-256",
@@ -3357,6 +3395,12 @@
 ]]></artwork></figure>
 
 	  <t>
+      ECDSA秘密部 d, 曲線タイプ P-521, ハッシュタイプ SHA-512, およびJWS Signing InputのASCII表現のオクテット列が, 入力としてECDSA署名関数に渡される. 
+      デジタル署名結果はEC点 (R, S)であり, ここで R および S は符号なし整数である. 
+      この例では, R と S の値をビッグエンディアン整数として表現するオクテット列となる:
+	  </t>
+      <!--
+	  <t>
 	    The ECDSA private part d is then passed to an ECDSA
 	    signing function, which also takes the curve type, P-256,
 	    the hash type, SHA-256, and the octets of the ASCII representation of
@@ -3366,10 +3410,15 @@
 	    unsigned integers.  In this example, the R and S values,
 	    given as octet sequences representing big endian integers are:
 	  </t>
+      -->
 
 	  <texttable>
+	    <ttcol align="left">結果名</ttcol>
+	    <ttcol align="left">値</ttcol>
+        <!--
 	    <ttcol align="left">Result Name</ttcol>
 	    <ttcol align="left">Value</ttcol>
+        -->
 
 	    <c>R</c>
 	    <c>
@@ -3387,11 +3436,17 @@
 	  </texttable>
 
 	  <t>
+      S配列をR配列の末尾に連結し, Base64 URLエンコーディングを施すことで, 以下のEncoded JWS Signatureが生成される
+      (改行は掲載上の都合による):
+	  </t>
+      <!--
+	  <t>
 	    Concatenating the S array to the end of the R array and
 	    base64url encoding the result produces this value for the
 	    Encoded JWS Signature
 	    (with line breaks for display purposes only):
 	  </t>
+      -->
 
 	  <figure><artwork><![CDATA[
   DtEhU3ljbEg8L38VWAfUAqOyKAM6-Xx-F4GawxaepmXFCgfTjDxw5djxLa8ISlSA
@@ -3399,12 +3454,18 @@
 ]]></artwork></figure>
 
 	<t>
+    ピリオド('.')文字をパーツ間の区切りとしてこれらの値をHeader.Payload.Signatureの順番で連結することで, JSON Compact Seriali完全なJWS表現が生成される.
+    (改行は掲載上の都合による):
+	</t>
+    <!--
+	<t>
 	  Concatenating these values in the order
 	  Header.Payload.Signature with period ('.') characters between the
 	  parts yields this complete JWS representation
 	  using the JWS Compact Serialization
 	  (with line breaks for display purposes only):
 	</t>
+    -->
 
 	<figure><artwork><![CDATA[
   eyJhbGciOiJFUzI1NiJ9
@@ -3420,26 +3481,49 @@
 	<section title="Decoding" anchor="ES256Decoding">
 
 	  <t>
+      JWSのデコードは, JWS Header, JWS Payload, JWS Signatureのオクテット列を生成するためにEncoded JWS Header, Encoded JWS Payload, Encoded JWS SignatureのBase64 URLデコードを必要とする.
+      JWS HeaderのUTF-8表現を含むオクテット列がJWS Header文字列にデコードされる.
+	  </t>
+      <!--
+	  <t>
 	    Decoding the JWS requires base64url decoding the Encoded JWS Header,
 	    Encoded JWS Payload, and Encoded JWS Signature to produce the
 	    JWS Header, JWS Payload, and JWS Signature octet sequences.
 	    The octet sequence containing the UTF-8 representation
 	    of the JWS Header is decoded into the JWS Header string.
 	  </t>
+      -->
 
 	</section>
 	<section title="Validating" anchor="ES256Validating">
 
+	  <t>
+	  ヘッダ中の <spanx style="verb">alg</spanx> パラメータが"ES256"であるため, JWS Signatureに含まれるECDSA P-256 SHA-256デジタル署名を検証する.
+      もし検証に失敗した場合, このJWSは拒否されなければならない (MUST).
+	  </t>
+      <!--
 	  <t>
 	    Since the <spanx style="verb">alg</spanx> parameter in the header is "ES256", we
 	    validate the ECDSA P-256 SHA-256 digital signature contained in
 	    the JWS Signature.
 	    If any of the validation steps fail, the JWS MUST be rejected.
 	  </t>
+      -->
+	  <t>
+      初めに, JWS Header文字列が正しいJSONであることを検証する.
+	  </t>
+      <!--
 	  <t>
 	    First, we validate that the JWS Header
 	    string is legal JSON.
 	  </t>
+      -->
+	  <t>
+      JWS Signatureの検証は最初の例と少し異なる. 
+      初めにEncoded JWS Signatureを前の例のようにBase64 URLデコード, それから長さ64のオクテット列を長さ32の2つのオクテット列に分割し, はじめがR, 次がSとなる.
+      そして, (x, y), (R, S)およびJWS Signing InputのASCII表現であるオクテットを, P-256 曲線とSHA-256ハッシュ関数が設定されたECDSA署名検証器に入力として与える. 
+	  </t>
+      <!--
 	  <t>
 	    Validating the JWS Signature is a little different
 	    from the first example. First, we base64url decode the Encoded JWS Signature as in the previous examples but we then
@@ -3451,6 +3535,12 @@
 	    has been configured to use the P-256 curve with the
 	    SHA-256 hash function.
 	  </t>
+      -->
+	  <t>
+      JSON Web Algorithms (JWA) <xref target="JWA" /> 仕様の3.4節で説明されているように, ECDSAのKの値の利用は, HMACの妥当性確認と同じ方法でデジタル署名の妥当性を検証することができないことを意味する. 
+      その代わり, 実装者はデジタル署名を検証するためにECDSA検証機を利用しなければならない (MUST).
+	  </t>
+      <!--
 	  <t>
 	    As explained in Section 3.4 of the
 	    JSON Web Algorithms (JWA) <xref target="JWA" /> specification, the
@@ -3460,6 +3550,7 @@
 	    implementations MUST use an ECDSA validator to validate
 	    the digital signature.
 	  </t>
+      -->
 
 	</section>
       </section>
