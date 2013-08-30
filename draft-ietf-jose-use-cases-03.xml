@@ -1482,6 +1482,18 @@
 
       <section anchor="sec-req-sec" title="Security Requirements">
         <t><list style="hanging">
+        <t hangText="S1">
+          暗号化やMACの計算に同じ対称鍵を繰り返し使用することを避けるためのメカニズムを提供すること。
+          その代わりに、長期間有効な鍵は鍵ラップのためだけに用いるべきであり、直接暗号化やMACに用いるべきではない。
+          CMS <xref target="RFC5652"></xref> で提供されているいずれかの鍵管理手法を用いるべきである。
+          <list style="symbols">
+            <t>鍵配送 (公開鍵のラップ)</t>
+            <t>鍵暗号化 (対称鍵のラップ)</t>
+            <t>鍵合意 (DH公開鍵のラップ)</t>
+            <t>パスワードベース暗号化 (パスワードから導出された鍵によるラップ)</t>
+          </list>
+        </t>
+        <!--
         <t hangText="S1">Provide mechanisms to avoid repeated use of the same symmetric
         key for encryption or MAC computation.  Instead, long-lived keys should be used
         only for key wrapping, not for direct encryption/MAC.  It should be possible to use any
@@ -1493,21 +1505,40 @@
             <t>Password-based encryption (wrapping under a key derived from a password)</t>
           </list>
         </t>
+        -->
 
+        <t hangText="S2">
+          長期間有効な対称鍵を暗号操作に直接用いる場合 (すなわち要件S1に合致しない場合)、鍵の生存期間を制限する必要がある等の、鍵管理の実践に関するデプロイガイダンスを提供すること。
+        </t>
+        <!--
         <t hangText="S2">Where long-lived symmetric keys are used directly for cryptographic
         operations (i.e., where requirement S1 is not met), provide deployment guidance on
         key management practices, such as the need to limit key lifetimes.</t>
+        -->
 
+        <t hangText="S3">
+          主要な検証プロセスに準拠した方法で暗号アルゴリズムを使用すること。
+          例えばFIPS標準がアルゴリズムAは目的Yではなく目的Xに対して用いることとしている場合、JOSEは目的Yに対するアルゴリズムAの使用を推奨すべきではない。
+        </t>
+        <!--
         <t hangText="S3">Use cryptographic algorithms in a manner compatible with
         major validation processes.  For example, if a FIPS standard allows
         algorithm A to be used for purpose X but not purpose Y, then JOSE should
         not recommend using algorithm A for purpose Y.</t>
+        -->
 
+        <t hangText="S4">
+          事前ネゴシエーションの有無に関わらず操作をサポートすること。
+          鍵のプロビジョニング以外の設定はなくとも、セキュアオブジェクトの生成や処理は可能に違いない。
+          鍵がアプリケーションのコンテキストから導出可能な場合、受信者がその適切な鍵を所持していなくとも認識可能に違いない。
+        </t>
+        <!--
         <t hangText="S4">Support operation with or without pre-negotiation.
         It must be possible to create or process secure objects without
         any configuration beyond key provisioning.  If it is possible for keys
         to be derived from application context, it must be possible for a recipient
         to recognize when it does not have the appropriate key.</t>
+        -->
         </list></t>
       </section>
 
