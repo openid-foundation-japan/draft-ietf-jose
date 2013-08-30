@@ -516,9 +516,9 @@
     <!--<section title="JWT Claims" anchor="Claims">-->
 
       <t>
-        JWT クレームセットは JWT によって送られるクレームのメンバーである JSON オブジェクトをあらわしている.
+        JWT クレームセットは JSON オブジェクトであり, それぞれのメンバーは JWT として送られるクレームである.
         JWT クレームセット内のクレーム名は一意でなければならない（MUST）.
-        受信者は重複しているクレーム名を拒否するか, あるいは JSON パーサーを ECMAScript 5.1 <xref target="ECMAScript"/> のセクション 15.12 (JSON オブジェクト) で定義されているとおり語彙的に最後の重複メンバー名だけを返却する JSON パーサを利用しなければならない（MUST）.
+        受信者はクレーム名が重複した JWT を拒否するか, あるいは JSON パーサーを ECMAScript 5.1 <xref target="ECMAScript"/> のセクション 15.12 (JSON オブジェクト) で定義されているとおり語彙的に最後の重複メンバー名だけを返却する JSON パーサを利用しなければならない（MUST）.
       </t>
       <!--
       <t>
@@ -532,9 +532,9 @@
       </t>
       -->
       <t>
-        JWT が有効とみなされるように含まれていなければならないクレームのセットは, 状況に依存し本仕様の範囲外である.
-        JWT の特定のアプリケーションは, 特定の方法でいくつかのクレームを解釈し処理するための実装を必要とする.
-        しかしながら, このような要求が存在しない場合には実装によって解釈されるすべてのクレームを無視されるべきである(SHOULD).
+        有効な JWT が含まねばならないクレームはコンテキストに依存するため, 本仕様の範囲外とする.
+        JWT を採用するアプリケーションごとに, クレームの解釈方法と処理方法について定めることになる.
+        アプリケーションがこのような要件を定めていないクレームについては, それが解釈不可能な場合には無視すること (SHOULD).
       </t>
       <!--
       <t>
@@ -561,8 +561,8 @@
       <!--<section title="Reserved Claim Names" anchor="ReservedClaimName">-->
   <t>
     次のクレーム名は予約されている.
-    以下に定義されているクレームはいずれも使用することを必須とすることを想定されてないが, 有用で相互互換のあるクレームのセットとしての起点が提供されている.
-    JWT の主な目的はコンパクト化するための表現であるため, すべて短いクレーム名となっている.
+    以下に定義されているクレームは, いずれも必須とされることを想定されてはいないが, 有用で相互運用性のあるクレームとなることを期待して提供されている.
+    JWT はコンパクトな表現形式となることを目的としているため, すべてのクレーム名は短くなっている.
     追加の予約クレーム名は <xref target="JWTClaimsReg" /> の IANA JSON Web トークンクレームレジストリにしたがって定義することができる.
   </t>
   <!--
@@ -580,9 +580,9 @@
 	<section title='"iss" (Issuer) クレーム' anchor="issDef">
   <!--<section title='"iss" (Issuer) Claim' anchor="issDef">-->
     <t>
-      <spanx style="verb">iss</spanx>（issuer）クレームは JWT を発行元を識別する.
+      <spanx style="verb">iss</spanx>（issuer）クレームは JWT の発行者の識別子である.
       このクレームの処理は一般的にアプリケーション固有である.
-      <spanx style="verb">iss</spanx> の値は文字列あるいは URI を含む大文字と小文字を区別する文字列である.
+      <spanx style="verb">iss</spanx> の値は文字列あるいは StringOrURI 値である.
       このクレームの使用は任意である（OPTIONAL）.
     </t>
     <!--
@@ -601,11 +601,11 @@
 	<section title='"sub" (Subject) クレーム' anchor="subDef">
   <!--<section title='"sub" (Subject) Claim' anchor="subDef">-->
     <t>
-      <spanx style="verb">sub</spanx>（subject）クレームは JWT の発行先を識別する.
-      JWT に含まれるこのクレームは通常対象についての説明である.
+      <spanx style="verb">sub</spanx>（subject）クレームは JWT の主語となる主体の識別子である.
+      JWT に含まれるクレームは, 通常 subject について述べたものである.
       このクレームの処理は一般的にアプリケーション固有である.
-      <spanx style="verb">sub</spanx> の値は文字列あるいはURIを含む大文字と小文字を区別する文字列である.
-      このクレームの使用は任意である（OPTIONAL）.
+      <spanx style="verb">sub</spanx> の値は文字列あるいは StringOrURI 値である.
+      このクレームの使用は任意であるOPTIONAL）.
     </t>
     <!--
 	  <t>
@@ -623,11 +623,10 @@
 	<section title='"aud" (Audience) クレーム' anchor="audDef">
   <!--<section title='"aud" (Audience) Claim' anchor="audDef">-->
     <t>
-      <spanx style="verb">aud</spanx>（audience）クレームは JWT を対象とするオーディエンスを識別する.
-      JWT を処理するために意図されたそれぞれの対象はオーディエンスクレームの中の値とそれ自体を識別しなければならない（MUST）.
-      もしクレームを処理している対象が <spanx style="verb">aud</spanx> クレームの値とそれ自体を識別していない場合, その JWT は拒否されなければならない（MUST）.
-      一般的な場合において, <spanx style="verb">aud</spanx> クレームの値は文字列あるいは URI を含む大文字と小文字を区別する文字列の配列である.
-      特殊な場合では, JWT がひとつのオーディエンスを含んでいるとき, <spanx style="verb">aud</spanx> の値は文字列あるいは URI を含む大文字のみまたは小文字のみの文字列でもよい（MAY）.
+      <spanx style="verb">aud</spanx>（audience）クレームは JWT を利用することが想定された主体の識別子一覧である.
+      JWT を処理するために意図されたそれぞれの対象は, オーディエンスクレームの値に自身の識別子が含まれていることを確認し, <spanx style="verb">aud</spanx> に自身の識別子が含まれない場合はその JWT の処理を拒否しなければならない（MUST）.
+      一般的な場合において, <spanx style="verb">aud</spanx> クレームの値は文字列あるいは StringOrURI 値の配列である.
+      JWT が単一のオーディエンスから構成される場合に限って, <spanx style="verb">aud</spanx> の値は単一の文字列あるいは StringOrURI 値でもよい（MAY）.
       オーディエンス値の解釈は一般的にアプリケーション固有である.
       このクレームの使用は任意である（OPTIONAL）.
     </t>
@@ -655,11 +654,12 @@
 	<section title='"exp" (Expiration Time) クレーム' anchor="expDef">
   <!--<section title='"exp" (Expiration Time) Claim' anchor="expDef">-->
     <t>
-      <spanx style="verb">exp</spanx> (expiration time) クレームは, それ以降に JWT が処理のために受け付けてはならない有効期限を識別する(MUST NOT).
-      <spanx style="verb">exp</spanx> クレームの処理は, 現在の日付/時刻が <spanx style="verb">exp</spanx> クレームに記載されている有効期限の日付/時刻以前でなければならないことを要求する(MUST). 
-      実装者はクロック・キューを考慮していくらかの小さな余地(通常は数分以上はない)を与えてもよい(MAY).
-      その値はIntDate値を含む数値でなければならない(MUST).
-      このクレームの使用は任意である(OPTIONAL).
+      <spanx style="verb">exp</spanx> (expiration time) クレームは, JWT の有効期限を示す.
+      これ以降その JWT を処理してはならない (MUST NOT).
+      <spanx style="verb">exp</spanx> クレームを処理する際には, <spanx style="verb">exp</spanx> が現在時刻以前でないことを確認しなければならない (MUST).
+      実装者はクロック・キューを考慮していくらかの小さな 余地 (通常は数分以上はない) を与えてもよい (MAY).
+      このクレームの値は IntDate 値でなければならない(MUST).
+      このクレームの使用は任意である (OPTIONAL).
     </t>
     <!--
 	  <t>
