@@ -749,8 +749,7 @@
 	<section title='"typ" (Type) クレーム' anchor="typDef">
   <!--<section title='"typ" (Type) Claim' anchor="typDef">-->
     <t>
-      <spanx style="verb">typ</spanx> (type) クレームは, JWT クレームセットのコンテンツのタイプを宣言するために利用できる (MAY).
-      このクレームの利用方法はアプリケーション固有であり, アプリケーションの都合にあわせて決定してよい.
+      <spanx style="verb">typ</spanx> (type) クレームは, アプリケーションにとって有用なコンテキストにおいて, アプリケーション固有の方法で, JWT クレームセットのコンテンツのタイプを宣言するために利用できる (MAY).
       <spanx style="verb">typ</spanx> の値は, 大文字と小文字を区別する文字列である.
       このクレームの使用は任意である (OPTIONAL).
     </t>
@@ -765,7 +764,7 @@
     </t>
     -->
     <t>
-      <spanx style="verb">typ</spanx> クレームの値は, <spanx style="verb">typ</spanx> ヘッダパラメータと同様のルールに従って決定される.
+      <spanx style="verb">typ</spanx> クレーム値には, <spanx style="verb">typ</spanx> ヘッダパラメータと同じ値空間および同じ規則が適用される.
     </t>
     <!--
 	  <t>
@@ -863,7 +862,7 @@
       <section title='"typ" (Type) ヘッダ・パラメータ' anchor="typHdrDef">
       <!-- <section title='"typ" (Type) Header Parameter' anchor="typHdrDef"> -->
 	<t>
-	  <spanx style="verb">typ</spanx> (type) ヘッダ・パラメータはアプリケーションにとって有用なコンテキストにおいて, アプリケーション固有の方法で, このJWTの形式を記述するために利用してもよい (MAY).
+	  <spanx style="verb">typ</spanx> (type) ヘッダ・パラメータは, アプリケーションにとって有用なコンテキストにおいて, アプリケーション固有の方法で, このJWTの形式を記述するために利用してもよい (MAY).
 	  このパラメータはJWTの処理に影響を及ぼさない.
 	  もしパラメータが存在した場合, その値はそのオブジェクトがJWTであることを示すため, <spanx style="verb">JWT</spanx>もしくは<spanx style="verb">urn:ietf:params:oauth:token-type:jwt</spanx>を指定することが推奨される (RECOMMENDED).
 	  <spanx style="verb">typ</spanx>の値は大文字小文字を区別する文字列である.
@@ -896,9 +895,9 @@
 	-->
 	</t>
 	<t>
-	  署名の入れ子もしくは暗号化オペレーションが使用されない通常時, このヘッダ・パラメータの使用は推奨されない (NOT RECOMMENDED).
-	  署名の入れ子もしくは暗号化オペレーションが使用される場合, このヘッダ・パラメータの使用は必須である (REQUIRED).
-	  この場合, このJWTの中に入れ子となるJWTが含まれることを示すため, 値は<spanx style="verb">JWT</spanx>でなければならない (MUST).
+	  入れ子の署名/暗号化オペレーションが使用されない通常時, このヘッダ・パラメータの使用は推奨されない (NOT RECOMMENDED).
+	  入れ子の署名/暗号化オペレーションが使用される場合, このヘッダ・パラメータの使用は必須である (REQUIRED).
+	  後者の場合, このJWTの中に入れ子となるJWTが含まれることを示すため, 値は<spanx style="verb">JWT</spanx>でなければならない (MUST).
 	  入れ子のJWTの例は<xref target="NestedJWTExample"/>を参照のこと.
 	<!--
 	  In the normal case where nested signing or encryption
@@ -912,7 +911,7 @@
 	-->
 	</t>
 	<t>
-	  <spanx style="verb">cty</spanx>ヘッダ・パラメータに使用された値は, <spanx style="verb">typ</spanx>ヘッダ・パラメータと同じ値空間から同じ規則が適用されて使用される.
+	  <spanx style="verb">cty</spanx>ヘッダ・パラメータ値には, <spanx style="verb">typ</spanx> ヘッダパラメータと同じ値空間および同じ規則が適用される.
 	<!--
 	  The values used for the <spanx style="verb">cty</spanx>
 	  header parameter come from the same value space as the
@@ -936,9 +935,9 @@
 	-->
 	</t>
 	<t>
-	  本仕様はアプリケーションの要求によっては, JWEであるJWTの中のヘッダ・パラメータとして複製されたJWTクレーム・セットの中にクレームが存在することを許可している.
+	  本仕様は, JWE の JWT クレームセット中に存在するクレームが, アプリケーションの必要に応じてヘッダパラメータとしても重複して存在することを許可する.
 	  もしそのように複製されたクレームが存在する場合, それらを受け取るアプリケーションはそれらの値が同一であることを確認すべきである (SHOULD).
-	  暗号化されずに送信されることが安全なクレームだけがJWTの中のヘッダ・パラメータ値として複製されたことを確認するのはアプリケーションの責任である.
+	  JWTのヘッダ・パラメータ値として複製されるクレームが, 暗号化せずに送信しても安全なものであることを保証するのは, アプリケーションの責任である.
 	<!--
 	  This specification allows Claims present in the JWT Claims Set
 	  to be replicated as Header Parameters in a JWT that is a JWE,
@@ -973,11 +972,8 @@
     <!-- <section title="Plaintext JWTs" anchor="Plaintext"> -->
 
 	<t>
-     JWTコンテンツが署名と暗号化のどちらか, 
-	 または両方がJWT(例えばJWTを含むデータ構造の署名など)中に含まれる以外の方法でセキュアな状態となるユースケースをサポートするために, 
-	 JWTも署名または暗号化なしで作成されるかもしれない.(MAY)
-     プレーンテキストJWTはJSON Web Algorithms(JWA)で定義されたJWSのalgヘッダパラメータにnoneを使用したJWSであり, 
-     それはJWSの署名値に空の文字列を持つJWSである.      
+     署名や暗号化以外の方法でJWTコンテンツがセキュアに保たれるようなユースケースをサポートするために, 署名や暗号化なしにJWTを生成することも可能とする (MAY).
+     プレーンテキストJWTはJSON Web Algorithms (JWA)で定義されたJWSのalgヘッダパラメータにnoneを使用したJWSであり, 署名値は空文字列となる.
     </t> 
      <!-- <t>
 	To support use cases where the JWT content is secured by a
