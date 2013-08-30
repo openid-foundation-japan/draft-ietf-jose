@@ -240,8 +240,8 @@
       target="RFC2119">RFC 2119</xref>.</t>
       -->
 
-      <t>この文書は<xref target="RFC4949"/>に記載される標準セキュリティ用語を広範囲に活用するものである。
-          JOSEとCMSのユースケースは似ていることから、いくつかのCMSのコンセプトについて<xref target="RFC5652"/>を例に説明する。</t>
+      <t>この文書は<xref target="RFC4949"/>に記載される標準セキュリティ用語を広範囲に活用するものである.
+          JOSEとCMSのユースケースは似ていることから, いくつかのCMSのコンセプトについて<xref target="RFC5652"/>を例に説明する.</t>
       <!--
       <t>This document makes extensive use of standard security terminology
       <xref target="RFC4949"/>. In addition, because the use cases for JOSE
@@ -249,7 +249,7 @@
       concepts <xref target="RFC5652"/>.</t>
       -->
 
-      <t>JOSEワーキンググループでは３つのJSONオブジェクトフォーマットを定義する。
+      <t>JOSEワーキンググループでは３つのJSONオブジェクトフォーマットを定義する.
       <!--
       <t>The JOSE working group charter calls for the group to define three
       basic JSON object formats:
@@ -265,9 +265,9 @@
           <!--<t>A format for expressing keys</t>-->
       </list>
 
-      この文書では、上記をそれぞれ"署名済みオブジェクトフォーマット"、"暗号化オブジェクトフォーマット"、"鍵フォーマット"と呼ぶ。
-      これらのフォーマットを表現することを目的としたJOSEワーキンググループの仕様はそれぞれJSON Web Signature (JWS)<xref target="I-D.ietf-jose-json-web-signature"/>, JSON Web Encryption (JWE)<xref target="I-D.ietf-jose-json-web-encryption"/>, JSON Web Key (JWK)<xref target="I-D.ietf-jose-json-web-key"/>である。
-      JWS, JWE, JWKで使用されるアルゴリズムやアルゴリズム識別子はJSON Web Alogrithms (JWA) <xref target="I-D.ietf-jose-json-web-algorithms"/> で定義されている。
+      この文書では, 上記をそれぞれ"署名済みオブジェクトフォーマット", "暗号化オブジェクトフォーマット", "鍵フォーマット"と呼ぶ.
+      これらのフォーマットを表現することを目的としたJOSEワーキンググループの仕様はそれぞれJSON Web Signature (JWS)<xref target="I-D.ietf-jose-json-web-signature"/>, JSON Web Encryption (JWE)<xref target="I-D.ietf-jose-json-web-encryption"/>, JSON Web Key (JWK)<xref target="I-D.ietf-jose-json-web-key"/>である.
+      JWS, JWE, JWKで使用されるアルゴリズムやアルゴリズム識別子はJSON Web Alogrithms (JWA) <xref target="I-D.ietf-jose-json-web-algorithms"/> で定義されている.
       <!--In this document, we will refer to these as
       the "signed object format",
       the "encrypted object format",
@@ -281,16 +281,16 @@
       JSON Web Algorithms (JWA) <xref target="I-D.ietf-jose-json-web-algorithms"/>.-->
       </t>
 
-      <t>通常、非対称/対称な処理を区別する必要がない場面では、共通鍵を使ったメッセージ認証コード(MAC) と公開鍵暗号を含むデジタル署名についても同様に"署名"、"シグネチャ"などの用語を用いる</t>
+      <t>通常, 非対称/対称な処理を区別する必要がない場面では, 共通鍵を使ったメッセージ認証コード(MAC) と公開鍵暗号を含むデジタル署名についても同様に"署名", "シグネチャ"などの用語を用いる</t>
       <!--<t>In general, where there is no need to distinguish between asymmetric and
       symmetric operations, we will use the terms "signing", "signature", etc.
       to denote both true digital signatures involving asymmetric cryptography
       as well as message authentication codes using symmetric keys (MACs).</t>-->
 
-      <t>セキュアオブジェクトの存続期間には、オブジェクトを生成するエンティティ（例：ペイロードを暗号化もしくは署名する側）とオブジェクトを利用するエンティティ（例：復号化、検証をする側）の２つの基本的なロールが存在する。
-          これらのロールをそれぞれ"送信者"、"受信者"と呼ぶことにする。
-          要件やユースケースによってはこれらのロールを単一エンティティが担うことを明記するかもしれないが、同一ロールに複数のエンティティが存在する可能性があることに留意すること。
-          たとえば、メッセージは複数の送信者によって署名されたり、複数の受信者によって復号化される可能性がある。</t>
+      <t>セキュアオブジェクトの存続期間には, オブジェクトを生成するエンティティ (例：ペイロードを暗号化もしくは署名する側) とオブジェクトを利用するエンティティ (例：復号化, 検証をする側) の２つの基本的なロールが存在する.
+          これらのロールをそれぞれ"送信者", "受信者"と呼ぶことにする.
+          要件やユースケースによってはこれらのロールを単一エンティティが担うことを明記するかもしれないが, 同一ロールに複数のエンティティが存在する可能性があることに留意すること.
+          たとえば, メッセージは複数の送信者によって署名されたり, 複数の受信者によって復号化される可能性がある.</t>
       <!--<t>In the lifespan of a secure object, there are two basic roles, an
       entity that creates the object (e.g., encrypting or signing a payload),
       and an entity that uses the object (decrypting, verifying). We will
@@ -303,23 +303,23 @@
 
     <section anchor="basic-sec" title="Basic Requirements">
       <t>
-        言うまでもなく、 暗号化および署名済みオブジェクトフォーマットに対し、機密性のためには対称あるいは非対称暗号化、完全性保護のためにはMACあるいはデジタル署名といった、適切な暗号メカニズムを用いることで、必要な保護が形成される。
-        両方のケースで、対称および非対称処理の両方のサポートがJOSEフォーマットには必要である。
+        言うまでもなく,  暗号化および署名済みオブジェクトフォーマットに対し, 機密性のためには対称あるいは非対称暗号化, 完全性保護のためにはMACあるいはデジタル署名といった, 適切な暗号メカニズムを用いることで, 必要な保護が形成される.
+        両方のケースで, 対称および非対称処理の両方のサポートがJOSEフォーマットには必要である.
         <list style="symbols">
           <t>
-            JOSE暗号化オブジェクトフォーマットは、送信者と受信者が対称鍵を共有しているケースでのオブジェクト暗号化をサポートしなければならない。
+            JOSE暗号化オブジェクトフォーマットは, 送信者と受信者が対称鍵を共有しているケースでのオブジェクト暗号化をサポートしなければならない.
           </t>
 
           <t>
-            JOSE暗号化オブジェクトフォーマットは、送信者が受信者の公開鍵のみを所持しているケースでのオブジェクト暗号化をサポートしなければならない。
+            JOSE暗号化オブジェクトフォーマットは, 送信者が受信者の公開鍵のみを所持しているケースでのオブジェクト暗号化をサポートしなければならない.
           </t>
 
           <t>
-            JOSE署名済みオブジェクトフォーマットは、送信者と受信者が対称鍵のみを共有しているケースでのメッセージ認証コード (MAC) を用いた完全性保護をサポートしなければならない。
+            JOSE署名済みオブジェクトフォーマットは, 送信者と受信者が対称鍵のみを共有しているケースでのメッセージ認証コード (MAC) を用いた完全性保護をサポートしなければならない.
           </t>
 
           <t>
-            JOSE署名済みオブジェクトフォーマットは、受信者が送信者の公開鍵のみを所持しているケースでのデジタル署名を用いた完全性保護をサポートしなければならない。
+            JOSE署名済みオブジェクトフォーマットは, 受信者が送信者の公開鍵のみを所持しているケースでのデジタル署名を用いた完全性保護をサポートしなければならない.
           </t>
         </list>
       </t>
@@ -347,16 +347,16 @@
         </list></t>
       -->
       <t>
-        いくつかのアプリケーションでは、JOSEオブジェクトの処理に用いる鍵が、JOSEオブジェクトの中で直接提示されるのではなく、アプリケーションのコンテキストを通じて提示される。
-        しかし、混乱を避けるために、必要なコンテキストが不足しているエンドポイントは、不足を認識し、問題なく失敗処理を行える必要がある。
-        鍵以外、JOSEオブジェクトは事前ネゴシエーションをサポートしない。
-        全ての暗号パラメータはJOSEオブジェクトの中に直接記述されなければならない。
+        いくつかのアプリケーションでは, JOSEオブジェクトの処理に用いる鍵が, JOSEオブジェクトの中で直接提示されるのではなく, アプリケーションのコンテキストを通じて提示される.
+        しかし, 混乱を避けるために, 必要なコンテキストが不足しているエンドポイントは, 不足を認識し, 問題なく失敗処理を行える必要がある.
+        鍵以外, JOSEオブジェクトは事前ネゴシエーションをサポートしない.
+        全ての暗号パラメータはJOSEオブジェクトの中に直接記述されなければならない.
         <list style="symbols">
           <t>
-             JOSE署名済みおよび暗号化オブジェクトフォーマットは、対象のオブジェクトの処理に必要な鍵を持っているかどうか、そしてその鍵はそのオブジェクト自身によって提示されているか、あるいはなんらかのout-of-bandメカニズムによって提示されているかどうかについて実装が認識するためのプロセスを定義しなければならない。
+             JOSE署名済みおよび暗号化オブジェクトフォーマットは, 対象のオブジェクトの処理に必要な鍵を持っているかどうか, そしてその鍵はそのオブジェクト自身によって提示されているか, あるいはなんらかのout-of-bandメカニズムによって提示されているかどうかについて実装が認識するためのプロセスを定義しなければならない.
           </t>
           <t>
-            JOSEで利用される各アルゴリズムについて、そのアルゴリズムを使用するJOSEオブジェクトが内包しなければならないパラメータを定義する必要がある。
+            JOSEで利用される各アルゴリズムについて, そのアルゴリズムを使用するJOSEオブジェクトが内包しなければならないパラメータを定義する必要がある.
           </t>
         </list>
       </t>
@@ -378,13 +378,13 @@
       </t>
       -->
       <t>
-        二つのエンティティが複数のJOSEオブジェクトを交換しようとするケースで、全てのJOSEオブジェクトで個々にパラメータを記述しなくても済むように、いくつかのパラメータについて事前にネゴシエーションをすることは有用かもしれない。
-        しかし、事前ネゴシエーションをサポートしないエンドポイントと混同しないように、これらのケースでは事前にネゴシエーションされたパラメータを使用していることを示すことは有益である。
+        二つのエンティティが複数のJOSEオブジェクトを交換しようとするケースで, 全てのJOSEオブジェクトで個々にパラメータを記述しなくても済むように, いくつかのパラメータについて事前にネゴシエーションをすることは有用かもしれない.
+        しかし, 事前ネゴシエーションをサポートしないエンドポイントと混同しないように, これらのケースでは事前にネゴシエーションされたパラメータを使用していることを示すことは有益である.
 
         <list style="symbols">
           <t>
-            オブジェクトの処理に事前ネゴシエーションされたパラメータが使用されることを示すことができるように、基本のJOSE署名済みおよび暗号化オブジェクトフォーマットを拡張できるようにすべきである。
-            この拡張は、どのパラメータが使用されるのかを示す手段も提供すべきである。
+            オブジェクトの処理に事前ネゴシエーションされたパラメータが使用されることを示すことができるように, 基本のJOSE署名済みおよび暗号化オブジェクトフォーマットを拡張できるようにすべきである.
+            この拡張は, どのパラメータが使用されるのかを示す手段も提供すべきである.
           </t>
         </list>
       </t>
@@ -405,8 +405,8 @@
       -->
 
       <t>
-        鍵フォーマットの目的は、暗号メッセージ処理用の符号化された鍵を使用するために十分な情報を受信者に提供することである。
-        そのため、時には純粋な鍵だけではなく追加のパラメータを含める必要がある。
+        鍵フォーマットの目的は, 暗号メッセージ処理用の符号化された鍵を使用するために十分な情報を受信者に提供することである.
+        そのため, 時には純粋な鍵だけではなく追加のパラメータを含める必要がある.
       </t>
       <!--
       <t>The purpose of the key format is to provide the recipient with
@@ -418,8 +418,8 @@
       <t>
         <list style="symbols">
           <t>
-            JOSE鍵フォーマットは符号化された鍵を使用するために必要な全てのアルゴリズムパラメータを含めることが出来なければならない。
-            そのパラメータには、アルゴリズムで必要となる追加のパラメータ (例: 楕円曲線パラメータ) とともに、その鍵が使用されるアルゴリズムの識別子も含まれる。
+            JOSE鍵フォーマットは符号化された鍵を使用するために必要な全てのアルゴリズムパラメータを含めることが出来なければならない.
+            そのパラメータには, アルゴリズムで必要となる追加のパラメータ (例: 楕円曲線パラメータ) とともに, その鍵が使用されるアルゴリズムの識別子も含まれる.
           </t>
         </list>
       </t>
@@ -464,8 +464,8 @@
     </section>
 
     <section anchor="use-cases-sec" title="Use Cases">
-        <t>アプリケーションレイヤーのプロトコルについて策定しているワーキンググループにはJOSEデータフォーマットをエンドツーエンドのセキュリティ機能の設計で利用したいという要望を表明しているところもある。
-            この章では、このようなグループが提案したユースケースをとりまとめ、JOSEオブジェクトフォーマットに求められる要件について説明する。</t>
+        <t>アプリケーションレイヤーのプロトコルについて策定しているワーキンググループにはJOSEデータフォーマットをエンドツーエンドのセキュリティ機能の設計で利用したいという要望を表明しているところもある.
+            この章では, このようなグループが提案したユースケースをとりまとめ, JOSEオブジェクトフォーマットに求められる要件について説明する.</t>
       <!--<t>Several working groups developing application-layer protocols
       have expressed a desire to use the JOSE data formats in their
       designs for end-to-end security features. In this section, we summarize
@@ -473,9 +473,9 @@
       they imply for the JOSE object formats.</t>-->
 
       <section anchor="sec-token-sec" title="Security Tokens">
-        <t>セキュリティトークンはオブジェクトベースのセキュリティではよくあるユースケースである。例えばSAMLのアサーション <xref target="OASIS.saml-core-2.0-os"/>がある。
-            セキュリティトークンは発行者から受信者へ対象のエンティティ（"クレーム"または"アサーション"）に関する情報を渡すために使われる。
-            トークンフォーマットのセキュリティ機能により、受信者はクレームが発行者により発行され、完全性が保護されているオブジェクトの場合は他のパーティから読み取れないことを検証することができる。</t>
+        <t>セキュリティトークンはオブジェクトベースのセキュリティではよくあるユースケースである. 例えばSAMLのアサーション <xref target="OASIS.saml-core-2.0-os"/>がある.
+            セキュリティトークンは発行者から受信者へ対象のエンティティ ("クレーム"または"アサーション") に関する情報を渡すために使われる.
+            トークンフォーマットのセキュリティ機能により, 受信者はクレームが発行者により発行され, 完全性が保護されているオブジェクトの場合は他のパーティから読み取れないことを検証することができる.</t>
         <!--<t>Security tokens are a common use case for object-based security,
         for example, SAML assertions <xref target="OASIS.saml-core-2.0-os"/>.
         Security tokens are used to convey information about a subject entity
@@ -485,8 +485,8 @@
         confidentiality-protected, that they were not visible to other
         parties.</t>-->
 
-        <t>セキュリティトークンはOAuth2.0<xref target="RFC6749"/>とそれに含まれるOAuth bearer tokens <xref target="RFC6750"/> などのリソース認可のプロトコルだけでなく、SAML 2.0 <xref target="OASIS.saml-core-2.0-os"/>, WS-Federation <xref target="WS-Federation"/>, Mozilla Persona <xref target="Persona"/>, OpenID Connect <xref target="OpenID.Messages"/> などのフェデレーションプロトコルで利用される。
-            あるケースでは、セキュリティトークンはクライアント認証やアクセス制御 <xref target="I-D.ietf-oauth-jwt-bearer"/><xref target="I-D.ietf-oauth-saml2-bearer"/>に利用される。</t>
+        <t>セキュリティトークンはOAuth2.0<xref target="RFC6749"/>とそれに含まれるOAuth bearer tokens <xref target="RFC6750"/> などのリソース認可のプロトコルだけでなく, SAML 2.0 <xref target="OASIS.saml-core-2.0-os"/>, WS-Federation <xref target="WS-Federation"/>, Mozilla Persona <xref target="Persona"/>, OpenID Connect <xref target="OpenID.Messages"/> などのフェデレーションプロトコルで利用される.
+            あるケースでは, セキュリティトークンはクライアント認証やアクセス制御 <xref target="I-D.ietf-oauth-jwt-bearer"/><xref target="I-D.ietf-oauth-saml2-bearer"/>に利用される.</t>
         <!--<t>Security tokens are used in federation protocols such as SAML 2.0
 	<xref target="OASIS.saml-core-2.0-os"/>,
         WS-Federation <xref target="WS-Federation"/>,
@@ -499,9 +499,9 @@
         control <xref target="I-D.ietf-oauth-jwt-bearer"/><xref
         target="I-D.ietf-oauth-saml2-bearer"/>.</t>-->
 
-	<t>JSON Web Token (JWT) <xref target="I-D.ietf-oauth-json-web-token"/> はJSONおよびJOSEをベースとしたセキュリティートークンフォーマットである。
+	<t>JSON Web Token (JWT) <xref target="I-D.ietf-oauth-json-web-token"/> はJSONおよびJOSEをベースとしたセキュリティートークンフォーマットである.
         JWTはMozilla Persona, OpenID Connect, OAuthと共に利用される.
-        JWTは限定された場面（例: HTTPクエリパラメータ）で主に利用されていたためJWTの主要な要件となり、それゆえJOSEは短くURLセーフな形式になっている。</t>
+        JWTは限定された場面 (例: HTTPクエリパラメータ) で主に利用されていたためJWTの主要な要件となり, それゆえJOSEは短くURLセーフな形式になっている.</t>
 	<!--<t>JSON Web Token (JWT) <xref target="I-D.ietf-oauth-json-web-token"/>
 	is a security token format
 	based on JSON and JOSE. It is used with Mozilla Persona,
@@ -514,11 +514,11 @@
       <section anchor="oauth-sec" title="OAuth">
 
         <t>
-          OAuthプロトコルは、HTTP <xref target="RFC6749"/> を用いた認可トークンの流通と利用のメカニズムを定義している。
-          保護リソースへアクセスしたいクライアントは、リソースオーナーからの認可を要求する。
-          このアクセスを許可する場合、リソースオーナーは認可サーバーに対し、クライアントへアクセストークンを発行するよう指示する。
-          クライアントは、保護リソースにアクセスしたいとき、関係するリソースサーバーにそのトークンを提示する。
-          そしてリソースサーバーは保護リソースへのアクセスを提供する前にそのトークンの妥当性を検証する。
+          OAuthプロトコルは, HTTP <xref target="RFC6749"/> を用いた認可トークンの流通と利用のメカニズムを定義している.
+          保護リソースへアクセスしたいクライアントは, リソースオーナーからの認可を要求する.
+          このアクセスを許可する場合, リソースオーナーは認可サーバーに対し, クライアントへアクセストークンを発行するよう指示する.
+          クライアントは, 保護リソースにアクセスしたいとき, 関係するリソースサーバーにそのトークンを提示する.
+          そしてリソースサーバーは保護リソースへのアクセスを提供する前にそのトークンの妥当性を検証する.
         </t>
         <!--
         <t>The OAuth protocol defines a mechanism for distributing and using
@@ -555,9 +555,9 @@
         </figure>
 
         <t>
-          実質的にこのプロセスは、クライアントおよびリソースオーナー経由で、認可サーバー(オブジェクトの送信者)からリソースサーバー(受信者)へトークンを移すことである
-          (リソースオーナーを経由するのはこのプロトコルが利用しているHTTPのメカニズムに起因している)。
-          そこで、信頼できない中間者経由でアプリケーションオブジェクトを転送するケースが出てくる。
+          実質的にこのプロセスは, クライアントおよびリソースオーナー経由で, 認可サーバー(オブジェクトの送信者)からリソースサーバー(受信者)へトークンを移すことである
+          (リソースオーナーを経由するのはこのプロトコルが利用しているHTTPのメカニズムに起因している).
+          そこで, 信頼できない中間者経由でアプリケーションオブジェクトを転送するケースが出てくる.
         </t>
         <!--
         <t>In effect, this process moves the token from the Authorization
@@ -569,10 +569,10 @@
         -->
 
         <t>
-          このアプリケーションには二つの不可欠なセキュリティ要件がある。
-          完全性とデータ生成元の認証である。
-          完全性保護は、リソースオーナーとクライアントがトークン内に符合化されたパーミッションを変更できないようするために必要である。
-          リソースオーナーは究極的には認可を付与するエンティティではあるが、例えばリソースオーナーが所有していないリソースへのアクセス権の付与も出来てしまうため、認可トークンの変更に対しては信頼できない。
+          このアプリケーションには二つの不可欠なセキュリティ要件がある.
+          完全性とデータ生成元の認証である.
+          完全性保護は, リソースオーナーとクライアントがトークン内に符合化されたパーミッションを変更できないようするために必要である.
+          リソースオーナーは究極的には認可を付与するエンティティではあるが, 例えばリソースオーナーが所有していないリソースへのアクセス権の付与も出来てしまうため, 認可トークンの変更に対しては信頼できない.
         </t>
         <!--
         <t>This application has two essential security requirements: Integrity
@@ -585,19 +585,19 @@
         -->
 
         <t>
-          データ生成元の認証は、トークンが信頼できる認可サーバーによって生成されたものかどうかをリソースサーバーが検証できるようにするために必要である。
+          データ生成元の認証は, トークンが信頼できる認可サーバーによって生成されたものかどうかをリソースサーバーが検証できるようにするために必要である.
         </t>
         <!--
         <t>Data origin authentication is required so that
         the Resource Server can verify that the token was issued by a trusted
-        Authorization Server. </t>
+        Authorization Server.</t>
         -->
 
         <t>
-          認可サーバーがリソースオーナーやクライアントに対してパーミッション情報を不可視としたい場合、機密性保護も必要となるかもしれない。
-          例えば、ソーシャルネットワーキングに関連したパーミッションはプライベートな情報と見なされるかもしれない。
-          しかし、OAuthは下位層で用いているHTTPトランザクションがTLSによって保護されていることを元々要求していることには注意すること。
-          よってトークンはリソースサーバーとクライアント以外のエンティティに対する機密性保護に関しては既に達成されている。
+          認可サーバーがリソースオーナーやクライアントに対してパーミッション情報を不可視としたい場合, 機密性保護も必要となるかもしれない.
+          例えば, ソーシャルネットワーキングに関連したパーミッションはプライベートな情報と見なされるかもしれない.
+          しかし, OAuthは下位層で用いているHTTPトランザクションがTLSによって保護されていることを元々要求していることには注意すること.
+          よってトークンはリソースサーバーとクライアント以外のエンティティに対する機密性保護に関しては既に達成されている.
         </t>
         <!--
         <t>Confidentiality protection may also be needed,
@@ -611,8 +611,8 @@
         -->
 
         <t>
-          署名と暗号化が対称暗号または非対称暗号のいずれを用いて提供されるのかに関わらず、機密性および完全性のニーズは、署名済みおよび暗号化オブジェクトフォーマットの基本要件に合致している。
-          どちらのメカニズムを採用するかの選択は、二つのサーバ間の関係、すなわちそれらが対称鍵を共有するのか、公開鍵のみを共有するのかに依存するだろう。
+          署名と暗号化が対称暗号または非対称暗号のいずれを用いて提供されるのかに関わらず, 機密性および完全性のニーズは, 署名済みおよび暗号化オブジェクトフォーマットの基本要件に合致している.
+          どちらのメカニズムを採用するかの選択は, 二つのサーバ間の関係, すなわちそれらが対称鍵を共有するのか, 公開鍵のみを共有するのかに依存するだろう.
         </t>
         <!--
         <t>The confidentiality and integrity needs are met by the basic
@@ -624,10 +624,10 @@
         -->
 
         <t>
-          認証の要件はデプロイの特性にも依存するだろう。
-          リソースサーバーと認可サーバーの結びつけが相対的に強いところでは、トークンを発行した認可サーバを識別するにはトークンの署名に用いた鍵だけで十分かもしれない。
-          これは、認可サーバーの公開鍵、あるいは公開鍵か対称鍵の識別子をプロトコルが伝送することを必要とする。
-          OAuthでは <spanx style="verb">client_id</spanx> パラメータが、使用される鍵を識別する。
+          認証の要件はデプロイの特性にも依存するだろう.
+          リソースサーバーと認可サーバーの結びつけが相対的に強いところでは, トークンを発行した認可サーバを識別するにはトークンの署名に用いた鍵だけで十分かもしれない.
+          これは, 認可サーバーの公開鍵, あるいは公開鍵か対称鍵の識別子をプロトコルが伝送することを必要とする.
+          OAuthでは <spanx style="verb">client_id</spanx> パラメータが, 使用される鍵を識別する.
         </t>
         <!--
         <t>Authentication requirements will also depend on deployment
@@ -641,9 +641,9 @@
         -->
 
         <t>
-          リソースサーバーは事前に認可サーバーの鍵を知らないといったような、より高度なケースも存在するかもしれない。
-          例えば一つのエンティティが(負荷分散のために)複数の認可サーバーをインスタンス化する場合、それらが個々に独立した鍵ペアを持っている例が挙げられる。
-          このようなケースの場合、対象の認可サーバーが信頼するエンティティかどうかをリソースサーバーが検証できるように、認可サーバーの証明書または証明書チェーンを含める必要もあるかもしれない。
+          リソースサーバーは事前に認可サーバーの鍵を知らないといったような, より高度なケースも存在するかもしれない.
+          例えば一つのエンティティが(負荷分散のために)複数の認可サーバーをインスタンス化する場合, それらが個々に独立した鍵ペアを持っている例が挙げられる.
+          このようなケースの場合, 対象の認可サーバーが信頼するエンティティかどうかをリソースサーバーが検証できるように, 認可サーバーの証明書または証明書チェーンを含める必要もあるかもしれない.
         </t>
         <!--
         <t>There may also be more advanced cases, where the Authorization
@@ -657,11 +657,11 @@
         -->
 
         <t>
-          OAuthにとってHTTPトランスポートはエンコーディングに関して特定の制約を課している。
-          OAuthプロトコルでは、base64urlエンコーディング <xref target="RFC4648"/> が実施された上で、トークンはHTTP URI <xref target="RFC2616"/> 内のクエリーパラメータとして頻繁にやり取りされる。
-          URI (従ってクエリパラメータも) の長さには制限が規定されていないが、実際にはいくつかのユーザーエージェントでは2048文字超のURIは拒否される。
-          いくつかのモバイルブラウザでは、この制限はさらに小さな値となっている。
-          そのためこのユースケースでは、JOSEオブジェクトに対して、URIクエリパラメータに含むことが可能なようシンプルであることと同時に、署名後 (場合によっては暗号化も) でも十分に小さなサイズであることを要求する。
+          OAuthにとってHTTPトランスポートはエンコーディングに関して特定の制約を課している.
+          OAuthプロトコルでは, base64urlエンコーディング <xref target="RFC4648"/> が実施された上で, トークンはHTTP URI <xref target="RFC2616"/> 内のクエリーパラメータとして頻繁にやり取りされる.
+          URI (従ってクエリパラメータも) の長さには制限が規定されていないが, 実際にはいくつかのユーザーエージェントでは2048文字超のURIは拒否される.
+          いくつかのモバイルブラウザでは, この制限はさらに小さな値となっている.
+          そのためこのユースケースでは, JOSEオブジェクトに対して, URIクエリパラメータに含むことが可能なようシンプルであることと同時に, 署名後 (場合によっては暗号化も) でも十分に小さなサイズであることを要求する.
         </t>
         <!--
         <t>The HTTP transport for OAuth imposes a particular constraint on the
@@ -725,10 +725,10 @@
 
       <section anchor="xmpp-sec" title="XMPP">
           <t>
-              Extensible Messaging and Presence Protocol (XMPP) は末端のクライアントから他の端末へXMPP serversの仕様に従ってメッセージを送信するプロトコルである。<xref target="RFC6120"/>
-              一般的には任意の送信メッセージに2つのサーバが関与する。
-              あるクライアント(Alice) は他のクライアント (Bob) 宛のメッセージをサーバ(A)へ送信する。
-              サーバAはBobのIDとDNSによってBobのドメイン(B)を持つサーバを特定し、メッセージをそのサーバへ送信する。その後サーバBはBobへメッセージを送信する。
+              Extensible Messaging and Presence Protocol (XMPP) は末端のクライアントから他の端末へXMPP serversの仕様に従ってメッセージを送信するプロトコルである. <xref target="RFC6120"/>
+              一般的には任意の送信メッセージに2つのサーバが関与する.
+              あるクライアント(Alice) は他のクライアント (Bob) 宛のメッセージをサーバ(A)へ送信する.
+              サーバAはBobのIDとDNSによってBobのドメイン(B)を持つサーバを特定し, メッセージをそのサーバへ送信する. その後サーバBはBobへメッセージを送信する.
           </t>
         <!--<t>The Extensible Messaging and Presence Protocol (XMPP) routes
         messages from one end client to another by way of XMPP servers <xref
@@ -747,9 +747,9 @@
         </figure>
 
         <t>
-            信頼できない中間者の問題については特にXMPPにとって深刻である。なぜならば、現時点で多くの適用例では、XMPPドメインの所有者がドメインのサーバの処理を他のエンティティに委託しているためである。
-            この環境では、ドメイン所有者の個人情報がドメインのオペレーターに露出してしまう明白なリスクが存在する。
-            XMPPはS/MIMEを利用して端末間セキュリティのメカニズム<xref target="RFC3923"/>を既に定義しているが、キー管理の問題やS/MIMEオブジェクトの処理が難しいこともあり、普及させることはできなかった。</t>
+            信頼できない中間者の問題については特にXMPPにとって深刻である. なぜならば, 現時点で多くの適用例では, XMPPドメインの所有者がドメインのサーバの処理を他のエンティティに委託しているためである.
+            この環境では, ドメイン所有者の個人情報がドメインのオペレーターに露出してしまう明白なリスクが存在する.
+            XMPPはS/MIMEを利用して端末間セキュリティのメカニズム<xref target="RFC3923"/>を既に定義しているが, キー管理の問題やS/MIMEオブジェクトの処理が難しいこともあり, 普及させることはできなかった.</t>
         <!--<t>The untrusted-intermediary problems are especially acute for XMPP
         because in many current deployments, the holder of an XMPP domain
         outsources the operation of the domain's servers to a different
@@ -761,10 +761,10 @@
         because of the difficulty of processing S/MIME objects.</t>-->
 
         <t>
-            XMPPワーキンググループはJOSEベースのエンコーディングとより明快なキー管理のシステムを利用した新しい端末間暗号化システムの策定に取り組んでいる。<xref target="I-D.miller-xmpp-e2e"/>
-            このシステム上で暗号化メッセージを送信するプロセスは２つのステップからなる。
-            1つ目は、送信者は対象な Content Encryption Key (CEK)を生成してメッセージコンテンツを暗号化して、暗号メッセージを届けたい先の受信者へ送信する。
-            2つ目は、各受信者は自身の公開鍵を提示することで受信者へ「コールバック」を行い、送信者は受信者の公開鍵で変換された関連のあるCEKを受け取る。
+            XMPPワーキンググループはJOSEベースのエンコーディングとより明快なキー管理のシステムを利用した新しい端末間暗号化システムの策定に取り組んでいる. <xref target="I-D.miller-xmpp-e2e"/>
+            このシステム上で暗号化メッセージを送信するプロセスは２つのステップからなる.
+            1つ目は, 送信者は対象な Content Encryption Key (CEK)を生成してメッセージコンテンツを暗号化して, 暗号メッセージを届けたい先の受信者へ送信する.
+            2つ目は, 各受信者は自身の公開鍵を提示することで受信者へ「コールバック」を行い, 送信者は受信者の公開鍵で変換された関連のあるCEKを受け取る.
         message to the desired set of recipients. Second, each recipient
         "dials back" to the sender, providing his public key; the sender then
         responds with the relevant CEK, wrapped with the recipient's public
@@ -795,9 +795,9 @@
         </figure>
 
         <t>
-            このシステムがJOSEフォーマットから要求する主要な事項は、コンテンツ部の暗号化による機密性保護に加え、共有鍵より導出したMACによる完全性の検証機能である。
-            しかしながら、暗号コンテンツの送受信での鍵交換を区別するためには、JOSE暗号化オブジェクトフォーマットに暗号ペイロードとは区別して共通鍵を含むメッセージを伝達できるような仕組みが要求される。
-            さらに、暗号オブジェクトにはコンテンツの暗号化に利用した鍵のタグが必要になる。そうすることで受信者(Bob)は送信者(Alice)へ鍵を含んだメッセージを送信する際にタグを提示することができる。
+            このシステムがJOSEフォーマットから要求する主要な事項は, コンテンツ部の暗号化による機密性保護に加え, 共有鍵より導出したMACによる完全性の検証機能である.
+            しかしながら, 暗号コンテンツの送受信での鍵交換を区別するためには, JOSE暗号化オブジェクトフォーマットに暗号ペイロードとは区別して共通鍵を含むメッセージを伝達できるような仕組みが要求される.
+            さらに, 暗号オブジェクトにはコンテンツの暗号化に利用した鍵のタグが必要になる. そうすることで受信者(Bob)は送信者(Alice)へ鍵を含んだメッセージを送信する際にタグを提示することができる.
         </t>
         <!--<t>The main thing that this system requires from the JOSE formats is
         confidentiality protection via content encryption, plus an integrity
@@ -810,10 +810,10 @@
         present the tag to the sender (Alice) when requesting the wrapped
         key.</t>-->
 
-        <t>XMPPの重要な他の特徴は、複数の受信者へのメッセージの同時配信を許可していることである。
-            上記のダイアグラムで言うと、サーバAはサーバB（Bobのサーバ）だけでなくほかのユーザの所有するサーバC, D, Eなどへもメッセージを配信できる。
-            そのようなケースでは、上記の仕組みに示される複数の「コールバック」のトランザクションを回避するため、XMPPシステムは受信者の公開鍵をキャッシュすることがあり、それにより鍵はこの後のメッセージの内容と共に送信することができる。
-            このことによりJOSE暗号オブジェクトフォーマットは複数バージョンものCEKの発行をサポートしなくてはならない。（CMS EnvelopedData structureでは複数の受信者情報の構造を含むことができるが）
+        <t>XMPPの重要な他の特徴は, 複数の受信者へのメッセージの同時配信を許可していることである.
+            上記のダイアグラムで言うと, サーバAはサーバB (Bobのサーバ) だけでなくほかのユーザの所有するサーバC, D, Eなどへもメッセージを配信できる.
+            そのようなケースでは, 上記の仕組みに示される複数の「コールバック」のトランザクションを回避するため, XMPPシステムは受信者の公開鍵をキャッシュすることがあり, それにより鍵はこの後のメッセージの内容と共に送信することができる.
+            このことによりJOSE暗号オブジェクトフォーマットは複数バージョンものCEKの発行をサポートしなくてはならない.  (CMS EnvelopedData structureでは複数の受信者情報の構造を含むことができるが)
         </t>
         <!--<t>Another important feature of XMPP is that it allows for the
         simultaneous delivery of a message to multiple recipients. In the
@@ -828,11 +828,11 @@
         RecipientInfo structures).</t>-->
 
         <t>
-            XMPPの端末間セキュリティシステムの最新のドラフトでは、各パーティはXMPPメッセージ伝達システム内にある他パーティの信用情報にもとづいて認証される。
-            送信者は、"Alice"という識別子宛のメッセージ（具体的には、隠蔽された鍵交換のためのリクエスト）を受け取ることができ、またその識別子宛のメッセージ（隠蔽された鍵情報）を送信できるため、受信者に認証される。
-            同様に、受信者はオリジナルの暗号メッセージと元の鍵交換のリクエストを送ることができるため、送信者に認証される。
-            そのため、ここでの認証で要求されるのはXMPPのルーティングが正しく行われることだけでなく、TLSが全てのホップにおいて使われることである。
-            それに加えて、３ホップ中いずれかにおいて中間者によってBobになりすまして暗号メッセージの鍵情報を取得できてしまうため、強い認証強度のTLSチャネルが要求される。
+            XMPPの端末間セキュリティシステムの最新のドラフトでは, 各パーティはXMPPメッセージ伝達システム内にある他パーティの信用情報にもとづいて認証される.
+            送信者は, "Alice"という識別子宛のメッセージ (具体的には, 隠蔽された鍵交換のためのリクエスト) を受け取ることができ, またその識別子宛のメッセージ (隠蔽された鍵情報) を送信できるため, 受信者に認証される.
+            同様に, 受信者はオリジナルの暗号メッセージと元の鍵交換のリクエストを送ることができるため, 送信者に認証される.
+            そのため, ここでの認証で要求されるのはXMPPのルーティングが正しく行われることだけでなく, TLSが全てのホップにおいて使われることである.
+            それに加えて, ３ホップ中いずれかにおいて中間者によってBobになりすまして暗号メッセージの鍵情報を取得できてしまうため, 強い認証強度のTLSチャネルが要求される.
         </t>
         <!--<t>In the current draft of the XMPP end-to-end security system, each
         party is authenticated by virtue of the other party's trust in the
@@ -849,7 +849,7 @@
         obtain the key material for an encrypted message.</t>-->
 
         <t>
-            この認証は比較的脆弱（TLSを用いた３つのホップに依存しているため）でエンドポイントでは検証できない。 そのためXMPPワーキンググループは最終受信者のためになんらかのクレデンシャルを導入することも考えられる。 そのようなケースでは、そういったクレデンシャルをJOSEオブジェクトと関連づける方法も必要となるであろう。
+            この認証は比較的脆弱 (TLSを用いた３つのホップに依存しているため) でエンドポイントでは検証できない.  そのためXMPPワーキンググループは最終受信者のためになんらかのクレデンシャルを導入することも考えられる.  そのようなケースでは, そういったクレデンシャルをJOSEオブジェクトと関連づける方法も必要となるであろう.
         </t>
         <!--<t>Because this authentication is quite weak (depending on the use of
         transport-layer security on three hops) and unverifiable by the
@@ -858,11 +858,11 @@
         need to be a way to associate these credentials with JOSE objects.</t>-->
 
         <t>
-            最終的に、XMPPがJSONではなくXMLベースであることに意味はない。
-            そのため、JOSEを利用するときは、XMPPはXML内にJSONオブジェクトを含めて送信される。
-            したがって、JOSEオブジェクトはXMLに含まれても問題ないような方法でエンコードされることが望ましい。
-            そうでなければ、XMLとしてパースされないように明示するため、明示的なCDATAの指定をパーサーに対して行わければならない。
-            この要件を満たすひとつの方法としては、base64urlエンコードをかけることがあげられるが、中〜大サイズのXMPPメッセージにとっては、これによりかなりのオーバーヘッドを強いる可能性がある。
+            最終的に, XMPPがJSONではなくXMLベースであることに意味はない.
+            そのため, JOSEを利用するときは, XMPPはXML内にJSONオブジェクトを含めて送信される.
+            したがって, JOSEオブジェクトはXMLに含まれても問題ないような方法でエンコードされることが望ましい.
+            そうでなければ, XMLとしてパースされないように明示するため, 明示的なCDATAの指定をパーサーに対して行わければならない.
+            この要件を満たすひとつの方法としては, base64urlエンコードをかけることがあげられるが, 中〜大サイズのXMPPメッセージにとっては, これによりかなりのオーバーヘッドを強いる可能性がある.
         </t>
         <!--<t>Finally, it's worth noting that XMPP is based on XML, not JSON. So
         by using JOSE, XMPP will be carrying JSON objects within XML. It is
@@ -876,13 +876,13 @@
 
       <section anchor="alto-sec" title="ALTO">
         <t>
-          Application-Layer Traffic Optimization (ALTO) は、エンド端末に対する分散ネットワークトポロジー情報のためのシステムであり、
-          これによりエンド端末はネットワークへのインパクトを抑えつつ自らの動作を修正することが可能となる <xref target="RFC6708"/> 。
-          ALTOプロトコルは、HTTP <xref target="RFC2616"/> で搬送するJSONオブジェクトの形態でトポロジー情報を分配する <xref target="I-D.ietf-alto-protocol"/> 。
-          元々の版のALTOはシンプルなクライアントサーバプロトコルであり、このケースではHTTPSを単純に使用するだけで十分である <xref target="RFC2818"/> 。
-          しかし、クライアントに到達する前に複数の中間サーバを経由してこれらのJSONオブジェクトが分配されるというALTOのユースケースの議論が始まり、
-          一方でクライアントがオブジェクトのオリジナルの送信元を認証する機能は依然として維持する必要があった。
-          元々のALTOプロトコルでも「ALTO情報を取得するALTOクライアントは、その受け取ったALTO情報が適切なALTOサーバーによって生成されたものかどうかの検証ができなければならない」という言及があった。
+          Application-Layer Traffic Optimization (ALTO) は, エンド端末に対する分散ネットワークトポロジー情報のためのシステムであり,
+          これによりエンド端末はネットワークへのインパクトを抑えつつ自らの動作を修正することが可能となる <xref target="RFC6708"/> .
+          ALTOプロトコルは, HTTP <xref target="RFC2616"/> で搬送するJSONオブジェクトの形態でトポロジー情報を分配する <xref target="I-D.ietf-alto-protocol"/> .
+          元々の版のALTOはシンプルなクライアントサーバプロトコルであり, このケースではHTTPSを単純に使用するだけで十分である <xref target="RFC2818"/> .
+          しかし, クライアントに到達する前に複数の中間サーバを経由してこれらのJSONオブジェクトが分配されるというALTOのユースケースの議論が始まり,
+          一方でクライアントがオブジェクトのオリジナルの送信元を認証する機能は依然として維持する必要があった.
+          元々のALTOプロトコルでも「ALTO情報を取得するALTOクライアントは, その受け取ったALTO情報が適切なALTOサーバーによって生成されたものかどうかの検証ができなければならない」という言及があった.
         </t>
         <!--
         <t>Application-Layer Traffic Optimization (ALTO) is a system for
@@ -904,10 +904,10 @@
         -->
 
         <t>
-          このケースでのセキュリティ要件は明確である。
-          ALTOペイロードを搬送するJOSEオブジェクトは、オリジナルの送信元サーバーのデジタル署名が付随している必要があり、
-          そしてそのサーバーのアイデンティティを証明できなければならないだろう。
-          ALTO情報は一般に公開されるものであるため、このケースでは機密性に関する要件はない。
+          このケースでのセキュリティ要件は明確である.
+          ALTOペイロードを搬送するJOSEオブジェクトは, オリジナルの送信元サーバーのデジタル署名が付随している必要があり,
+          そしてそのサーバーのアイデンティティを証明できなければならないだろう.
+          ALTO情報は一般に公開されるものであるため, このケースでは機密性に関する要件はない.
         </t>
         <!--
         <t>In this case, the security requirements are straightforward. JOSE
@@ -919,10 +919,10 @@
         -->
 
         <t>
-          より興味深い議題はエンコーディングに関することである。
-          ALTOオブジェクトは前述の2つのケースよりもペイロードが大きくなる可能性があり、そのサイズは数メガバイトにまでなると考えられる。
-          このような大きなオブジェクトの処理は、シングルパスで実施できた方がより高速に処理できる。
-          そしてそれは、JSON構造内でフィールドが特定の順番であることをJOSEオブジェクトが要求することで可能となるだろう。
+          より興味深い議題はエンコーディングに関することである.
+          ALTOオブジェクトは前述の2つのケースよりもペイロードが大きくなる可能性があり, そのサイズは数メガバイトにまでなると考えられる.
+          このような大きなオブジェクトの処理は, シングルパスで実施できた方がより高速に処理できる.
+          そしてそれは, JSON構造内でフィールドが特定の順番であることをJOSEオブジェクトが要求することで可能となるだろう.
         </t>
         <!--
         <t>The more interesting questions are encoding questions. ALTO objects
@@ -934,11 +934,11 @@
         -->
 
         <t>
-          加えて、ALTOオブジェクトはJSONとしてエンコードされているため、JOSEオブジェクト内に安全に包含することが可能である。
-          署名済みのJOSEオブジェクトは、署名とともに署名されたデータを搬送するだろう。
-          JSONオブジェクトは、JSON文字列内に安全にエンコードされて格納されることが可能という性質を持っている。
-          これに関する要件は、不必要な空白は取り除くことだけであり、例えばbase64urlエンコーディングよりもかなりシンプルな変換である。
-          このことは、特定の「JSON-safe」なケースでのJOSEエンコーディングを最適化できるかどうかという議題に繋がる。
+          加えて, ALTOオブジェクトはJSONとしてエンコードされているため, JOSEオブジェクト内に安全に包含することが可能である.
+          署名済みのJOSEオブジェクトは, 署名とともに署名されたデータを搬送するだろう.
+          JSONオブジェクトは, JSON文字列内に安全にエンコードされて格納されることが可能という性質を持っている.
+          これに関する要件は, 不必要な空白は取り除くことだけであり, 例えばbase64urlエンコーディングよりもかなりシンプルな変換である.
+          このことは, 特定の「JSON-safe」なケースでのJOSEエンコーディングを最適化できるかどうかという議題に繋がる.
         </t>
         <!--
         <t>In addition, because ALTO objects are also encoded as JSON, they
@@ -952,8 +952,8 @@
         -->
 
         <t>
-          最終的に、「分離署名 (detached signature)」メカニズム、つまり署名情報を保護対象のコンテンツから分離してエンコードする方法が、ALTOにとっては望ましいかもしれない。
-          これはALTOプロトコルで、署名をHTTPSのヘッダ、署名されたコンテンツをHTTPSのエンティティボディに含めることを可能とするだろう。
+          最終的に, 「分離署名 (detached signature)」メカニズム, つまり署名情報を保護対象のコンテンツから分離してエンコードする方法が, ALTOにとっては望ましいかもしれない.
+          これはALTOプロトコルで, 署名をHTTPSのヘッダ, 署名されたコンテンツをHTTPSのエンティティボディに含めることを可能とするだろう.
         </t>
         <!--
         <t>Finally, it may be desirable for ALTO to have a "detached signature"
@@ -1079,17 +1079,17 @@
       </section>
 
       <section anchor="webcrypto-sec" title="Web Cryptography">
-          <t>W3C Web Cryptography APIではWeb用の標準暗号API <xref target="WebCrypto"></xref>を定義している。
-              もしブラウザがこのAPIを使えるようにした場合、ウェブページの一部として実行されたJavaScriptがブラウザにダイジェスト、MAC、暗号化、デジタル署名などの処理を実行させることが可能となる。</t>
+          <t>W3C Web Cryptography APIではWeb用の標準暗号API <xref target="WebCrypto"></xref>を定義している.
+              もしブラウザがこのAPIを使えるようにした場合, ウェブページの一部として実行されたJavaScriptがブラウザにダイジェスト, MAC, 暗号化, デジタル署名などの処理を実行させることが可能となる.</t>
       <!--<t>The W3C Web Cryptography API defines a standard cryptographic API for the
       Web <xref target="WebCrypto"></xref>.  If a browser exposes this API, then
       JavaScript provided as part of a Web page can ask the browser to perform
       cryptographic operations, such as digest, MAC, encryption, or digital signing.</t>-->
 
       <t>
-          ブラウザが暗号処理を実行することの主要な理由の一つに、JavaScriptコードによって暗号処理に利用されるの鍵情報にアクセスできないようにすることが挙げられる。
-          例えば、この分離によって、クロスサイトスクリプティング(XSS)によって注入されたコードがブラウザ内に保持された鍵を読み取ったり抜き取ったりすることを防げるだろう。
-          悪意のあるコードがブラウザ上で実行し続けている間は鍵を依然として利用可能である一方、この脆弱性はユーザのブラウザ上で脆弱なページがアクティブな間のみ有効である。
+          ブラウザが暗号処理を実行することの主要な理由の一つに, JavaScriptコードによって暗号処理に利用されるの鍵情報にアクセスできないようにすることが挙げられる.
+          例えば, この分離によって, クロスサイトスクリプティング(XSS)によって注入されたコードがブラウザ内に保持された鍵を読み取ったり抜き取ったりすることを防げるだろう.
+          悪意のあるコードがブラウザ上で実行し続けている間は鍵を依然として利用可能である一方, この脆弱性はユーザのブラウザ上で脆弱なページがアクティブな間のみ有効である.
       </t>
       <!--<t>One of the key reasons to have the browser perform cryptographic operations
       is to avoid allowing JavaScript code to access the keying material used for these
@@ -1100,10 +1100,10 @@
       page is active in a user's browser.</t>-->
 
       <t>
-          しかしながら、WebCryptGraphy API は鍵のエクスポート機能も提供する。それによりJavascriptでAPIを隠蔽した形式で鍵を抜き出すことができる。
-          例えば、JavaScriptは別のデバイスが保持する対になる秘密鍵の代わりに公開鍵を提供したかもしれない。
-          それにより、APIが提供する隠蔽された鍵は新しいデバイスへ安全に鍵を転送するのに使うことができる。
-          こうして悪意のあるコードが鍵をエクスポートできるようにする可能性があるが、ユーザへの通知や同意の検証を考慮にいれても、明示的なエクスポート処理を必要とすることが制御のポイントとなっている。
+          しかしながら, WebCryptGraphy API は鍵のエクスポート機能も提供する. それによりJavascriptでAPIを隠蔽した形式で鍵を抜き出すことができる.
+          例えば, JavaScriptは別のデバイスが保持する対になる秘密鍵の代わりに公開鍵を提供したかもしれない.
+          それにより, APIが提供する隠蔽された鍵は新しいデバイスへ安全に鍵を転送するのに使うことができる.
+          こうして悪意のあるコードが鍵をエクスポートできるようにする可能性があるが, ユーザへの通知や同意の検証を考慮にいれても, 明示的なエクスポート処理を必要とすることが制御のポイントとなっている.
       </t>
       <!--<t>However, the WebCryptography API also provides a key export functionality,
       which can allow JavaScript to extract a key from the API in wrapped form.  For
@@ -1115,9 +1115,9 @@
       consent verification.</t>-->
 
       <t>
-          Web CryptGraphy API はブラウザが自身の扱う鍵の利用を制限することを強いることも許可している。
-          例えば、対象鍵は暗号化のみでMACには利用できないこと注目されがちである。
-          鍵が隠蔽された形式でエクスポートされる際、これらの属性は鍵と一緒にもっていかれるべきである。
+          Web CryptGraphy API はブラウザが自身の扱う鍵の利用を制限することを強いることも許可している.
+          例えば, 対象鍵は暗号化のみでMACには利用できないこと注目されがちである.
+          鍵が隠蔽された形式でエクスポートされる際, これらの属性は鍵と一緒にもっていかれるべきである.
       </t>
       <!--<t>The Web Cryptography API also allows browsers to impose limitations on the
       usage of the keys it handles.  For example, a symmetric key might be marked as
@@ -1125,11 +1125,11 @@
       form, these attributes should be carried along with it.</t>-->
 
       <t>
-          Web CryptGraphy API はこのようにして、いくつかの鍵の形式を表現するフォーマットが必要とされる。
-          言うまでもなく、非対称な鍵のペアから公開鍵は自由にインポートでき、ブラウザよりエクスポート可能であるため、公開鍵を表現するためのフォーマットが必要である。
-          秘密鍵や対象鍵を表現できるようなフォーマットもまた必要とされている。
-          非公開鍵のために、まず第一に必要なものは鍵を暗号的に機密性および完全性が保証されている、隠蔽された形式である。
-          ダイレクトで隠蔽されていないフォーマットを定義することもまた、セキュリティの境目での利用に有用であるかもしれない。
+          Web CryptGraphy API はこのようにして, いくつかの鍵の形式を表現するフォーマットが必要とされる.
+          言うまでもなく, 非対称な鍵のペアから公開鍵は自由にインポートでき, ブラウザよりエクスポート可能であるため, 公開鍵を表現するためのフォーマットが必要である.
+          秘密鍵や対象鍵を表現できるようなフォーマットもまた必要とされている.
+          非公開鍵のために, まず第一に必要なものは鍵を暗号的に機密性および完全性が保証されている, 隠蔽された形式である.
+          ダイレクトで隠蔽されていないフォーマットを定義することもまた, セキュリティの境目での利用に有用であるかもしれない.
       </t>
       <!--<t>The Web Cryptography API thus requires formats to express several forms of
       keys.  Obviously, the public key from an asymmetric key pair can be freely
@@ -1145,8 +1145,8 @@
     <section title="Constrained Devices">
 
       <t>
-        このセクションでは <xref target="I-D.ietf-lwig-terminology"/> に定義されている制約のあるデバイスでのユースケースを示す。
-        このタイプのデバイスでの典型的な問題には、限られたメモリ、限られた電源、低い処理能力、そして通信プロトコルでの厳しいサイズ制限が挙げられる。
+        このセクションでは <xref target="I-D.ietf-lwig-terminology"/> に定義されている制約のあるデバイスでのユースケースを示す.
+        このタイプのデバイスでの典型的な問題には, 限られたメモリ, 限られた電源, 低い処理能力, そして通信プロトコルでの厳しいサイズ制限が挙げられる.
       </t>
       <!--
       <t>This section describes use cases for constrained devices as defined
@@ -1159,9 +1159,9 @@
       <section title="Example: MAC based on ECDH-derived key">
 
         <t>
-          小さく低電力なデバイスのメーカーがJOSEワーキンググループの成果を暗号化や認証のフレームワークとして採用することを決定したとしよう。
-          このデバイスメーカーではゲートと電力の双方に関して共に予算の限りがある。
-          このため、これらの必要量を最小化するために多数のショートカットと設計決定がなされてきた。
+          小さく低電力なデバイスのメーカーがJOSEワーキンググループの成果を暗号化や認証のフレームワークとして採用することを決定したとしよう.
+          このデバイスメーカーではゲートと電力の双方に関して共に予算の限りがある.
+          このため, これらの必要量を最小化するために多数のショートカットと設計決定がなされてきた.
         </t>
         <!--
         <t>Suppose a small, low power device maker has decided on using the output of
@@ -1173,9 +1173,9 @@
         -->
 
         <t>
-          設計チームは、メッセージ認証コード (MAC) を使用することで必要な認証の提供には十分だろうと決定した。
-          しかし彼らはMACは使用するが、単一の共有秘密鍵を長期間使用することは望まない。
-          代わりに、彼らは以下に提案する検証可能な共有秘密鍵を計算により求める方式を採用する。
+          設計チームは, メッセージ認証コード (MAC) を使用することで必要な認証の提供には十分だろうと決定した.
+          しかし彼らはMACは使用するが, 単一の共有秘密鍵を長期間使用することは望まない.
+          代わりに, 彼らは以下に提案する検証可能な共有秘密鍵を計算により求める方式を採用する.
         </t>
         <!--
         <t>The design team has determined that the use of message authentication
@@ -1188,27 +1188,27 @@
 
         <t><list style="symbols">
           <t>
-            Elliptic-Curve Diffie-Hellman (ECDH) 鍵は、デバイスの製造時に (もしくは導入時の設定処理の一環として) 生成される。
+            Elliptic-Curve Diffie-Hellman (ECDH) 鍵は, デバイスの製造時に (もしくは導入時の設定処理の一環として) 生成される.
           </t>
 
           <t>
-            コントローラー用のECDH公開鍵は、設定時にセットされる。
+            コントローラー用のECDH公開鍵は, 設定時にセットされる.
           </t>
 
           <t>
-            設定システムは、ECDHの計算を行い、結果の共有秘密鍵をデバイスに設定する。
-            このプロセスは、必要な指数計算をデバイス上で実施する必要をなくす。
-            この計算された共有秘密鍵の保護に関するセキュリティ要件は、ECDH秘密鍵の保護に関する要件と同等である。
+            設定システムは, ECDHの計算を行い, 結果の共有秘密鍵をデバイスに設定する.
+            このプロセスは, 必要な指数計算をデバイス上で実施する必要をなくす.
+            この計算された共有秘密鍵の保護に関するセキュリティ要件は, ECDH秘密鍵の保護に関する要件と同等である.
           </t>
 
           <t>
-            カウンターと増分値はデバイス上に設定される。
+            カウンターと増分値はデバイス上に設定される.
           </t>
 
           <t>
-            デバイスがメッセージを送信する際、カウンターはインクリメントされ、新たなMAC鍵がECDH秘密鍵とカウンター値から計算される。
-            必要なMAC鍵を導出するために、AES-CBCをベースとした独自の鍵導出関数 (KDF) を用いる。
-            そしてMAC鍵は、メッセージのMAC値を計算するのに用いられる。
+            デバイスがメッセージを送信する際, カウンターはインクリメントされ, 新たなMAC鍵がECDH秘密鍵とカウンター値から計算される.
+            必要なMAC鍵を導出するために, AES-CBCをベースとした独自の鍵導出関数 (KDF) を用いる.
+            そしてMAC鍵は, メッセージのMAC値を計算するのに用いられる.
           </t>
         </list></t>
         <!--
@@ -1239,8 +1239,8 @@
         -->
 
         <t>
-          システムがメッセージの機密性を提供する必要があるとき、同様の方法でKDFは、AEADアルゴリズム鍵を計算するためにも利用できる。
-          より大きなデバイスのコントローラーでは、指数計算のステップを実施したり、送信元ナンス値を生成するために乱数生成器を使用するだろう。
+          システムがメッセージの機密性を提供する必要があるとき, 同様の方法でKDFは, AEADアルゴリズム鍵を計算するためにも利用できる.
+          より大きなデバイスのコントローラーでは, 指数計算のステップを実施したり, 送信元ナンス値を生成するために乱数生成器を使用するだろう.
         </t>
         <!--
         <t>In a similar manner the KDF function can used to compute an AEAD
@@ -1402,8 +1402,8 @@
 
     <section anchor="req-sec" title="Requirements">
         <t>
-            この章では前章のユースケースの要件を要約を行い、またユースケースから直接的には得られないもう一歩進んだ要件を並べる。
-            JOSEのシステムが採用するのに依然として望ましい特長ではあるが、厳しい要件ではない制約もまたある。
+            この章では前章のユースケースの要件を要約を行い, またユースケースから直接的には得られないもう一歩進んだ要件を並べる.
+            JOSEのシステムが採用するのに依然として望ましい特長ではあるが, 厳しい要件ではない制約もまたある.
         </t>
       <!--<t>This section summarizes the requirements from the above uses cases, and
       lists further requirements not directly derived from the above use cases.
@@ -1419,7 +1419,7 @@
             <t>メッセージ認証 (完全性/対象鍵による認証)</t>
             <t>認証済み暗号化</t>
             </list>
-            つまり、このワーキンググループによって定義されたセキュアオブジェクトはCMS 署名データ、認証データ、エンベロープデータ、認証エンベロープデータオブジェクトと同等のセキュリティ特性を提供するべきだ<xref target="RFC5652"></xref> <xref target="RFC5083"></xref>.</t>
+            つまり, このワーキンググループによって定義されたセキュアオブジェクトはCMS 署名データ, 認証データ, エンベロープデータ, 認証エンベロープデータオブジェクトと同等のセキュリティ特性を提供するべきだ<xref target="RFC5652"></xref> <xref target="RFC5083"></xref>.</t>
           <!--<t hangText="F1">Define formats for secure objects that provide the following
           security properties:
             <list style="symbols">
@@ -1432,20 +1432,20 @@
           EnvelopedData, and AuthEnveloped data objects <xref target="RFC5652"></xref>
           <xref target="RFC5083"></xref>.</t>-->
           <t hangText="F2">
-              非対称暗号アルゴリズムのための公開鍵と秘密鍵と関連付けられた属性を付帯し、隠蔽された形式の秘密鍵を含むフォーマットを定義すること。
+              非対称暗号アルゴリズムのための公開鍵と秘密鍵と関連付けられた属性を付帯し, 隠蔽された形式の秘密鍵を含むフォーマットを定義すること.
           </t>
           <!--<t hangText="F2">Define a format for public keys and private keys for
           asymmetric cryptographic algorithms, with associated attributes, including a
           wrapped form for private keys.</t>-->
           <t hangText="F3">
-              隠蔽された鍵とされていない鍵の両者を扱えるような関連属性を持つ対象鍵のためのフォーマットを定義すること。
+              隠蔽された鍵とされていない鍵の両者を扱えるような関連属性を持つ対象鍵のためのフォーマットを定義すること.
 
           </t>
           <!--<t hangText="F3">Define a format for symmetric keys with associated attributes,
           allowing for both wrapped and unwrapped keys.</t>-->
           <t hangText="F4">
-              上記オブジェクト個別のJSONシリアライズ機能を定義すること。
-              JSON ABNF syntax <xref target="RFC4627"></xref> によると、この変換でのオブジェクトは正しくなければならない.
+              上記オブジェクト個別のJSONシリアライズ機能を定義すること.
+              JSON ABNF syntax <xref target="RFC4627"></xref> によると, この変換でのオブジェクトは正しくなければならない.
           </t>
           <!--<t hangText="F4">Define a JSON serialization for each of the above objects.  An object
           in this encoding must be valid according to the JSON ABNF syntax
@@ -1461,9 +1461,9 @@
           <!--<t hangText="F6">Allow for attributes associated to wrapped keys to be bound
           to them cryptographically</t>-->
           <t hangText="F7">
-              隠蔽された鍵が対象鍵を利用するセキュアオブジェクトから区別されるようにすること。
-              そのようなケースでは、隠蔽された鍵（例：暗号文、MAC値）以外のセキュアオブジェクトの暗号コンポーネントは隠蔽された鍵形式とは非依存でなくてはならない。
-              例えば、暗号化オブジェクトが複数の受信者宛に準備された場合、暗号文ではなく隠蔽された鍵のみが変わる。
+              隠蔽された鍵が対象鍵を利用するセキュアオブジェクトから区別されるようにすること.
+              そのようなケースでは, 隠蔽された鍵 (例：暗号文, MAC値) 以外のセキュアオブジェクトの暗号コンポーネントは隠蔽された鍵形式とは非依存でなくてはならない.
+              例えば, 暗号化オブジェクトが複数の受信者宛に準備された場合, 暗号文ではなく隠蔽された鍵のみが変わる.
           </t>
           <!--<t hangText="F7">Allow for wrapped keys to be separated from a secure object
           that uses a symmetric key.  In such cases, cryptographic components of the
@@ -1472,7 +1472,7 @@
           object is prepared for multiple recipients, then only the wrapped key may vary,
           not the ciphertext.</t>-->
           <t hangText="F8">
-              この文書記載の要件に合わせようとして、特に大量のアプリケーションの内容が保護されるような場合に、余計なオーバーヘッドを強いないようにすること。
+              この文書記載の要件に合わせようとして, 特に大量のアプリケーションの内容が保護されるような場合に, 余計なオーバーヘッドを強いないようにすること.
           </t>
           <!--<t hangText="F8">Do not impose more overhead than is required to meet the
           requirements in this document, especially when a large amount of application
@@ -1483,9 +1483,9 @@
       <section anchor="sec-req-sec" title="Security Requirements">
         <t><list style="hanging">
         <t hangText="S1">
-          暗号化やMACの計算に同じ対称鍵を繰り返し使用することを避けるためのメカニズムを提供すること。
-          その代わりに、長期間有効な鍵は鍵ラップのためだけに用いるべきであり、直接暗号化やMACに用いるべきではない。
-          CMS <xref target="RFC5652"></xref> で提供されているいずれかの鍵管理手法を用いるべきである。
+          暗号化やMACの計算に同じ対称鍵を繰り返し使用することを避けるためのメカニズムを提供すること.
+          その代わりに, 長期間有効な鍵は鍵ラップのためだけに用いるべきであり, 直接暗号化やMACに用いるべきではない.
+          CMS <xref target="RFC5652"></xref> で提供されているいずれかの鍵管理手法を用いるべきである.
           <list style="symbols">
             <t>鍵配送 (公開鍵のラップ)</t>
             <t>鍵暗号化 (対称鍵のラップ)</t>
@@ -1508,7 +1508,7 @@
         -->
 
         <t hangText="S2">
-          長期間有効な対称鍵を暗号操作に直接用いる場合 (すなわち要件S1に合致しない場合)、鍵の生存期間を制限する必要がある等の、鍵管理の実践に関するデプロイガイダンスを提供すること。
+          長期間有効な対称鍵を暗号操作に直接用いる場合 (すなわち要件S1に合致しない場合), 鍵の生存期間を制限する必要がある等の, 鍵管理の実践に関するデプロイガイダンスを提供すること.
         </t>
         <!--
         <t hangText="S2">Where long-lived symmetric keys are used directly for cryptographic
@@ -1517,8 +1517,8 @@
         -->
 
         <t hangText="S3">
-          主要な検証プロセスに準拠した方法で暗号アルゴリズムを使用すること。
-          例えばFIPS標準がアルゴリズムAは目的Yではなく目的Xに対して用いることとしている場合、JOSEは目的Yに対するアルゴリズムAの使用を推奨すべきではない。
+          主要な検証プロセスに準拠した方法で暗号アルゴリズムを使用すること.
+          例えばFIPS標準がアルゴリズムAは目的Yではなく目的Xに対して用いることとしている場合, JOSEは目的Yに対するアルゴリズムAの使用を推奨すべきではない.
         </t>
         <!--
         <t hangText="S3">Use cryptographic algorithms in a manner compatible with
@@ -1528,9 +1528,9 @@
         -->
 
         <t hangText="S4">
-          事前ネゴシエーションの有無に関わらず操作をサポートすること。
-          鍵のプロビジョニング以外の設定はなくとも、セキュアオブジェクトの生成や処理は可能に違いない。
-          鍵がアプリケーションのコンテキストから導出可能な場合、受信者がその適切な鍵を所持していなくとも認識可能に違いない。
+          事前ネゴシエーションの有無に関わらず操作をサポートすること.
+          鍵のプロビジョニング以外の設定はなくとも, セキュアオブジェクトの生成や処理は可能に違いない.
+          鍵がアプリケーションのコンテキストから導出可能な場合, 受信者がその適切な鍵を所持していなくとも認識可能に違いない.
         </t>
         <!--
         <t hangText="S4">Support operation with or without pre-negotiation.
