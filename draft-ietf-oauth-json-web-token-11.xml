@@ -655,7 +655,7 @@
   <!--<section title='"exp" (Expiration Time) Claim' anchor="expDef">-->
     <t>
       <spanx style="verb">exp</spanx> (expiration time) クレームは, JWT の有効期限を示す.
-      これ以降その JWT を処理してはならない (MUST NOT).
+      これ以降はその JWT を処理してはならない (MUST NOT).
       <spanx style="verb">exp</spanx> クレームを処理する際には, <spanx style="verb">exp</spanx> が現在時刻以前でないことを確認しなければならない (MUST).
       実装者はクロック・キューを考慮していくらかの小さな 余地 (通常は数分以上はない) を与えてもよい (MAY).
       このクレームの値は IntDate 値でなければならない(MUST).
@@ -680,11 +680,12 @@
 	<section title='"nbf" (Not Before) クレーム' anchor="nbfDef">
   <!--<section title='"nbf" (Not Before) Claim' anchor="nbfDef">-->
     <t>
-      <spanx style="verb">nbf</spanx> (not before) クレームは, それ以前に JWT が処理のために受け付けてはならない時刻を識別する(MUST NOT).
-      <spanx style="verb">nbf</spanx> クレームの処理は, 現在の日付/時刻が <spanx style="verb">nbf</spanx> クレームに記載されている日付/時刻の後, またはその以前であってはならない(MUST).
-      実装者はクロック・キューを考慮していくらかの小さな余地(通常は数分以上はない)を与えてもよい(MAY).
-      その値はIntDate値を含む数値でなければならない(MUST).
-      このクレームの使用は任意である(OPTIONAL).
+      <spanx style="verb">nbf</spanx> (not before) クレームは, JWT が有効になる日時を示す.
+      これ以前にその JWT を処理してはならない (MUST NOT).
+      <spanx style="verb">nbf</spanx> クレームを処理する際には, <spanx style="verb">exp</spanx> が現在時刻以前であることを確認しなければならない (MUST).
+      実装者はクロック・キューを考慮していくらかの小さな余地 (通常は数分以上はない) を与えてもよい (MAY).
+      その値は IntDate 値でなければならない (MUST).
+      このクレームの使用は任意である (OPTIONAL).
     </t>
     <!--
 	  <t>
@@ -705,10 +706,10 @@
 	<section title='"iat" (Issued At) クレーム' anchor="iatDef">
   <!--<section title='"iat" (Issued At) Claim' anchor="iatDef">-->
     <t>
-      <spanx style="verb">iat</spanx> (issued at) クレームは, JWT を発行した時刻を識別する.
-      このクレームは JWT の発行されてからの経過時間を決めることに利用可能である.
-      その値はIntDate値を含む数値でなければならない(MUST).
-      このクレームの使用は任意である(OPTIONAL).
+      <spanx style="verb">iat</spanx> (issued at) クレームは, JWT を発行した時刻を示す.
+      このクレームは JWT の発行されてからの経過時間を求める際に利用可能である.
+      その値は IntDate 値でなければならない (MUST).
+      このクレームの使用は任意である (OPTIONAL).
     </t>
     <!--
 	  <t>
@@ -725,10 +726,10 @@
   <!--<section title='"jti" (JWT ID) Claim' anchor="jtiDef">-->
     <t>
       <spanx style="verb">jti</spanx> (JWT ID) クレームは, JWT のための一意な識別子を提供する.
-      その識別子の値は, 同じ値が誤って異なるデータオブジェクトに割り当てられるという極わずかな確率があることを保証する方法で割り当てられなければならない(MUST).
+      その識別子の値は, 重複確率が無視できるほど十分低いことを保証できる方法で割り当てられなければならない (MUST).
       <spanx style="verb">jti</spanx> クレームは, JWT がリプレイされることを防ぐことに利用することができる.
       <spanx style="verb">jti</spanx> の値は大文字と小文字を区別する文字列である.
-      このクレームの使用は任意である(OPTIONAL).
+      このクレームの使用は任意である (OPTIONAL).
     </t>
     <!--
 	  <t>
@@ -748,9 +749,10 @@
 	<section title='"typ" (Type) クレーム' anchor="typDef">
   <!--<section title='"typ" (Type) Claim' anchor="typDef">-->
     <t>
-      <spanx style="verb">typ</spanx> (type) クレームは, アプリケーションに有用に使われるコンテンツ内でアプリケーション固有の方法で JWT クレームセットのコンテンツのタイプを宣言するために利用してもよい(MAY).
+      <spanx style="verb">typ</spanx> (type) クレームは, JWT クレームセットのコンテンツのタイプを宣言するために利用できる (MAY).
+      このクレームの利用方法はアプリケーション固有であり, アプリケーションの都合にあわせて決定してよい.
       <spanx style="verb">typ</spanx> の値は, 大文字と小文字を区別する文字列である.
-      このクレームの使用は任意である(OPTIONAL).
+      このクレームの使用は任意である (OPTIONAL).
     </t>
     <!--
 	  <t>
@@ -763,7 +765,7 @@
     </t>
     -->
     <t>
-      <spanx style="verb">typ</spanx> クレーム のために使用されるその値は, 同じ規則に提供され <spanx style="verb">typ</spanx> ヘッダパラメータとして同じ値空間からなる.
+      <spanx style="verb">typ</spanx> クレームの値は, <spanx style="verb">typ</spanx> ヘッダパラメータと同様のルールに従って決定される.
     </t>
     <!--
 	  <t>
@@ -782,8 +784,8 @@
 
         <t>
           クレーム名は JWT の利用者によって自由に定義することができる.
-          しかしながら, 衝突をさけるために, いくつかのクレーム名は IANA JSON Web トークンクレームレジストリ <xref target="JWTClaimsReg" /> に登録するか, 小特性を持つ名前空間を含む公開名にすべきである(SHOULD).
-          それぞれの場合において, 名前あるいは値の定義者はクレーム名を定義するために用いる名前空間の一部を管理下におくために妥当な予防措置を講じることを必要とする.
+          しかしながら, 衝突をさけるために, いくつかのクレーム名は IANA JSON Web トークンクレームレジストリ <xref target="JWTClaimsReg" /> に登録するか, 耐衝突性を持つ名前空間を含む公開名にすべきである (SHOULD).
+          それぞれの場合において, 名前あるいは値の定義者は, クレーム名を定義するために用いる名前空間の一部が自身の管理下にあることを保証できるよう, 妥当な措置を講じる必要がある.
         </t>
         <!--
         <t>
@@ -805,8 +807,8 @@
       <!--<section title="Private Claim Names" anchor="PrivateClaimName">-->
 
         <t>
-          JWT の提供者とコンシューマは, 予約名 <xref target="ReservedClaimName"></xref> あるいは公開名 <xref target="PublicClaimName"></xref> でない非公開名であるクレーム名を用いることに同意してもよい(MAY).
-          公開名とは異なり, 非公開名は衝突の対象であり慎重に使用する必要がある.
+          JWT の作成者および利用者は, 相互に同意のもとで, 予約クレーム名 <xref target="ReservedClaimName"></xref> でも公開クレーム名 <xref target="PublicClaimName"></xref> でもない非公開クレーム名を用いてもよい (MAY).
+          公開クレーム名とは異なり, 非公開クレーム名は衝突の可能性があり, 慎重に使用する必要がある.
         </t>
         <!--
          <t>
