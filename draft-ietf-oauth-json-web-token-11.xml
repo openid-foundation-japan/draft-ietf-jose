@@ -268,7 +268,7 @@
 	  <t hangText="耐衝突性を持つ名前空間">
 	  <!-- <t hangText="Collision Resistant Namespace"> -->
 	    他の名前空間とほとんど衝突しない様に割り当てられた名前空間.
-	    例えば、耐衝突性は名前空間の一部の管理を移譲したり, 耐衝突性を持つ名前の割り付け機能の利用によって達成することが出来る.
+	    例えば, 耐衝突性は名前空間の一部の管理を移譲したり, 耐衝突性を持つ名前の割り付け機能の利用によって達成することが出来る.
 	    耐衝突性を持つ名前空間の例は次のものを含んでいる.
 	    ドメイン名, ITU-T X.600とX.670推奨シリーズで定義されているオブジェクト識別子 (OID), ユニバーサル・ユニーク識別子 (UUID)<xref target="RFC4122"/>.
 	    管理を移譲された名前空間を利用する場合, 名前を定義する人は定義するための名前空間の一部を管理していることを保証するために合理的な予防措置を講ずる必要がある.
@@ -503,9 +503,9 @@
     <!--<section title="JWT Claims" anchor="Claims">-->
 
       <t>
-        JWT クレームセットは JWT によって送られるクレームのメンバーである JSON オブジェクトをあらわしている。
-        JWT クレームセット内のクレーム名は一意でなければならない（MUST）。
-        受信者は重複しているクレーム名を拒否するか、あるいは JSON パーサーを ECMAScript 5.1 <xref target="ECMAScript"/> のセクション 15.12 (JSON オブジェクト) で定義されているとおり語彙的に最後の重複メンバー名だけを返却する JSON パーサを利用しなければならない（MUST）。
+        JWT クレームセットは JWT によって送られるクレームのメンバーである JSON オブジェクトをあらわしている.
+        JWT クレームセット内のクレーム名は一意でなければならない（MUST）.
+        受信者は重複しているクレーム名を拒否するか, あるいは JSON パーサーを ECMAScript 5.1 <xref target="ECMAScript"/> のセクション 15.12 (JSON オブジェクト) で定義されているとおり語彙的に最後の重複メンバー名だけを返却する JSON パーサを利用しなければならない（MUST）.
       </t>
       <!--
       <t>
@@ -519,9 +519,9 @@
       </t>
       -->
       <t>
-        JWT が有効とみなされるように含まれていなければならないクレームのセットは、状況に依存し本仕様の範囲外である。
-        JWT の特定のアプリケーションは、特定の方法でいくつかのクレームを解釈し処理するための実装を必要とする。
-        しかしながら、このような要求が存在しない場合には実装によって解釈されるすべてのクレームを無視されるべきである(SHOULD)。
+        JWT が有効とみなされるように含まれていなければならないクレームのセットは, 状況に依存し本仕様の範囲外である.
+        JWT の特定のアプリケーションは, 特定の方法でいくつかのクレームを解釈し処理するための実装を必要とする.
+        しかしながら, このような要求が存在しない場合には実装によって解釈されるすべてのクレームを無視されるべきである(SHOULD).
       </t>
       <!--
       <t>
@@ -535,7 +535,7 @@
       </t>
       -->
       <t>
-        JWT クレーム名には予約されたクレーム名と公開クレーム名、非公開クレーム名の3つのクラスが定義されている。
+        JWT クレーム名には予約されたクレーム名と公開クレーム名, 非公開クレーム名の3つのクラスが定義されている.
       </t>
       <!--
       <t>
@@ -547,10 +547,10 @@
       <section title="予約クレーム名" anchor="ReservedClaimName">
       <!--<section title="Reserved Claim Names" anchor="ReservedClaimName">-->
   <t>
-    次のクレーム名は予約されている。
-    以下に定義されているクレームはいずれも使用することを必須とすることを想定されてないが、有用で相互互換のあるクレームのセットとしての起点が提供されている。
-    JWT の主な目的はコンパクト化するための表現であるため、すべて短いクレーム名となっている。
-    追加の予約クレーム名は <xref target="JWTClaimsReg" /> の IANA JSON Web トークンクレームレジストリにしたがって定義することができる。
+    次のクレーム名は予約されている.
+    以下に定義されているクレームはいずれも使用することを必須とすることを想定されてないが, 有用で相互互換のあるクレームのセットとしての起点が提供されている.
+    JWT の主な目的はコンパクト化するための表現であるため, すべて短いクレーム名となっている.
+    追加の予約クレーム名は <xref target="JWTClaimsReg" /> の IANA JSON Web トークンクレームレジストリにしたがって定義することができる.
   </t>
   <!--
 	<t>
@@ -567,10 +567,10 @@
 	<section title='"iss" (Issuer) クレーム' anchor="issDef">
   <!--<section title='"iss" (Issuer) Claim' anchor="issDef">-->
     <t>
-      <spanx style="verb">iss</spanx>（issuer）クレームは JWT を発行元を識別する。
-      このクレームの処理は一般的にアプリケーション固有である。
-      <spanx style="verb">iss</spanx> の値は文字列あるいは URI を含む大文字と小文字を区別する文字列である。
-      このクレームの使用は任意である（OPTIONAL）。
+      <spanx style="verb">iss</spanx>（issuer）クレームは JWT を発行元を識別する.
+      このクレームの処理は一般的にアプリケーション固有である.
+      <spanx style="verb">iss</spanx> の値は文字列あるいは URI を含む大文字と小文字を区別する文字列である.
+      このクレームの使用は任意である（OPTIONAL）.
     </t>
     <!--
 	  <t>
@@ -588,11 +588,11 @@
 	<section title='"sub" (Subject) クレーム' anchor="subDef">
   <!--<section title='"sub" (Subject) Claim' anchor="subDef">-->
     <t>
-      <spanx style="verb">sub</spanx>（subject）クレームは JWT の発行先を識別する。
-      JWT に含まれるこのクレームは通常対象についての説明である。
-      このクレームの処理は一般的にアプリケーション固有である。
-      <spanx style="verb">sub</spanx> の値は文字列あるいはURIを含む大文字と小文字を区別する文字列である。
-      このクレームの使用は任意である（OPTIONAL）。
+      <spanx style="verb">sub</spanx>（subject）クレームは JWT の発行先を識別する.
+      JWT に含まれるこのクレームは通常対象についての説明である.
+      このクレームの処理は一般的にアプリケーション固有である.
+      <spanx style="verb">sub</spanx> の値は文字列あるいはURIを含む大文字と小文字を区別する文字列である.
+      このクレームの使用は任意である（OPTIONAL）.
     </t>
     <!--
 	  <t>
@@ -610,13 +610,13 @@
 	<section title='"aud" (Audience) クレーム' anchor="audDef">
   <!--<section title='"aud" (Audience) Claim' anchor="audDef">-->
     <t>
-      <spanx style="verb">aud</spanx>（audience）クレームは JWT を対象とするオーディエンスを識別する。
-      JWT を処理するために意図されたそれぞれの対象はオーディエンスクレームの中の値とそれ自体を識別しなければならない（MUST）。
-      もしクレームを処理している対象が <spanx style="verb">aud</spanx> クレームの値とそれ自体を識別していない場合、その JWT は拒否されなければならない（MUST）。
-      一般的な場合において、<spanx style="verb">aud</spanx> クレームの値は文字列あるいは URI を含む大文字と小文字を区別する文字列の配列である。
-      特殊な場合では、JWT がひとつのオーディエンスを含んでいるとき、<spanx style="verb">aud</spanx> の値は文字列あるいは URI を含む大文字のみまたは小文字のみの文字列でもよい（MAY）。
-      オーディエンス値の解釈は一般的にアプリケーション固有である。
-      このクレームの使用は任意である（OPTIONAL）。
+      <spanx style="verb">aud</spanx>（audience）クレームは JWT を対象とするオーディエンスを識別する.
+      JWT を処理するために意図されたそれぞれの対象はオーディエンスクレームの中の値とそれ自体を識別しなければならない（MUST）.
+      もしクレームを処理している対象が <spanx style="verb">aud</spanx> クレームの値とそれ自体を識別していない場合, その JWT は拒否されなければならない（MUST）.
+      一般的な場合において, <spanx style="verb">aud</spanx> クレームの値は文字列あるいは URI を含む大文字と小文字を区別する文字列の配列である.
+      特殊な場合では, JWT がひとつのオーディエンスを含んでいるとき, <spanx style="verb">aud</spanx> の値は文字列あるいは URI を含む大文字のみまたは小文字のみの文字列でもよい（MAY）.
+      オーディエンス値の解釈は一般的にアプリケーション固有である.
+      このクレームの使用は任意である（OPTIONAL）.
     </t>
     <!--
 	  <t>
@@ -1201,8 +1201,8 @@
       <section title="JSON Web トークンクレームレジストリ" anchor="JWTClaimsReg">
       <!--<section title="JSON Web Token Claims Registry" anchor="JWTClaimsReg">-->
   <t>
-    本仕様は、予約 JWT クレーム名のために IANA JSON Web トークンクレームレジストリを定めている。
-    このレジストリは、予約クレーム名とそれを定義している仕様へのリファレンスを記録している。本仕様は <xref target="ReservedClaimName"></xref> で定義されているクレーム名を登録する。
+    本仕様は, 予約 JWT クレーム名のために IANA JSON Web トークンクレームレジストリを定めている.
+    このレジストリは, 予約クレーム名とそれを定義している仕様へのリファレンスを記録している.本仕様は <xref target="ReservedClaimName"></xref> で定義されているクレーム名を登録する.
   </t>
   <!--
 	<t>
@@ -1216,8 +1216,8 @@
   </t>
   -->
   <t>
-    値は1名以上の Designated Experts の勧告に従い, [TBD]@ietf.org のメーリングリストで2週間のレビュー期間の後に Specification Required <xref target="RFC5226"/> な状態で登録される。
-    しかしながら, 発行に先立ちそれらの値を割り当てることができるように Designated Expert(s) はそれらの値が公開できる状態になった時点で登録を許可することもありうる。
+    値は1名以上の Designated Experts の勧告に従い, [TBD]@ietf.org のメーリングリストで2週間のレビュー期間の後に Specification Required <xref target="RFC5226"/> な状態で登録される.
+    しかしながら, 発行に先立ちそれらの値を割り当てることができるように Designated Expert(s) はそれらの値が公開できる状態になった時点で登録を許可することもありうる.
   </t>
   <!--
 	<t>
@@ -1241,8 +1241,8 @@
         </t>
         -->
         <t>
-          Designated Expert(s) はレビュー期間内に登録申請を承認または拒否し, レビューが行われるメーリングリストおよび IANA へその決定を告げる。
-          要請が拒否された場合は, その理由が通知され, 可能な場合は申請の成功に向けた提案が行われるべきである。
+          Designated Expert(s) はレビュー期間内に登録申請を承認または拒否し, レビューが行われるメーリングリストおよび IANA へその決定を告げる.
+          要請が拒否された場合は, その理由が通知され, 可能な場合は申請の成功に向けた提案が行われるべきである.
         </t>
         <!--
         <t>
@@ -1253,7 +1253,7 @@
         </t>
         -->
         <t>
-          IANA はDesigned Export(s) からのレジストリ更新のみを受け付けなければならず、登録のために全ての申請をレビューが行われるメーリングリストに送られるべきである。
+          IANA はDesigned Export(s) からのレジストリ更新のみを受け付けなければならず, 登録のために全ての申請をレビューが行われるメーリングリストに送られるべきである.
         </t>
         <!--
         <t>
@@ -1268,8 +1268,8 @@
             <list style='hanging'>
               <t hangText='Claim Name:'>
                 <vspace />
-                申請される名前 (例: "example")。この名前は大文字と小文字を区別する。
-                大文字と小文字を区別し他の登録されている名前と一致する名前は受け付けられるべきではない (SHOULD NOT)。
+                申請される名前 (例: "example").この名前は大文字と小文字を区別する.
+                大文字と小文字を区別し他の登録されている名前と一致する名前は受け付けられるべきではない (SHOULD NOT).
                 <!--
                 The name requested (e.g., "example").
 		            This name is case sensitive.  Names that match other registered names
@@ -1278,9 +1278,9 @@
               </t>
               <t hangText='Change Controller:'>
                 <vspace />
-                標準化過程の RFC については、"IETF" とする。
-                その他については、責任を追う団体の名前を与える。
-                その他の詳細 (例: 郵便番号、メールアドレス、ホームページ URI) も含んでもよい。
+                標準化過程の RFC については, "IETF" とする.
+                その他については, 責任を追う団体の名前を与える.
+                その他の詳細 (例: 郵便番号, メールアドレス, ホームページ URI) も含んでもよい.
                 <!--
                 For Standards Track RFCs, state "IETF". For others, give the name of the
                 responsible party. Other details (e.g., postal address, email address, home page URI) may also be included.
@@ -1288,7 +1288,7 @@
               </t>
               <t hangText='Specification Document(s):'>
                 <vspace />
-                パラメータを定めるドキュメントの参照、そのドキュメントの複製を取得するために利用可能な URI を含むことが望ましい。
+                パラメータを定めるドキュメントの参照, そのドキュメントの複製を取得するために利用可能な URI を含むことが望ましい.
                 <!--
                 Reference to the document(s) that specify the parameter, preferably including URI(s) that
                 can be used to retrieve copies of the document(s). An indication of the relevant
@@ -1414,7 +1414,7 @@
 	<section title="レジストリコンテンツ" anchor="URNContents">
   <!--<section title="Registry Contents" anchor="URNContents">-->
     <t>
-      本仕様は、コンテンツが JWT であることを示すために利用可能な <spanx style='verb'>token-type:jwt</spanx> の値を <xref target="RFC6755">An IETF URN Sub-Namespace for OAuth</xref> に設けられた IANA urn:ietf:params:oauth レジストリに登録する。
+      本仕様は, コンテンツが JWT であることを示すために利用可能な <spanx style='verb'>token-type:jwt</spanx> の値を <xref target="RFC6755">An IETF URN Sub-Namespace for OAuth</xref> に設けられた IANA urn:ietf:params:oauth レジストリに登録する.
     </t>
     <!--
 	  <t>
@@ -1441,7 +1441,7 @@
 	<section title="レジストリコンテンツ" anchor="TypContents">
   <!--<section title="Registry Contents" anchor="TypContents">-->
     <t>
-      本仕様は、コンテンツが JWT であることを示すために利用可能な <spanx style='verb'>JWT</spanx> タイプの値を IANA JSON Web Signature and Encryption Type Value レジストリ <xref target="JWS"/> に登録する。
+      本仕様は, コンテンツが JWT であることを示すために利用可能な <spanx style='verb'>JWT</spanx> タイプの値を IANA JSON Web Signature and Encryption Type Value レジストリ <xref target="JWS"/> に登録する.
     </t>
     <!--
 	  <t>
@@ -1475,7 +1475,7 @@
 	<section title="レジストリコンテンツ" anchor="MediaContents">
   <!--<section title="Registry Contents" anchor="MediaContents">-->
     <t>
-      本仕様は、コンテンツが JWT であることを示すために利用可能な <spanx style="verb">application/jwt</spanx> Media Type <xref target="RFC2046"/> を MIME Media Type registry <xref target="RFC4288"/> に登録する。
+      本仕様は, コンテンツが JWT であることを示すために利用可能な <spanx style="verb">application/jwt</spanx> Media Type <xref target="RFC2046"/> を MIME Media Type registry <xref target="RFC4288"/> に登録する.
     </t>
     <!--
 	  <t>
@@ -1547,7 +1547,7 @@
 
       <section title="Registration of JWE Header Parameter Names" anchor="HdrReg">
   <t>
-    本仕様は、<xref target="ClaimsAsHeaders"/> のヘッダパラメータとして複製されたクレームで使用するために <xref target="ReservedClaimName"/> に定義されている特定の予約クレーム名を IANA JSON Web Signature and Encryption Header Parameters registry <xref target="JWS" /> に登録する。
+    本仕様は, <xref target="ClaimsAsHeaders"/> のヘッダパラメータとして複製されたクレームで使用するために <xref target="ReservedClaimName"/> に定義されている特定の予約クレーム名を IANA JSON Web Signature and Encryption Header Parameters registry <xref target="JWS" /> に登録する.
   </t>
   <!--
 	<t>
@@ -1879,7 +1879,7 @@
       <!-- <section title="Example Encrypted JWT" anchor="EncryptedJWTExample"> -->
 	
     <t>     
-      この例では、RSAES-PKCS1-V1_5とAES_128_CBC_HMAC_SHA_256を使用して, 
+      この例では, RSAES-PKCS1-V1_5とAES_128_CBC_HMAC_SHA_256を使用して, 
       受信者に<xref target="ExampleJWT"/>で使用したものと同じクレームを暗号化する.
     </t>
 	<!-- <t>
@@ -1959,8 +1959,8 @@
       <section title="入れ子 JWT の例" anchor="NestedJWTExample">
       <!--<section title="Example Nested JWT" anchor="NestedJWTExample">-->
   <t>
-    この例では、JWT が入れ子になったJWTを作成する JWE または JWS のペイロードとして使用する方法を示す。
-    この場合、JWT クレームセットは始めに署名した後、暗号化されている。
+    この例では, JWT が入れ子になったJWTを作成する JWE または JWS のペイロードとして使用する方法を示す.
+    この場合, JWT クレームセットは始めに署名した後, 暗号化されている.
   </t>
   <!--
 	<t>
@@ -1970,8 +1970,8 @@
   </t>
   -->
   <t>
-    内部の署名 JWT は、<xref target="JWS"/> の 付録 A.2 の例と同じである。
-    この例は、その後 RSAES-PKCS1-V1_5 と AES_128_CBC_HMAC_SHA_256 を使用して受信者にこの内部の JWT を暗号化する。
+    内部の署名 JWT は, <xref target="JWS"/> の 付録 A.2 の例と同じである.
+    この例は, その後 RSAES-PKCS1-V1_5 と AES_128_CBC_HMAC_SHA_256 を使用して受信者にこの内部の JWT を暗号化する.
   </t>
   <!--
 	<t>
@@ -1990,7 +1990,7 @@
     -->
 	  <list style="symbols">
       <t>
-        コンテンツ暗号化キーは、JWE 暗号化されたキーを生成するための RSAES-PKCS1-V1_5 アルゴリズムを使用した受信者に暗号化され、
+        コンテンツ暗号化キーは, JWE 暗号化されたキーを生成するための RSAES-PKCS1-V1_5 アルゴリズムを使用した受信者に暗号化され, 
       </t>
       <!--
 	    <t>
@@ -2000,7 +2000,7 @@
       </t>
       -->
       <t>
-        その平文は、暗号化文を生成するための AES_128_CBC_HMAC_SHA_256 アルゴリズムを使用した暗号化であり、
+        その平文は, 暗号化文を生成するための AES_128_CBC_HMAC_SHA_256 アルゴリズムを使用した暗号化であり, 
       </t>
       <!--
 	    <t>
@@ -2009,7 +2009,7 @@
       </t>
       -->
       <t>
-        その平文は JWT である。
+        その平文は JWT である.
       </t>
       <!--
 	    <t>
@@ -2037,7 +2037,7 @@
 ]]></artwork></figure>
 
   <t>
-    この JWT の計算は <xref target="JWE"/> の 付録 A.2 の JWE の計算と同じであり、異なる JWE ヘッダ、平文、初期ベクトル、およびコンテンツ暗号化キーの値以外が使用される。
+    この JWT の計算は <xref target="JWE"/> の 付録 A.2 の JWE の計算と同じであり, 異なる JWE ヘッダ, 平文, 初期ベクトル, およびコンテンツ暗号化キーの値以外が使用される.
   </t>
   <!--
 	<t>
@@ -2054,7 +2054,7 @@
   </t>
   -->
   <t>
-    使用されているペイロードは、<xref target="JWS"/> (すべての空白や改行は削除されている) の 付録セクション A.2.1 終わりの JWT の ASCII 表現の8ビットバイトである。
+    使用されているペイロードは, <xref target="JWS"/> (すべての空白や改行は削除されている) の 付録セクション A.2.1 終わりの JWT の ASCII 表現の8ビットバイトである.
   </t>
   <!--
 	<t>
@@ -2076,7 +2076,7 @@
 	  [82, 101, 100, 109, 111, 110, 100, 32, 87, 65, 32, 57, 56, 48, 53, 50]
 	</t>
   <t>
-    この例では、以下のJSON Webキー <xref target="JWK" /> フォーマットで表現されているコンテンツ暗号キーを使用している:
+    この例では, 以下のJSON Webキー <xref target="JWK" /> フォーマットで表現されているコンテンツ暗号キーを使用している:
   </t>
   <!--
 	<t>
