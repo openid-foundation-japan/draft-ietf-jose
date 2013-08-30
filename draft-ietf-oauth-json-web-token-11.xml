@@ -642,7 +642,13 @@
 	<section title='"exp" (Expiration Time) クレーム' anchor="expDef">
   <!--<section title='"exp" (Expiration Time) Claim' anchor="expDef">-->
     <t>
+      <spanx style="verb">exp</spanx> (expiration time) クレームは, それ以降に JWT が処理のために受け付けてはならない有効期限を識別する(MUST NOT).
+      <spanx style="verb">exp</spanx> クレームの処理は, 現在の日付/時刻が <spanx style="verb">exp</spanx> クレームに記載されている有効期限の日付/時刻以前でなければならないことを要求する(MUST). 
+      実装者はクロック・キューを考慮していくらかの小さな余地(通常は数分以上はない)を与えてもよい(MAY).
+      その値はIntDate値を含む数値でなければならない(MUST).
+      このクレームの使用は任意である(OPTIONAL).
     </t>
+    <!--
 	  <t>
 	    The <spanx style="verb">exp</spanx> (expiration time)
 	    claim identifies the expiration time on or after which the
@@ -654,10 +660,20 @@
 	    usually no more than a few minutes, to account for clock skew.
 	    Its value MUST be a number containing an IntDate value.
 	    Use of this claim is OPTIONAL.
-	  </t>
+    </t>
+    -->
 	</section>
 
-	<section title='"nbf" (Not Before) Claim' anchor="nbfDef">
+	<section title='"nbf" (Not Before) クレーム' anchor="nbfDef">
+  <!--<section title='"nbf" (Not Before) Claim' anchor="nbfDef">-->
+    <t>
+      <spanx style="verb">nbf</spanx> (not before) クレームは, それ以前に JWT が処理のために受け付けてはならない時刻を識別する(MUST NOT).
+      <spanx style="verb">nbf</spanx> クレームの処理は, 現在の日付/時刻が <spanx style="verb">nbf</spanx> クレームに記載されている日付/時刻の後, またはその以前であってはならない(MUST).
+      実装者はクロック・キューを考慮していくらかの小さな余地(通常は数分以上はない)を与えてもよい(MAY).
+      その値はIntDate値を含む数値でなければならない(MUST).
+      このクレームの使用は任意である(OPTIONAL).
+    </t>
+    <!--
 	  <t>
 	    The <spanx style="verb">nbf</spanx> (not before) claim
 	    identifies the time before which the JWT MUST NOT be
@@ -669,20 +685,39 @@
 	    usually no more than a few minutes, to account for clock skew.
 	    Its value MUST be a number containing an IntDate value.
 	    Use of this claim is OPTIONAL.
-	  </t>
+    </t>
+    -->
 	</section>
 
-	<section title='"iat" (Issued At) Claim' anchor="iatDef">
+	<section title='"iat" (Issued At) クレーム' anchor="iatDef">
+  <!--<section title='"iat" (Issued At) Claim' anchor="iatDef">-->
+    <t>
+      <spanx style="verb">iat</spanx> (issued at) クレームは, JWT を発行した時刻を識別する.
+      このクレームは JWT の発行されてからの経過時間を決めることに利用可能である.
+      その値はIntDate値を含む数値でなければならない(MUST).
+      このクレームの使用は任意である(OPTIONAL).
+    </t>
+    <!--
 	  <t>
 	    The <spanx style="verb">iat</spanx> (issued at) claim
 	    identifies the time at which the JWT was issued.  This
 	    claim can be used to determine the age of the JWT.
 	    Its value MUST be a number containing an IntDate value.
 	    Use of this claim is OPTIONAL.
-	  </t>
+    </t>
+    -->
 	</section>
 
-	<section title='"jti" (JWT ID) Claim' anchor="jtiDef">
+	<section title='"jti" (JWT ID) クレーム' anchor="jtiDef">
+  <!--<section title='"jti" (JWT ID) Claim' anchor="jtiDef">-->
+    <t>
+      <spanx style="verb">jti</spanx> (JWT ID) クレームは, JWT のための一意な識別子を提供する.
+      その識別子の値は, 同じ値が誤って異なるデータオブジェクトに割り当てられるという極わずかな確率があることを保証する方法で割り当てられなければならない(MUST).
+      <spanx style="verb">jti</spanx> クレームは, JWT がリプレイされることを防ぐことに利用することができる.
+      <spanx style="verb">jti</spanx> の値は大文字と小文字を区別する文字列である.
+      このクレームの使用は任意である(OPTIONAL).
+    </t>
+    <!--
 	  <t>
 	    The <spanx style="verb">jti</spanx> (JWT ID) claim
 	    provides a unique identifier for the JWT.  The identifier
@@ -693,10 +728,18 @@
 	    prevent the JWT from being replayed.
 	    The <spanx style="verb">jti</spanx> value is a case sensitive string.
 	    Use of this claim is OPTIONAL.
-	  </t>
+    </t>
+    -->
 	</section>
 
-	<section title='"typ" (Type) Claim' anchor="typDef">
+	<section title='"typ" (Type) クレーム' anchor="typDef">
+  <!--<section title='"typ" (Type) Claim' anchor="typDef">-->
+    <t>
+      <spanx style="verb">typ</spanx> (type) クレームは, アプリケーションに有用に使われるコンテンツ内でアプリケーション固有の方法で JWT クレームセットのコンテンツのタイプを宣言するために利用してもよい(MAY).
+      <spanx style="verb">typ</spanx> の値は, 大文字と小文字を区別する文字列である.
+      このクレームの使用は任意である(OPTIONAL).
+    </t>
+    <!--
 	  <t>
 	    The <spanx style="verb">typ</spanx> (type) claim MAY be used
 	    to declare a type for the contents of this JWT Claims Set
@@ -704,19 +747,32 @@
 	    in contexts where this is useful to the application.
 	    The <spanx style="verb">typ</spanx> value is a case sensitive string.
 	    Use of this claim is OPTIONAL.
-	  </t>
+    </t>
+    -->
+    <t>
+      <spanx style="verb">typ</spanx> クレーム のために使用されるその値は, 同じ規則に提供され <spanx style="verb">typ</spanx> ヘッダパラメータとして同じ値空間からなる.
+    </t>
+    <!--
 	  <t>
 	    The values used for the <spanx style="verb">typ</spanx>
 	    claim come from the same value space as the
 	    <spanx style="verb">typ</spanx> header parameter,
 	    with the same rules applying.
-	  </t>
+    </t>
+    -->
 	</section>
 
       </section>
 
-      <section title="Public Claim Names" anchor="PublicClaimName">
+      <section title="公開クレーム名" anchor="PublicClaimName">
+      <!--<section title="Public Claim Names" anchor="PublicClaimName">-->
 
+        <t>
+          クレーム名は JWT の利用者によって自由に定義することができる.
+          しかしながら, 衝突をさけるために, いくつかのクレーム名は IANA JSON Web トークンクレームレジストリ <xref target="JWTClaimsReg" /> に登録するか, 小特性を持つ名前空間を含む公開名にすべきである(SHOULD).
+          それぞれの場合において, 名前あるいは値の定義者はクレーム名を定義するために用いる名前空間の一部を管理下におくために妥当な予防措置を講じることを必要とする.
+        </t>
+        <!--
         <t>
 	  Claim Names can be defined at will by those using
 	  JWTs. However, in order to prevent collisions, any new
@@ -728,11 +784,18 @@
 	  or value needs to take reasonable precautions to make sure they
 	  are in control of the part of the namespace they use to
 	  define the Claim Name.
-	</t>
+  </t>
+  -->
       </section>
 
-      <section title="Private Claim Names" anchor="PrivateClaimName">
+      <section title="非公開クレーム名" anchor="PrivateClaimName">
+      <!--<section title="Private Claim Names" anchor="PrivateClaimName">-->
 
+        <t>
+          JWT の提供者とコンシューマは, 予約名 <xref target="ReservedClaimName"></xref> あるいは公開名 <xref target="PublicClaimName"></xref> でない非公開名であるクレーム名を用いることに同意してもよい(MAY).
+          公開名とは異なり, 非公開名は衝突の対象であり慎重に使用する必要がある.
+        </t>
+        <!--
          <t>
 	   A producer and consumer of a JWT MAY agree to use Claim Names
 	   that are Private Names:  names that are
@@ -740,7 +803,8 @@
 	   or Public Names <xref target="PublicClaimName"></xref>.
 	   Unlike Public Names, Private Names are subject to collision and
 	   should be used with caution.
-	 </t>
+   </t>
+   -->
 
       </section>
     </section>
