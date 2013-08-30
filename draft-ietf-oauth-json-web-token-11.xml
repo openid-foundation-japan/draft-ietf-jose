@@ -360,9 +360,9 @@
       </t>
       <t>
 	JWTヘッダの内容は, JWTクレーム・セットに適用される暗号化オペレーションについて記述している.
-	JWTヘッダがJWSヘッダである場合, そのJWTはJWSペイロードとなるJWTクレーム・セットと共にJWSとして表され, クレームはデジタル署名もしくはメッセージ認証符号化される.
-	JWTヘッダがJWEヘッダである場合, そのJWTは平文入力となるJWTクレーム・セットと共にJWEとして表され, クレームは暗号化される.
-	JWTはJWEやJWS構造の中に含まれ入れ子のJWTを構成することが出来, 入れ子の署名や暗号化を実施することが出来る.
+	JWTヘッダがJWSヘッダである場合, そのJWTはJWTクレーム・セットをJWSペイロードとしたJWSとなり, クレームにはデジタル署名もしくはメッセージ認証符号が付与される.
+	JWTヘッダがJWEヘッダである場合, そのJWTはJWTクレーム・セットをJWEの平文入力としたJWEとなり, クレームは暗号化される.
+	JWTはJWEやJWS構造の中に含まれ入れ子のJWTを構成することができ, 単一のJWTに対して署名や暗号化を繰り返し実施することができる.
 	<!--
 	The contents of the JWT Header describe the cryptographic
 	operations applied to the JWT Claims Set.
@@ -378,9 +378,9 @@
 	-->
       </t>
       <t>
-	JWTはピリオド('.')によって分割されたURLとして安全な文字列として表される.
-	それぞれのパートはBase64urlエンコードされた値を含む.
-	JWTの中のパートの数はJWSコンパクト・シリアライゼーションもしくはJWEコンパクト・シリアライゼーションを使った結果のJWSもしくはJWEオブジェクトの表現に依存する.
+	JWTはピリオド('.')によって連結された一連のURL-safeな文字列として表される.
+	それぞれのパートはBase64urlエンコードされた値で構成される.
+	JWTの中のパートの数は, JWSコンパクト・シリアライゼーション表現のJWSもしくはJWEコンパクト・シリアライゼーション表現のJWEのどちらとして利用されているかに依存する.
 	<!--
 	A JWT is represented as a sequence of URL-safe parts
 	separated by period ('.') characters.
@@ -396,7 +396,8 @@
       <!-- <section title="Example JWT" anchor="ExampleJWT"> -->
 
 	<t>
-	  下記のJWTヘッダはエンコードされたオブジェクトはJSON Web Token (JWT) であり, そのJWTはHMAC SHA-256アルゴリズムを使ってメッセージ認証符号化されていることを表す.
+	  下記はJWTヘッダの例である.
+	  このヘッダは, エンコードされたオブジェクトがJSON Web Token (JWT) であり, そのJWTにはHMAC SHA-256アルゴリズムを使ってメッセージ認証符号が付与されていることを表している.
 	  <!--
 	  The following example JWT Header declares that the
 	  encoded object is a JSON Web Token (JWT) and the JWT is
