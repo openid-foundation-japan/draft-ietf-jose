@@ -1276,8 +1276,8 @@
       <section title="JSON Web トークンクレームレジストリ" anchor="JWTClaimsReg">
       <!--<section title="JSON Web Token Claims Registry" anchor="JWTClaimsReg">-->
   <t>
-    本仕様は, 予約 JWT クレーム名のために IANA JSON Web トークンクレームレジストリを定めている.
-    このレジストリは, 予約クレーム名とそれを定義している仕様へのリファレンスを記録している.本仕様は <xref target="ReservedClaimName"></xref> で定義されているクレーム名を登録する.
+    本仕様では, 予約 JWT クレーム名のための IANA JSON Web トークンクレームレジストリを定める.
+    このレジストリは, 予約クレーム名とそれを定義している仕様へのリファレンスを記録する. 本仕様は <xref target="ReservedClaimName"></xref> で定義されているクレーム名を登録する.
   </t>
   <!--
 	<t>
@@ -1291,8 +1291,8 @@
   </t>
   -->
   <t>
-    値は1名以上の Designated Experts の勧告に従い, [TBD]@ietf.org のメーリングリストで2週間のレビュー期間の後に Specification Required <xref target="RFC5226"/> な状態で登録される.
-    しかしながら, 発行に先立ちそれらの値を割り当てることができるように Designated Expert(s) はそれらの値が公開できる状態になった時点で登録を許可することもありうる.
+    値は, 1名以上の Designated Experts の勧告に従い, [TBD]@ietf.org のメーリングリストで2週間の審査期間を経て, Specification Required <xref target="RFC5226"/> な状態で登録される.
+    しかしながら, 発行に先立ってそれらの値を用いることができるように, Designated Expert(s) はそれらの値が公開できる状態になった時点で登録を許可することもありうる.
   </t>
   <!--
 	<t>
@@ -1316,8 +1316,8 @@
         </t>
         -->
         <t>
-          Designated Expert(s) はレビュー期間内に登録申請を承認または拒否し, レビューが行われるメーリングリストおよび IANA へその決定を告げる.
-          要請が拒否された場合は, その理由が通知され, 可能な場合は申請の成功に向けた提案が行われるべきである.
+          Designated Expert(s) は審査期間内に登録を承認または拒否し, レビューが行われるメーリングリストおよび IANA へその決定を告げる.
+          要請が拒否された場合は, その理由が通知され, 可能な場合は承認に向けた提案が行われるべきである.
         </t>
         <!--
         <t>
@@ -1328,7 +1328,7 @@
         </t>
         -->
         <t>
-          IANA はDesigned Export(s) からのレジストリ更新のみを受け付けなければならず, 登録のために全ての申請をレビューが行われるメーリングリストに送られるべきである.
+          IANA は, Designed Export(s) からのレジストリ更新のみを受け付けなければならず, すべての登録要請をレビューメーリングリストに送信しなければならない.
         </t>
         <!--
         <t>
@@ -1343,8 +1343,8 @@
             <list style='hanging'>
               <t hangText='Claim Name:'>
                 <vspace />
-                申請される名前 (例: "example").この名前は大文字と小文字を区別する.
-                大文字と小文字を区別し他の登録されている名前と一致する名前は受け付けられるべきではない (SHOULD NOT).
+                名称 (例: "example"). 名称は大文字と小文字を区別する.
+                大文字と小文字を区別せず他の登録されている名称と一致する名称は受け付けられるべきではない (SHOULD NOT).
                 <!--
                 The name requested (e.g., "example").
 		            This name is case sensitive.  Names that match other registered names
@@ -1353,9 +1353,9 @@
               </t>
               <t hangText='Change Controller:'>
                 <vspace />
-                標準化過程の RFC については, "IETF" とする.
-                その他については, 責任を追う団体の名前を与える.
-                その他の詳細 (例: 郵便番号, メールアドレス, ホームページ URI) も含んでもよい.
+                RFC の標準に従う際は, "IETF" と記載する.
+                それ以外の場合は, 責任ある団体の名称を記載する.
+                その他の詳細 (例えば, 郵便番号, メールアドレス, ホームページの URL) も記載してもよい.
                 <!--
                 For Standards Track RFCs, state "IETF". For others, give the name of the
                 responsible party. Other details (e.g., postal address, email address, home page URI) may also be included.
@@ -1363,7 +1363,9 @@
               </t>
               <t hangText='Specification Document(s):'>
                 <vspace />
-                パラメータを定めるドキュメントの参照, そのドキュメントの複製を取得するために利用可能な URI を含むことが望ましい.
+                パラメータ仕様を記載したドキュメントへの参照を記載する.
+                ドキュメントを取得することのできる URI が記載されていることが望ましい.
+                明確な記載箇所への参照が含まれることが望ましいが必須ではない.
                 <!--
                 Reference to the document(s) that specify the parameter, preferably including URI(s) that
                 can be used to retrieve copies of the document(s). An indication of the relevant
@@ -1379,104 +1381,176 @@
           <t> <?rfc subcompact="yes"?>
             <list style='symbols'>
               <t>
+		クレーム名: <spanx style="verb">iss</spanx>
+		<!--
                 Claim Name: <spanx style="verb">iss</spanx>
+		-->
               </t>
               <t>
+		変更管理: IETF
+		<!--
                 Change Controller: IETF
+		-->
               </t>
               <t>
+		仕様ドキュメント: <xref target="issDef"/> of [[ this document ]]
+		<!--
                 Specification Document(s): <xref target="issDef"/> of [[ this document ]]
+		-->
               </t>
             </list>
 	  </t>
 	  <t>
             <list style='symbols'>
               <t>
+		クレーム名: <spanx style="verb">sub</spanx>
+		<!--
                 Claim Name: <spanx style="verb">sub</spanx>
+		-->
               </t>
               <t>
+		変更管理: IETF
+		<!--
                 Change Controller: IETF
+		-->
               </t>
               <t>
+		仕様ドキュメント:  <xref target="subDef"/> of [[ this document ]]
+		<!--
                 Specification Document(s): <xref target="subDef"/> of [[ this document ]]
+		-->
               </t>
             </list>
 	  </t>
 	  <t>
             <list style='symbols'>
               <t>
+		クレーム名: <spanx style="verb">aud</spanx>
+		<!--
                 Claim Name: <spanx style="verb">aud</spanx>
+		-->
               </t>
               <t>
+		変更管理: IETF
+		<!--
                 Change Controller: IETF
+		-->
               </t>
               <t>
+		仕様ドキュメント: <xref target="audDef"/> of [[ this document ]]
+		<!--
                 Specification Document(s): <xref target="audDef"/> of [[ this document ]]
+		-->
               </t>
             </list>
 	  </t>
 	  <t>
 	    <list style='symbols'>
 	      <t>
+		クレーム名: <spanx style="verb">exp</spanx>
+		<!--
 		Claim Name: <spanx style="verb">exp</spanx>
+		-->
 	      </t>
 	      <t>
+		変更管理: IETF
+		<!--
 		Change Controller: IETF
+		-->
 	      </t>
 	      <t>
+		仕様ドキュメント: <xref target="expDef"/> of [[ this document ]]
+		<!--
 		Specification Document(s): <xref target="expDef"/> of [[ this document ]]
+		-->
 	      </t>
 	    </list>
 	  </t>
 	  <t>
             <list style='symbols'>
               <t>
+		クレーム名: <spanx style="verb">nbf</spanx>
+		<!--
                 Claim Name: <spanx style="verb">nbf</spanx>
+		-->
               </t>
               <t>
+		変更管理: IETF
+		<!--
                 Change Controller: IETF
+		-->
               </t>
               <t>
+		仕様ドキュメント: <xref target="nbfDef"/> of [[ this document ]]
+		<!--
                 Specification Document(s): <xref target="nbfDef"/> of [[ this document ]]
+		-->
               </t>
             </list>
 	  </t>
 	  <t>
             <list style='symbols'>
               <t>
+		クレーム名: <spanx style="verb">iat</spanx>
+		<!--
                 Claim Name: <spanx style="verb">iat</spanx>
+		-->
               </t>
               <t>
+		変更管理: IETF
+		<!--
                 Change Controller: IETF
+		-->
               </t>
               <t>
+		仕様ドキュメント: <xref target="iatDef"/> of [[ this document ]]
+		<!--
                 Specification Document(s): <xref target="iatDef"/> of [[ this document ]]
+		-->
               </t>
             </list>
 	  </t>
 	  <t>
             <list style='symbols'>
               <t>
+		クレーム名: <spanx style="verb">jti</spanx>
+		<!--
                 Claim Name: <spanx style="verb">jti</spanx>
+		-->
               </t>
               <t>
+		変更管理: IETF
+		<!--
                 Change Controller: IETF
+		-->
               </t>
               <t>
+		仕様ドキュメント: <xref target="jtiDef"/> of [[ this document ]]
+		<!--
                 Specification Document(s): <xref target="jtiDef"/> of [[ this document ]]
+		-->
               </t>
             </list>
 	  </t>
 	  <t>
             <list style='symbols'>
               <t>
+		クレーム名: <spanx style="verb">typ</spanx>
+		<!--
                 Claim Name: <spanx style="verb">typ</spanx>
+		-->
               </t>
               <t>
+		変更管理: IETF
+		<!--
                 Change Controller: IETF
+		-->
               </t>
               <t>
+		仕様ドキュメント: <xref target="typDef"/> of [[ this document ]]
+		<!--
                 Specification Document(s): <xref target="typDef"/> of [[ this document ]]
+		-->
               </t>
 	    </list>
           </t>
@@ -1489,7 +1563,7 @@
 	<section title="レジストリコンテンツ" anchor="URNContents">
   <!--<section title="Registry Contents" anchor="URNContents">-->
     <t>
-      本仕様は, コンテンツが JWT であることを示すために利用可能な <spanx style='verb'>token-type:jwt</spanx> の値を <xref target="RFC6755">An IETF URN Sub-Namespace for OAuth</xref> に設けられた IANA urn:ietf:params:oauth レジストリに登録する.
+      本仕様は, コンテントが JWT であることを示すことが出来るように, <xref target="RFC6755">An IETF URN Sub-Namespace for OAuth</xref> に設けられた IANA urn:ietf:params:oauth レジストリへ <spanx style='verb'>token-type:jwt</spanx> の値を登録する.
     </t>
     <!--
 	  <t>
@@ -1503,9 +1577,14 @@
 	  <t> <?rfc subcompact="yes"?>
 	  <list style='symbols'>
 	    <t>URN: urn:ietf:params:oauth:token-type:jwt</t>
+	    <t>共通名: JSON Web Token (JWT) Token Type</t>
+	    <t>変更管理: IETF</t>
+	    <t>仕様ドキュメント: [[this document]]</t>
+	<!--
 	    <t>Common Name: JSON Web Token (JWT) Token Type</t>
 	    <t>Change Controller: IETF</t>
 	    <t>Specification Document(s): [[this document]]</t>
+	-->
 	  </list>
 	  </t>
 	</section>
@@ -1516,7 +1595,7 @@
 	<section title="レジストリコンテンツ" anchor="TypContents">
   <!--<section title="Registry Contents" anchor="TypContents">-->
     <t>
-      本仕様は, コンテンツが JWT であることを示すために利用可能な <spanx style='verb'>JWT</spanx> タイプの値を IANA JSON Web Signature and Encryption Type Value レジストリ <xref target="JWS"/> に登録する.
+      本仕様は, コンテントが JWT であることを示すことが出来るように, IANA JSON Web Signature and Encryption Type Values レジストリ <xref target="JWS"/> に <spanx style='verb'>JWT</spanx> タイプの値を登録する.
     </t>
     <!--
 	  <t>
@@ -1529,16 +1608,28 @@
 	  <t> <?rfc subcompact="yes"?>
 	  <list style='symbols'>
 	    <t>
+	      "typ" ヘッダ・パラメータの値: <spanx style='verb'>JWT</spanx>
+	<!--
 	      "typ" Header Parameter Value: <spanx style='verb'>JWT</spanx>
+	-->
 	    </t>
 	    <t>
+	      MIME Type の略称: application/jwt
+	<!--
 	      Abbreviation for MIME Type: application/jwt
+	-->
 	    </t>
 	    <t>
+	      変更管理: IETF
+	<!--
 	      Change Controller: IETF
+	-->
 	    </t>
 	    <t>
+	      仕様ドキュメント: <xref target="typHdrDef"/> of [[ this document ]]
+	<!--
 	      Specification Document(s): <xref target="typHdrDef"/> of [[ this document ]]
+	-->
 	    </t>
 	  </list>
 	  </t>
@@ -1550,7 +1641,7 @@
 	<section title="レジストリコンテンツ" anchor="MediaContents">
   <!--<section title="Registry Contents" anchor="MediaContents">-->
     <t>
-      本仕様は, コンテンツが JWT であることを示すために利用可能な <spanx style="verb">application/jwt</spanx> Media Type <xref target="RFC2046"/> を MIME Media Type registry <xref target="RFC4288"/> に登録する.
+      本仕様は, コンテントが JWT であることを示すことが出来るように, MIME Media Type registry <xref target="RFC4288"/> に <spanx style="verb">application/jwt</spanx> Media Type <xref target="RFC2046"/> を登録する.
     </t>
     <!--
 	  <t>
@@ -1563,56 +1654,106 @@
 	  <t> <?rfc subcompact="yes"?>
 	  <list style="symbols">
 	    <t>
+	      タイプ名: application
+	<!--
 	      Type Name: application
+	-->
 	    </t>
 	    <t>
+	      サブタイプ名: jwt
+	<!--
 	      Subtype Name: jwt
+	-->
 	    </t>
 	    <t>
+	      必須パラメータ: n/a
+	<!--
 	      Required Parameters: n/a
+	-->
 	    </t>
 	    <t>
+	      オプションパラメータ: n/a
+	<!--
 	      Optional Parameters: n/a
+	-->
 	    </t>
 	    <t>
+	      エンコーディングにおける考慮点: JWT の値はピリオド ('.') で区切られた base64url エンコードされた値 (それらのうち幾つかが空の文字列の場合もある) の列としてエンコードされる.
+	<!--
 	      Encoding considerations: JWT values are encoded as a
 	      series of base64url encoded values (some of which may be the
 	      empty string) separated by period ('.') characters
+	-->
 	    </t>
 	    <t>
+	      セキュリティ上の考慮点: [[ this document ]] のセキュリティ上の考慮点のセクションを参照のこと.
+	<!--
 	      Security Considerations: See the Security Considerations section of [[ this document ]]
+	-->
 	    </t>
 	    <t>
+	      相互運用上の考慮点: n/a
+	<!--
 	      Interoperability Considerations: n/a
+	-->
 	    </t>
 	    <t>
+	      公開された仕様: [[ this document ]]
+	<!--
 	      Published Specification: [[ this document ]]
+	-->
 	    </t>
 	    <t>
+	      このメディアタイプを利用するアプリケーション:
+	      OpenID Connect, Mozilla Persona, Salesforce, Google, 他多数
+	<!--
 	      Applications that use this media type:
 	      OpenID Connect, Mozilla Persona, Salesforce, Google, numerous others
+	-->
 	    </t>
 	    <t>
+	      追加情報:
+	      マジックナンバー: n/a,
+	      ファイル拡張子: n/a,
+	      Macintosh ファイルタイプコード: n/a
+	<!--
 	      Additional Information:
 	      Magic number(s): n/a,
 	      File extension(s): n/a,
 	      Macintosh file type code(s): n/a
+	-->
 	    </t>
 	    <t>
+	      その他情報の問い合わせ先とメールアドレス:
+	      Michael B. Jones, mbj@microsoft.com
+	<!--
 	      Person &amp; email address to contact for further information:
 	      Michael B. Jones, mbj@microsoft.com
+	-->
 	    </t>
 	    <t>
+	      意図された用途: COMMON
+	<!--
 	      Intended Usage: COMMON
+	-->
 	    </t>
 	    <t>
+	      用途の制限: none
+	<!--
 	      Restrictions on Usage: none
+	-->
 	    </t>
 	    <t>
+	      著者: Michael B. Jones, mbj@microsoft.com
+	<!--
 	      Author: Michael B. Jones, mbj@microsoft.com
+	-->
 	    </t>
 	    <t>
+	      変更管理: IETF
+	<!--
 	      Change Controller: IETF
+	-->
 	    </t>
 	  </list>
 	  </t>
