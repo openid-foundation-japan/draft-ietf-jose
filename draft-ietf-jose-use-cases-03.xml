@@ -829,7 +829,7 @@
 
         <t>
             XMPPの端末間セキュリティシステムの最新のドラフトでは, 各パーティはXMPPメッセージ伝達システム内にある他パーティの信用情報にもとづいて認証される.
-            送信者は, "Alice"という識別子宛のメッセージ (具体的には, 隠蔽された鍵交換のためのリクエスト) を受け取ることができ, またその識別子宛のメッセージ (隠蔽された鍵情報) を送信できるため, 受信者に認証される.
+            送信者は, "Alice"という識別子宛のメッセージ (具体的には, 鍵交換のためのリクエスト) を受け取ることができ, またその識別子宛のメッセージ (ラップされた鍵情報) を送信できるため, 受信者に認証される.
             同様に, 受信者はオリジナルの暗号メッセージと元の鍵交換のリクエストを送ることができるため, 送信者に認証される.
             そのため, ここでの認証で要求されるのはXMPPのルーティングが正しく行われることだけでなく, TLSが全てのホップにおいて使われることである.
             それに加えて, ３ホップ中いずれかにおいて中間者によってBobになりすまして暗号メッセージの鍵情報を取得できてしまうため, 強い認証強度のTLSチャネルが要求される.
@@ -1100,9 +1100,9 @@
       page is active in a user's browser.</t>-->
 
       <t>
-          しかしながら, WebCryptGraphy API は鍵のエクスポート機能も提供する. それによりJavascriptでAPIを隠蔽した形式で鍵を抜き出すことができる.
+          しかしながら, WebCryptGraphy API は鍵のエクスポート機能も提供する. それによりJavascriptでAPIをラップされた形式で鍵を抜き出すことができる.
           例えば, JavaScriptは別のデバイスが保持する対になる秘密鍵の代わりに公開鍵を提供したかもしれない.
-          それにより, APIが提供する隠蔽された鍵は新しいデバイスへ安全に鍵を転送するのに使うことができる.
+          それにより, APIが提供する鍵は新しいデバイスへ安全に鍵を転送するのに使うことができる.
           こうして悪意のあるコードが鍵をエクスポートできるようにする可能性があるが, ユーザへの通知や同意の検証を考慮にいれても, 明示的なエクスポート処理を必要とすることが制御のポイントとなっている.
       </t>
       <!--<t>However, the WebCryptography API also provides a key export functionality,
@@ -1117,7 +1117,7 @@
       <t>
           Web CryptGraphy API はブラウザが自身の扱う鍵の利用を制限することを強いることも許可している.
           例えば, 対象鍵は暗号化のみでMACには利用できないこと注目されがちである.
-          鍵が隠蔽された形式でエクスポートされる際, これらの属性は鍵と一緒にもっていかれるべきである.
+          鍵がラップされた形式でエクスポートされる際, これらの属性は鍵と一緒にもっていかれるべきである.
       </t>
       <!--<t>The Web Cryptography API also allows browsers to impose limitations on the
       usage of the keys it handles.  For example, a symmetric key might be marked as
@@ -1128,8 +1128,8 @@
           Web CryptGraphy API はこのようにして, いくつかの鍵の形式を表現するフォーマットが必要とされる.
           言うまでもなく, 非対称な鍵のペアから公開鍵は自由にインポートでき, ブラウザよりエクスポート可能であるため, 公開鍵を表現するためのフォーマットが必要である.
           秘密鍵や対象鍵を表現できるようなフォーマットもまた必要とされている.
-          非公開鍵のために, まず第一に必要なものは鍵を暗号的に機密性および完全性が保証されている, 隠蔽された形式である.
-          ダイレクトで隠蔽されていないフォーマットを定義することもまた, セキュリティの境目での利用に有用であるかもしれない.
+          公開鍵以外の形式のため, まず第一に必要なものは鍵を暗号的に機密性および完全性が保証されているような、ラップされた形式である.
+          ダイレクトでラップされていないフォーマットを定義することもまた, セキュリティ的に閉じた環境での利用に有用であるかもしれない.
       </t>
       <!--<t>The Web Cryptography API thus requires formats to express several forms of
       keys.  Obviously, the public key from an asymmetric key pair can be freely
@@ -1415,11 +1415,11 @@
           <t hangText="F1">
               下記のセキュリティ特性を備えたセキュアオブジェクトのためのフォーマットを定義すること
             <list style="symbols">
-            <t>デジタル署名 (完全性/非対象鍵のペアによる認証)</t>
-            <t>メッセージ認証 (完全性/対象鍵による認証)</t>
-            <t>認証済み暗号化</t>
+                <t>デジタル署名 (非対象鍵のペアによる完全性保護/認証)</t>
+                <t>メッセージ認証 (対象鍵による完全性保護/認証)</t>
+                <t>認証付き暗号化</t>
             </list>
-            つまり, このワーキンググループによって定義されたセキュアオブジェクトはCMS 署名データ, 認証データ, エンベロープデータ, 認証エンベロープデータオブジェクトと同等のセキュリティ特性を提供するべきだ<xref target="RFC5652"></xref> <xref target="RFC5083"></xref>.</t>
+            つまり, このワーキンググループによって定義されたセキュアオブジェクトはCMS SignedData, CMS AuthenticatedData, CMS EnvelopedData, CMS AuthEnvelopedDataオブジェクトと同等のセキュリティ特性を提供するべきだ<xref target="RFC5652"></xref> <xref target="RFC5083"></xref>.</t>
           <!--<t hangText="F1">Define formats for secure objects that provide the following
           security properties:
             <list style="symbols">
@@ -1432,13 +1432,13 @@
           EnvelopedData, and AuthEnveloped data objects <xref target="RFC5652"></xref>
           <xref target="RFC5083"></xref>.</t>-->
           <t hangText="F2">
-              非対称暗号アルゴリズムのための公開鍵と秘密鍵と関連付けられた属性を付帯し, 隠蔽された形式の秘密鍵を含むフォーマットを定義すること.
+              非対称暗号アルゴリズムのための公開鍵と秘密鍵と関連付けられた属性を付帯し, ラップされた形式の秘密鍵を含むフォーマットを定義すること.
           </t>
           <!--<t hangText="F2">Define a format for public keys and private keys for
           asymmetric cryptographic algorithms, with associated attributes, including a
           wrapped form for private keys.</t>-->
           <t hangText="F3">
-              隠蔽された鍵とされていない鍵の両者を扱えるような関連属性を持つ対象鍵のためのフォーマットを定義すること.
+              ラップされた鍵とされていない鍵の両者を扱えるような関連属性を持つ対象鍵のためのフォーマットを定義すること.
 
           </t>
           <!--<t hangText="F3">Define a format for symmetric keys with associated attributes,
@@ -1456,14 +1456,14 @@
           <!--<t hangText="F5">Define a compact, URL-safe text serialization for the encrypted
           signed object formats.</t>-->
           <t hangText="F6">
-              隠蔽された鍵と関連付けられた属性を暗号的にオブジェクトにひもづけられるようにすること.
+              ラップされた鍵と関連付けられた属性を暗号的にオブジェクトにひもづけられるようにすること.
           </t>
           <!--<t hangText="F6">Allow for attributes associated to wrapped keys to be bound
           to them cryptographically</t>-->
           <t hangText="F7">
-              隠蔽された鍵が対象鍵を利用するセキュアオブジェクトから区別されるようにすること.
-              そのようなケースでは, 隠蔽された鍵 (例：暗号文, MAC値) 以外のセキュアオブジェクトの暗号コンポーネントは隠蔽された鍵形式とは非依存でなくてはならない.
-              例えば, 暗号化オブジェクトが複数の受信者宛に準備された場合, 暗号文ではなく隠蔽された鍵のみが変わる.
+              ラップされた鍵が対象鍵を利用するセキュアオブジェクトから区別されるようにすること.
+              そのようなケースでは, ラップされた鍵 (例：暗号文, MAC値) 以外のセキュアオブジェクトの暗号コンポーネントは鍵形式とは非依存でなくてはならない.
+              例えば, 暗号化オブジェクトが複数の受信者宛に準備された場合, 暗号文ではなくラップされた鍵のみが変わる.
           </t>
           <!--<t hangText="F7">Allow for wrapped keys to be separated from a secure object
           that uses a symmetric key.  In such cases, cryptographic components of the
