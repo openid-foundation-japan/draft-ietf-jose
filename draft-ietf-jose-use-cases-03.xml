@@ -1589,6 +1589,13 @@
     </section>
 
     <section anchor="sec-cons-sec" title="Security Considerations">
+      <t>
+        本ドキュメントの主目的は JSON ベースのセキュアオブジェクトフォーマットが満たすべき要件をまとめることである.
+        このフォーマットに関する Security Consideratios は, 一般的なオブジェクトベースのセキュリティテクノロジーに関するレベルでは CMS <xref target="RFC5652"/> のそれに準じる.
+        JOSE フォーマットと CMS の最大の違いは, JOSE が JSON ベースであることである.
+        JSON は正規化された表現形式が存在しないため, 2つの JSON オブジェクトが同じ情報を表現しているのかどうかを判断することは難しく, それが JOSE を利用する上で脆弱性につながることもあるかもしれない.
+      </t>
+      <!--
       <t>The primary focus of this document is the requirements for a
       JSON-based secure object format. At the level of general security
       considerations for object-based security technologies, the security
@@ -1598,6 +1605,7 @@
       representation. The lack of a canonical form means that it is difficult
       to determine whether two JSON objects represent the same information,
       which could lead to vulnerabilities in some usages of JOSE.</t>
+      -->
     </section>
   </middle>
 
