@@ -1075,168 +1075,294 @@
 
     </section>
 
-    <section title="Rules for Creating and Validating a JWT" anchor="Validating">
+    <section title="JWTを作成および検証するためのルール" anchor="Validating">
+	<!-- <section title="Rules for Creating and Validating a JWT" anchor="Validating"> -->
 
-      <t>
+	<t>
+	JWTを作成するために, 次の手順を実行しなければならない(MUST).
+	手順の順序は, 手順の入力と出力の間に依存関係が存在しない場合において重要ではない.
+	
+      <!--<t>
 	To create a JWT, one MUST perform these steps.  The order of
 	the steps is not significant in cases where there are no
 	dependencies between the inputs and outputs of the steps.
-
-        <list style="numbers">
-
+	-->
+        <list style="numbers"> 
+		
 	  <t>
+	    望ましいクレームを含むJWTクレームセットを作成する.
+		空白は表現の中で明確に許容されており, エンコーディングの前に正規化を実行する必要がないため注意すること.
+	  </t>
+	  <!-- <t>
 	    Create a JWT Claims Set containing the desired claims.
 	    Note that white space is explicitly allowed in the
 	    representation and no canonicalization need be performed before
 	    encoding.
-	  </t>
+	  </t> -->
+	  
 	  <t>
+	    メッセージはJWTクレームセットのUTF-8表現のオクテットとする.
+	  </t>
+	  <!-- <t>
 	    Let the Message be the octets of the UTF-8 representation
 	    of the JWT Claims Set.
-	  </t>
+	  </t> -->
+	  
 	  <t>
+	    望ましいヘッダパラメータを含むJWTヘッダを作成する.
+		JWTは, <xref target="JWS" />仕様, または<xref target="JWE" />仕様に従わなければならない(MUST).
+		空白は表現の中で明確に許容されており, エンコーディングの前に正規化を実行する必要がないため注意すること.
+	  </t>
+	  
+	  <!-- <t>
 	    Create a JWT Header containing the desired set of header
 	    parameters.  The JWT
 	    MUST conform to either the <xref target="JWS" /> or <xref
 	    target="JWE" /> specifications.
 	    Note that white
 	    space is explicitly allowed in the representation and no
-	    canonicalization need be performed before encoding.
+	    can onicalization need be performed before encoding.
+	  </t>-->
+	  
+	  <t>
+	    JWTヘッダのUTF-8表現のオクテットをBase64urlエンコードする.
+		これをエンコードされたJWTヘッダとする,
 	  </t>
-          <t>
+      <!-- <t>
 	    Base64url encode the octets of the UTF-8 representation of
 	    the JWT Header.  Let this be the Encoded JWT Header.
-	  </t>
+	  </t> -->
+	  
 	  <t>
+	    JWTは, JWSかJWEかによって２つのケースがある.
+	  
+	  <!-- <t>
 	    Depending upon whether the JWT is a JWS or JWE,
 	    there are two cases:
+	  -->
+	  
 	    <list style='symbols'>
-	      <t>
+		
+		<t>
+		JWTがJWSの場合, JWSヘッダとしてJWTヘッダを, JWSペイロードとしてメッセージを使用してJWSを作成する.
+		JWSを作成するために<xref target="JWS" />で明記されたすべての手順に従わなければならない(MUST).
+		</t>
+	    <!--  <t>
 		If the JWT is a JWS, create a JWS using the JWT
 		Header as the JWS Header and the Message as the JWS
 		Payload; all steps specified in <xref target="JWS" />
 		for creating a JWS MUST be followed.
-	      </t>
-	      <t>
+	      </t> -->
+	   
+		<t>
+		JWTがJWEの場合, JWEヘッダとしてJWTヘッダを, JWEプレーンテキストとしてメッセージを使用してJWEを作成する.
+		JWEを作成するために<xref target="JWE" />で明記されたすべての手順に従わなければならない(MUST)
+		</t>
+        <!--  <t>
 		Else, if the JWT is a JWE, create a JWE using the
 		JWT Header as the JWE Header and the Message as the
 		JWE Plaintext; all steps specified in <xref
 		target="JWE" /> for creating a JWE MUST be followed.
-	      </t>
+	      </t> -->
+		  
 	    </list>
 	  </t>
+	  
 	  <t>
+	    ネストされた署名または暗号化の操作が行われた場合, メッセージはJWTまたはJWEとして,  
+		そのステップで作られた新しいJWTヘッダを<spanx style="verb">JWT</spanx>の<spanx style="verb">cty</spanx>(Content type)の値として利用し, ステップ3に戻る. 
+	  </t>
+	  <!-- <t>
 	    If a nested signing or encryption operation will be
 	    performed, let the Message be the JWS or JWE, and
 	    return to Step 3, using a <spanx style="verb">cty</spanx> (content type)
 	    value of <spanx style="verb">JWT</spanx>
 	    in the new JWT Header created in that step.
-	  </t>
+	  </t> -->
 	  <t>
-	    Otherwise, let the resulting JWT be the JWS or JWE.
+	  それ以外の場合, 結果のJWTはJWSまたはJWEとする.
 	  </t>
+	  <!-- <t>
+	    Otherwise, let the resulting JWT be the JWS or JWE.
+	  </t> -->
         </list>
       </t>
-      <t>
+	  
+	  <t>
+	  JWTを検証する際, 次の手順を取らねばならない(MUST).
+	  手順の順序は, 手順の入力と出力の間に依存関係が存在しない場合において重要ではない.
+	  列挙されている手順のいずれかが抜けた場合, JWTは処理のために拒絶されねばならない(MUST).
+	  </t>
+      <!-- <t>
 	When validating a JWT the following steps MUST be taken.  The
 	order of the steps is not significant in cases where there are
 	no dependencies between the inputs and outputs of the steps.
 	If any of the listed steps fails then the JWT MUST be
 	rejected for processing.
-      </t>
+      </t> -->
       <t>
 	<list style="numbers">
+	  
 	  <t>
-	    The JWT MUST contain at least one period ('.') character.
+	    JWTは少なくとも一つのピリオド('.')を含まねばならない(MUST)
 	  </t>
+	  <!-- <t>
+	    The JWT MUST contain at least one period ('.') character.
+	  </t> -->
+	  
 	  <t>
+	    エンコードされたJWTヘッダは最初のピリオド(',')の前のJWTの一部とする.
+	  </t>
+	  <!-- <t>
 	    Let the Encoded JWT Header be the portion of the JWT
 	    before the first period ('.') character.
+	  </t> -->
+	  
+	  <t>
+	  	エンコードされたJWTヘッダは本仕様で与えられた制限, パディング文字が使用されていないこと, に従い, base64urlデコードに成功しなければならない(MUST).
 	  </t>
-          <t>
+      <!--    <t>
 	    The Encoded JWT Header MUST be successfully base64url
 	    decoded following the restriction given in this
 	    specification that no padding characters have been used.
+	  </t> -->
+	  
+	  <t>
+      	結果としてJWTヘッダは<xref target="RFC4627">RFC 4627</xref>に準拠し, 完全に有効なJSON構文でなければならない(MUST).
 	  </t>
-          <t>
+	  <!--	<t>
 	    The resulting JWT Header MUST be completely valid JSON syntax
 	    conforming to <xref target="RFC4627">RFC 4627</xref>.
+	  </t>  -->
+	  
+	  <t>
+	    結果としてJWTヘッダは, その構文と意味が理解およびサポートされている, または理解されていないとき無視されるよう指定されている, 
+		パラメータと値のみを含むように検証されなければならない(MUST)
 	  </t>
-          <t>
+      <!--    <t>
 	    The resulting JWT Header MUST be validated to only include
 	    parameters and values whose syntax and semantics are both
 	    understood and supported
 	    or that are specified as being ignored when not understood.
-	  </t>
+	  </t> -->
+	  
 	  <t>
+	  	JWTは, <spanx style="verb">alg</spanx>(アルゴリズム)ヘッダの値とオプションで<spanx
+	    style="verb">enc</spanx> (暗号化方式) ヘッダの値(存在する場合)を調べることで, JWSかJWEかを決定する.
+	  </t>
+	  <!-- <t>
 	    Determine whether the JWT is a JWS or a JWE by
 	    examining the <spanx style="verb">alg</spanx>
 	    (algorithm) header value and optionally, the <spanx
 	    style="verb">enc</spanx> (encryption method) header value,
 	    if present.
-	  </t>
+	  </t> -->
 	  <t>
+	    JWTはJWSかJWEかのどうかによって２つのケースがある.
+	  <!-- <t>
 	    Depending upon whether the JWT is a JWS or JWE,
-	    there are two cases:
+	    there are two cases: -->
 	    <list style='symbols'>
-	      <t>
+		
+		<t>
+		JWTがJWSの場合, JWSを検証するために<xref target="JWS" />で指定されたすべての手順に従わなければならない(MUST).
+		メッセージをbase64urlデコードした結果をJWSペイロードとする.
+		</t>
+	    <!--  <t>
 		If the JWT is a JWS, all steps specified in <xref
 		target="JWS" /> for validating a JWS MUST be followed.
 		Let the Message be the result of base64url decoding
 		the JWS Payload.
-	      </t>
-	      <t>
+	      </t> -->
+		<t>
+		JWTがJWEの場合, JWEを検証するために<xref target="JWE" />で指定されたすべての手順に従わなければならない(MUST).
+		メッセージをJWEプレーンテキストとする.
+		</t>
+	    <!--  <t>
 		Else, if the JWT is a JWE, all steps specified in <xref
 		target="JWE" /> for validating a JWE MUST be followed.
 		Let the Message be the JWE Plaintext.
-	      </t>
+	      </t> -->
 	    </list>
 	  </t>
 	  <t>
+	  JWTヘッダが<spanx style="verb">JWT</spanx>の<spanx style="verb">cty</spanx> (content type)値を含む場合, 
+	  メッセージはネストされ署名または暗号化操作の対象となったJWTである.
+	  この場合, メッセージをJWTとして扱い, ステップ1に戻る.
+	  </t>
+	  <!-- <t>
 	    If the JWT Header contains a <spanx style="verb">cty</spanx> (content type)
 	    value of <spanx style="verb">JWT</spanx>,
 	    then the Message is a JWT that was the subject of
 	    nested signing or encryption operations.  In
 	    this case, return to Step 1, using the Message as the JWT.
-	  </t>
+	  </t> -->
 	  <t>
+	    それ以外の場合, JWTクレームセットをメッセージとする.
+	  </t>
+	  <!-- <t>
 	    Otherwise, let the JWT Claims Set be the Message.
-	  </t>
+	  </t> -->
 	  <t>
+	    JWTクレームセットは, <xref target="RFC4627">RFC 4627</xref>に準拠し, 完全に有効なJSON構文でなければならない(MUST)
+	  </t>
+	  <!-- <t>
 	    The JWT Claims Set MUST be completely valid
 	    JSON syntax conforming to <xref target="RFC4627">RFC
 	    4627</xref>.
-	  </t>
+	  </t> -->
         </list>
       </t>
 
-      <section title="String Comparison Rules" anchor="StringComparison">
+      <section title="文字列の比較規則" anchor="StringComparison">
+	  <!-- <section title="String Comparison Rules" anchor="StringComparison"> -->
 
 	<t>
+	  JWTを処理するとき必然的にJSONオブジェクトの値を既知の文字列と比較することを求められる.
+	  例えば, アルゴリズムが何であるかチェックするために, <spanx style="verb">alg</spanx>をエンコーディングしているUnicode文字列は,
+	  一致しているヘッダパラメータがあるかどうかを確認するために, JWTヘッダのメンバ名と照合される.
+	</t>
+	<!-- <t>
 	  Processing a JWT inevitably requires comparing known strings
 	  to values in JSON objects. For example, in checking what the
 	  algorithm is, the Unicode string encoding
 	  <spanx style="verb">alg</spanx> will be
 	  checked against the member names in the JWT Header
 	  to see if there is a matching Header Parameter Name.
-	</t>
+	</t> -->
 	<t>
+	  <xref target="JWS" />のSection 5.3の文字列の比較規則で指定されたJSON文字列と他のUnicode文字列の比較は, 
+	  正規化せずにUnicodeコードポイントを比較することによって実施されなければならない(MUST).
+	</t>
+	<!-- <t>
 	  Comparisons between JSON strings and other Unicode strings
 	  MUST be performed by comparing Unicode code points without normalization
 	  as specified in the String Comparison Rules in Section 5.3 of <xref target="JWS" />.
-	</t>
+	</t> -->
       </section>
 
     </section>
 
-    <section title="Cryptographic Algorithms" anchor="Algorithms">
+	<section title="暗号化アルゴリズム" anchor="Algorithms">
+    <!-- <section title="Cryptographic Algorithms" anchor="Algorithms"> -->
 
-      <t>
+	<t>
+	JWTはJSON Web Signature (JWS)<xref target="JWS" />とJSON Web Encryption (JWE) <xref target="JWE" />を, 
+	JWTのコンテンツに対して署名と暗号化の両方, またはいずれかを実施するために利用する.
+	</t>
+    <!--  <t>
 	JWTs use JSON Web Signature (JWS) <xref target="JWS" /> and
 	JSON Web Encryption (JWE) <xref target="JWE" /> to sign and/or
 	encrypt the contents of the JWT.
-      </t>
-      <t>
+      </t> -->
+	<t>
+	JWAの署名アルゴリズムのうち, HMAC SHA-256 (<spanx style="verb">HS256</spanx>)と<spanx style="verb">none</spanx>は, 
+	JWT実装に準拠する形で実施されなければならない(MUST).
+	また実装は, SHA-256ハッシュアルゴリズム(<spanx style="verb">RS256</spanx>)のRSASSA-PKCS1-V1_5と, 
+	P-256曲線を利用したECDSAと, SHA-256ハッシュアルゴリズム(<spanx style="verb">ES256</spanx>)のサポートも推奨される(RECOMMENDED).
+	他のアルゴリズムと鍵サイズのサポートは任意である(OPTIONAL).
+	</t>
+    <!--  <t>
 	Of the JWA signing algorithms, only
 	HMAC SHA-256
 	(<spanx style="verb">HS256</spanx>) and
@@ -1248,8 +1374,19 @@
 	ECDSA using the P-256 curve and the SHA-256 hash algorithm
 	(<spanx style="verb">ES256</spanx>).
 	Support for other algorithms and key sizes is OPTIONAL.
-      </t>
-      <t>
+      </t> -->
+	
+	<t>
+	暗号化機能の実装を提供する場合, JWA暗号化アルゴリズムの, 2048ビット鍵(<spanx style="verb">RSA1_5</spanx>)のRSAES-PKCS1-V1_5, 
+	128と256ビット鍵のAESキーラップ(<spanx style="verb">A128KW</spanx>と<spanx style="verb">A256KW</spanx>), 
+	それと複合認証されたAES CBCとHMAC SHA-2(<spanx style="verb">A128CBC-HS256</spanx>と<spanx style="verb">A256CBC-HS512</spanx>)を
+	使用した暗号化アルゴリズムは、実装に準拠する形で実装しなければならない(MUST).
+	実装がコンテンツ暗号化鍵をラップするために利用される鍵について同意するためのECDH-ESと, 
+	128ビットと256ビットの鍵でGalois/Counterモード(GCM)のAES(<spanx style="verb">A128GCM</spanx>と<spanx style="verb">A256GCM</spanx>)
+	をサポートすることもまた推奨される(RECOMMENDED).
+	他のアルゴリズムと鍵サイズのサポートは任意である(OPTIONAL).
+  	</t>
+    <!--  <t>
 	If an implementation provides encryption capabilities,
 	of the JWA encryption algorithms, only
 	RSAES-PKCS1-V1_5 with 2048 bit keys
@@ -1266,7 +1403,7 @@
 	AES in Galois/Counter Mode (GCM) with 128 bit and 256 bit keys
 	(<spanx style="verb">A128GCM</spanx> and <spanx style="verb">A256GCM</spanx>).
 	Support for other algorithms and key sizes is OPTIONAL.
-      </t>
+      </t> -->
 
     </section>
 
