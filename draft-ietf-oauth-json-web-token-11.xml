@@ -1343,7 +1343,7 @@
 
 	<t>
   	JWTはJSON Web Signature (JWS)<xref target="JWS" />とJSON Web Encryption (JWE) <xref target="JWE" />を, 
-	JWTのコンテンツに対して署名と暗号化の両方, またはいずれかを実施するために利用する.
+	JWTのコンテンツに対して署名と暗号化の両方を実施するために利用する.
 	</t>
     <!--  <t>
 	JWTs use JSON Web Signature (JWS) <xref target="JWS" /> and
@@ -1372,7 +1372,7 @@
       </t> -->
 	
 	<t>
-	暗号化機能の実装を提供する場合, JWA暗号化アルゴリズムの, 2048ビット鍵(<spanx style="verb">RSA1_5</spanx>)のRSAES-PKCS1-V1_5, 
+	JWA暗号化アルゴリズムの実装が, 暗号化機能を提供する場合, 2048ビット鍵(<spanx style="verb">RSA1_5</spanx>)のRSAES-PKCS1-V1_5, 
 	128と256ビット鍵のAESキーラップ(<spanx style="verb">A128KW</spanx>と<spanx style="verb">A256KW</spanx>), 
 	それと複合認証されたAES CBCとHMAC SHA-2(<spanx style="verb">A128CBC-HS256</spanx>と<spanx style="verb">A256CBC-HS512</spanx>)を
 	使用した暗号化アルゴリズムは、実装に準拠する形で実装しなければならない(MUST).
