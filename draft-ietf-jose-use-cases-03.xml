@@ -1804,6 +1804,36 @@
 
     </references>
 
+    <references title='翻訳プロジェクト'>
+      <reference anchor="oidfj">
+        <front>
+          <title>OpenIDファウンデーションジャパン</title>
+          <author>
+            <organization>OpenIDファウンデーションジャパン</organization>
+          </author>
+        </front>
+        <format type='html' target='http://www.openid.or.jp/' />
+      </reference>
+      <reference anchor="oidfj-trans">
+        <front>
+          <title>翻訳・教育ワーキンググループ</title>
+          <author>
+            <organization>OpenIDファウンデーションジャパン</organization>
+          </author>
+        </front>
+        <format type='html' target='http://openid-foundation-japan.github.com/' />
+      </reference>
+      <reference anchor="oidfj-github">
+        <front>
+          <title>Githubレポジトリー</title>
+          <author>
+            <organization>OpenIDファウンデーションジャパン</organization>
+          </author>
+        </front>
+        <format type='html' target='https://github.com/openid-foundation-japan' />
+      </reference>
+    </references>
+
     <section anchor="ack-sec" title="Acknowledgements">
       <t>Thanks to Matt Miller for discussions related to XMPP end-to-end
       security model, and to Mike Jones for considerations related to security
@@ -1862,6 +1892,26 @@
           <t>
             Created the initial IETF draft based upon
             draft-barnes-jose-use-cases-01 with some additions.
+          </t>
+        </list>
+      </t>
+    </section>
+
+    <section title="翻訳者" anchor="Translator">
+      <t>
+        本仕様の翻訳は, <xref target='oidfj'>OpenIDファウンデーションジャパン</xref> <xref target='oidfj-trans'>翻訳・教育ワーキンググループ</xref>を主体として, 有志のメンバーによって行われました.
+        質問や修正依頼などについては, <xref target='oidfj-github'>Githubレポジトリー</xref> にご連絡ください.
+      </t>
+      <t>
+        <list style='symbols'>
+          <t>
+            Nov Matake (GREE, Inc.)
+          </t>
+          <t>
+            Satoshi Yagi
+          </t>
+          <t>
+            Yusuke Kondo (Yahoo! Japan)
           </t>
         </list>
       </t>
