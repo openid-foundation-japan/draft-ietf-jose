@@ -1090,7 +1090,7 @@
         <list style="numbers"> 
 		
 	  <t>
-	    必要とされるクレームからなるJWTクレームセットを作成する.
+	    必要なクレームを含むJWTクレームセットを作成する.
 		なお, 空白は表現の中で明確に許容されており, エンコーディングの前に正規化を実行する必要はない.
 	  </t>
 	  <!-- <t>
@@ -1109,7 +1109,7 @@
 	  </t> -->
 	  
 	  <t>
-	    必要とされるヘッダパラメータからなるJWTヘッダを作成する.
+	    必要なヘッダパラメータを含むJWTヘッダを作成する.
 		JWTは, <xref target="JWS" />仕様, または<xref target="JWE" />仕様に従わなければならない(MUST).
 		なお, 空白は表現の中で明確に許容されており, エンコーディングの前に正規化を実行する必要はない.
 	  </t>
@@ -1134,7 +1134,7 @@
 	  </t> -->
 	  
 	  <t>
-	    JWTは, JWSかJWEかによって２つのケースがある.
+	    当該のJWTがJWSかJWEかによって2つのケースがある.
 	  
 	  <!-- <t>
 	    Depending upon whether the JWT is a JWS or JWE,
@@ -1169,8 +1169,8 @@
 	  </t>
 	  
 	  <t>
-	  	ネストした署名または暗号化処理を行う場合は, JWSもしくはJWEをメッセージとしてステップ3に戻る.
-	  	この際, 次のステップで新たに作られる JWTヘッダーの<spanx style="verb">cty</spanx> (content type) ヘッダ値には, <spanx style="verb">JWT</spanx>を指定する.
+	  	入れ子にされた署名または暗号化処理を行う場合は, JWSもしくはJWEをメッセージとしてステップ3に戻る.
+	  	この際, そのステップで新たに作られる JWTヘッダの<spanx style="verb">cty</spanx> (content type) ヘッダ値には, <spanx style="verb">JWT</spanx>を指定する.
 	  </t>
 	  <!-- <t>
 	    If a nested signing or encryption operation will be
@@ -1180,7 +1180,7 @@
 	    in the new JWT Header created in that step.
 	  </t> -->
 	  <t>
-	  それ以外の場合, 計算されたJWTをJWSまたはJWEとする.
+	  それ以外の場合, 結果として生成されるJWTはJWSまたはJWEとなる.
 	  </t>
 	  <!-- <t>
 	    Otherwise, let the resulting JWT be the JWS or JWE.
@@ -1219,7 +1219,7 @@
 	  </t> -->
 	  
 	  <t>
-	  	エンコード済JWTヘッダは, パディング文字を使用しないという本仕様が定める制約に従い, base64urlデコードに成功しなければならない(MUST).
+	  	エンコード済JWTヘッダは, パディング文字を使用しないという本仕様が定める制約に従い, base64urlデコードできなければならない(MUST).
 	  </t>
       <!--    <t>
 	    The Encoded JWT Header MUST be successfully base64url
@@ -1228,7 +1228,7 @@
 	  </t> -->
 	  
 	  <t>
-      	計算されたJWTヘッダは, <xref target="RFC4627">RFC 4627</xref>に準拠した, 完全に有効なJSON構文でなければならない(MUST).
+      	生成されたJWTヘッダは, <xref target="RFC4627">RFC 4627</xref>に準拠した, 完全に有効なJSON構文でなければならない(MUST).
 	  </t>
 	  <!--	<t>
 	    The resulting JWT Header MUST be completely valid JSON syntax
@@ -1236,7 +1236,7 @@
 	  </t>  -->
 	  
 	  <t>
-	    計算されたJWTヘッダは, その構文と意味が理解可能でサポートされている, または理解できないとき無視するよう指定されたパラメータと値のみを含むように検証されなければならない (MUST).
+	    生成されたJWTヘッダは, その構文と意味が理解可能で且つサポートされ, 理解できないとき無視されるパラメータと値のみを含むように検証されなければならない (MUST).
 	  </t>
       <!--    <t>
 	    The resulting JWT Header MUST be validated to only include
@@ -1246,7 +1246,7 @@
 	  </t> -->
 	  
 	  <t>
-	  	<spanx style="verb">alg</spanx> (アルゴリズム) ヘッダ値, およびオプションで<spanx style="verb">enc</spanx> (暗号化方式) ヘッダ値 (存在する場合) を調べ, JWT が JWS なのか JWE なのかを判別する.
+	  	<spanx style="verb">alg</spanx> (アルゴリズム) ヘッダの値, およびオプションで<spanx style="verb">enc</spanx> (暗号化方式) ヘッダの値 (存在する場合) を検証し, そのJWT が JWS なのか JWE なのかを判別する.
 	  </t>
 	  <!-- <t>
 	    Determine whether the JWT is a JWS or a JWE by
@@ -1256,7 +1256,7 @@
 	    if present.
 	  </t> -->
 	  <t>
-	    JWTは, JWSかJWEかによって２つのケースがある.
+	    JWTがJWSかJWEかによって, 2つのケースがある.
 	  <!-- <t>
 	    Depending upon whether the JWT is a JWS or JWE,
 	    there are two cases: -->
@@ -1264,7 +1264,7 @@
 		
 		<t>
 		JWTがJWSの場合, JWSを検証するために<xref target="JWS" />で指定されたすべての手順に従わなければならない(MUST).
-		メッセージをbase64urlデコードした結果をJWSペイロードとする.
+		メッセージはbase64urlデコードされたJWSペイロードとなる.
 		</t>
 	    <!--  <t>
 		If the JWT is a JWS, all steps specified in <xref
@@ -1274,7 +1274,7 @@
 	      </t> -->
 		<t>
 		JWTがJWEの場合, JWEを検証するために<xref target="JWE" />で指定されたすべての手順に従わなければならない(MUST).
-		メッセージをJWEプレーンテキストとする.
+		メッセージはJWEプレーンテキストとなる.
 		</t>
 	    <!--  <t>
 		Else, if the JWT is a JWE, all steps specified in <xref
@@ -1284,7 +1284,7 @@
 	    </list>
 	  </t>
 	  <t>
-	  JWTヘッダが<spanx style="verb">cty</spanx> (content type) に <spanx style="verb">JWT</spanx> という値を持つ場合, このメッセージはネストした署名または暗号化処理を受けたJWTである.
+	  JWTヘッダが<spanx style="verb">JWT</spanx>の値として<spanx style="verb">cty</spanx> (content type) を持つ場合, このメッセージは入れ子にされた署名または暗号化処理を受けたJWTである.
 	  この場合, メッセージをJWTとして扱い, ステップ1に戻る.
 	  </t>
 	  <!-- <t>
@@ -1301,7 +1301,7 @@
 	    Otherwise, let the JWT Claims Set be the Message.
 	  </t> -->
 	  <t>
-	    JWTクレームセットは, <xref target="RFC4627">RFC 4627</xref>に準拠し, 完全に有効なJSON構文でなければならない(MUST)
+	    JWTクレームセットは, <xref target="RFC4627">RFC 4627</xref>に準拠した, 完全に有効なJSON構文でなければならない(MUST)
 	  </t>
 	  <!-- <t>
 	    The JWT Claims Set MUST be completely valid
@@ -1315,7 +1315,7 @@
 	  <!-- <section title="String Comparison Rules" anchor="StringComparison"> -->
 
 	<t>
-	  JWTを処理するとき必然的にJSONオブジェクトの値を既知の文字列と比較することを求められる.
+	  JWTを処理するとき必然的にJSONオブジェクトの中の値を既知の文字列と比較することを求められる.
 	  例えば, アルゴリズムが何であるかチェックするためには, <spanx style="verb">alg</spanx> というUnicode文字列を受け取ったJWTヘッダメンバ名と比較し, 一致しているヘッダパラメータがあるかどうかを確認することになる.
 	</t>
 	<!-- <t>
@@ -1327,7 +1327,7 @@
 	  to see if there is a matching Header Parameter Name.
 	</t> -->
 	<t>
-	  <xref target="JWS" /> Section 5.3の "String Comparison Rules" に示す通り, JSON文字列と他のUnicode文字列の比較は, 正規化せずにUnicodeコードポイントを比較することによって実施されなければならない(MUST).
+	  <xref target="JWS" /> 節 5.3の "String Comparison Rules" に示す通り, JSON文字列と他のUnicode文字列の比較は, 正規化せずにUnicodeコードポイントを比較することによって実施されなければならない(MUST).
 	</t>
 	<!-- <t>
 	  Comparisons between JSON strings and other Unicode strings
@@ -1342,7 +1342,7 @@
     <!-- <section title="Cryptographic Algorithms" anchor="Algorithms"> -->
 
 	<t>
-	JWTはJSON Web Signature (JWS)<xref target="JWS" />とJSON Web Encryption (JWE) <xref target="JWE" />を, 
+  	JWTはJSON Web Signature (JWS)<xref target="JWS" />とJSON Web Encryption (JWE) <xref target="JWE" />を, 
 	JWTのコンテンツに対して署名と暗号化の両方, またはいずれかを実施するために利用する.
 	</t>
     <!--  <t>
@@ -1893,9 +1893,10 @@
 	<?rfc subcompact="no"?>
       </section>
 
-      <section title="Registration of JWE Header Parameter Names" anchor="HdrReg">
+      <section title="JWEヘッダパラメータの登録" anchor="HdrReg">
+      <!-- <section title="Registration of JWE Header Parameter Names" anchor="HdrReg"> -->
   <t>
-    本仕様は, <xref target="ClaimsAsHeaders"/> のヘッダパラメータとして複製されたクレームで使用するために <xref target="ReservedClaimName"/> に定義されている特定の予約済クレーム名を IANA JSON Web Signature and Encryption Header Parameters registry <xref target="JWS" /> に登録する.
+    本仕様は, <xref target="ClaimsAsHeaders"/>としてヘッダパラメータとして複製されたクレームによる試用のために, IANA JSON Web Signatureと暗号化ヘッダパラメータレジストリの<xref target="ReservedClaimName"/>で定義された特定の予約済クレーム名を登録する.
   </t>
   <!--
 	<t>
@@ -1913,48 +1914,84 @@
           <t> <?rfc subcompact="yes"?>
             <list style='symbols'>
               <t>
+                ヘッダパラメータ名: <spanx style="verb">iss</spanx>
+		<!--
                 Header Parameter Name: <spanx style="verb">iss</spanx>
+		-->
               </t>
 	      <t>
+		ヘッダパラメータの使用箇所: JWE
+		<!--
 		Header Parameter Usage Location(s): JWE
+		-->
 	      </t>
               <t>
+                変更管理: IETF
+		<!--
                 Change Controller: IETF
+		-->
               </t>
               <t>
+                仕様ドキュメント: <xref target="issDef"/> of [[ this document ]]
+		<!--
                 Specification Document(s): <xref target="issDef"/> of [[ this document ]]
+		-->
               </t>
             </list>
 	  </t>
 	  <t>
  	    <list style='symbols'>
               <t>
+                ヘッダパラメータ名: <spanx style="verb">sub</spanx>
+		<!--
                 Header Parameter Name: <spanx style="verb">sub</spanx>
+		-->
               </t>
 	      <t>
+		ヘッダパラメータの使用箇所: JWE
+		<!--
 		Header Parameter Usage Location(s): JWE
+		-->
 	      </t>
               <t>
+                変更管理: IETF
+		<!--
                 Change Controller: IETF
+		-->
               </t>
               <t>
+                仕様ドキュメント: <xref target="subDef"/> of [[ this document ]]
+		<!--
                 Specification Document(s): <xref target="subDef"/> of [[ this document ]]
+		-->
               </t>
             </list>
 	  </t>
 	  <t>
  	    <list style='symbols'>
               <t>
+                ヘッダパラメータ名: <spanx style="verb">aud</spanx>
+		<!--
                 Header Parameter Name: <spanx style="verb">aud</spanx>
+		-->
               </t>
 	      <t>
+		ヘッダパラメータの使用箇所: JWE
+		<!--
 		Header Parameter Usage Location(s): JWE
+		-->
 	      </t>
               <t>
+                変更管理: IETF
+		<!--
                 Change Controller: IETF
+		-->
               </t>
               <t>
+                仕様ドキュメント: <xref target="audDef"/> of [[ this document ]]
+		<!--
                 Specification Document(s): <xref target="audDef"/> of [[ this document ]]
+		-->
               </t>
             </list>
 	  </t>
@@ -1966,8 +2003,8 @@
 
     <section title="Security Considerations" anchor="Security">
       <t>
-	どんな暗号化アプリケーションが直面したすべてのセキュリティ問題はJWT/JWS/JWE/JWKエージェントによって直面しなければならない.
-	これらの問題の中には, ユーザのプライベート鍵および対称鍵を保護し, 様々な攻撃を防ぎ, ユーザが間違った受信者のためのメッセージを不注意に暗号化するような間違いを避けることを助ける.
+	JWT/JWS/JWE/JWKエージェントは, 暗号化アプリケーションが直面したあらゆるセキュリティ問題に対応しなければならない.
+	これらの問題の中には, ユーザのプライベート鍵および対称鍵を保護し, 様々な攻撃を防ぎ, ユーザが不正な受信者のためにメッセージを不注意に暗号化するような間違いを避けることを助けることが含まれる.
 	セキュリティに関する検討項目の全てのリストを挙げることは本ドキュメントの範囲外である.
 	<!--
 	All of the security issues faced by any cryptographic application
@@ -1979,7 +2016,7 @@
 	-->
       </t>
       <t>
-	JWSの仕様のすべてのセキュリティに関する検討項目は, 暗号化が使用される際のJWEのセキュリティに関する検討項目と同様に, JWTにも当てはまる.
+	JWSの仕様のすべてのセキュリティに関する検討項目は, 暗号化が使用される際のJWEのセキュリティに関する検討項目と同様に, JWTにも適用される.
 	特に, JWSのJSONのセキュリティに関する検討項目とUnicode比較のセキュリティに関する検討項目はJWSヘッダに適用されるのと同様にJWTクレームセットにも等しく適用される.
 	<!--
 	All the security considerations in the JWS specification also
@@ -1992,7 +2029,7 @@
       </t>
       <t>
 	構文上, 入れ子のJWTのための署名と暗号化のオペレーションは任意の順番に適用してもよいが, 通常送信者はメッセージに署名してからその結果を暗号化するべきである (したがって, 署名を暗号化する).
-	これはメッセージを暗号化されたままにするので, 署名者にプライバシーを提供するのと同様に, 署名を暴かれる攻撃を防ぐ.
+	このことは, メッセージを暗号化されたままにするため, 署名者にプライバシーを提供するのと同様に, 署名を暴かれる攻撃を防ぐ.
 	更に, 暗号化されたテキストに対する署名は多くのルール上, 有効であるとは考えられてはいない.
 	<!--
 	While syntactically, the signing and encryption operations for
@@ -2006,7 +2043,7 @@
 	-->
       </t>
       <t>
-	署名と暗号化オペレーションの順序に関連するセキュリティ問題に関する潜在的な懸念は, 既にJWSとJWEの仕様に取り込まれていることに留意すること.
+	署名と暗号化オペレーションの順序に関連するセキュリティ問題に関する潜在的な懸念は, 既にJWSとJWEの仕様の中で指摘されている.
 	特に, JWEは認証された暗号化アルゴリズムの利用のみをサポートしているため, 多くのコンテキストで適用される暗号化後の署名に関する潜在的な必要性についての暗号化関連の懸念事項は, 本仕様には適用されない.
 	<!--
 	Note that potential concerns about security issues related to
