@@ -71,7 +71,7 @@
       <t>
       	JSON Web Token (JWT) は2者間でやりとりされるコンパクトで URL-safe なクレームの表現方法である.
       	JWT に含まれるクレームは JavaScript Object Notation (JSON) オブジェクトとしてエンコードされ, JSON Web Signature (JWS) のペイロードや JSON Web Encryption (JWE) の平文として利用される.
-      	JWS や JWE とともに用いることで, クレームに対してデジタル署名や MAC を付与したり, 暗号化することが可能となる.
+      	JWS や JWE とともに用いることで, クレームに対してデジタル署名や MAC を付与と暗号化の両方を行うことが可能となる.
       </t>
       <!--
       <t>
@@ -102,8 +102,8 @@
     <t> 
 	JSON Web Token(JWT)はHTTP認証ヘッダやURIクエリパラメータなどスペースに制約のある環境を意図したコンパクトな表現形式である.
     JWTは, クレームをJSON Web Signature(JWS)<xref target="JWS"/>のペイロードや
-	JSON Web Encryption(JWE)<xref target="JWE"/>のプレーンテキストとなるJavaScript Object Notation(JSON)<xref target="RFC4627"/>オブジェクトとしてエンコードし, クレームに対するデジタル署名やMAC, 暗号化などを可能にする.
-	JWTは常にJWSのコンパクトシリアライゼーションまたはJWEコンパクトシリアライゼーションを利用して表現される.
+	JSON Web Encryption(JWE)<xref target="JWE"/>のプレーンテキストとなるJavaScript Object Notation(JSON)<xref target="RFC4627"/>オブジェクトとしてエンコードし, クレームに対するデジタル署名やMACと暗号化の両方を可能にする.
+	JWTは常にJWSのコンパクトシリアライゼーションまたはJWS Compact Serializationを利用して表現される.
 	</t>
 	<!-- <t>
 	JSON Web Token (JWT) is a compact claims representation format intended for
@@ -149,7 +149,7 @@
 	<list style="hanging">
 
           <t hangText="JSON Web Token (JWT)">
-        クレームのセットをJSONオブジェクトとして文字列表現にしてJWSやJWEにエンコードすることで, クレームに対するデジタル署名やメッセージ認証符号化, 暗号化が可能になる.
+        クレームのセットをJSONオブジェクトとして文字列表現にしてJWSやJWEにエンコードすることで, クレームに対するデジタル署名やMACと暗号化の両方が可能になる.
 	    <!--
 	    A string representing a set of claims as a JSON object that is
 	    encoded in a JWS or JWE,
@@ -157,10 +157,10 @@
 	    -->
 	  </t>
 
-          <t hangText="Base64urlエンコーディング">
+          <t hangText="base64urlエンコーディング">
           <!-- <t hangText="Base64url Encoding"> -->
-        <xref target="RFC4648">RFC 4648</xref>のセクション5で説明されているURLおよびファイル名として安全なBase64エンコーディングであり, Section 3.2で許可されているように (URLとして安全ではない) '=' パディング文字が省略されている.
-	    (パディングなしのBase64urlエンコーディングの導入についての注意事項は<xref target="JWS" />のAppendix Cを参照のこと)
+        <xref target="RFC4648">RFC 4648</xref>の節 5で説明されているURLおよびファイル名として安全なBase64エンコーディングであり, 節 3.2で許可されているように (URLとして安全ではない) '=' パディング文字が省略されている.
+	    (パディングなしのbase64urlエンコーディングの導入についての注意事項は<xref target="JWS" />のAppendix Cを参照のこと)
 	    <!--
 	    The URL- and filename-safe Base64 encoding
 	    described in <xref target="RFC4648">RFC 4648</xref>,
@@ -173,8 +173,8 @@
 
  	  <t hangText="JSONテキストオブジェクト">
  	  <!-- <t hangText="JSON Text Object"> -->
-	    UTF-8 <xref target="RFC3629"/>エンコードされたテキストでありJSONオブジェクトを表現する.
-	    JSONオブジェクトの構文は<xref target="RFC4627"/>のSection 2.2で定義されている.
+	    UTF-8 <xref target="RFC3629"/>エンコード済テキストでありJSONオブジェクトを表現する.
+	    JSONオブジェクトの構文は<xref target="RFC4627"/>の節 2.2で定義されている.
 	    <!--
 	    A UTF-8 <xref target="RFC3629"/>
 	    encoded text string representing a JSON object;
@@ -186,7 +186,7 @@
           <t hangText="JWTヘッダ">
           <!-- <t hangText="JWT Header"> -->
 	    JWTに適用される暗号化オペレーションについて記述しているJSONテキストオブジェクト.
-	    JWTがデジタル署名もしくはメッセージ認証符号化されている場合, JWTヘッダはJWSヘッダである.
+	    JWTがデジタル署名もしくはMACされている場合, JWTヘッダはJWSヘッダである.
 	    JWTが暗号化されている場合, JWTヘッダはJWEヘッダである.
 	    <!--
 	    A JSON Text Object that
@@ -250,9 +250,9 @@
 	    -->
 	  </t>
 
-          <t hangText="エンコードされたJWTヘッダ">
+          <t hangText="エンコード済JWTヘッダ">
           <!-- <t hangText="Encoded JWT Header"> -->
-	    JWTヘッダをBase64urlエンコードしたもの.
+	    JWTヘッダをbase64urlエンコードしたもの.
 	    <!--
 	    Base64url encoding of the JWT Header.
 	    -->
@@ -260,7 +260,7 @@
 
 	  <t hangText="入れ子にされたJWT">
 	  <!-- <t hangText="Nested JWT"> -->
-	    署名かつ/もしくは暗号化が適用されたJWTに入れ子にされているJWT.
+	    署名と暗号化の両方が適用されたJWTに入れ子にされているJWT.
 	    入れ子にされたJWTでは, JWTは内包されたJWS/JWEのペイロード/平文の値として利用される.
 	    <!--
 	    A JWT in which nested signing and/or encryption are employed.
@@ -335,10 +335,10 @@
     <!-- <section title="JSON Web Token (JWT) Overview" anchor="Overview"> -->
 
       <t>
-	JWTは, JWSおよび/またはJWE構造の中にエンコードされるJSONオブジェクトとしてクレームのセットを表す.
+	JWTは, JWSとJWE構造の両方の中にエンコードされるJSONオブジェクトとしてクレームのセットを表す.
 	このJSONオブジェクトはJWTクレーム・セットである.
-	<xref target="RFC4627">RFC 4627</xref>のSection 2.2の通り, JSONオブジェクトは0以上の名前/値のペア(もしくはメンバ)から構成され, その名前は文字列であり値は任意のJSON値である.
-	これらのメンバはJWTによって表されるクレームである.
+	<xref target="RFC4627">RFC 4627</xref>の節 2.2の通り, JSONオブジェクトは0以上の名前/値のペア(もしくはメンバ)から構成され, その名前は文字列であり値は任意のJSON値である.
+	これらのメンバはJWTによって表現されるクレームである.
 	<!--
 	JWTs represent a set of claims as a JSON object that is
 	encoded in a JWS and/or JWE structure.
@@ -360,8 +360,8 @@
       </t>
       <t>
 	JWTヘッダの内容は, JWTクレーム・セットに適用される暗号化オペレーションについて記述している.
-	JWTヘッダがJWSヘッダである場合, そのJWTはJWTクレーム・セットをJWSペイロードとしたJWSとなり, クレームにはデジタル署名もしくはメッセージ認証符号が付与される.
-	JWTヘッダがJWEヘッダである場合, そのJWTはJWTクレーム・セットをJWEの平文入力としたJWEとなり, クレームは暗号化される.
+	JWTヘッダがJWSヘッダである場合, そのJWTクレーム・セットをJWSペイロードとしたJWSとして表現され, クレームにはデジタル署名もしくはMACが付与される.
+	JWTヘッダがJWEヘッダである場合, そのJWTはJWTクレーム・セットをJWEの平文入力としたJWEとして表現され, クレームは暗号化される.
 	JWTはJWEやJWS構造の中に含まれ入れ子のJWTを構成することができ, 単一のJWTに対して署名や暗号化を繰り返し実施することができる.
 	<!--
 	The contents of the JWT Header describe the cryptographic
@@ -378,9 +378,9 @@
 	-->
       </t>
       <t>
-	JWTはピリオド('.')によって連結された一連のURL-safeな文字列として表される.
-	それぞれのパートはBase64urlエンコードされた値で構成される.
-	JWTの中のパートの数は, JWSコンパクト・シリアライゼーション表現のJWSもしくはJWEコンパクト・シリアライゼーション表現のJWEのどちらとして利用されているかに依存する.
+	JWTはピリオド('.')によって連結された一連のURL-safeな文字列として表現される.
+	それぞれのパートはbase64urlでエンコード済の値で構成される.
+	JWTの中のパートの数は, JWSコンパクト・シリアライゼーション表現のJWSもしくはJWS Compact Serialization表現のJWEのどちらとして利用されているかに依存する.
 	<!--
 	A JWT is represented as a sequence of URL-safe parts
 	separated by period ('.') characters.
@@ -397,7 +397,7 @@
 
 	<t>
 	  下記はJWTヘッダの例である.
-	  このヘッダは, エンコードされたオブジェクトがJSON Web Token (JWT) であり, そのJWTにはHMAC SHA-256アルゴリズムを使ってメッセージ認証符号が付与されていることを表している.
+	  このヘッダは, エンコード済オブジェクトがJSON Web Token (JWT) であり, そのJWTにはHMAC SHA-256アルゴリズムを使ってMACが付与されていることを表している.
 	  <!--
 	  The following example JWT Header declares that the
 	  encoded object is a JSON Web Token (JWT) and the JWT is
@@ -411,7 +411,7 @@
 ]]></artwork></figure>
 
 	<t>
-	  JWTヘッダのUTF-8のオクテットをBase64urlエンコードすると, このエンコードされたJWSヘッダの値が作られ, それはエンコードされたJWTヘッダとして使われる.
+	  JWTヘッダのUTF-8表現のオクテットをbase64urlエンコードすると, このエンコード済JWSヘッダの値が作られ, それはエンコードされたJWTヘッダとして使われる.
 	  <!--
 	  Base64url encoding the octets of the UTF-8 representation of
 	  the JWT Header yields this Encoded JWS Header value,
@@ -437,7 +437,7 @@
 ]]></artwork></figure>
 
 	<t>
-	  下記のオクテット配列は, 上記JWTクレーム・セットをUTF-8で表したものであり, JWSペイロードである.
+	  下記のオクテット配列は, 上記JWTクレーム・セットをUTF-8で表現したものであり, JWSペイロードである.
 	  <!--
 	  The following octet sequence, which is the UTF-8 representation
 	  of the JWT Claims Set above, is the JWS Payload:
@@ -450,8 +450,8 @@
 	</t>
 
 	<t>
-	  JWSペイロードをBase64urlエンコードするとこのエンコードされたJWSペイロードが作り出せる.
-	  (表示上の都合で改行を含む)
+	  JWSペイロードをbase64urlエンコードすると, このエンコード済JWSペイロードが作り出せる.
+	  (改行は掲載上の都合による)
 	  <!--
 	  Base64url encoding the JWS Payload yields this Encoded JWS Payload
 	  (with line breaks for display purposes only):
@@ -464,7 +464,7 @@
 ]]></artwork></figure>
 
 	<t>
-	  エンコードされたJWSヘッダとエンコードされたJWSペイロードをHMAC SHA-256アルゴリズムで署名し, <xref target="JWS" />に指定された形で署名をBase64urlエンコードすると, このエンコードされたJWS署名を作り出せる.
+	  エンコード済のJWSヘッダとエンコード済のJWSペイロードをHMAC SHA-256アルゴリズムで署名し, <xref target="JWS" />に指定された形で署名をbase64urlエンコードすると, このエンコード済JWS署名を作り出せる.
 	  <!--
 	  Signing the Encoded JWS Header and Encoded JWS Payload with
 	  the HMAC SHA-256 algorithm and base64url encoding the
@@ -516,9 +516,9 @@
     <!--<section title="JWT Claims" anchor="Claims">-->
 
       <t>
-        JWT クレームセットは JSON オブジェクトであり, それぞれのメンバーは JWT として送られるクレームである.
+        JWT クレームセットは JSON オブジェクトであり, それぞれのメンバは JWT として送られるクレームである.
         JWT クレームセット内のクレーム名は一意でなければならない（MUST）.
-        受信者はクレーム名が重複した JWT を拒否するか, あるいは JSON パーサーを ECMAScript 5.1 <xref target="ECMAScript"/> のセクション 15.12 (JSON オブジェクト) で定義されているとおり語彙的に最後の重複メンバー名だけを返却する JSON パーサを利用しなければならない（MUST）.
+        受信者はクレーム名が重複した JWT を拒否するか, あるいは JSON パーサーを ECMAScript 5.1 <xref target="ECMAScript"/> の節 15.12 (JSON オブジェクト) で定義されているとおり語彙的に最後の重複メンバ名だけを返却する JSON パーサを利用しなければならない（MUST）.
       </t>
       <!--
       <t>
@@ -533,8 +533,8 @@
       -->
       <t>
         有効な JWT が含まねばならないクレームはコンテキストに依存するため, 本仕様の範囲外とする.
-        JWT を採用するアプリケーションごとに, クレームの解釈方法と処理方法について定めることになる.
-        アプリケーションがこのような要件を定めていないクレームについては, それが解釈不可能な場合には無視すること (SHOULD).
+        JWT を実装するアプリケーションごとに, クレームを理解する方法と処理方法について定めることになる.
+        アプリケーションがこのような要件を定めていないクレームについては, それが理解不可能な場合には無視すること (SHOULD).
       </t>
       <!--
       <t>
@@ -548,7 +548,7 @@
       </t>
       -->
       <t>
-        JWT クレーム名には予約されたクレーム名と公開クレーム名, 非公開クレーム名の3つのクラスが定義されている.
+        JWT クレーム名には予約済クレーム名とパブリッククレーム名, プライベートクレーム名の3つのクラスが定義されている.
       </t>
       <!--
       <t>
@@ -557,13 +557,13 @@
       </t>
       -->
 
-      <section title="予約クレーム名" anchor="ReservedClaimName">
+      <section title="予約済クレーム名" anchor="ReservedClaimName">
       <!--<section title="Reserved Claim Names" anchor="ReservedClaimName">-->
   <t>
-    次のクレーム名は予約されている.
+    次のクレーム名は予約済である.
     以下に定義されているクレームは, いずれも必須とされることを想定されてはいないが, 有用で相互運用性のあるクレームとなることを期待して提供されている.
-    JWT はコンパクトな表現形式となることを目的としているため, すべてのクレーム名は短くなっている.
-    追加の予約クレーム名は <xref target="JWTClaimsReg" /> の IANA JSON Web トークンクレームレジストリにしたがって定義することができる.
+    JWT は表現がコンパクトになることを目的としているため, すべてのクレーム名は短くなっている.
+    追加の予約済クレーム名は <xref target="JWTClaimsReg" /> の IANA JSON Web トークンクレームレジストリにしたがって定義することができる.
   </t>
   <!--
 	<t>
@@ -778,12 +778,12 @@
 
       </section>
 
-      <section title="公開クレーム名" anchor="PublicClaimName">
+      <section title="パブリッククレーム名" anchor="PublicClaimName">
       <!--<section title="Public Claim Names" anchor="PublicClaimName">-->
 
         <t>
           クレーム名は JWT の利用者によって自由に定義することができる.
-          しかしながら, 衝突をさけるために, いくつかのクレーム名は IANA JSON Web トークンクレームレジストリ <xref target="JWTClaimsReg" /> に登録するか, 耐衝突性を持つ名前空間を含む公開名にすべきである (SHOULD).
+          しかしながら, 衝突をさけるために, いくつかのクレーム名は IANA JSON Web トークンクレームレジストリ <xref target="JWTClaimsReg" /> に登録するか, 耐衝突性を持つ名前空間を含むパブリック名にすべきである (SHOULD).
           それぞれの場合において, 名前あるいは値の定義者は, クレーム名を定義するために用いる名前空間の一部が自身の管理下にあることを保証できるよう, 妥当な措置を講じる必要がある.
         </t>
         <!--
@@ -802,12 +802,12 @@
   -->
       </section>
 
-      <section title="非公開クレーム名" anchor="PrivateClaimName">
+      <section title="プライベートクレーム名" anchor="PrivateClaimName">
       <!--<section title="Private Claim Names" anchor="PrivateClaimName">-->
 
         <t>
-          JWT の作成者および利用者は, 相互に同意のもとで, 予約クレーム名 <xref target="ReservedClaimName"></xref> でも公開クレーム名 <xref target="PublicClaimName"></xref> でもない非公開クレーム名を用いてもよい (MAY).
-          公開クレーム名とは異なり, 非公開クレーム名は衝突の可能性があり, 慎重に使用する必要がある.
+          JWT の作成者および利用者は, 相互に同意のもとで, 予約済クレーム名 <xref target="ReservedClaimName"></xref> でもパブリッククレーム名 <xref target="PublicClaimName"></xref> でもないプライベートクレーム名を用いてもよい (MAY).
+          パブリッククレーム名とは異なり, プライベートクレーム名は衝突の可能性があり, 慎重に使用する必要がある.
         </t>
         <!--
          <t>
@@ -827,10 +827,10 @@
     <!-- <section title="JWT Header" anchor="Header"> -->
 
       <t>
-	JWTヘッダ内のJSONオブジェクトのメンバは, JWTに適用される暗号化オペレーション, および任意でJWTの追加プロパティを表している.
+	JWTヘッダ内のJSONオブジェクトのメンバは, JWTに適用される暗号化オペレーション, および任意でJWTの追加プロパティを表現している.
 	JWTヘッダ内のメンバ名はヘッダ・パラメータ名として参照される.
 	それらの名前はユニークである必要があり (MUST) ,
-	受信者は重複するヘッダ・パラメータ名を持つJWTを拒否するか, ECMAScript 5.1 <xref target="ECMAScript"/> のセクション 15.12 (JSONオブジェクト) に指定されているとおり語彙的に最後の重複メンバ名だけを返却するJSONパーサを利用しなければならない (MUST).
+	受信者は重複するヘッダ・パラメータ名を持つJWTを拒否するか, ECMAScript 5.1 <xref target="ECMAScript"/> の節 15.12 (JSONオブジェクト) に指定されているとおり語彙的に最後の重複メンバ名だけを返却するJSONパーサを利用しなければならない (MUST).
 	対応する値はヘッダ・パラメータ値として参照される.
 	<!--
 	The members of the JSON object represented by the JWT Header
@@ -924,7 +924,7 @@
       <section title="ヘッダ・パラメータとしてクレームを複製する" anchor="ClaimsAsHeaders">
       <!-- <section title="Replicating Claims as Header Parameters" anchor="ClaimsAsHeaders"> -->
 	<t>
-	  暗号化されたJWTを使ういくつかのアプリケーションでは, 暗号化されていない状態のいくつかのクレームを持つことは有用である.
+	  暗号化されたJWTを使ういくつかのアプリケーションでは, 暗号化されていない表現のいくつかのクレームを持つことは有用である.
 	  例えばこれはアプリケーションがJWTを復号する前にそれををどのように処理するかを決定するためのルールを処理する際に使用される.
 	<!--
 	  In some applications using encrypted JWTs, it is useful to
@@ -951,7 +951,7 @@
 	</t>
 	<t>
 	  本仕様はそれらを必要とするアプリケーションのために, 暗号化されたJWTの中のクレームの暗号化されていない複製を提供する目的で<spanx style="verb">iss</spanx> (issuer), <spanx style="verb">sub</spanx> (subject), <spanx style="verb">aud</spanx> (audience) ヘッダ・パラメータ名を予約する.
-	  他の仕様においても同様に必要があればヘッダ・パラメータ名として予約されたクレーム名として他の名前を予約してもよい (MAY).
+	  他の仕様においても同様に必要があればヘッダ・パラメータ名として予約済クレーム名として他の名前を予約してもよい (MAY).
 	<!--
 	  This specification reserves the
 	  <spanx style="verb">iss</spanx> (issuer),
@@ -972,8 +972,8 @@
     <!-- <section title="Plaintext JWTs" anchor="Plaintext"> -->
 
 	<t>
-     署名や暗号化以外の方法でJWTコンテンツがセキュアに保たれるようなユースケースをサポートするために, 署名や暗号化なしにJWTを生成することも可能とする (MAY).
-     プレーンテキストJWTはJSON Web Algorithms (JWA)で定義されたJWSのalgヘッダパラメータにnoneを使用したJWSであり, 署名値は空文字列となる.
+     署名や暗号化以外の方法でJWTコンテンツが保護されるユースケースをサポートするために, 署名と暗号化の両方なしにJWTを生成することも可能とする (MAY).
+     プレーンテキストJWTはJSON Web Algorithms (JWA)で定義されたJWSのalgヘッダパラメータにnoneを使用したJWSであり, JWS署名値は空文字列となる.
     </t> 
      <!-- <t>
 	To support use cases where the JWT content is secured by a
@@ -991,7 +991,7 @@
       <!-- <section title="Example Plaintext JWT" anchor="ExamplePlaintextJWT"> -->
 
      <t>
-      次の例ではJWTヘッダがエンコードされたオブジェクトがプレーンテキストJWTであることを宣言する.
+      次の例ではJWTヘッダはエンコード済オブジェクトがプレーンテキストJWTであることを宣言する.
      </t>
 	<!-- <t>
 	  The following example JWT Header declares that the
@@ -1003,8 +1003,8 @@
 ]]></artwork></figure>
 
     <t>
-      JWTヘッダのUTF-8表現のオクテットをBase64urlエンコーディングし, 
-      このエンコードされたJWTヘッダを得る.
+      JWTヘッダのUTF-8表現のオクテットをbase64urlエンコーディングし, 
+      このエンコード済JWTヘッダを得る.
     </t>
 	<!-- <t>
 	  Base64url encoding the octets of the UTF-8 representation of
@@ -1029,9 +1029,9 @@
 ]]></artwork></figure>
 	
      <t>
-      JWTクレームセットのUTF-8表現のオクテットをBase64urlエンコードし, 
-      このエンコードされたJWSペイロードを得る.
-      (表示目的のための改行を含む)
+      JWTクレームセットのUTF-8表現のオクテットをbase64urlエンコードし, 
+      このエンコード済JWSペイロードを得る.
+      (改行は掲載上の都合による)
      </t>
 	<!-- <t>
 	  Base64url encoding the octets of the UTF-8 representation of
@@ -1046,7 +1046,7 @@
 
 	
     <t>
-      エンコードされたJWS署名は空文字列である.
+      エンコード済JWS署名は空文字列である.
     </t>
 	<!-- <t>
 	  The Encoded JWS Signature is the empty string.
@@ -1125,8 +1125,8 @@
 	  </t>-->
 	  
 	  <t>
-	    JWTヘッダのUTF-8表現のオクテットをBase64urlエンコードする.
-		これをエンコードされたJWTヘッダとする,
+	    JWTヘッダのUTF-8表現のオクテットをbase64urlエンコードする.
+		これをエンコード済JWTヘッダとする,
 	  </t>
       <!-- <t>
 	    Base64url encode the octets of the UTF-8 representation of
@@ -1211,7 +1211,7 @@
 	  </t> -->
 	  
 	  <t>
-	    エンコードされたJWTヘッダは最初のピリオド(',')の前のJWTの一部とする.
+	    エンコード済JWTヘッダは最初のピリオド(',')の前のJWTの一部とする.
 	  </t>
 	  <!-- <t>
 	    Let the Encoded JWT Header be the portion of the JWT
@@ -1219,7 +1219,7 @@
 	  </t> -->
 	  
 	  <t>
-	  	エンコードされたJWTヘッダは本仕様で与えられた制限, パディング文字が使用されていないこと, に従い, base64urlデコードに成功しなければならない(MUST).
+	  	エンコード済JWTヘッダは本仕様で与えられた制限, パディング文字が使用されていないこと, に従い, base64urlデコードに成功しなければならない(MUST).
 	  </t>
       <!--    <t>
 	    The Encoded JWT Header MUST be successfully base64url
@@ -1331,7 +1331,7 @@
 	  to see if there is a matching Header Parameter Name.
 	</t> -->
 	<t>
-	  <xref target="JWS" />のSection 5.3の文字列の比較規則で指定されたJSON文字列と他のUnicode文字列の比較は, 
+	  <xref target="JWS" />の節 5.3の文字列の比較規則で指定されたJSON文字列と他のUnicode文字列の比較は, 
 	  正規化せずにUnicodeコードポイントを比較することによって実施されなければならない(MUST).
 	</t>
 	<!-- <t>
@@ -1357,7 +1357,7 @@
       </t> -->
 	<t>
 	JWAの署名アルゴリズムのうち, HMAC SHA-256 (<spanx style="verb">HS256</spanx>)と<spanx style="verb">none</spanx>は, 
-	JWT実装に準拠する形で実施されなければならない(MUST).
+	JWT実装に準拠する形で実装されなければならない(MUST).
 	また実装は, SHA-256ハッシュアルゴリズム(<spanx style="verb">RS256</spanx>)のRSASSA-PKCS1-V1_5と, 
 	P-256曲線を利用したECDSAと, SHA-256ハッシュアルゴリズム(<spanx style="verb">ES256</spanx>)のサポートも推奨される(RECOMMENDED).
 	他のアルゴリズムと鍵サイズのサポートは任意である(OPTIONAL).
@@ -1413,8 +1413,8 @@
       <section title="JSON Web トークンクレームレジストリ" anchor="JWTClaimsReg">
       <!--<section title="JSON Web Token Claims Registry" anchor="JWTClaimsReg">-->
   <t>
-    本仕様では, 予約 JWT クレーム名のための IANA JSON Web トークンクレームレジストリを定める.
-    このレジストリは, 予約クレーム名とそれを定義している仕様へのリファレンスを記録する. 本仕様は <xref target="ReservedClaimName"></xref> で定義されているクレーム名を登録する.
+    本仕様では, 予約済 JWT クレーム名のための IANA JSON Web トークンクレームレジストリを定める.
+    このレジストリは, 予約済クレーム名とそれを定義している仕様へのリファレンスを記録する. 本仕様は <xref target="ReservedClaimName"></xref> で定義されているクレーム名を登録する.
   </t>
   <!--
 	<t>
@@ -1442,7 +1442,7 @@
   -->
         <t>
           登録要請は, 適切な件名 (例: "Request for access token type: example") で [TBD]@ietf.org のメーリングリストに通知しなければならず, そこでレビューとコメントが行われる.
-          [[ RFC-EDITORへの注意: メーリングリストの名前は, IESGとIANAと協議の上, 決定されるべきである. 提案される名前: claims-reg-review ]]
+          [[ RFC-EDITORへの注意: メーリングリストの名前は, IESGとIANAと協議の上, 決定されるべきである. 推奨される名前: claims-reg-review ]]
         </t>
         <!--
         <t>
@@ -1815,7 +1815,7 @@
 	-->
 	    </t>
 	    <t>
-	      エンコーディングにおける考慮点: JWT の値はピリオド ('.') で区切られた base64url エンコードされた値 (それらのうち幾つかが空の文字列の場合もある) の列としてエンコードされる.
+	      エンコーディングにおける考慮点: JWT の値はピリオド ('.') で区切られた base64url エンコード済の値 (それらのうち幾つかが空の文字列の場合もある) の列としてエンコードされる.
 	<!--
 	      Encoding considerations: JWT values are encoded as a
 	      series of base64url encoded values (some of which may be the
@@ -1823,7 +1823,7 @@
 	-->
 	    </t>
 	    <t>
-	      セキュリティ上の考慮点: [[ this document ]] のセキュリティ上の考慮点のセクションを参照のこと.
+	      セキュリティ上の考慮点: [[ this document ]] のセキュリティ上の考慮点の節を参照のこと.
 	<!--
 	      Security Considerations: See the Security Considerations section of [[ this document ]]
 	-->
@@ -1900,7 +1900,7 @@
 
       <section title="Registration of JWE Header Parameter Names" anchor="HdrReg">
   <t>
-    本仕様は, <xref target="ClaimsAsHeaders"/> のヘッダパラメータとして複製されたクレームで使用するために <xref target="ReservedClaimName"/> に定義されている特定の予約クレーム名を IANA JSON Web Signature and Encryption Header Parameters registry <xref target="JWS" /> に登録する.
+    本仕様は, <xref target="ClaimsAsHeaders"/> のヘッダパラメータとして複製されたクレームで使用するために <xref target="ReservedClaimName"/> に定義されている特定の予約済クレーム名を IANA JSON Web Signature and Encryption Header Parameters registry <xref target="JWS" /> に登録する.
   </t>
   <!--
 	<t>
@@ -2241,7 +2241,7 @@
 	</t> -->
 	
  	<t>
-      次の例ではJWEヘッダ(表示目的のための改行を含む)を宣言する.
+      次の例ではJWEヘッダ(改行は掲載上の都合による)を宣言する.
       <list style="symbols">
 	<!-- <t>
 	  The following example JWE Header (with line breaks for display purposes only) declares that:
@@ -2288,7 +2288,7 @@
 	
     <t>
       この例の最終的な結果は以下の様になる.
-      (表示目的のための改行を含む)
+      (改行は掲載上の都合による)
     </t>    
 	<!-- <t>
 	  The final result in this example
@@ -2376,7 +2376,7 @@
   {"alg":"RSA1_5","enc":"A128CBC-HS256","cty":"JWT"}
 ]]></artwork></figure>
     <t>
-      JWE ヘッダの UTF-8 表現の8ビットバイトをエンコードしている Base64 URL は JWE ヘッダの値を得られる: 
+      JWTヘッダのUTF-8表現のオクテットをbase64urlエンコードすることによりエンコード済JWTヘッダの値を得られる:
     </t>
     <!--
 	  <t>
@@ -2407,7 +2407,7 @@
   </t>
   -->
   <t>
-    使用されているペイロードは, <xref target="JWS"/> (すべての空白や改行は削除されている) の 付録セクション A.2.1 終わりの JWT の ASCII 表現の8ビットバイトである.
+    使用されているペイロードは, <xref target="JWS"/> (すべての空白や改行は削除されている) の 付録の節 A.2.1 終わりの JWT の ASCII 表現の8ビットバイトである.
   </t>
   <!--
 	<t>
@@ -2512,7 +2512,7 @@
 	-->
       </t>
       <t>
-	したがって, JWTはSAMLアサーションが行うことのうち幾らかを実現することが出来るが, JWTはSAMLアサーションのすべてを置き換えるのではなく, 導入の容易さ, もしくはコンパクトさが考慮される様な場合に使われるトークン・フォーマットとして意図されている.
+	したがって, JWTはSAMLアサーションが行うことのうち幾らかを実現することが出来るが, JWTはSAMLアサーションのすべてを置き換えるのではなく, 実装の容易さ, もしくはコンパクトさが考慮される様な場合に使われるトークン・フォーマットとして意図されている.
 	<!--
 	Therefore, while JWTs can do some of the things SAML assertions
 	do, JWTs are not intended as a full replacement for SAML
@@ -2522,7 +2522,7 @@
       </t>
       <t>
 	SAMLアサーションは常にサブジェクトに関するエンティティによって発行されるステートメントである.
-	しばしばJWTも, エンティティが<spanx style="verb">iss</spanx> (issuer) クレームによってあらわされ, サブジェクトが<spanx style="verb">sub</spanx> (subject) クレームによってあらわされるステートメントを生成することにより, それと同じ方法で使用される.
+	しばしばJWTも, エンティティが<spanx style="verb">iss</spanx> (issuer) クレームによって表現され, サブジェクトが<spanx style="verb">sub</spanx> (subject) クレームによって表現されるステートメントを生成することにより, それと同じ方法で使用される.
 	しかしながら, これらのクレームはオプションなので, JWTフォーマットは他の用途でも用いることが出来る.
 	<!--
 	SAML Assertions are always statements made by an entity about a subject.
