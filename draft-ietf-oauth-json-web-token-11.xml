@@ -1896,7 +1896,7 @@
       <section title="JWEヘッダパラメータの登録" anchor="HdrReg">
       <!-- <section title="Registration of JWE Header Parameter Names" anchor="HdrReg"> -->
   <t>
-    本仕様は, <xref target="ClaimsAsHeaders"/>としてヘッダパラメータとして複製されたクレームによる試用のために, IANA JSON Web Signatureと暗号化ヘッダパラメータレジストリの<xref target="ReservedClaimName"/>で定義された特定の予約済クレーム名を登録する.
+    本仕様は, <xref target="ClaimsAsHeaders"/> にあるように, ヘッダパラメータとして複製されたクレームを使用するために, JSON Web Signature and Encryption Header Parameters レジストリの<xref target="ReservedClaimName"/>で定義された特定の予約済クレーム名を登録する.
   </t>
   <!--
 	<t>
