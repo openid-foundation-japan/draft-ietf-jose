@@ -1284,7 +1284,7 @@
 	    </list>
 	  </t>
 	  <t>
-	  JWTヘッダが<spanx style="verb">JWT</spanx>の値として<spanx style="verb">cty</spanx> (content type) を持つ場合, このメッセージは入れ子にされた署名または暗号化処理を受けたJWTである.
+	  JWTヘッダが <spanx style="verb">cty</spanx> (content type) の値として <spanx style="verb">JWT</spanx> を持つ場合, このメッセージは入れ子にされた署名または暗号化処理を受けたJWTである.
 	  この場合, メッセージをJWTとして扱い, ステップ1に戻る.
 	  </t>
 	  <!-- <t>
