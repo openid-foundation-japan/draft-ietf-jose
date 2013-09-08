@@ -3983,30 +3983,40 @@
       <section title="Example Plaintext JWS" anchor="ExamplePlaintextJWS">
 
 	<t>
-	  The following example JWS Header declares that the
-	  encoded object is a Plaintext JWS:
+	  以下のJWSヘッダの例はエンコード済みのオブジェクトが平文のJWSである例を示している:
 	</t>
-
+    <!--  <t>
+              The following example JWS Header declares that the
+              encoded object is a Plaintext JWS:
+          </t>
+    -->
 	<figure><artwork><![CDATA[
   {"alg":"none"}
 ]]></artwork></figure>
 
 	<t>
-	  Base64url encoding the octets of the UTF-8 representation of
-	  the JWS Header yields this Encoded JWS Header:
+	  このJWSヘッダのUTF-8表現のオクテット列をbase64urlエンコーディングすると以下のエンコード済みJWSヘッダが生成される:
 	</t>
-
+    <!--  <t>
+              Base64url encoding the octets of the UTF-8 representation of
+              the JWS Header yields this Encoded JWS Header:
+          </t>
+    -->
 	<figure><artwork><![CDATA[
   eyJhbGciOiJub25lIn0
 ]]></artwork></figure>
 
 	<t>
-	  The JWS Payload used in this example, which
-	  follows, is the same as in the previous examples.  Since
-	  the Encoded JWS Payload will therefore be the same, its
-	  computation is not repeated here.
+	  以下に示されるこの例の中で使われているJWSペイロードは, 前の例のものと同じである.
+	  それゆえエンコード済みJWSペイロードは同じであるため, ここでは再度算出は行わない.
 	</t>
-
+    <!--  <t>
+              The JWS Payload used in this example, which
+              follows, is the same as in the previous examples.  Since
+              the Encoded JWS Payload will therefore be the same, its
+              computation is not repeated here.
+          </t>
+    -->
 	<figure><artwork><![CDATA[
   {"iss":"joe",
    "exp":1300819380,
@@ -4014,16 +4024,22 @@
 ]]></artwork></figure>
 
 	<t>
-	  The Encoded JWS Signature is the empty string.
+	  エンコード済みJWS署名は空文字となる.
 	</t>
-
+    <!--  <t>
+              The Encoded JWS Signature is the empty string.
+          </t>
+     -->
 	<t>
-	  Concatenating these parts in the order
-	  Header.Payload.Signature with period ('.') characters between the
-	  parts yields this complete JWS (with line breaks for
-	  display purposes only):
+	  ヘッダ.ペイロードPayload.署名の順でそれぞれの部分をピリオド('.')で連結すると完全なJWSが生成される(改行は掲載上の都合による):
 	</t>
-
+    <!--  <t>
+              Concatenating these parts in the order
+              Header.Payload.Signature with period ('.') characters between the
+              parts yields this complete JWS (with line breaks for
+              display purposes only):
+          </t>
+    -->
 	<figure><artwork><![CDATA[
   eyJhbGciOiJub25lIn0
   .
@@ -4035,69 +4051,98 @@
 
       <section title="Example JWS Using JWS JSON Serialization" anchor="JSONSerializationExample">
 	<t>
-	  This section contains an example using the JWS JSON Serialization.
-	  This example demonstrates the capability for
-	  conveying multiple digital signatures and/or MACs for the
-	  same payload.
+	  このセクションはJWS JSON Serializationを利用した場合の例を含む.
+	  この例では同一のペイロードについて複数の電子署名, および/またはMAC値を伝送できることを示す.
 	</t>
+    <!--  <t>
+              This section contains an example using the JWS JSON Serialization.
+              This example demonstrates the capability for
+              conveying multiple digital signatures and/or MACs for the
+              same payload.
+          </t>
+    -->
 	<t>
-	  The Encoded JWS Payload used in this example is the same as
-	  that used in the examples in <xref target="RS256Example"/>
-	  and <xref target="ES256Example"/>
-	  (with line breaks for display purposes only):
+	  この例で利用されているエンコード済みJWSペイロードは <xref target="RS256Example"/>と <xref target="ES256Example"/>の例で利用されているものと同じである(改行は掲載上の都合による):
 	</t>
-
+    <!--  <t>
+              The Encoded JWS Payload used in this example is the same as
+              that used in the examples in <xref target="RS256Example"/>
+              and <xref target="ES256Example"/>
+              (with line breaks for display purposes only):
+          </t>
+    -->
 	<figure><artwork><![CDATA[
   eyJpc3MiOiJqb2UiLA0KICJleHAiOjEzMDA4MTkzODAsDQogImh0dHA6Ly9leGFt
   cGxlLmNvbS9pc19yb290Ijp0cnVlfQ
 ]]></artwork></figure>
 
 	<t>
-	  Two digital signatures are used in this example:
-	  the first using RSASSA-PKCS-v1_5 SHA-256 and
-	  the second using ECDSA P-256 SHA-256.
-	  For the first, the JWS Protected Header and key
-	  are the same as in <xref target="RS256Example"/>,
-	  resulting in the same JWS Signature value;
-	  therefore, its computation is not repeated here.
-	  For the second, the JWS Protected Header and key
-	  are the same as in <xref target="ES256Example"/>,
-	  resulting in the same JWS Signature value;
-	  therefore, its computation is not repeated here.
+	  この例では二つの電子署名が使用される:
+	  1つ目ではRSASSA-PKCS-v1_5 SHA-256を2つ目ではECDSA P-256 SHA-256を利用する.
+	  1つ目のJWSプロテクトヘッダと鍵は <xref target="RS256Example"/>のものと同じになり, 結果として得られるJWS署名が同じ値になる;
+      それゆえここでは再度算出は行わない.
+	  2つ目のJWSプロテクトヘッダと鍵は <xref target="ES256Example"/>のものと同じになり, 結果として得られるJWS署名が同じ値になる;
+	  それゆえここでは再度算出は行わない.
 	</t>
-
+    <!--      <t>
+              Two digital signatures are used in this example:
+              the first using RSASSA-PKCS-v1_5 SHA-256 and
+              the second using ECDSA P-256 SHA-256.
+              For the first, the JWS Protected Header and key
+              are the same as in <xref target="RS256Example"/>,
+              resulting in the same JWS Signature value;
+              therefore, its computation is not repeated here.
+              For the second, the JWS Protected Header and key
+              are the same as in <xref target="ES256Example"/>,
+              resulting in the same JWS Signature value;
+              therefore, its computation is not repeated here.
+          </t>
+    -->
 	<section title="JWS Per-Signature Protected Headers" anchor="JSProtectedHeader">
 
 	  <t>
-	    The JWS Protected Header value used for the first signature is:
+	    1つ目の署名に利用されるJWSプロテクトヘッダ値は以下となる:
 	  </t>
-
+      <!--  <t>
+            The JWS Protected Header value used for the first signature is:
+        </t>
+      -->
 	  <figure><artwork><![CDATA[
   {"alg":"RS256"}
 ]]></artwork></figure>
 
 	  <t>
-	    Base64url encoding these octets yields this
-	    Encoded JWS Header value:
+	    これらのオクテット列をbase64urlエンコーディングすると以下のエンコード済みJWSヘッダ値が生成される:
 	  </t>
-
+      <!--  <t>
+            Base64url encoding these octets yields this
+            Encoded JWS Header value:
+        </t>
+      -->
 	  <figure><artwork><![CDATA[
   eyJhbGciOiJSUzI1NiJ9
 ]]></artwork></figure>
 
 	  <t>
-	    The JWS Protected Header value used for the second signature is:
+	    2つ目の署名に利用されるJWSプロテクトヘッダ値は以下となる:
 	  </t>
 
+      <!--  <t>
+            The JWS Protected Header value used for the second signature is:
+        </t>
+      -->
 	  <figure><artwork><![CDATA[
   {"alg":"ES256"}
 ]]></artwork></figure>
 
 	  <t>
-	    Base64url encoding these octets yields this
-	    Encoded JWS Header value:
+	    これらのオクテット列をbase64urlエンコーディングすると以下のエンコード済みJWSヘッダ値が生成される:
 	  </t>
-
+      <!--  <t>
+            Base64url encoding these octets yields this
+            Encoded JWS Header value:
+        </t>
+      -->
 	  <figure><artwork><![CDATA[
   eyJhbGciOiJFUzI1NiJ9
 ]]></artwork></figure>
@@ -4105,19 +4150,26 @@
 
 	<section title="JWS Per-Signature Unprotected Headers" anchor="JSRecipientHeaders">
 	  <t>
-	    Key ID values are supplied for both keys using per-signature
-	    header parameters.
-	    The two values used to represent these Key IDs are:
+	    Key ID の値は, 署名毎のヘッダパラメータを利用して両方の鍵に対して与えられる.
+	    これらのKey IDを表す2つの値は以下となる:
 	  </t>
-
+      <!--  <t>
+            Key ID values are supplied for both keys using per-signature
+            header parameters.
+            The two values used to represent these Key IDs are:
+        </t>
+      -->
 	  <figure><artwork><![CDATA[
   {"kid":"2010-12-29"}
 ]]></artwork></figure>
 
 	  <t>
-	    and:
+	    と:
 	  </t>
-
+      <!--  <t>
+            and:
+        </t>
+      -->
 	  <figure><artwork><![CDATA[
   {"kid":"e9bc097a-ce51-4036-9562-d2ade882db0d"}
 ]]></artwork></figure>
@@ -4125,20 +4177,26 @@
 
 	<section title="Complete JWS Header Values" anchor="JSHeader">
 	  <t>
-	    Combining the protected and unprotected header values
-	    supplied, the JWS Header values used for the first and second
-	    signatures respectively are:
+	    与えられたプロテクトヘッダとプロテクトされていないヘッダの値を合わせて, 1つ目の署名と2つ目の署名それぞれに利用されるJWSヘッダ値は以下のようになる:
 	  </t>
-
+      <!--  <t>
+            Combining the protected and unprotected header values
+            supplied, the JWS Header values used for the first and second
+            signatures respectively are:
+        </t>
+      -->
 	  <figure><artwork><![CDATA[
   {"alg":"RS256",
    "kid":"2010-12-29"}
 ]]></artwork></figure>
 
 	  <t>
-	    and:
+	    と:
 	  </t>
-
+      <!--  <t>
+            and:
+        </t>
+      -->
 	  <figure><artwork><![CDATA[
   {"alg":"ES256",
    "kid":"e9bc097a-ce51-4036-9562-d2ade882db0d"}
@@ -4150,11 +4208,14 @@
 	<section title="Complete JWS JSON Serialization Representation" anchor="JSComplete">
 
 	  <t>
-	    The complete JSON Web Signature JSON Serialization
-	    for these values is as follows
-	    (with line breaks for display purposes only):
+	    これらの値の完全なJSON Web Signature JSON Serializationは以下のようになる(改行は掲載上の都合による):
 	  </t>
-
+      <!--  <t>
+            The complete JSON Web Signature JSON Serialization
+            for these values is as follows
+            (with line breaks for display purposes only):
+        </t>
+      -->
 	  <figure><artwork><![CDATA[
   {"payload":
     "eyJpc3MiOiJqb2UiLA0KICJleHAiOjEzMDA4MTkzODAsDQogImh0dHA6Ly9leGF
