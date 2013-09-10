@@ -4247,6 +4247,11 @@
 
     <section title='"x5c" (X.509 Certificate Chain) Example' anchor="x5cExample">
       <t>
+      	以下の JSON array は, <xref target="x5cDef"/> にあるように, <spanx style="verb">x5c</spanx> ヘッダパラメータとして指定される証明書チェーンの例である.
+      	ここでは Base64URL エンコードではなく Base64 エンコードが用いられるため, 空白と改行が許可されていることに注意すること.
+      </t>
+      <!--
+      <t>
 	The JSON array below is an example of a certificate chain
 	that could be used as the value of an
 	<spanx style="verb">x5c</spanx> (X.509 Certificate Chain) header parameter,
@@ -4254,6 +4259,7 @@
 	Note that since these strings contain base64 encoded (not base64url encoded)
 	values, they are allowed to contain white space and line breaks.
       </t>
+	  -->
 
       <figure><artwork><![CDATA[
   ["MIIE3jCCA8agAwIBAgICAwEwDQYJKoZIhvcNAQEFBQAwYzELMAkGA1UEBhMCVVM
@@ -4334,15 +4340,27 @@
     <section title="Notes on implementing base64url encoding without padding" anchor="base64urlnotes">
 
       <t>
+      	ここではパディング無し Base64URL エンコード/デコードを, 標準のパディング付き Base64 エンコード/デコードを元に実装する方法について述べる.
+      </t>
+      <!--
+      <t>
 	This appendix describes how to implement base64url encoding
 	and decoding functions without padding based upon standard
 	base64 encoding and decoding functions that do use padding.
       </t>
+	  -->
+
+	  <t>
+	  	具体例として, 以下に C# での実装例を挙げる.
+	  	他の言語でも実装方法は同様である.
+	  </t>
+	  <!--
       <t>
 	To be concrete, example C# code implementing these functions
 	is shown below.  Similar code could be used in other
 	languages.
       </t>
+	  -->
 
       <figure><artwork><![CDATA[
   static string base64urlencode(byte [] arg)
@@ -4371,6 +4389,11 @@
   }
 ]]></artwork></figure>
 
+	  <t>
+	  	上記コードの通り, パディング無しBase64URL エンコード文字列をパディング付きに変換する為に付与すべきパディング "=" の文字数は, エンコード文字列長から求められる.
+	  	"length mod 4 = 0" の時, パディングは必要なく, "length mod 4 = 2" の時は2つの "=" を追加, "length mod 4 = 3" の時は1つ, "length mod 4 = 1" の時はその入力が不正である.
+	  </t>
+	  <!--
       <t>
 	As per the example code above, the number of '=' padding
 	characters that needs to be added to the end of a base64url
@@ -4383,11 +4406,18 @@
 	if the length mod 4 is 3, one '=' padding character is added;
 	if the length mod 4 is 1, the input is malformed.
       </t>
+	  -->
+	  <t>
+	  	エンコードあり/なしの値の対応例を以下に示す.
+	  	以下のオクテット列はその下の文字列にエンコードされ, デコードすると元のオクテット列が導出される.
+	  </t>
+	  <!--
       <t>
 	An example correspondence between unencoded and encoded values
 	follows.  The octet sequence below encodes into the string
 	below, which when decoded, reproduces the octet sequence.
       </t>
+	  -->
 
       <figure><artwork>3 236 255 224 193</artwork></figure>
 
@@ -4396,6 +4426,10 @@
 
     <section title='Negative Test Case for "crit" Header Parameter' anchor="critTest">
       <t>
+      	適切な実装は, 理解不能もしくは処理不能なクリティカル拡張を含む入力を拒否しなければならない.
+      	以下に示す JWS は, <spanx style="verb">http://example.invalid/UNDEFINED</spanx> という理解不能な拡張ヘッダパラメータを利用しているため, いかなる実装もこの JWS を拒否しなければならない.
+      	<spanx style="verb">http://example.invalid/UNDEFINED</spanx> に変わるなんらかの理解不能なヘッダパラメータが含まれる場合にも, 同様に実装はそれらを拒否しなければならない.
+      	<!--
 	Conforming implementations must reject input containing critical extensions
 	that are not understood or cannot be processed.  The following JWS must
 	be rejected by all implementations, because it uses an extension
@@ -4405,10 +4439,14 @@
 	<spanx style="verb">http://example.invalid/UNDEFINED</spanx> is substituted for
 	any other header parameter name not understood by the implementation,
 	must also be rejected.
+		-->
 
 	<figure>
 	  <preamble>
+	  	JWS ヘッダ
+	  	<!--
 	    The JWS Header value for this JWS is:
+		-->
 	  </preamble>
 	  <artwork><![CDATA[
   {"alg":"none",
@@ -4420,8 +4458,11 @@
 
 	<figure>
 	  <preamble>
+	  	JWS 全体 (改行は表示の都合による)
+	  	<!--
 	    The complete JWS that must be rejected is as follows
 	    (with line breaks for display purposes only):
+		-->
 	  </preamble>
 	  <artwork><![CDATA[
   eyJhbGciOiJub25lIiwNCiAiY3JpdCI6WyJodHRwOi8vZXhhbXBsZS5jb20vVU5ERU
