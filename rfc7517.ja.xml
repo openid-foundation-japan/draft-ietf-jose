@@ -143,17 +143,32 @@
     <section title="Terminology" anchor="Terminology">
 
       <t>
-        The terms
+        "JSON Web Signature (JWS)",
+        "Base64url Encoding",
+        "Collision-Resistant Name",
+        "Header Parameter",
+        および "JOSE Header" という各用語は,
+        JWS 仕様 <xref target="JWS"/> で定義されている.
+        <!-- The terms
         "JSON Web Signature (JWS)",
         "Base64url Encoding",
         "Collision-Resistant Name",
         "Header Parameter",
         and "JOSE Header" are defined by
-        the JWS specification <xref target="JWS"/>.
+        the JWS specification <xref target="JWS"/>. -->
       </t>
 
       <t>
-        The terms
+        "JSON Web Encryption (JWE)",
+        "Additional Authenticated Data (AAD)",
+        "JWE Authentication Tag",
+        "JWE Ciphertext",
+        "JWE Compact Serialization",
+        "JWE Encrypted Key",
+        "JWE Initialization Vector",
+        および "JWE Protected Header" という各用語は,
+        JWE 仕様 <xref target="JWE"/> で定義されている.
+        <!-- The terms
         "JSON Web Encryption (JWE)",
         "Additional Authenticated Data (AAD)",
         "JWE Authentication Tag",
@@ -162,20 +177,26 @@
         "JWE Encrypted Key",
         "JWE Initialization Vector",
         and "JWE Protected Header" are defined by
-        the JWE specification <xref target="JWE"/>.
+        the JWE specification <xref target="JWE"/>. -->
       </t>
 
       <t>
-        The terms
+        "Ciphertext",
+        "Digital Signature",
+        "Message Authentication Code (MAC)",
+        および "Plaintext" という各用語は,
+        <xref target="RFC4949">"Internet Security Glossary, Version 2"</xref> で定義されている.
+        <!-- The terms
         "Ciphertext",
         "Digital Signature",
         "Message Authentication Code (MAC)",
         and "Plaintext" are defined by
-        the <xref target="RFC4949">"Internet Security Glossary, Version 2"</xref>.
+        the <xref target="RFC4949">"Internet Security Glossary, Version 2"</xref>. -->
       </t>
 
       <t>
-        These terms are defined by this specification:
+        本仕様では以下の用語を定義する.
+        <!-- These terms are defined by this specification: -->
       </t>
 
       <t>
@@ -183,14 +204,18 @@
 
           <t hangText="JSON Web Key (JWK)">
             <vspace/>
-            A JSON object that represents a cryptographic key.
-            The members of the object represent properties of the key, including its value.
+            暗号鍵を表現する JSON オブジェクト.
+            このオブジェクトの各メンバーは, 鍵の各プロパティを表現する.
+            <!-- A JSON object that represents a cryptographic key.
+            The members of the object represent properties of the key, including its value. -->
           </t>
           <t hangText="JWK Set">
             <vspace/>
-            A JSON object that represents a set of JWKs.
+            1セットの JWK の集合を表現する JSON オブジェクト.
+            この JSON オブジェクトは必ず <spanx style="verb">keys</spanx> というメンバーを含み (MUST), その要素は JWK の配列となる.
+            <!-- A JSON object that represents a set of JWKs.
             The JSON object MUST have a <spanx style="verb">keys</spanx> member,
-            which is an array of JWKs.
+            which is an array of JWKs. -->
           </t>
 
         </list>
