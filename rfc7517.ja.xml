@@ -205,14 +205,14 @@
           <t hangText="JSON Web Key (JWK)">
             <vspace/>
             暗号鍵を表現する JSON オブジェクト.
-            このオブジェクトの各メンバーは, 鍵の各プロパティを表現する.
+            このオブジェクトの各要素は, 鍵の各プロパティを表現する.
             <!-- A JSON object that represents a cryptographic key.
             The members of the object represent properties of the key, including its value. -->
           </t>
           <t hangText="JWK Set">
             <vspace/>
             1セットの JWK の集合を表現する JSON オブジェクト.
-            この JSON オブジェクトは必ず <spanx style="verb">keys</spanx> というメンバーを含み (MUST), その要素は JWK の配列となる.
+            この JSON オブジェクトは必ず <spanx style="verb">keys</spanx> という要素を含み (MUST), その要素は JWK の配列となる.
             <!-- A JSON object that represents a set of JWKs.
             The JSON object MUST have a <spanx style="verb">keys</spanx> member,
             which is an array of JWKs. -->
@@ -250,30 +250,43 @@
 
     <section title="JSON Web Key (JWK) Format" anchor="JWKFormat">
       <t>
-        A JWK is a JSON object that represents a cryptographic key.
+        JWK は暗号鍵を表現する JSON オブジェクトである.
+        JWK の要素は鍵のプロパティを表現する.
+        この JSON オブジェクトは, <xref target="RFC7159">RFC 7159</xref> の Section 2 に従って, 任意の JSON バリューや構造文字の前後に空白スペースや改行を含むことができる.
+        本仕様では, 暗号化アルゴリズムに依存しない鍵パラメータを定義する.
+        <!-- A JWK is a JSON object that represents a cryptographic key.
         The members of the object represent properties of the key, including its value.
         This JSON object MAY contain whitespace and/or line breaks
         before or after any JSON values or structural characters,
         in accordance with Section 2 of <xref target="RFC7159">RFC 7159</xref>.
         This document defines the key parameters that are not algorithm specific
-        and, thus, common to many keys.
+        and, thus, common to many keys. -->
       </t>
       <t>
-        In addition to the common parameters, each JWK will have
+        共通パラメータに加え, JWK は鍵タイプ固有の要素を含む.
+        これらの要素は鍵のパラメータを示す.
+        JSON Web Algorithm (JWA) <xref target="JWA"/> 仕様の Section 6 では, 複数種類の暗号鍵およびそれに紐付いた要素を定義する.
+        <!-- In addition to the common parameters, each JWK will have
         members that are key type specific.
         These members represent the parameters of the key.
         Section 6 of the JSON Web Algorithms (JWA) <xref target="JWA"/> specification
-        defines multiple kinds of cryptographic keys and their associated members.
+        defines multiple kinds of cryptographic keys and their associated members. -->
       </t>
       <t>
-        The member names within a JWK MUST be unique;
+        JWK の要素名はユニークでなければならない (MUST).
+        JWK パーサーは要素名の重複をリジェクトするか, ECMAScript 5.1 <xref target="ECMAScript"/> Section 15.12 (The JSON Object) に従い辞書順で最後の重複要素名のみを返す JSON パーサーを利用しなければならない (MUST).
+        <!-- The member names within a JWK MUST be unique;
         JWK parsers MUST either reject JWKs with duplicate member names
         or use a JSON parser that returns only the lexically last duplicate member name,
         as specified in Section 15.12 (The JSON Object) of
-        ECMAScript 5.1 <xref target="ECMAScript"/>.
+        ECMAScript 5.1 <xref target="ECMAScript"/>. -->
       </t>
       <t>
-        Additional members can be present in the JWK;
+        JSK にはその他の要素も含むことができる.
+        もし JWK 実装が理解できない要素に出くわした場合は, その要素を無視する事 (MUST).
+        異なる鍵タイプの鍵パラメータを示す要素名は, 重複を許す.
+        新しい要素名は, <xref target="JWKParamReg" /> により設立される IANA "JSON Web Key Parameters" レジストリに登録するか, Collision-Resistant Name を含むようにすること.
+        <!-- Additional members can be present in the JWK;
         if not understood by implementations encountering them, they MUST be ignored.
         Member names used for representing key parameters
         for different keys types need not be distinct.
@@ -281,12 +294,16 @@
         should either be registered in the IANA "JSON Web Key Parameters" registry
         established by
         <xref target="JWKParamReg" /> or be
-        a value that contains a Collision-Resistant Name.
+        a value that contains a Collision-Resistant Name. -->
       </t>
 
       <section title='"kty" (Key Type) Parameter' anchor="ktyDef">
         <t>
-          The <spanx style="verb">kty</spanx> (key type) parameter
+          <spanx style="verb">kty</spanx> (key type) パラメータは, <spanx style="verb">RSA</spanx> や <spanx style="verb">EC</spanx> といった暗号アルゴリズムファミリーを示す.
+          <spanx style="verb">kty</spanx> 値は, <xref target="JWA" /> で設立される IANA "JSON Web Key Types" レジストリに登録するか, Collision-Resistant Name を含むようにすること.
+          <spanx style="verb">kty</spanx> 値は大文字小文字を区別する.
+          JWK はこの要素を含まなければならない (MUST).
+          <!-- The <spanx style="verb">kty</spanx> (key type) parameter
           identifies the cryptographic algorithm family used with the key,
           such as <spanx style="verb">RSA</spanx> or <spanx style="verb">EC</spanx>.
           <spanx style="verb">kty</spanx> values should either be
@@ -295,37 +312,44 @@
           <xref target="JWA" /> or be
           a value that contains a Collision-Resistant Name.
           The <spanx style="verb">kty</spanx> value is a case-sensitive string.
-          This member MUST be present in a JWK.
+          This member MUST be present in a JWK. -->
         </t>
         <t>
-          A list of defined <spanx style="verb">kty</spanx> values can be found
+          定義済みの <spanx style="verb">kty</spanx> 値は, <xref target="JWA"/> で設立される IANA "JSON Web Key Types" レジストリに登録されている.
+          当該レジストリの初期登録値は <xref target="JWA"/> Section 6.1 にある.
+          <!-- A list of defined <spanx style="verb">kty</spanx> values can be found
           in the IANA "JSON Web Key Types" registry
           established by
           <xref target="JWA"/>;
           the initial contents of this registry are the values defined in
           Section 6.1 of
-          <xref target="JWA"/>.
+          <xref target="JWA"/>. -->
         </t>
         <t>
-          The key type definitions include specification of the
+          鍵タイプの定義はその鍵タイプで用いられる要素の定義も含む.
+          特定の <spanx style="verb">kty</spanx> に紐づく要素は, <xref target="JWKParamReg"/> で設立する IANA "JSON Web Key Parameters" レジストリに登録されている.
+          <!-- The key type definitions include specification of the
           members to be used for those key types.
           Members used with specific <spanx style="verb">kty</spanx> values can
           be found
           in the IANA "JSON Web Key Parameters" registry
           established by
-          <xref target="JWKParamReg"/>.
+          <xref target="JWKParamReg"/>. -->
         </t>
       </section>
 
       <section title='"use" (Public Key Use) Parameter' anchor="useDef">
         <t>
-          The <spanx style="verb">use</spanx> (public key use) parameter identifies the
+          <spanx style="verb">use</spanx> (public key use) パラメータは当該公開鍵の用途を示す.
+          <spanx style="verb">use</spanx> パラメータは, その鍵が暗号化目的で提供されるのか, 署名検証目的で提供されるのかを示すために利用される.
+          <!-- The <spanx style="verb">use</spanx> (public key use) parameter identifies the
           intended use of the public key.
           The <spanx style="verb">use</spanx> parameter is employed to indicate whether
-          a public key is used for encrypting data or verifying the signature on data.
+          a public key is used for encrypting data or verifying the signature on data. -->
         </t>
         <t>
-          Values defined by this specification are:
+          本仕様で定義される値は以下の通りである.
+          <!-- Values defined by this specification are: -->
         </t>
         <t>
           <?rfc subcompact="yes"?>
@@ -336,27 +360,37 @@
           <?rfc subcompact="no"?>
         </t>
         <t>
-           Other values MAY be used.
+          上記以外の値も利用可能である (MAY).
+          <spanx style="verb">use</spanx> 値は大文字小文字を区別する文字列である.
+          <spanx style="verb">use</spanx> の利用は, アプリケーションが必須としない限りは OPTIONAL である.
+          <!-- Other values MAY be used.
           The <spanx style="verb">use</spanx> value is a case-sensitive string.
           Use of the <spanx style="verb">use</spanx> member is OPTIONAL,
-          unless the application requires its presence.
+          unless the application requires its presence. -->
         </t>
         <t>
-          When a key is used to wrap another key and a public key use designation
+          ある鍵が他の鍵をラップするために用いられ, 最初の鍵に対する公開鍵用途の指定を行いたい場合は, <spanx style="verb">enc</spanx> (encryption) を指定すること.
+          鍵ラッピングは暗号化の一種である.
+          <spanx style="verb">enc</spanx> 値は鍵交換オペレーションのためにも利用可能である.
+          <!-- When a key is used to wrap another key and a public key use designation
           for the first key is desired, the <spanx style="verb">enc</spanx> (encryption)
           key use value is used, since key wrapping is a kind of encryption.
           The <spanx style="verb">enc</spanx> value is also to be used for
-          public keys used for key agreement operations.
+          public keys used for key agreement operations. -->
         </t>
         <t>
-          Additional <spanx style="verb">use</spanx> (public key use)
+          その他の <spanx style="verb">use</spanx> (public key use) 値も <xref target="UseReg"/> で設立する "JSON Web Key Use" レジストリに登録することができる.
+          本仕様をオープンな環境で利用する場合, そこで利用される拡張値の登録を強く推奨する.
+          そういった環境では, 複数の組織がそこで利用される拡張に対して共通理解を持つ事が重要である.
+          クローズドな環境では, 未登録な拡張値を利用してもよい.
+          <!-- Additional <spanx style="verb">use</spanx> (public key use)
           values can be registered in the IANA
           "JSON Web Key Use" registry established by <xref target="UseReg"/>.
           Registering any extension values used is highly recommended when
           this specification is used in open environments, in which multiple organizations
           need to have a common understanding of any extensions used.
           However, unregistered extension values can be used in closed environments,
-          in which the producing and consuming organization will always be the same.
+          in which the producing and consuming organization will always be the same. -->
         </t>
       </section>
 
