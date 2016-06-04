@@ -224,12 +224,15 @@
 
     <section title="Example JWK" anchor="ExampleJWK">
       <t>
-        This section provides an example of a JWK.
+        本 Section では JWK の例を示す.
+        以下の JWK サンプルは, P-256 Elliptic Curve の Elliptic Curve　<xref target="DSS"/> 鍵を示し, x 座標と y 座標はそれぞれ base64url エンコードされている.
+        またこの鍵自身の識別子 (kid) も含まれる.
+        <!-- This section provides an example of a JWK.
         The following example JWK declares that
         the key is an Elliptic Curve <xref target="DSS"/> key,
         it is used with the P-256 Elliptic Curve,
         and its x and y coordinates are the base64url-encoded values shown.
-        A key identifier is also provided for the key.
+        A key identifier is also provided for the key. -->
       </t>
       <figure><artwork><![CDATA[
   {"kty":"EC",
@@ -240,7 +243,8 @@
   }
 ]]></artwork></figure>
       <t>
-        Additional example JWK values can be found in <xref target="ExampleJWKSets"/>.
+        他にも <xref target="ExampleJWKSets"/> に JWK サンプルが示されている.
+        <!-- Additional example JWK values can be found in <xref target="ExampleJWKSets"/>. -->
       </t>
     </section>
 
