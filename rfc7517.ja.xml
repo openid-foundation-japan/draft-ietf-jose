@@ -396,14 +396,18 @@
 
       <section title='"key_ops" (Key Operations) Parameter' anchor="key_opsDef">
         <t>
-          The <spanx style="verb">key_ops</spanx> (key operations) parameter
+          <spanx style="verb">key_ops</spanx> (key operations) パラメータは鍵の利用が想定されるオペレーションを示す.
+          <spanx style="verb">key_ops</spanx> は, 公開鍵, 暗号鍵, 共通鍵のいずれのユースケースをも想定して定義されている.
+          <!-- The <spanx style="verb">key_ops</spanx> (key operations) parameter
           identifies the operation(s) for which the key is intended to be used.
           The <spanx style="verb">key_ops</spanx> parameter is intended for use cases
-          in which public, private, or symmetric keys may be present.
+          in which public, private, or symmetric keys may be present. -->
         </t>
         <t>
-          Its value is an array of key operation values.
-          Values defined by this specification are:
+          この値は鍵オペレーションを示す値の配列である.
+          本仕様で定義される値は以下の通りである.
+          <!-- Its value is an array of key operation values.
+          Values defined by this specification are: -->
         </t>
         <t>
           <?rfc subcompact="yes"?>
@@ -420,47 +424,67 @@
           <?rfc subcompact="no"?>
         </t>
         <t>
-          (Note that the <spanx style="verb">key_ops</spanx> values
+          (注: <spanx style="verb">key_ops</spanx> 値は <xref target="W3C.CR-WebCryptoAPI-20141211">Web Cryptography API</xref> 仕様で定義される <spanx style="verb">KeyUsage</spanx> 値と意図的に一致させてある.)
+          <!-- (Note that the <spanx style="verb">key_ops</spanx> values
           intentionally match the <spanx style="verb">KeyUsage</spanx> values defined in
-          the <xref target="W3C.CR-WebCryptoAPI-20141211">Web Cryptography API</xref> specification.)
+          the <xref target="W3C.CR-WebCryptoAPI-20141211">Web Cryptography API</xref> specification.) -->
         </t>
         <t>
-          Other values MAY be used.
+          その他の値も利用可能である.
+          鍵オペレーション値は大文字小文字を区別する文字列である.
+          重複した鍵オペレーション値を同時に1つの配列に含めることはできない (MUST NOT).
+          <spanx style="verb">key_ops</spanx>　の利用は, アプリケーションが必須としない限りは OPTIONAL である.
+          <!-- Other values MAY be used.
           The key operation values are case-sensitive strings.
           Duplicate key operation values MUST NOT be present in the array.
           Use of the <spanx style="verb">key_ops</spanx> member is OPTIONAL,
-          unless the application requires its presence.
+          unless the application requires its presence. -->
         </t>
         <t>
-          Multiple unrelated key operations SHOULD NOT be specified for a key
+          関連性のない複数の鍵オペレーションを1つの鍵に指定することは推奨しない (SHOULD NOT).
+          そういった行為は, 同じ鍵を複数のアルゴリズムで利用することに起因する, 潜在的な脆弱性につながる.
+          <spanx style="verb">sign</spanx> と <spanx style="verb">verify</spanx>,
+          <spanx style="verb">encrypt</spanx> と <spanx style="verb">decrypt</spanx>,
+          <spanx style="verb">wrapKey</spanx> と <spanx style="verb">unwrapKey</spanx>
+          といった組み合わせは許容されるが, その他の組み合わせは推奨しない (SHOULD NOT).
+          <!-- Multiple unrelated key operations SHOULD NOT be specified for a key
           because of the potential vulnerabilities associated with
           using the same key with multiple algorithms.
           Thus, the combinations
           <spanx style="verb">sign</spanx> with <spanx style="verb">verify</spanx>,
           <spanx style="verb">encrypt</spanx> with <spanx style="verb">decrypt</spanx>, and
           <spanx style="verb">wrapKey</spanx> with <spanx style="verb">unwrapKey</spanx>
-          are permitted, but other combinations SHOULD NOT be used.
+          are permitted, but other combinations SHOULD NOT be used. -->
         </t>
         <t>
-          Additional <spanx style="verb">key_ops</spanx> (key operations)
+          その他の <spanx style="verb">key_ops</spanx> (key operations) 値も <xref target="KeyOpsReg"/> で設立する IANA "JSON Web Key Operations" レジストリに登録することができる.
+          <spanx style="verb">use</spanx> のレジストリ登録時の考慮点を, <spanx style="verb">key_ops</spanx> のレジストリ登録時にも同様に考慮すること.
+          <!-- Additional <spanx style="verb">key_ops</spanx> (key operations)
           values can be registered in the IANA
           "JSON Web Key Operations" registry established by <xref target="KeyOpsReg"/>.
           The same considerations about registering extension values apply to
           the <spanx style="verb">key_ops</spanx> member as do for
-          the <spanx style="verb">use</spanx> member.
+          the <spanx style="verb">use</spanx> member. -->
         </t>
         <t>
-          The <spanx style="verb">use</spanx> and
+          <spanx style="verb">use</spanx> と <spanx style="verb">key_ops</spanx> は同時に利用すべきではない (SHOULD NOT).
+          もし両者を同時に利用する場合は, 両者が矛盾しないようにすること.
+          どちらかの要素を利用する場合には, 当該アプリケーションでどちらが利用されるかをあらかじめ明示すべきである.
+          <!-- The <spanx style="verb">use</spanx> and
           <spanx style="verb">key_ops</spanx> JWK members SHOULD NOT be used together;
           however, if both are used, the information they convey MUST be consistent.
           Applications should specify which of these members they use,
-          if either is to be used by the application.
+          if either is to be used by the application. -->
         </t>
       </section>
 
       <section title='"alg" (Algorithm) Parameter' anchor="algDef">
         <t>
-          The <spanx style="verb">alg</spanx> (algorithm) parameter identifies the
+          <spanx style="verb">alg</spanx> (algorithm) パラメータはその鍵で利用されるアルゴリズムを示す.
+          この値は, <xref target="JWA" /> の設立する IANA "JSON Web Signature and Encryption Algorithms" レジストリに登録するか, Collision-Resistant Name を含めること.
+          <spanx style="verb">alg</spanx> 値は大文字小文字を区別する ASCII 文字列である.
+          この要素の利用は OPTIONAL である.
+          <!-- The <spanx style="verb">alg</spanx> (algorithm) parameter identifies the
           algorithm intended for use with the key.
           The values used should either be registered in the
           IANA "JSON Web Signature and Encryption Algorithms" registry
@@ -468,13 +492,20 @@
           <xref target="JWA" /> or be
           a value that contains a Collision-Resistant Name.
           The <spanx style="verb">alg</spanx> value is a case-sensitive ASCII string.
-          Use of this member is OPTIONAL.
+          Use of this member is OPTIONAL. -->
         </t>
       </section>
 
       <section title='"kid" (Key ID) Parameter' anchor="kidDef">
         <t>
-          The <spanx style="verb">kid</spanx> (key ID) parameter is used
+          <spanx style="verb">kid</spanx> (key ID) パラメータは特定の鍵を識別するために用いられる.
+          例えば, 鍵のロールオーバー時に JWK Set の中から必要な鍵を特定する, などの用途が考えられる.
+          <spanx style="verb">kid</spanx> 値の構造は未定義である.
+          <spanx style="verb">kid</spanx> を JWK Set 内で用いる場合, JWK Set 内の異なる鍵は異なる <spanx style="verb">kid</spanx> 値を持つべきである (SHOULD).
+          (異なる鍵が同じ <spanx style="verb">kid</spanx> 値を持つ例としては, <spanx style="verb">kty</spanx> (key type) は異なるが, アプリケーションからはそれらが互いに等価な代替手段であると考えられている場合などがあげられる.)
+          <spanx style="verb">kid</spanx> 値は大文字小文字を区別する文字列である.
+          この要素の利用は OPTIONAL である.
+          <!-- The <spanx style="verb">kid</spanx> (key ID) parameter is used
           to match a specific key.
           This is used, for instance, to choose among a set of keys within a JWK Set
           during key rollover.
@@ -487,12 +518,13 @@
           <spanx style="verb">kty</spanx> (key type) values but are considered
           to be equivalent alternatives by the application using them.)
           The <spanx style="verb">kid</spanx> value is a case-sensitive string.
-          Use of this member is OPTIONAL.
+          Use of this member is OPTIONAL. -->
         </t>
         <t>
-          When used with JWS or JWE, the <spanx style="verb">kid</spanx>
+          JWS や JWE とともに利用する場合, JWK の <spanx style="verb">kid</spanx> 値は JWS Header や JWE Header に含まれる <spanx style="verb">kid</spanx> 値と一致するようにすること.
+          <!-- When used with JWS or JWE, the <spanx style="verb">kid</spanx>
           value is used to match a JWS or JWE <spanx style="verb">kid</spanx>
-          Header Parameter value.
+          Header Parameter value. -->
         </t>
       </section>
 
