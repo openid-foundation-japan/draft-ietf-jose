@@ -530,7 +530,15 @@
 
       <section title='"x5u" (X.509 URL) Parameter' anchor="x5uDef">
         <t>
-          The <spanx style="verb">x5u</spanx> (X.509 URL) parameter
+          <spanx style="verb">x5u</spanx> (X.509 URL) パラメータは X.509 公開鍵証明書や証明書チェーン <xref target="RFC5280"/> といったリソースを指し示す URI <xref target="RFC3986"/> である.
+          当該リソースは <xref target="RFC5280">RFC 5280</xref> を満たす PEM エンコード形式の証明書や証明書チェーンでなければならない (MUST).
+          各証明書は <xref target="RFC4945">RFC 4945</xref> Section 6.1 に従い区切ること.
+          先頭の証明書に含まれる鍵は当該 JWK の示す公開鍵と一致すること (MUST).
+          当該リソースは完全性が保護された状態で提供されなければならない (MUST).
+          当該証明書への HTTP GET リクエストは TLS <xref target="RFC2818" /> <xref target="RFC5246" /> の利用が必須である (MUST).
+          サーバー証明書の検証も <xref target="RFC6125">RFC 6125</xref> Section 6 に従って行うこと (MUST).
+          この要素の利用は OPTIONAL である.
+          <!-- The <spanx style="verb">x5u</spanx> (X.509 URL) parameter
           is a URI <xref target="RFC3986"/> that refers to a resource for
           an X.509 public key certificate or certificate chain <xref target="RFC5280"/>.
           The identified resource MUST provide a representation of
@@ -546,10 +554,14 @@
           <xref target="RFC2818" /> <xref target="RFC5246" />;
           the identity of the server MUST be validated, as per
           Section 6 of <xref target="RFC6125">RFC 6125</xref>.
-          Use of this member is OPTIONAL.
+          Use of this member is OPTIONAL. -->
         </t>
         <t>
-          While there is no requirement that optional JWK members providing key usage,
+          <spanx style="verb">x5u</spanx> を利用する場合, 鍵の利用用途やアルゴリズムなどの情報を示すその他の OPTIONAL な JWK 要素は必須ではないが, そういった要素を利用したほうが PKIX 証明書 <xref target="RFC5280"/> を扱わないアプリケーションに対する相互運用性向上につながるであろう.
+          そういったその他の要素を利用する場合は, その指し示すコンテンツは先頭の証明書の関連するフィールドと整合性を保つこと (MUST).
+          例えば <spanx style="verb">use</spanx> 要素を用いる場合, その値は証明書に含まれるその証明書の用途と一致しなければならない (MUST).
+          同様に <spanx style="verb">alg</spanx> 要素を用いる場合, その値は証明書に含まれるアルゴリズムと一致すること (MUST).
+          <!-- While there is no requirement that optional JWK members providing key usage,
           algorithm, or other information be present when the <spanx style="verb">x5u</spanx>
           member is used, doing so may improve interoperability for
           applications that do not handle PKIX certificates <xref target="RFC5280"/>.
@@ -559,13 +571,20 @@
           then it MUST correspond to the usage that is specified in the certificate,
           when it includes this information.
           Similarly, if the <spanx style="verb">alg</spanx> member is present,
-          it MUST correspond to the algorithm specified in the certificate.
+          it MUST correspond to the algorithm specified in the certificate. -->
         </t>
       </section>
 
       <section title='"x5c" (X.509 Certificate Chain) Parameter' anchor="x5cDef">
         <t>
-          The <spanx style="verb">x5c</spanx> (X.509 certificate chain) parameter
+          <spanx style="verb">x5c</spanx> (X.509 certificate chain) パラメータは, 1つ以上の PKIX 証明書 <xref target="RFC5280"/> からなるチェーンを示す.
+          証明書チェーンは証明書文字列の JSON 配列として表現される.
+          それぞれの証明書文字列は base64 エンコード (<xref target="RFC4648"/> Section 4 参照, base64url エンコードではない) された DER 形式の <xref target="ITU.X690.1994"/> PKIX 証明書である.
+          当該 JWK の鍵を含む PKIX 証明書は先頭の証明書でなければならない (MUST).
+          その後には証明書を続けることもでき (MAY), その場合, 各証明書はその一つ前の証明書を証明する.
+          先頭の証明書に含まれる鍵は当該 JWK の示す公開鍵と一致すること (MUST).
+          この要素の利用は OPTIONAL である.
+          <!-- The <spanx style="verb">x5c</spanx> (X.509 certificate chain) parameter
           contains a chain of one or more PKIX certificates <xref target="RFC5280"/>.
           The certificate chain is represented as
           a JSON array of certificate value strings.
@@ -579,65 +598,82 @@
           previous one.
           The key in the first certificate MUST match the public key
           represented by other members of the JWK.
-          Use of this member is OPTIONAL.
+          Use of this member is OPTIONAL. -->
         </t>
         <t>
-          As with the <spanx style="verb">x5u</spanx> member,
+          <spanx style="verb">x5u</spanx> 同様, <spanx style="verb">x5c</spanx> とともに鍵用途やアルゴリズムといったその他の情報も同じ JWK に含める事ができる (MAY).
+          他の要素が含まれる場合, それらは先頭の証明書との整合性をとること.
+          詳細は <xref target="x5uDef"/> の最後の一文を参照.
+          <!-- As with the <spanx style="verb">x5u</spanx> member,
           optional JWK members providing key usage, algorithm, or other information
           MAY also be present when
           the <spanx style="verb">x5c</spanx> member is used.
           If other members are present, the contents of those members MUST be
           semantically consistent with the related fields in the first certificate.
           See the last paragraph of <xref target="x5uDef"/>
-          for additional guidance on this.
+          for additional guidance on this. -->
         </t>
       </section>
 
       <section title='"x5t" (X.509 Certificate SHA-1 Thumbprint) Parameter'
                anchor="x5tDef">
         <t>
-          The <spanx style="verb">x5t</spanx> (X.509 certificate SHA-1 thumbprint)
+          <spanx style="verb">x5t</spanx> (X.509 certificate SHA-1 thumbprint) パラメータは, DER エンコードされた X.509 証明書 <xref target="RFC5280"/> の SHA-1 thumbprint (a.k.a. digest) の base64url エンコード値を示す.
+          証明書 thumbprint は証明書 fingerprint と呼ばれることもある.
+          当該証明書に含まれる鍵は当該 JWK の示す公開鍵と一致すること (MUST).
+          この要素の利用は OPTIONAL である.
+          <!-- The <spanx style="verb">x5t</spanx> (X.509 certificate SHA-1 thumbprint)
           parameter is a base64url-encoded
           SHA-1 thumbprint (a.k.a. digest) of the DER encoding of
           an X.509 certificate <xref target="RFC5280"/>.
           Note that certificate thumbprints are also sometimes known as certificate fingerprints.
           The key in the certificate MUST match the public key
           represented by other members of the JWK.
-          Use of this member is OPTIONAL.
+          Use of this member is OPTIONAL. -->
         </t>
         <t>
-          As with the <spanx style="verb">x5u</spanx> member,
+          <spanx style="verb">x5u</spanx> 同様, <spanx style="verb">x5t</spanx> とともに鍵用途やアルゴリズムといったその他の情報も同じ JWK に含める事ができる (MAY).
+          他の要素が含まれる場合, それらは当該証明書との整合性をとること.
+          詳細は <xref target="x5uDef"/> の最後の一文を参照.
+          <!-- As with the <spanx style="verb">x5u</spanx> member,
           optional JWK members providing key usage, algorithm, or other information
           MAY also be present when
           the <spanx style="verb">x5t</spanx> member is used.
           If other members are present, the contents of those members MUST be
           semantically consistent with the related fields in the referenced certificate.
           See the last paragraph of <xref target="x5uDef"/>
-          for additional guidance on this.
+          for additional guidance on this. -->
         </t>
       </section>
 
       <section title='"x5t#S256" (X.509 Certificate SHA-256 Thumbprint) Parameter'
                anchor="x5tS256Def">
         <t>
-          The <spanx style="verb">x5t#S256</spanx> (X.509 certificate SHA-256 thumbprint)
+          <spanx style="verb">x5t#S256</spanx> (X.509 certificate SHA-256 thumbprint) パラメータは, DER エンコードされた X.509 証明書 <xref target="RFC5280"/> の SHA-256 thumbprint (a.k.a. digest) の base64url エンコード値を示す.
+          証明書 thumbprint は証明書 fingerprint と呼ばれることもある.
+          当該証明書に含まれる鍵は当該 JWK の示す公開鍵と一致すること (MUST).
+          この要素の利用は OPTIONAL である.
+          <!-- The <spanx style="verb">x5t#S256</spanx> (X.509 certificate SHA-256 thumbprint)
           parameter is a base64url-encoded
           SHA-256 thumbprint (a.k.a. digest) of the DER encoding of
           an X.509 certificate <xref target="RFC5280"/>.
           Note that certificate thumbprints are also sometimes known as certificate fingerprints.
           The key in the certificate MUST match the public key
           represented by other members of the JWK.
-          Use of this member is OPTIONAL.
+          Use of this member is OPTIONAL. -->
         </t>
         <t>
-          As with the <spanx style="verb">x5u</spanx> member,
+          <spanx style="verb">x5u</spanx> 同様, <spanx style="verb">x5t#S256</spanx> とともに鍵用途やアルゴリズムといったその他の情報も同じ JWK に含める事ができる (MAY).
+          他の要素が含まれる場合, それらは当該証明書との整合性をとること.
+          詳細は <xref target="x5uDef"/> の最後の一文を参照.
+          <!-- As with the <spanx style="verb">x5u</spanx> member,
           optional JWK members providing key usage, algorithm, or other information
           MAY also be present when
           the <spanx style="verb">x5t#S256</spanx> member is used.
           If other members are present, the contents of those members MUST be
           semantically consistent with the related fields in the referenced certificate.
           See the last paragraph of <xref target="x5uDef"/>
-          for additional guidance on this.
+          for additional guidance on this. -->
         </t>
       </section>
 
