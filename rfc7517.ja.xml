@@ -682,19 +682,19 @@
     <section title="JWK Set Format" anchor="JWKSet">
 
       <t>
-        JWK SetはJWKのセットを表すJSONオブジェクトである.
-        JSONオブジェクトは, その値がJWK配列となる <spanx style="verb">keys</spanx> メンバを持たなければならない (MUST).
-        このJSONオブジェクトは空白および, または改行を含んでも良い (MAY).
+        JWK Set は JWK のセットを表す JSON オブジェクトである.
+        JSON オブジェクトは, その値が JWK 配列となる <spanx style="verb">keys</spanx> メンバを持たなければならない (MUST).
+        この JSON オブジェクトは空白および, または改行を含んでも良い (MAY).
         <!-- A JWK Set is a JSON object that represents a set of JWKs.
         The JSON object MUST have a <spanx style="verb">keys</spanx> member,
         with its value being an array of JWKs.
         This JSON object MAY contain whitespace and/or line breaks. -->
       </t>
       <t>
-        単一のJWK Setの中においてメンバ名はユニークでなければならない (MUST);
-        JWK Setパーサーは重複するメンバ名を持つJWK Setを拒否するか, 
+        単一の JWK Set の中においてメンバ名はユニークでなければならない (MUST);
+        JWK Set パーサーは重複するメンバ名を持つ JWK Set を拒否するか, 
         ECMAScript 5.1 <xref target="ECMAScript"/> の Section 15.12 ("The JSON Object") で定義されている, 
-        重複するメンバ名の最後の語彙のみを返却するJSONパーサーを使用しなければならない (MUST).
+        重複するメンバ名の最後の語彙のみを返却する JSON パーサーを使用しなければならない (MUST).
         <!-- The member names within a JWK Set MUST be unique;
         JWK Set parsers MUST either reject JWK Sets with duplicate member names
         or use a JSON parser that returns only the lexically last duplicate member name,
@@ -702,9 +702,9 @@
         ECMAScript 5.1 <xref target="ECMAScript"/>. -->
       </t>
       <t>
-        追加のメンバをJWK Setの中に表現することも可能である;
+        追加のメンバを JWK Set の中に表現することも可能である;
         もし実装がそれらを解釈できない場合, それらは無視されなければならない (MUST).
-        JWK Setの追加プロパティを表すパラメータは <xref target="JWKSetParamReg" /> に設立される
+        JWK Set の追加プロパティを表すパラメータは <xref target="JWKSetParamReg" /> に設立される
         IANA "JSON Web Key Set Parameters" レジストリへ登録, もしくは衝突に耐えられる名称を含む値
         であるべきである.
         <!-- Additional members can be present in the JWK Set;
@@ -728,11 +728,14 @@
 
       <section title='"keys" Parameter' anchor="keysDef">
         <t>
-          The value of the <spanx style="verb">keys</spanx>
+          <spanx style="verb">keys</spanx> パラメータの値は JWK の値の配列である.
+          既定では, 配列の中の JWK の値の順序は優先順位を示さないが, 必要であれば
+          JWK Set の利用者は目的に沿って順序に意味を持たせることも可能である.
+          <!-- The value of the <spanx style="verb">keys</spanx>
           parameter is an array of JWK values.
           By default, the order of the JWK values within the array does not imply
           an order of preference among them, although applications of JWK Sets
-          can choose to assign a meaning to the order for their purposes, if desired.
+          can choose to assign a meaning to the order for their purposes, if desired. -->
         </t>
       </section>
     </section>
@@ -740,16 +743,30 @@
     <section title="String Comparison Rules" anchor="StringComparison">
 
       <t>
-        The string comparison rules for this specification are the same as
+        本仕様における厳密な比較に関するルールは <xref target="JWS" /> の
+        Section 5.3 で定義されているものと同一である.
+        <!-- The string comparison rules for this specification are the same as
         those defined in
-        Section 5.3 of <xref target="JWS" />.
+        Section 5.3 of <xref target="JWS" />. -->
       </t>
     </section>
 
     <section title="Encrypted JWK and Encrypted JWK Set Formats" anchor="EncryptedJWK">
 
       <t>
-        Access to JWKs containing non-public key material
+        非公開の鍵要素を含む JWK の, 非公開情報へのアクセスするための合理的な理由がない
+        アクセスは防止されなくてはならない (MUST).
+        これは, そのような相手からの参照される可能性がある時,
+        秘密鍵もしくは対象鍵の値が公開されることを防ぐために,
+        JWK を暗号化することにより達成される.
+        この目的には, 暗号化された JWK (UTF-8 エンコードされた JWK をプレーンテキスト
+        の値として持つ JWE) の利用が推奨される.
+        暗号化された JWK の処理は, その他の JWE の処理と同一である.
+        <spanx style="verb">jwk+json</spanx> の <spanx style="verb">cty</spanx> (content type) 
+        ヘッダ パラメータの値は, アプリケーションがその暗号化されたコンテンツが
+        別の意味合いや決まりにより JWK であることを知っていて, <spanx style="verb">cty</spanx> 
+        の値が省略されている場合を除き, JWE のコンテンツが JWK であることを示さなければならない (MUST).
+        <!-- Access to JWKs containing non-public key material
         by parties without legitimate access to the non-public information
         MUST be prevented.
         This can be accomplished by encrypting the JWK
@@ -765,10 +782,18 @@
         unless the application knows that the encrypted content is
         a JWK by another means or convention,
         in which case the <spanx style="verb">cty</spanx> value
-        would typically be omitted.
+        would typically be omitted. -->
       </t>
       <t>
-        JWK Sets containing non-public key material will also need to be encrypted
+        非公開の鍵情報を含む JWK Set もまた, 同様の事情により暗号化される必要がある.
+        この目的には, 暗号化された JWK Set (UTF-8 エンコードされた JWK Set をプレーンテキスト
+        の値として持つ JWE) の利用が推奨される.
+        暗号化された JWK Set の処理は, その他の JWE の処理と同一である.
+        <spanx style="verb">jwk-set+json</spanx> の <spanx style="verb">cty</spanx> (content type) 
+        ヘッダ パラメータの値は, アプリケーションがその暗号化されたコンテンツが
+        別の意味合いや決まりにより JWK Set であることを知っていて, <spanx style="verb">cty</spanx> 
+        の値が省略されている場合を除き, JWE のコンテンツが JWK Set であることを示さなければならない (MUST).
+        <!-- JWK Sets containing non-public key material will also need to be encrypted
         under these circumstances.
         The use of an Encrypted JWK Set, which is a JWE with the UTF-8 encoding of a JWK Set
         as its plaintext value, is recommended for this purpose.
@@ -780,10 +805,11 @@
         unless the application knows that the encrypted content is
         a JWK Set by another means or convention,
         in which case the <spanx style="verb">cty</spanx> value
-        would typically be omitted.
+        would typically be omitted. -->
       </t>
       <t>
-        See <xref target="example-encrypted-jwk"/> for an example encrypted JWK.
+        暗号化された JWK のサンプルは <xref target="example-encrypted-jwk"/> を参照すること.
+        <!-- See <xref target="example-encrypted-jwk"/> for an example encrypted JWK. -->
       </t>
 
     </section>
