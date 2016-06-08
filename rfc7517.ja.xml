@@ -682,33 +682,48 @@
     <section title="JWK Set Format" anchor="JWKSet">
 
       <t>
-        A JWK Set is a JSON object that represents a set of JWKs.
+        JWK SetはJWKのセットを表すJSONオブジェクトである.
+        JSONオブジェクトは, その値がJWK配列となる <spanx style="verb">keys</spanx> メンバを持たなければならない (MUST).
+        このJSONオブジェクトは空白および, または改行を含んでも良い (MAY).
+        <!-- A JWK Set is a JSON object that represents a set of JWKs.
         The JSON object MUST have a <spanx style="verb">keys</spanx> member,
         with its value being an array of JWKs.
-        This JSON object MAY contain whitespace and/or line breaks.
+        This JSON object MAY contain whitespace and/or line breaks. -->
       </t>
       <t>
-        The member names within a JWK Set MUST be unique;
+        単一のJWK Setの中においてメンバ名はユニークでなければならない (MUST);
+        JWK Setパーサーは重複するメンバ名を持つJWK Setを拒否するか, 
+        ECMAScript 5.1 <xref target="ECMAScript"/> の Section 15.12 ("The JSON Object") で定義されている, 
+        重複するメンバ名の最後の語彙のみを返却するJSONパーサーを使用しなければならない (MUST).
+        <!-- The member names within a JWK Set MUST be unique;
         JWK Set parsers MUST either reject JWK Sets with duplicate member names
         or use a JSON parser that returns only the lexically last duplicate member name,
         as specified in Section 15.12 ("The JSON Object") of
-        ECMAScript 5.1 <xref target="ECMAScript"/>.
+        ECMAScript 5.1 <xref target="ECMAScript"/>. -->
       </t>
       <t>
-        Additional members can be present in the JWK Set;
+        追加のメンバをJWK Setの中に表現することも可能である;
+        もし実装がそれらを解釈できない場合, それらは無視されなければならない (MUST).
+        JWK Setの追加プロパティを表すパラメータは <xref target="JWKSetParamReg" /> に設立される
+        IANA "JSON Web Key Set Parameters" レジストリへ登録, もしくは衝突に耐えられる名称を含む値
+        であるべきである.
+        <!-- Additional members can be present in the JWK Set;
         if not understood by implementations encountering them, they MUST be ignored.
         Parameters for representing additional properties of JWK Sets
         should either be registered in the IANA "JSON Web Key Set Parameters" registry
         established by
         <xref target="JWKSetParamReg" /> or be
-        a value that contains a Collision-Resistant Name.
+        a value that contains a Collision-Resistant Name. -->
       </t>
       <t>
-        Implementations SHOULD ignore JWKs within a JWK Set that use
+        実装は解釈できないの値であったり, 必要なメンバが存在しなかったり,
+        サポートされる範囲外の値の <spanx style="verb">kty</spanx> (key type)
+        を使用している JWK Set を含む JWK を無視するべきである (SHOULD).
+        <!-- Implementations SHOULD ignore JWKs within a JWK Set that use
         <spanx style="verb">kty</spanx> (key type) values that
         are not understood by them,
         that are missing required members,
-        or for which values are out of the supported ranges.
+        or for which values are out of the supported ranges. -->
       </t>
 
       <section title='"keys" Parameter' anchor="keysDef">
