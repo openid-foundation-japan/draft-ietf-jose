@@ -816,54 +816,89 @@
 
     <section title="IANA Considerations" anchor="IANA">
       <t>
-        The following registration procedure is used for all the
-        registries established by this specification.
+        以下の登録手続きは本仕様により確立されるすべてのレジストリに使用される.
+        <!-- The following registration procedure is used for all the
+        registries established by this specification. -->
       </t>
       <t>
-        The registration procedure for values is Specification Required
+        値は, 1名以上の Designated Experts の勧告に従い, jose&nbhy;reg&nbhy;review@ietf.org 
+        のメーリングリストで2週間の審査期間を経て, Specification Required <xref target="RFC5226"/> 
+        な状態で登録される. しかしながら, 発行に先立ってそれらの値を用いることができるように, 
+        Designated Experts はそれらの値が公開できる状態になった時点で登録を許可することもありうる.
+        <!-- The registration procedure for values is Specification Required
         <xref target="RFC5226"/> after a three-week review period on the
 jose&nbhy;reg&nbhy;review@ietf.org mailing
         list, on the advice of one or more Designated Experts. However, to allow for the
         allocation of values prior to publication, the Designated Experts may approve
-        registration once they are satisfied that such a specification will be published.
-      </t>
-      <t>Registration requests sent to the mailing list for review should use
-  an appropriate subject
-        (e.g., "Request to register JWK parameter: example").
+        registration once they are satisfied that such a specification will be published. -->
       </t>
       <t>
-        Within the review period, the Designated Experts will either approve or
+        登録要請は, 適切な件名 (例: "Request to register JWK parameter: example") でメーリングリスト
+        に通知しなければならない.
+        <!-- Registration requests sent to the mailing list for review should use
+  an appropriate subject
+        (e.g., "Request to register JWK parameter: example"). -->
+      </t>
+      <t>
+        Designated Experts は審査期間内に登録を承認または拒否し, レビューが行われる
+        メーリングリストおよび IANA へその決定を告げる. 要請が拒否された場合は, その
+        理由が通知され, 可能な場合は承認に向けた提案が行われるべきである.
+        21日以上の期間にわたり未決定な登録要請は, 解決に向け (iesg@ietf.org メーリング
+        リストを用い) IESG の留意事項へ持ち込むことが出来る.
+        <!-- Within the review period, the Designated Experts will either approve or
         deny the registration request, communicating this decision to the review list and IANA.
         Denials should include an explanation and, if applicable, suggestions as to how to make
         the request successful.
         Registration requests that are undetermined for
         a period longer than 21 days can be brought to the IESG's attention
-        (using the iesg@ietf.org mailing list) for resolution.
+        (using the iesg@ietf.org mailing list) for resolution. -->
       </t>
       <t>
-        Criteria that should be applied by the Designated Experts include
+        審査は提案された登録が, 既存の機能と重複がないことや, 一般的な適用性があるのか, それとも
+        特定のアプリケーションにとってのみ有用なのか, 登録の説明は明確なのかどうか, について検証
+        を含め Designated Experts により承認されるべきである.
+        <!-- Criteria that should be applied by the Designated Experts include
         determining whether the proposed registration duplicates existing functionality,
         whether it is likely to be of general applicability
         or useful only for a single application,
-        and whether the registration description is clear.
+        and whether the registration description is clear. -->
       </t>
       <t>
-        IANA must only accept registry updates from the Designated Experts and should direct
-        all requests for registration to the review mailing list.
+        IANA は, Designated Experts からのレジストリ更新のみを受け付けなければならず, すべての
+        登録要請をレビューメーリングリストに送信しなければならない.
+        <!-- IANA must only accept registry updates from the Designated Experts and should direct
+        all requests for registration to the review mailing list. -->
       </t>
       <t>
-        It is suggested that multiple Designated Experts be appointed who are able to
+        本仕様を使用する異なるアプリケーションの視点を代表することのできる複数の Designated 
+        Experts を指名することを提案する. これは登録決定のレビューを広く告知するためである.
+        登録決定が特定の Expert の興味分野に対して論争を起こす場合は, 当該の Expert は他の
+        Experts の決定に従うべきである.
+        <!-- It is suggested that multiple Designated Experts be appointed who are able to
         represent the perspectives of different applications using this specification,
         in order to enable broadly informed review of registration decisions.
         In cases where a registration decision could be perceived as
         creating a conflict of interest for a particular Expert,
-        that Expert should defer to the judgment of the other Experts.
+        that Expert should defer to the judgment of the other Experts. -->
       </t>
 
 
       <section title="JSON Web Key Parameters Registry" anchor="JWKParamReg">
         <t>
-          This section establishes the
+          本セクションは JWK パラメータ名のための IANA "JSON Web Key Parameters" レジストリ
+          を確立する.
+          レジストリはパラメータの名前, パラメータと共に使われるキーの型, 自身が定義
+          される仕様への参照を記録する.
+
+          It also records whether the parameter conveys public or private information.
+          This section registers the parameter names defined in
+          <xref target="JWKFormat"/>.
+          The same JWK parameter name may be registered multiple times,
+          provided that duplicate parameter registrations are only for
+          key&nbhy;type&nbhy;specific JWK parameters; in this case, the meaning
+          of the duplicate parameter name is disambiguated by the
+          <spanx style="verb">kty</spanx> value of the JWK containing it.
+          <!-- This section establishes the
           IANA "JSON Web Key Parameters" registry
           for JWK parameter names.
           The registry records the parameter name,
@@ -876,7 +911,7 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
           provided that duplicate parameter registrations are only for
           key&nbhy;type&nbhy;specific JWK parameters; in this case, the meaning
           of the duplicate parameter name is disambiguated by the
-          <spanx style="verb">kty</spanx> value of the JWK containing it.
+          <spanx style="verb">kty</spanx> value of the JWK containing it. -->
         </t>
 
         <section title="Registration Template" anchor="JWKTemplate">
