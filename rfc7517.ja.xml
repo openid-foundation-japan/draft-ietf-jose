@@ -887,17 +887,15 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
         <t>
           本セクションは JWK パラメータ名のための IANA "JSON Web Key Parameters" レジストリ
           を確立する.
-          レジストリはパラメータの名前, パラメータと共に使われるキーの型, 自身が定義
+          レジストリはパラメータの名前, パラメータと共に使われる key type, 自身が定義
           される仕様への参照を記録する.
-
-          It also records whether the parameter conveys public or private information.
-          This section registers the parameter names defined in
-          <xref target="JWKFormat"/>.
-          The same JWK parameter name may be registered multiple times,
-          provided that duplicate parameter registrations are only for
-          key&nbhy;type&nbhy;specific JWK parameters; in this case, the meaning
-          of the duplicate parameter name is disambiguated by the
-          <spanx style="verb">kty</spanx> value of the JWK containing it.
+          同様にレジストリは当該のパラメータが公開もしくは非公開の情報を伝えるかどうかについても
+          記録する.
+          本セクションは <xref target="JWKFormat"/> で定義されているパラメータ名を登録する.
+          同一の JWK パラメータ名を複数回登録しても良く, 重複するパラメータ登録は
+          key type に特化した JWK パラメータに限った目的のものである. この場合, 重複する
+          パラメータ名の意味は JWK に含まれる <spanx style="verb">kty</spanx> の値により
+          曖昧さをなくされる.
           <!-- This section establishes the
           IANA "JSON Web Key Parameters" registry
           for JWK parameter names.
@@ -919,7 +917,19 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
             <list style='hanging'>
               <t hangText='Parameter Name:'>
                 <vspace/>
-                The name requested (e.g., "kid").
+                要求された名前 (例, "kid").
+                本仕様の中核となる目標は表現の結果をコンパクトにすることであるため, 
+                名前は短くすることを推奨する (RECOMMENDED). -- 特別な理由がない
+                限り 8 文字を超えるべきではない.
+                名前は大文字, 小文字を区別する.
+                名前は Designated Experts が例外を許可する特別な理由があることを宣言
+                した場合を除き, 他の登録された名前と大文字, 小文字の違いで重複させる
+                べきではない.
+                しかしながら, パラメータ名が一緒に使用される <spanx style="verb">kty</spanx> 
+                の値の付随セットが異なる場合においては, 同一の名前を登録してもよい.
+                <spanx style="verb">kty</spanx>の値のマッチングのため, "*" は全ての
+                値にマッチする.
+                <!-- The name requested (e.g., "kid").
                 Because a core goal of this specification is for the resulting
                 representations to be compact, it is RECOMMENDED that the name be short
                 -- not to exceed 8 characters without a compelling reason to do so.
@@ -931,41 +941,55 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
                 accompanying sets of <spanx style="verb">kty</spanx> values that
                 the parameter name is used with are disjoint;
                 for the purposes of matching <spanx style="verb">kty</spanx> values,
-                "*" matches all values.
+                "*" matches all values. -->
               </t>
               <t hangText='Parameter Description:'>
                 <vspace/>
-                Brief description of the parameter (e.g., "Key ID").
+                パラメータの簡単な説明 (例, "Key ID").
+                <!-- Brief description of the parameter (e.g., "Key ID"). -->
               </t>
               <t hangText='Used with "kty" Value(s):'>
                 <vspace/>
-                The key type parameter value(s) that the parameter name is to be used with,
+                パラメータの名前が一緒に利用する key type パラメータの値, もしくは
+                パラメータの値がすべての key type で利用される場合は "*".
+                値は, 登録済みのパラメータ名が同一の際, 他の登録済みの <spanx style="verb">kty</spanx> の値と大文字, 小文字
+                の区別をせずにマッチするべきではない (パラメータ名が大文字, 小文字の
+                区別をせずにマッチしている場合を含む). ただし, Designated Experts が例外を
+                許可する特別な理由があることを宣言した場合を除く.
+                <!-- The key type parameter value(s) that the parameter name is to be used with,
                 or the value "*" if the parameter value is used with all key types.
                 Values may not match other registered <spanx style="verb">kty</spanx>
                 values in a case-insensitive manner
                 when the registered parameter name is the same
                 (including when the parameter name matches in a case-insensitive manner)
                 unless the Designated Experts state that there is a compelling reason
-                to allow an exception.
+                to allow an exception. -->
               </t>
               <t hangText='Parameter Information Class:'>
                 <vspace/>
-                Registers whether the parameter conveys public or private information.
-                Its value must be either Public or Private.
+                パラメータが公開もしくは非公開の情報を含むかどうかを登録する.
+                値は Public もしくは Private のどちらかでなければならない.
+                <!-- Registers whether the parameter conveys public or private information.
+                Its value must be either Public or Private. -->
               </t>
               <t hangText='Change Controller:'>
                 <vspace/>
-                For Standards Track RFCs, list the "IESG". For others, give the name of the
+                RFC の標準に従う際は, "IETF" と記載する. それ以外の場合は, 責任ある団体の名称を記載する.
+                その他の詳細 (例えば, 郵便番号, メールアドレス, ホームページの URL) も記載してもよい.
+                <!-- For Standards Track RFCs, list the "IESG". For others, give the name of the
                 responsible party. Other details (e.g., postal address, email address, home page
-                URI) may also be included.
+                URI) may also be included. -->
               </t>
               <t hangText='Specification Document(s):'>
                 <vspace/>
-                Reference to the document or documents that specify the parameter,
+                パラメータ仕様を記載したドキュメントへの参照を記載する. ドキュメントを取得することの
+                できる URI が記載されていることが望ましい. 明確な記載箇所への参照が含まれることが
+                望ましいが必須ではない.
+                <!-- Reference to the document or documents that specify the parameter,
                 preferably including URIs that
                 can be used to retrieve copies of the documents.
                 An indication of the relevant
-                sections may also be included but is not required.
+                sections may also be included but is not required. -->
               </t>
             </list>
           </t>
@@ -975,198 +999,252 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
           <t> <?rfc subcompact="yes"?>
             <list style='symbols'>
               <t>
-                Parameter Name: <spanx style="verb">kty</spanx>
+                パラメータ名: <spanx style="verb">kty</spanx>
+                <!-- Parameter Name: <spanx style="verb">kty</spanx> -->
               </t>
               <t>
-                Parameter Description: Key Type
+                パラメータ説明: Key の型
+                <!-- Parameter Description: Key Type -->
               </t>
               <t>
-                Used with "kty" Value(s): *
+                "kty" に使われる値: *
+                <!-- Used with "kty" Value(s): * -->
               </t>
               <t>
-                Parameter Information Class: Public
+                パラメータ情報クラス: 公開
+                <!-- Parameter Information Class: Public -->
               </t>
               <t>
-                Change Controller: IESG
+                変更管理: IESG
+                <!-- Change Controller: IESG -->
               </t>
               <t>
-                Specification Document(s): <xref target="ktyDef" /> of RFC 7517
-              </t>
-            </list>
-          </t>
-          <t>
-            <list style='symbols'>
-              <t>
-                Parameter Name: <spanx style="verb">use</spanx>
-              </t>
-              <t>
-                Parameter Description: Public Key Use
-              </t>
-              <t>
-                Used with "kty" Value(s): *
-              </t>
-              <t>
-                Parameter Information Class: Public
-              </t>
-              <t>
-                Change Controller: IESG
-              </t>
-              <t>
-                Specification Document(s): <xref target="useDef" /> of RFC 7517
+                仕様ドキュメント: RFC 7517 の <xref target="ktyDef" />
+                <!-- Specification Document(s): <xref target="ktyDef" /> of RFC 7517 -->
               </t>
             </list>
           </t>
           <t>
             <list style='symbols'>
               <t>
-                Parameter Name: <spanx style="verb">key_ops</spanx>
+                パラメータ名: <spanx style="verb">use</spanx>
+                <!-- Parameter Name: <spanx style="verb">use</spanx> -->
               </t>
               <t>
-                Parameter Description: Key Operations
+                パラメータ説明: 公開鍵の使用
+                <!-- Parameter Description: Public Key Use -->
               </t>
               <t>
-                Used with "kty" Value(s): *
+                "kty" に使われる値: *
+                <!-- Used with "kty" Value(s): * -->
               </t>
               <t>
-                Parameter Information Class: Public
+                パラメータ情報クラス: 公開
+                <!-- Parameter Information Class: Public -->
               </t>
               <t>
-                Change Controller: IESG
+                変更管理: IESG
+                <!-- Change Controller: IESG -->
               </t>
               <t>
-                Specification Document(s): <xref target="key_opsDef" /> of RFC 7517
-              </t>
-            </list>
-          </t>
-          <t>
-            <list style='symbols'>
-              <t>
-                Parameter Name: <spanx style="verb">alg</spanx>
-              </t>
-              <t>
-                Parameter Description: Algorithm
-              </t>
-              <t>
-                Used with "kty" Value(s): *
-              </t>
-              <t>
-                Parameter Information Class: Public
-              </t>
-              <t>
-                Change Controller: IESG
-              </t>
-              <t>
-                Specification Document(s): <xref target="algDef" /> of RFC 7517
+                仕様ドキュメント: RFC 7517 の <xref target="useDef" />
+                <!-- Specification Document(s): <xref target="useDef" /> of RFC 7517 -->
               </t>
             </list>
           </t>
           <t>
             <list style='symbols'>
               <t>
-                Parameter Name: <spanx style="verb">kid</spanx>
+                パラメータ名: <spanx style="verb">key_ops</spanx>
+                <!-- Parameter Name: <spanx style="verb">key_ops</spanx> -->
               </t>
               <t>
-                Parameter Description: Key ID
+                パラメータ説明: Key 操作
+                <!-- Parameter Description: Key Operations -->
               </t>
               <t>
-                Used with "kty" Value(s): *
+                "kty" に使われる値: *
+                <!-- Used with "kty" Value(s): * -->
               </t>
               <t>
-                Parameter Information Class: Public
+                パラメータ情報クラス: 公開
+                <!-- Parameter Information Class: Public -->
               </t>
               <t>
-                Change Controller: IESG
+                変更管理: IESG
+                <!-- Change Controller: IESG -->
               </t>
               <t>
-                Specification Document(s): <xref target="kidDef" /> of RFC 7517
-              </t>
-            </list>
-          </t>
-          <t>
-            <list style='symbols'>
-              <t>
-                Parameter Name: <spanx style="verb">x5u</spanx>
-              </t>
-              <t>
-                Parameter Description: X.509 URL
-              </t>
-              <t>
-                Used with "kty" Value(s): *
-              </t>
-              <t>
-                Parameter Information Class: Public
-              </t>
-              <t>
-                Change Controller: IESG
-              </t>
-              <t>
-                Specification Document(s): <xref target="x5uDef" /> of RFC 7517
+                仕様ドキュメント: RFC 7517 の <xref target="key_opsDef" />
+                <!-- Specification Document(s): <xref target="key_opsDef" /> of RFC 7517 -->
               </t>
             </list>
           </t>
           <t>
             <list style='symbols'>
               <t>
-                Parameter Name: <spanx style="verb">x5c</spanx>
+                パラメータ名: <spanx style="verb">alg</spanx>
+                <!-- Parameter Name: <spanx style="verb">alg</spanx> -->
               </t>
               <t>
-                Parameter Description: X.509 Certificate Chain
+                パラメータ説明: アルゴリズム
+                <!-- Parameter Description: Algorithm -->
               </t>
               <t>
-                Used with "kty" Value(s): *
+                "kty" に使われる値: *
+                <!-- Used with "kty" Value(s): * -->
               </t>
               <t>
-                Parameter Information Class: Public
+                パラメータ情報クラス: 公開
+                <!-- Parameter Information Class: Public -->
               </t>
               <t>
-                Change Controller: IESG
+                変更管理: IESG
+                <!-- Change Controller: IESG -->
               </t>
               <t>
-                Specification Document(s): <xref target="x5cDef" /> of RFC 7517
-              </t>
-            </list>
-          </t>
-          <t>
-            <list style='symbols'>
-              <t>
-                Parameter Name: <spanx style="verb">x5t</spanx>
-              </t>
-              <t>
-                Parameter Description: X.509 Certificate SHA-1 Thumbprint
-              </t>
-              <t>
-                Used with "kty" Value(s): *
-              </t>
-              <t>
-                Parameter Information Class: Public
-              </t>
-              <t>
-                Change Controller: IESG
-              </t>
-              <t>
-                Specification Document(s): <xref target="x5tDef" /> of RFC 7517
+                仕様ドキュメント: RFC 7517 の <xref target="algDef" />
+                <!-- Specification Document(s): <xref target="algDef" /> of RFC 7517 -->
               </t>
             </list>
           </t>
           <t>
             <list style='symbols'>
               <t>
-                Parameter Name: <spanx style="verb">x5t#S256</spanx>
+                パラメータ名: <spanx style="verb">kid</spanx>
+                <!-- Parameter Name: <spanx style="verb">kid</spanx> -->
               </t>
               <t>
-                Parameter Description: X.509 Certificate SHA-256 Thumbprint
+                パラメータ説明: Key 識別子
+                <!-- Parameter Description: Key ID -->
               </t>
               <t>
-                Used with "kty" Value(s): *
+                "kty" に使われる値: *
+                <!-- Used with "kty" Value(s): * -->
               </t>
               <t>
-                Parameter Information Class: Public
+                パラメータ情報クラス: 公開
+                <!-- Parameter Information Class: Public -->
               </t>
               <t>
-                Change Controller: IESG
+                変更管理: IESG
+                <!-- Change Controller: IESG -->
               </t>
               <t>
-                Specification Document(s): <xref target="x5tS256Def" /> of RFC 7517
+                仕様ドキュメント: RFC 7517 の <xref target="kidDef" />
+                <!-- Specification Document(s): <xref target="kidDef" /> of RFC 7517 -->
+              </t>
+            </list>
+          </t>
+          <t>
+            <list style='symbols'>
+              <t>
+                パラメータ名: <spanx style="verb">x5u</spanx>
+                <!-- Parameter Name: <spanx style="verb">x5u</spanx> -->
+              </t>
+              <t>
+                パラメータ説明: X.509 URL
+                <!-- Parameter Description: X.509 URL -->
+              </t>
+              <t>
+                "kty" に使われる値: *
+                <!-- Used with "kty" Value(s): * -->
+              </t>
+              <t>
+                パラメータ情報クラス: 公開
+                <!-- Parameter Information Class: Public -->
+              </t>
+              <t>
+                変更管理: IESG
+                <!-- Change Controller: IESG -->
+              </t>
+              <t>
+                仕様ドキュメント: RFC 7517 の <xref target="x5uDef" />
+                <!-- Specification Document(s): <xref target="x5uDef" /> of RFC 7517 -->
+              </t>
+            </list>
+          </t>
+          <t>
+            <list style='symbols'>
+              <t>
+                パラメータ名: <spanx style="verb">x5c</spanx>
+                <!-- Parameter Name: <spanx style="verb">x5c</spanx> -->
+              </t>
+              <t>
+                パラメータ説明: X.509 証明書チェイン
+                <!-- Parameter Description: X.509 Certificate Chain -->
+              </t>
+              <t>
+                "kty" に使われる値: *
+                <!-- Used with "kty" Value(s): * -->
+              </t>
+              <t>
+                パラメータ情報クラス: 公開
+                <!-- Parameter Information Class: Public -->
+              </t>
+              <t>
+                変更管理: IESG
+                <!-- Change Controller: IESG -->
+              </t>
+              <t>
+                仕様ドキュメント: RFC 7517 の <xref target="x5cDef" />
+                <!-- Specification Document(s): <xref target="x5cDef" /> of RFC 7517 -->
+              </t>
+            </list>
+          </t>
+          <t>
+            <list style='symbols'>
+              <t>
+                パラメータ名: <spanx style="verb">x5t</spanx>
+                <!-- Parameter Name: <spanx style="verb">x5t</spanx> -->
+              </t>
+              <t>
+                パラメータ説明: X.509 証明書の SHA-1 拇印
+                <!-- Parameter Description: X.509 Certificate SHA-1 Thumbprint -->
+              </t>
+              <t>
+                "kty" に使われる値: *
+                <!-- Used with "kty" Value(s): * -->
+              </t>
+              <t>
+                パラメータ情報クラス: 公開
+                <!-- Parameter Information Class: Public -->
+              </t>
+              <t>
+                変更管理: IESG
+                <!-- Change Controller: IESG -->
+              </t>
+              <t>
+                仕様ドキュメント: RFC 7517 の <xref target="x5tDef" />
+                <!-- Specification Document(s): <xref target="x5tDef" /> of RFC 7517 -->
+              </t>
+            </list>
+          </t>
+          <t>
+            <list style='symbols'>
+              <t>
+                パラメータ名: <spanx style="verb">x5t#S256</spanx>
+                <!-- Parameter Name: <spanx style="verb">x5t#S256</spanx> -->
+              </t>
+              <t>
+                パラメータ説明: X.509 証明書の SHA-256 拇印
+                <!-- Parameter Description: X.509 Certificate SHA-256 Thumbprint -->
+              </t>
+              <t>
+                "kty" に使われる値: *
+                <!-- Used with "kty" Value(s): * -->
+              </t>
+              <t>
+                パラメータ情報クラス: 公開
+                <!-- Parameter Information Class: Public -->
+              </t>
+              <t>
+                変更管理: IESG
+                <!-- Change Controller: IESG -->
+              </t>
+              <t>
+                仕様ドキュメント: RFC 7517 の <xref target="x5tS256Def" />
+                <!-- Specification Document(s): <xref target="x5tS256Def" /> of RFC 7517 -->
               </t>
             </list>
           </t>
@@ -1176,13 +1254,17 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
 
       <section title="JSON Web Key Use Registry" anchor="UseReg">
         <t>
-          This section establishes the
+          本セクションは JWK <spanx style="verb">use</spanx> (公開鍵の利用) メンバの値のための
+          IANA "JSON Web Key Use" レジストリを確立する.
+          レジストリは公開鍵の利用の値と, 定義している仕様への参照を記録する.
+          本セクションは <xref target="useDef"/> で定義されているパラメータ名を登録する.
+          <!-- This section establishes the
           IANA "JSON Web Key Use" registry
           for JWK <spanx style="verb">use</spanx> (public key use) member values.
           The registry records the public key use value
           and a reference to the specification that defines it.
           This section registers the parameter names defined in
-          <xref target="useDef" />.
+          <xref target="useDef" />. -->
         </t>
 
         <section title="Registration Template" anchor="UseTemplate">
@@ -1190,32 +1272,46 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
             <list style='hanging'>
               <t hangText='Use Member Value:'>
                 <vspace/>
-                The name requested (e.g., "sig").
+                要求された名前 (例, "sig").
+                本仕様の中核となる目標は表現の結果をコンパクトにすることであるため, 
+                名前は短くすることを推奨する (RECOMMENDED). -- 特別な理由がない
+                限り 8 文字を超えるべきではない.
+                名前は大文字, 小文字を区別する.
+                名前は Designated Experts が例外を許可する特別な理由があることを宣言
+                した場合を除き, 他の登録された名前と大文字, 小文字の違いで重複させる
+                べきではない.
+                <!-- The name requested (e.g., "sig").
                 Because a core goal of this specification is for the resulting
                 representations to be compact, it is RECOMMENDED that the name be short
                 -- not to exceed 8 characters without a compelling reason to do so.
                 This name is case sensitive.
                 Names may not match other registered names in a case-insensitive manner
                 unless the Designated Experts state that there is a compelling reason
-                to allow an exception.
+                to allow an exception. -->
               </t>
               <t hangText='Use Description:'>
                 <vspace/>
-                Brief description of the use (e.g., "Digital Signature or MAC").
+                簡単な使用方法 (e.g., "デジタル署名もしくは MAC").
+                <!-- Brief description of the use (e.g., "Digital Signature or MAC"). -->
               </t>
               <t hangText='Change Controller:'>
                 <vspace/>
-                For Standards Track RFCs, list the "IESG". For others, give the name of the
+                RFC の標準に従う際は, "IETF" と記載する. それ以外の場合は, 責任ある団体の名称を記載する.
+                その他の詳細 (例えば, 郵便番号, メールアドレス, ホームページの URL) も記載してもよい.
+                <!-- For Standards Track RFCs, list the "IESG". For others, give the name of the
                 responsible party. Other details (e.g., postal address, email address, home page
-                URI) may also be included.
+                URI) may also be included. -->
               </t>
               <t hangText='Specification Document(s):'>
                 <vspace/>
-                Reference to the document or documents that specify the parameter,
+                パラメータ仕様を記載したドキュメントへの参照を記載する. ドキュメントを取得することの
+                できる URI が記載されていることが望ましい. 明確な記載箇所への参照が含まれることが
+                望ましいが必須ではない.
+                <!-- Reference to the document or documents that specify the parameter,
                 preferably including URIs that
                 can be used to retrieve copies of the documents.
                 An indication of the relevant
-                sections may also be included but is not required.
+                sections may also be included but is not required. -->
               </t>
             </list>
           </t>
@@ -1225,32 +1321,40 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
           <t> <?rfc subcompact="yes"?>
             <list style='symbols'>
               <t>
-                Use Member Value: <spanx style="verb">sig</spanx>
+                利用メンバ値: <spanx style="verb">sig</spanx>
+                <!-- Use Member Value: <spanx style="verb">sig</spanx> -->
               </t>
               <t>
-                Use Description: Digital Signature or MAC
+                利用説明: デジタル署名もしくは MAC
+                <!-- Use Description: Digital Signature or MAC -->
               </t>
               <t>
-                Change Controller: IESG
+                変更管理: IESG
+                <!-- Change Controller: IESG -->
               </t>
               <t>
-                Specification Document(s): <xref target="useDef" /> of RFC 7517
+                仕様ドキュメント: RFC 7517 の <xref target="useDef" />
+                <!-- Specification Document(s): <xref target="useDef" /> of RFC 7517 -->
               </t>
             </list>
           </t>
           <t>
             <list style='symbols'>
               <t>
-                Use Member Value: <spanx style="verb">enc</spanx>
+                利用メンバ値: <spanx style="verb">enc</spanx>
+                <!-- Use Member Value: <spanx style="verb">enc</spanx> -->
               </t>
               <t>
-                Use Description: Encryption
+                利用説明: 暗号化
+                <!-- Use Description: Encryption -->
               </t>
               <t>
-                Change Controller: IESG
+                変更管理: IESG
+                <!-- Change Controller: IESG -->
               </t>
               <t>
-                Specification Document(s): <xref target="useDef" /> of RFC 7517
+                仕様ドキュメント: RFC 7517 の <xref target="useDef" />
+                <!-- Specification Document(s): <xref target="useDef" /> of RFC 7517 -->
               </t>
             </list>
           </t>
@@ -1260,13 +1364,17 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
 
       <section title="JSON Web Key Operations Registry" anchor="KeyOpsReg">
         <t>
-          This section establishes the
+          本セクションは JWK <spanx style="verb">key_ops</spanx> 配列要素の値のための
+          IANA "JSON Web Key Operations" レジストリを確立する.
+          レジストリは鍵運用の値と定義されている仕様への参照を記録する.
+          本セクションは <xref target="key_opsDef"/> で定義されているパラメータ名を登録する.
+          <!-- This section establishes the
           IANA "JSON Web Key Operations" registry
           for values of JWK <spanx style="verb">key_ops</spanx> array elements.
           The registry records the key operation value
           and a reference to the specification that defines it.
           This section registers the parameter names defined in
-          <xref target="key_opsDef" />.
+          <xref target="key_opsDef" />. -->
         </t>
 
         <section title="Registration Template" anchor="KeyOpsTemplate">
@@ -1274,32 +1382,46 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
             <list style='hanging'>
               <t hangText='Key Operation Value:'>
                 <vspace/>
-                The name requested (e.g., "sign").
+                要求された名前 (例, "sign").
+                本仕様の中核となる目標は表現の結果をコンパクトにすることであるため, 
+                名前は短くすることを推奨する (RECOMMENDED). -- 特別な理由がない
+                限り 8 文字を超えるべきではない.
+                名前は大文字, 小文字を区別する.
+                名前は Designated Experts が例外を許可する特別な理由があることを宣言
+                した場合を除き, 他の登録された名前と大文字, 小文字の違いで重複させる
+                べきではない.
+                <!-- The name requested (e.g., "sign").
                 Because a core goal of this specification is for the resulting
                 representations to be compact, it is RECOMMENDED that the name be short
                 -- not to exceed 8 characters without a compelling reason to do so.
                 This name is case sensitive.
                 Names may not match other registered names in a case-insensitive manner
                 unless the Designated Experts state that there is a compelling reason
-                to allow an exception.
+                to allow an exception. -->
               </t>
               <t hangText='Key Operation Description:'>
                 <vspace/>
-                Brief description of the key operation (e.g., "Compute digital signature or MAC").
+                鍵運用の簡単な説明 (e.g., "デジタル署名もしくは MAC を計算する").
+                <!-- Brief description of the key operation (e.g., "Compute digital signature or MAC"). -->
               </t>
               <t hangText='Change Controller:'>
                 <vspace/>
-                For Standards Track RFCs, list the "IESG". For others, give the name of the
+                RFC の標準に従う際は, "IETF" と記載する. それ以外の場合は, 責任ある団体の名称を記載する.
+                その他の詳細 (例えば, 郵便番号, メールアドレス, ホームページの URL) も記載してもよい.
+                <!-- For Standards Track RFCs, list the "IESG". For others, give the name of the
                 responsible party. Other details (e.g., postal address, email address, home page
-                URI) may also be included.
+                URI) may also be included. -->
               </t>
               <t hangText='Specification Document(s):'>
                 <vspace/>
-                Reference to the document or documents that specify the parameter,
+                パラメータ仕様を記載したドキュメントへの参照を記載する. ドキュメントを取得することの
+                できる URI が記載されていることが望ましい. 明確な記載箇所への参照が含まれることが
+                望ましいが必須ではない.
+                <!-- Reference to the document or documents that specify the parameter,
                 preferably including URIs that can be used to retrieve
                 copies of the documents.
                 An indication of the relevant
-                sections may also be included but is not required.
+                sections may also be included but is not required. -->
               </t>
             </list>
           </t>
@@ -1310,128 +1432,160 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
           <t> <?rfc subcompact="yes"?>
             <list style='symbols'>
               <t>
-                Key Operation Value: <spanx style="verb">sign</spanx>
+                鍵運用の値: <spanx style="verb">sign</spanx>
+                <!-- Key Operation Value: <spanx style="verb">sign</spanx> -->
               </t>
               <t>
-                Key Operation Description: Compute digital signature or MAC
+                鍵運用の説明: デジタル署名もしくは MAC を計算する
+                <!-- Key Operation Description: Compute digital signature or MAC -->
               </t>
               <t>
-                Change Controller: IESG
+                変更管理: IESG
+                <!-- Change Controller: IESG -->
               </t>
               <t>
-                Specification Document(s): <xref target="key_opsDef" /> of RFC 7517
-              </t>
-            </list>
-          </t>
-          <t>
-            <list style='symbols'>
-              <t>
-                Key Operation Value: <spanx style="verb">verify</spanx>
-              </t>
-              <t>
-                Key Operation Description: Verify digital signature or MAC
-              </t>
-              <t>
-                Change Controller: IESG
-              </t>
-              <t>
-                Specification Document(s): <xref target="key_opsDef" /> of RFC 7517
+                仕様ドキュメント: RFC 7517 の <xref target="key_opsDef" />
+                <!-- Specification Document(s): <xref target="key_opsDef" /> of RFC 7517 -->
               </t>
             </list>
           </t>
           <t>
             <list style='symbols'>
               <t>
-                Key Operation Value: <spanx style="verb">encrypt</spanx>
+                鍵運用の値: <spanx style="verb">verify</spanx>
+                <!-- Key Operation Value: <spanx style="verb">verify</spanx> -->
               </t>
               <t>
-                Key Operation Description: Encrypt content
+                鍵運用の説明: デジタル署名もしくは MAC を検証する
+                <!-- Key Operation Description: Verify digital signature or MAC -->
               </t>
               <t>
-                Change Controller: IESG
+                変更管理: IESG
+                <!-- Change Controller: IESG -->
               </t>
               <t>
-                Specification Document(s): <xref target="key_opsDef" /> of RFC 7517
-              </t>
-            </list>
-          </t>
-          <t>
-            <list style='symbols'>
-              <t>
-                Key Operation Value: <spanx style="verb">decrypt</spanx>
-              </t>
-              <t>
-                Key Operation Description: Decrypt content and validate decryption, if applicable
-              </t>
-              <t>
-                Change Controller: IESG
-              </t>
-              <t>
-                Specification Document(s): <xref target="key_opsDef" /> of RFC 7517
+                仕様ドキュメント: RFC 7517 の <xref target="key_opsDef" />
+                <!-- Specification Document(s): <xref target="key_opsDef" /> of RFC 7517 -->
               </t>
             </list>
           </t>
           <t>
             <list style='symbols'>
               <t>
-                Key Operation Value: <spanx style="verb">wrapKey</spanx>
+                鍵運用の値: <spanx style="verb">encrypt</spanx>
+                <!-- Key Operation Value: <spanx style="verb">encrypt</spanx> -->
               </t>
               <t>
-                Key Operation Description: Encrypt key
+                鍵運用の説明: コンテンツを暗号化する
+                <!-- Key Operation Description: Encrypt content -->
               </t>
               <t>
-                Change Controller: IESG
+                変更管理: IESG
+                <!-- Change Controller: IESG -->
               </t>
               <t>
-                Specification Document(s): <xref target="key_opsDef" /> of RFC 7517
-              </t>
-            </list>
-          </t>
-          <t>
-            <list style='symbols'>
-              <t>
-                Key Operation Value: <spanx style="verb">unwrapKey</spanx>
-              </t>
-              <t>
-                Key Operation Description: Decrypt key and validate decryption, if applicable
-              </t>
-              <t>
-                Change Controller: IESG
-              </t>
-              <t>
-                Specification Document(s): <xref target="key_opsDef" /> of RFC 7517
+                仕様ドキュメント: RFC 7517 の <xref target="key_opsDef" />
+                <!-- Specification Document(s): <xref target="key_opsDef" /> of RFC 7517 -->
               </t>
             </list>
           </t>
           <t>
             <list style='symbols'>
               <t>
-                Key Operation Value: <spanx style="verb">deriveKey</spanx>
+                鍵運用の値: <spanx style="verb">decrypt</spanx>
+                <!-- Key Operation Value: <spanx style="verb">decrypt</spanx> -->
               </t>
               <t>
-                Key Operation Description: Derive key
+                鍵運用の説明: コンテンツの復号, および適用可能であれば復号の検証
+                <!-- Key Operation Description: Decrypt content and validate decryption, if applicable -->
               </t>
               <t>
-                Change Controller: IESG
+                変更管理: IESG
+                <!-- Change Controller: IESG -->
               </t>
               <t>
-                Specification Document(s): <xref target="key_opsDef" /> of RFC 7517
+                仕様ドキュメント: RFC 7517 の <xref target="key_opsDef" />
+                <!-- Specification Document(s): <xref target="key_opsDef" /> of RFC 7517 -->
               </t>
             </list>
           </t>
           <t>
             <list style='symbols'>
               <t>
-                Key Operation Value: <spanx style="verb">deriveBits</spanx>
+                鍵運用の値: <spanx style="verb">wrapKey</spanx>
+                <!-- Key Operation Value: <spanx style="verb">wrapKey</spanx> -->
               </t>
               <t>
-                Key Operation Description: Derive bits not to be used as a key
+                鍵運用の説明: 鍵の暗号化
+                <!-- Key Operation Description: Encrypt key -->
               </t>
               <t>
-                Change Controller: IESG
+                変更管理: IESG
+                <!-- Change Controller: IESG -->
               </t>
               <t>
-                Specification Document(s): <xref target="key_opsDef" /> of RFC 7517
+                仕様ドキュメント: RFC 7517 の <xref target="key_opsDef" />
+                <!-- Specification Document(s): <xref target="key_opsDef" /> of RFC 7517 -->
+              </t>
+            </list>
+          </t>
+          <t>
+            <list style='symbols'>
+              <t>
+                鍵運用の値: <spanx style="verb">unwrapKey</spanx>
+                <!-- Key Operation Value: <spanx style="verb">unwrapKey</spanx> -->
+              </t>
+              <t>
+                鍵運用の説明: 鍵の復号, および適用可能であれば復号の検証
+                <!-- Key Operation Description: Decrypt key and validate decryption, if applicable -->
+              </t>
+              <t>
+                変更管理: IESG
+                <!-- Change Controller: IESG -->
+              </t>
+              <t>
+                仕様ドキュメント: RFC 7517 の <xref target="key_opsDef" />
+                <!-- Specification Document(s): <xref target="key_opsDef" /> of RFC 7517 -->
+              </t>
+            </list>
+          </t>
+          <t>
+            <list style='symbols'>
+              <t>
+                鍵運用の値: <spanx style="verb">deriveKey</spanx>
+                <!-- Key Operation Value: <spanx style="verb">deriveKey</spanx> -->
+              </t>
+              <t>
+                鍵運用の説明: 鍵を派生する
+                <!-- Key Operation Description: Derive key -->
+              </t>
+              <t>
+                変更管理: IESG
+                <!-- Change Controller: IESG -->
+              </t>
+              <t>
+                仕様ドキュメント: RFC 7517 の <xref target="key_opsDef" />
+                <!-- Specification Document(s): <xref target="key_opsDef" /> of RFC 7517 -->
+              </t>
+            </list>
+          </t>
+          <t>
+            <list style='symbols'>
+              <t>
+                鍵運用の値: <spanx style="verb">deriveBits</spanx>
+                <!-- Key Operation Value: <spanx style="verb">deriveBits</spanx> -->
+              </t>
+              <t>
+                鍵運用の説明: 鍵としての利用用途ではなく派生する
+                <!-- Key Operation Description: Derive bits not to be used as a key -->
+              </t>
+              <t>
+                変更管理: IESG
+                <!-- Change Controller: IESG -->
+              </t>
+              <t>
+                仕様ドキュメント: RFC 7517 の <xref target="key_opsDef" />
+                <!-- Specification Document(s): <xref target="key_opsDef" /> of RFC 7517 -->
               </t>
             </list>
           </t>
@@ -1441,13 +1595,17 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
 
       <section title="JSON Web Key Set Parameters Registry" anchor="JWKSetParamReg">
         <t>
-          This section establishes the
+          本セクションは JWK Set パラメータ名のための IANA "JSON Web Key Set Parameters"
+          レジストリを確立する.
+          レジストリはパラメータの名前と定義されている仕様への参照を記録する.
+          本セクションは <xref target="JWKSet"/> で定義されているパラメータ名を登録する.
+          <!-- This section establishes the
           IANA "JSON Web Key Set Parameters" registry
           for JWK Set parameter names.
           The registry records the parameter name
           and a reference to the specification that defines it.
           This section registers the parameter names defined in
-          <xref target="JWKSet" />.
+          <xref target="JWKSet" />. -->
         </t>
 
         <section title="Registration Template" anchor="SetTemplate">
@@ -1455,32 +1613,46 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
             <list style='hanging'>
               <t hangText='Parameter Name:'>
                 <vspace/>
-                The name requested (e.g., "keys").
+                要求された名前 (例, "keys").
+                本仕様の中核となる目標は表現の結果をコンパクトにすることであるため, 
+                名前は短くすることを推奨する (RECOMMENDED). -- 特別な理由がない
+                限り 8 文字を超えるべきではない.
+                名前は大文字, 小文字を区別する.
+                名前は Designated Experts が例外を許可する特別な理由があることを宣言
+                した場合を除き, 他の登録された名前と大文字, 小文字の違いで重複させる
+                べきではない.
+                <!-- The name requested (e.g., "keys").
                 Because a core goal of this specification is for the resulting
                 representations to be compact, it is RECOMMENDED that the name be short
                 -- not to exceed 8 characters without a compelling reason to do so.
                 This name is case sensitive.
                 Names may not match other registered names in a case-insensitive manner
                 unless the Designated Experts state that there is a compelling reason
-                to allow an exception.
+                to allow an exception. -->
               </t>
               <t hangText='Parameter Description:'>
                 <vspace/>
-                Brief description of the parameter (e.g., "Array of JWK values").
+                パラメータの簡単な説明 (例, "JWK の値の配列").
+                <!-- Brief description of the parameter (e.g., "Array of JWK values"). -->
               </t>
               <t hangText='Change Controller:'>
                 <vspace/>
-                For Standards Track RFCs, list the "IESG". For others, give the name of the
+                RFC の標準に従う際は, "IETF" と記載する. それ以外の場合は, 責任ある団体の名称を記載する.
+                その他の詳細 (例えば, 郵便番号, メールアドレス, ホームページの URL) も記載してもよい.
+                <!-- For Standards Track RFCs, list the "IESG". For others, give the name of the
                 responsible party. Other details (e.g., postal address, email address, home page
-                URI) may also be included.
+                URI) may also be included. -->
               </t>
               <t hangText='Specification Document(s):'>
                 <vspace/>
-                Reference to the document or documents that specify the parameter,
+                パラメータ仕様を記載したドキュメントへの参照を記載する. ドキュメントを取得することの
+                できる URI が記載されていることが望ましい. 明確な記載箇所への参照が含まれることが
+                望ましいが必須ではない.
+                <!-- Reference to the document or documents that specify the parameter,
                 preferably including URIs that can be used to retrieve
                 copies of the documents.
                 An indication of the relevant
-                sections may also be included but is not required.
+                sections may also be included but is not required. -->
               </t>
             </list>
           </t>
@@ -1490,17 +1662,21 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
           <t> <?rfc subcompact="yes"?>
             <list style='symbols'>
               <t>
-                Parameter Name: <spanx style="verb">keys</spanx>
+                パラメータ名: <spanx style="verb">keys</spanx>
+                <!-- Parameter Name: <spanx style="verb">keys</spanx> -->
               </t>
 
               <t>
-                Parameter Description: Array of JWK Values
+                パラメータ説明: JWK の値の配列
+                <!-- Parameter Description: Array of JWK Values -->
               </t>
               <t>
-                Change Controller: IESG
+                変更管理: IESG
+                <!-- Change Controller: IESG -->
               </t>
               <t>
-                Specification Document(s): <xref target="keysDef" /> of RFC 7517
+                仕様ドキュメント: RFC 7517 の <xref target="keysDef" />
+                <!-- Specification Document(s): <xref target="keysDef" /> of RFC 7517 -->
               </t>
             </list>
           </t>
@@ -1511,7 +1687,14 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
       <section title="Media Type Registration" anchor="MediaReg">
         <section title="Registry Contents" anchor="MediaContents">
           <t>
-            This section registers the
+            本セクションは <xref target="RFC6838">RFC 6838</xref> に記載される様式に
+            従い, "Media タイプ" レジストリ <xref target="IANA.MediaTypes"/> に
+            <spanx style="verb">application/jwk+json</spanx> と
+            <spanx style="verb">application/jwk-set+json</spanx>
+            Media タイプを登録する.
+            そしてそれは, コンテンツがそれぞれ JWK もしくは JWK Set であることを示すために
+            利用することができる.
+            <!-- This section registers the
             <spanx style="verb">application/jwk+json</spanx> and
             <spanx style="verb">application/jwk-set+json</spanx>
             media types <xref target="RFC2046"/>
@@ -1519,137 +1702,185 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
             in the manner described in <xref target="RFC6838">RFC 6838</xref>,
             which can be used to indicate that the content is
             a JWK or
-            a JWK Set, respectively.
+            a JWK Set, respectively. -->
           </t>
           <t> <?rfc subcompact="yes"?>
             <list style="symbols">
               <t>
-                Type Name: application
+                タイプ名: application
+                <!-- Type Name: application -->
               </t>
               <t>
-                Subtype Name: jwk+json
+                サブタイプ名: jwk+json
+                <!-- Subtype Name: jwk+json -->
               </t>
               <t>
-                Required Parameters: n/a
+                必須パラメータ: n/a
+                <!-- Required Parameters: n/a -->
               </t>
               <t>
-                Optional Parameters: n/a
+                オプションパラメータ: n/a
+                <!-- Optional Parameters: n/a -->
               </t>
               <t>
-                Encoding considerations: 8bit;
+                エンコーディングの考慮事項: 8ビット
+                application/jwk+json の値は JSON オブジェクトとして表現される.
+                JSON オブジェクトは UTF-8 エンコードされているべきである (SHOULD).
+                <!-- Encoding considerations: 8bit;
                 application/jwk+json values are represented as a JSON object;
-                UTF-8 encoding SHOULD be employed for the JSON object.
+                UTF-8 encoding SHOULD be employed for the JSON object. -->
               </t>
               <t>
-                Security Considerations: See the Security Considerations
-                section of RFC 7517.
+                セキュリティ上の考慮事項: RFC 7517 のセキュリティ上の考慮事項のセクションを参照すること.
+                <!-- Security Considerations: See the Security Considerations
+                section of RFC 7517. -->
               </t>
               <t>
-                Interoperability Considerations: n/a
+                相互運用性の考慮事項: n/a
+                <!-- Interoperability Considerations: n/a -->
               </t>
               <t>
-                Published Specification: RFC 7517
+                公開された仕様: RFC 7517
+                <!-- Published Specification: RFC 7517 -->
               </t>
               <t>
-                Applications that use this media type:
+                このメディアタイプを利用するアプリケーション:
                 OpenID Connect, Salesforce, Google, Android,
-                Windows Azure, W3C WebCrypto API, numerous others
+                Windows Azure, W3C WebCrypto API, その他多数
+                <!-- Applications that use this media type:
+                OpenID Connect, Salesforce, Google, Android,
+                Windows Azure, W3C WebCrypto API, numerous others -->
               </t>
               <t>
-                Fragment identifier considerations: n/a
+                断片化された識別子の考慮事項: n/a
+                <!-- Fragment identifier considerations: n/a -->
               </t>
               <t>
-                Additional Information: <list style="empty">
+                追加情報: <list style="empty">
+                <t>マジックナンバー: n/a</t>
+                <t>ファイル拡張子: n/a</t>
+                <t>マッキントッシュのファイル型コード: n/a</t></list>
+                <!-- Additional Information: <list style="empty">
                 <t>Magic number(s): n/a</t>
                 <t>File extension(s): n/a</t>
-                <t>Macintosh file type code(s): n/a</t></list>
+                <t>Macintosh file type code(s): n/a</t></list> -->
 <vspace/>
               </t>
               <t>
-                Person &amp; email address to contact for further information:
+                追加情報が必要な場合の連絡先:
+                <!-- Person &amp; email address to contact for further information: -->
 <vspace/>
                 Michael B. Jones, mbj@microsoft.com
               </t>
               <t>
-                Intended Usage: COMMON
+                意図された用途: COMMON
+                <!-- Intended Usage: COMMON -->
               </t>
               <t>
-                Restrictions on Usage: none
+                用途の制限: none
+                <!-- Restrictions on Usage: none -->
               </t>
               <t>
-                Author: Michael B. Jones, mbj@microsoft.com
+                著者: Michael B. Jones, mbj@microsoft.com
+                <!-- Author: Michael B. Jones, mbj@microsoft.com -->
               </t>
               <t>
-                Change Controller: IESG
+                変更管理: IESG
+                <!-- Change Controller: IESG -->
               </t>
               <t>
-                Provisional registration? No
+                仮登録か? No
+                <!-- Provisional registration? No -->
               </t>
             </list>
           </t>
           <t>
             <list style="symbols">
               <t>
-                Type Name: application
+                タイプ名: application
+                <!-- Type Name: application -->
               </t>
               <t>
-                Subtype Name: jwk-set+json
+                サブタイプ名: jwk-set+json
+                <!-- Subtype Name: jwk-set+json -->
               </t>
               <t>
-                Required Parameters: n/a
+                必須パラメータ: n/a
+                <!-- Required Parameters: n/a -->
               </t>
               <t>
-                Optional Parameters: n/a
+                オプションパラメータ: n/a
+                <!-- Optional Parameters: n/a -->
               </t>
               <t>
-                Encoding considerations: 8bit;
+                エンコーディングの考慮事項: 8ビット
+                application/jwk-set+json の値は JSON オブジェクトとして表現される.
+                JSON オブジェクトは UTF-8 エンコードされているべきである (SHOULD).
+                <!-- Encoding considerations: 8bit;
                 application/jwk-set+json values are represented as a JSON Object;
-                UTF-8 encoding SHOULD be employed for the JSON object.
+                UTF-8 encoding SHOULD be employed for the JSON object. -->
               </t>
               <t>
-                Security Considerations: See the Security Considerations
-                section of RFC 7517.
+                セキュリティ上の考慮事項: RFC 7517 のセキュリティ上の考慮事項のセクションを参照すること.
+                <!-- Security Considerations: See the Security Considerations
+                section of RFC 7517. -->
               </t>
               <t>
-                Interoperability Considerations: n/a
+                相互運用性の考慮事項: n/a
+                <!-- Interoperability Considerations: n/a -->
               </t>
               <t>
-                Published Specification: RFC 7517
+                公開された仕様: RFC 7517
+                <!-- Published Specification: RFC 7517 -->
               </t>
               <t>
-                Applications that use this media type:
+                このメディアタイプを利用するアプリケーション:
                 OpenID Connect, Salesforce, Google, Android,
-                Windows Azure, W3C WebCrypto API, numerous others
+                Windows Azure, W3C WebCrypto API, その他多数
+                <!-- Applications that use this media type:
+                OpenID Connect, Salesforce, Google, Android,
+                Windows Azure, W3C WebCrypto API, numerous others -->
               </t>
               <t>
-                Fragment identifier considerations: n/a
+                断片化された識別子の考慮事項: n/a
+                <!-- Fragment identifier considerations: n/a -->
               </t>
               <t>
-                Additional Information: <list style="empty">
+                追加情報: <list style="empty">
+                <t>マジックナンバー: n/a</t>
+                <t>ファイル拡張子: n/a</t>
+                <t>マッキントッシュのファイル型コード: n/a</t></list>
+                <!-- Additional Information: <list style="empty">
                 <t>Magic number(s): n/a</t>
                 <t>File extension(s): n/a</t>
-                <t>Macintosh file type code(s): n/a</t></list>
+                <t>Macintosh file type code(s): n/a</t></list> -->
 <vspace/>
               </t>
               <t>
-                Person &amp; email address to contact for further information:
+                追加情報が必要な場合の連絡先:
+                <!-- Person &amp; email address to contact for further information: -->
 <vspace/>
                 Michael B. Jones, mbj@microsoft.com
               </t>
               <t>
-                Intended Usage: COMMON
+                意図された用途: COMMON
+                <!-- Intended Usage: COMMON -->
               </t>
               <t>
-                Restrictions on Usage: none
+                用途の制限: none
+                <!-- Restrictions on Usage: none -->
               </t>
               <t>
-                Author: Michael B. Jones, mbj@microsoft.com
+                著者: Michael B. Jones, mbj@microsoft.com
+                <!-- Author: Michael B. Jones, mbj@microsoft.com -->
               </t>
               <t>
-                Change Controller: IESG
+                変更管理: IESG
+                <!-- Change Controller: IESG -->
               </t>
               <t>
-                Provisional registration? No
+                仮登録か? No
+                <!-- Provisional registration? No -->
               </t>
             </list>
           </t>
