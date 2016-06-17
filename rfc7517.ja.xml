@@ -1892,59 +1892,92 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
 
     <section title="Security Considerations" anchor="Security">
       <t>
-        All of the security issues that are pertinent to any cryptographic application
+        JWS/JWE/JWKエージェントは, 暗号化アプリケーションが直面したあらゆるセキュリティ問題
+        に対応しなければならない. これらの問題の中には, ユーザのプライベート鍵および対称鍵を
+        保護し, 様々な攻撃を防ぎ, ユーザが不正な受信者のためにメッセージを不注意に暗号化する
+        ような間違いを避けることを助けることが含まれる.
+        <!-- All of the security issues that are pertinent to any cryptographic application
         must be addressed by JWS/JWE/JWK agents.  Among these issues are protecting
         the user's asymmetric private and symmetric secret keys and
-        employing countermeasures to various attacks.
+        employing countermeasures to various attacks. -->
       </t>
 
       <section title="Key Provenance and Trust" anchor="KeyTrust">
         <t>
-          One should place no more trust in the data cryptographically secured by a key
+          信頼できる方法で取得された鍵と関連づけられていない限り, 鍵による暗号化により
+          保護されたデータに信頼を置くべきではない.
+          信頼できない方法で取得された鍵と関連付けられたどんなデータも懐疑的に取り扱う
+          べきである.
+          鍵の発行元の認証に関するセキュリティ上の考慮事項については <xref target="JWS"/>
+          のセクション 10.3 を参照すること.
+          <!-- One should place no more trust in the data cryptographically secured by a key
           than in the method by which it was obtained and
           in the trustworthiness of the entity asserting an association with the key.
           Any data associated with a key that is obtained in an untrusted manner
           should be treated with skepticism.
           See Section 10.3 of <xref target="JWS"/> for security considerations on
-          key origin authentication.
+          key origin authentication. -->
         </t>
         <t>
-          In almost all cases, applications make decisions about whether to trust a key
+          多くの場合において, アプリケーションは鍵を信頼するかどうかを鍵自身よりも
+          鍵に関連付けられた名前やロールや発行元といった属性に基づき決定する.
+          アプリケーソンが鍵を信頼するかどうかを決定する際, JWK に属性をバインドする
+          複数の方法が存在する. メカニズムの2つの例は PKIX <xref target="RFC5280"/>
+          と JSON Web Token (JWT) <xref target="JWT"/> である.
+          <!-- In almost all cases, applications make decisions about whether to trust a key
           based on attributes bound to the key, such as names, roles,
           and the key origin, rather than based on the key itself.
           When an application is deciding whether to trust a key, there are several ways
           that it can bind attributes to a JWK.  Two example mechanisms are
-          PKIX <xref target="RFC5280"/> and JSON Web Token (JWT) <xref target="JWT"/>.
+          PKIX <xref target="RFC5280"/> and JSON Web Token (JWT) <xref target="JWT"/>. -->
         </t>
         <t>
-          For instance, the creator of a JWK can include a PKIX certificate
+          例えば, JWK の作成者は PKIX 証明書を JWK の <spanx style="verb">x5c</spanx>
+          メンバとして含めることが出来る.
+          もしアプリケーションが証明書を確認し, JWK が証明書の中のサブジェクト公開鍵と
+          一致していることの検証を行う場合, サブジェクト名や代替名や拡張用途や
+          署名チェインといった証明書の中の属性と JWK を紐づけることが出来る.
+          <!-- For instance, the creator of a JWK can include a PKIX certificate
           in the JWK's <spanx style="verb">x5c</spanx> member.
           If the application validates the certificate and verifies that
           the JWK corresponds to the subject public key in the certificate,
           then the JWK can be associated with the attributes in the certificate,
           such as the subject name, subject alternative names, extended key usages,
-          and its signature chain.
+          and its signature chain. -->
         </t>
         <t>
-          As another example, a JWT can be used to associate attributes
+          他の例として, JWT は, JWK を JWT の中のクレームとして参照することにより
+          JWK と属性を関連付けて使用することが出来る.
+          JWK はクレームの値として直接含める もしくは JWK 値を取得するための TLS で
+          保護された URI を JWT に含めることが出来る.
+          どちらの方法でも, JWT クレームを経由して JWK を取得するアプリケーションは
+          JWT の暗号化プロパティと追加のクレームを鍵を信頼するかどうかを決めるために
+          関連づけることが出来る.
+          <!-- As another example, a JWT can be used to associate attributes
           with a JWK by referencing the JWK as a claim in the JWT.
           The JWK can be included directly as a claim value
           or the JWT can include a TLS-secured URI from which to retrieve the JWK value.
           Either way, an application that gets a JWK via a JWT claim can associate it
           with the JWT's cryptographic properties and use these
-          and possibly additional claims in deciding whether to trust the key.
+          and possibly additional claims in deciding whether to trust the key. -->
         </t>
         <t>
-          The security considerations in Section 12.3 of
+          セキュリティチェインのすべてのリンクに依存するデジタル署名の強度に関する
+          <xref target="W3C.NOTE-xmldsig-core2-20130411">XML DSIG 2.0</xref> の セクション
+          12.3 のセキュリティ上の考慮事項は本仕様にも適用される.
+          <!-- The security considerations in Section 12.3 of
           <xref target="W3C.NOTE-xmldsig-core2-20130411">XML DSIG 2.0</xref>
           about the strength of a digital signature depending upon all the links in
-          the security chain also apply to this specification.
+          the security chain also apply to this specification. -->
         </t>
         <t>
-          The TLS Requirements in Section 8 of <xref target="JWS" />
+          <xref target="JWS" /> のセクション 8 の TLS に関する要求事項は本仕様にも
+          適用される. 例外として <spanx style="verb">x5u</spanx> JWK メンバが本仕様
+          で定義される中で TLS を使用する唯一の機能である場合を除く.
+          <!-- The TLS Requirements in Section 8 of <xref target="JWS" />
           also apply to this specification,
           except that the <spanx style="verb">x5u</spanx> JWK member
-          is the only feature defined by this specification using TLS.
+          is the only feature defined by this specification using TLS. -->
         </t>
       </section>
 
