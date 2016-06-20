@@ -1984,26 +1984,48 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
       <section title="Preventing Disclosure of Non-public Key Information"
                anchor="PreventingDisclosure">
         <t>
-          Private and symmetric keys MUST be protected from disclosure
+          秘密鍵と対象鍵は意図しない相手へ公開されないように保護されなければならない (MUST).
+          このために推奨される手段の一つは, JWE のプレーンテキストとして JWK もしくは JWK
+          セットの値を使い, それらを含む JWK もしくは JWK セットを暗号化することである.
+          もちろん, 意図した相手が非公開鍵の情報を暗号化するため鍵を安全に取得する手段と,
+          その相手が対応する復号鍵を取得するための安全な手段が存在する必要がある.
+          <!-- Private and symmetric keys MUST be protected from disclosure
           to unintended parties.  One recommended means of doing so is
           to encrypt JWKs or JWK Sets containing them by using the JWK
           or JWK Set value as the plaintext of a JWE.
           Of course, this requires that there be a secure way to obtain
           the key used to encrypt the non-public key information
           to the intended party and a secure way for that party to obtain
-          the corresponding decryption key.
+          the corresponding decryption key. -->
         </t>
         <t>
-          The security considerations in
+          秘密鍵と対象鍵, 鍵の利用, 情報漏えいに対する保護に関する
+          <xref target="RFC3447">RFC 3447</xref> と <xref target="RFC6030">RFC 6030</xref>
+          のセキュリティ上の考慮点は本仕様に対しても適用される.
+          <!-- The security considerations in
           <xref target="RFC3447">RFC 3447</xref> and <xref target="RFC6030">RFC 6030</xref>
           about protecting private and symmetric keys, key usage, and information leakage
-          also apply to this specification.
+          also apply to this specification. -->
         </t>
       </section>
 
       <section title="RSA Private Key Representations and Blinding" anchor="RSABlinding">
         <t>
-          The RSA Key blinding operation <xref target="Kocher"/>, which is a defense
+          タイミング攻撃に対する防御手法である, RSA 鍵の blinding 操作 <xref target="Kocher"/>
+          は RSA 鍵のすべての値 <spanx style="verb">n</spanx>, <spanx style="verb">e</spanx>,
+          そして <spanx style="verb">d</spanx> を必要とする.
+          しかしながら, いくつかの RSA 秘密鍵の表現は公開指数 <spanx style="verb">e</spanx>
+          を含んでおらず, 係数 <spanx style="verb">n</spanx> と 秘密指数 <spanx style="verb">d</spanx>
+          のみを含んでいる.
+          これは真実である, 例えば, Java の RSAPrivateKeySpec API は公開指数 <spanx style="verb">e</spanx>
+          をパラメータとして含んでいない.
+          そのため RSA 鍵の blinding を有効にするには, それらの表現は避けるべきである.
+          Java では RSAPrivateCrtKeySpec API を代替手段として使用することが出来る.
+          適用された暗号 <xref target="HAC"/> のハンドブックのセクション 8.2.2(i) は
+          残る RSA 秘密鍵のパラメータを計算するかについて議論しており, 必要であれば
+          <spanx style="verb">n</spanx>, <spanx style="verb">e</spanx>, と <spanx style="verb">d</spanx>
+          のみを使うように指定する.
+          <!-- The RSA Key blinding operation <xref target="Kocher"/>, which is a defense
           against some timing attacks, requires all of the
           RSA key values <spanx style="verb">n</spanx>, <spanx style="verb">e</spanx>,
           and <spanx style="verb">d</spanx>.
@@ -2019,14 +2041,16 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
           Section 8.2.2(i) of the Handbook of Applied Cryptography
           <xref target="HAC"/> discusses how to compute the remaining RSA private key
           parameters, if needed, using only <spanx style="verb">n</spanx>,
-          <spanx style="verb">e</spanx>, and <spanx style="verb">d</spanx>.
+          <spanx style="verb">e</spanx>, and <spanx style="verb">d</spanx>. -->
         </t>
       </section>
 
       <section title="Key Entropy and Random Values" anchor="KeyEntropy">
         <t>
-          See Section 10.1 of <xref target="JWS"/> for security considerations on
-          key entropy and random values.
+          キーエントロピーとランダム値に関するセキュリティ上の考慮点については
+　　　　　<xref target="JWS"/> のセクション 10.1 を参照すること.
+          <!-- See Section 10.1 of <xref target="JWS"/> for security considerations on
+          key entropy and random values. -->
         </t>
       </section>
 
