@@ -683,7 +683,7 @@
 
       <t>
         JWK Set は JWK のセットを表す JSON オブジェクトである.
-        JSON オブジェクトは, その値が JWK 配列となる <spanx style="verb">keys</spanx> メンバを持たなければならない (MUST).
+        この JSON オブジェクトは, その値が JWK 配列となる <spanx style="verb">keys</spanx> メンバを持たなければならない (MUST).
         この JSON オブジェクトは空白および, または改行を含んでも良い (MAY).
         <!-- A JWK Set is a JSON object that represents a set of JWKs.
         The JSON object MUST have a <spanx style="verb">keys</spanx> member,
@@ -692,8 +692,8 @@
       </t>
       <t>
         単一の JWK Set の中においてメンバ名はユニークでなければならない (MUST);
-        JWK Set パーサーは重複するメンバ名を持つ JWK Set を拒否するか, 
-        ECMAScript 5.1 <xref target="ECMAScript"/> の Section 15.12 ("The JSON Object") で定義されている, 
+        JWK Set パーサーは重複するメンバ名を持つ JWK Set を拒否するか,
+        ECMAScript 5.1 <xref target="ECMAScript"/> の Section 15.12 ("The JSON Object") で定義されている,
         重複するメンバ名の最後の語彙のみを返却する JSON パーサーを使用しなければならない (MUST).
         <!-- The member names within a JWK Set MUST be unique;
         JWK Set parsers MUST either reject JWK Sets with duplicate member names
@@ -705,8 +705,7 @@
         追加のメンバを JWK Set の中に表現することも可能である;
         もし実装がそれらを解釈できない場合, それらは無視されなければならない (MUST).
         JWK Set の追加プロパティを表すパラメータは <xref target="JWKSetParamReg" /> に設立される
-        IANA "JSON Web Key Set Parameters" レジストリへ登録, もしくは衝突に耐えられる名称を含む値
-        であるべきである.
+        IANA "JSON Web Key Set Parameters" レジストリへ登録, もしくは衝突に耐えられる名称を含む値であるべきである.
         <!-- Additional members can be present in the JWK Set;
         if not understood by implementations encountering them, they MUST be ignored.
         Parameters for representing additional properties of JWK Sets
@@ -716,9 +715,8 @@
         a value that contains a Collision-Resistant Name. -->
       </t>
       <t>
-        実装は解釈できないの値であったり, 必要なメンバが存在しなかったり,
-        サポートされる範囲外の値の <spanx style="verb">kty</spanx> (key type)
-        を使用している JWK Set を含む JWK を無視するべきである (SHOULD).
+        実装は, JWK Set に含まれる JWK のうち, 解釈できない <spanx style="verb">kty</spanx> (key type) 値であったり,
+        必要なメンバが存在しなかったり, サポートされる範囲外のメンバー値を持つ JWK を無視するべきである (SHOULD).
         <!-- Implementations SHOULD ignore JWKs within a JWK Set that use
         <spanx style="verb">kty</spanx> (key type) values that
         are not understood by them,
@@ -743,7 +741,7 @@
     <section title="String Comparison Rules" anchor="StringComparison">
 
       <t>
-        本仕様における厳密な比較に関するルールは <xref target="JWS" /> の
+        本仕様における文字列比較に関するルールは <xref target="JWS" /> の
         Section 5.3 で定義されているものと同一である.
         <!-- The string comparison rules for this specification are the same as
         those defined in
@@ -754,18 +752,15 @@
     <section title="Encrypted JWK and Encrypted JWK Set Formats" anchor="EncryptedJWK">
 
       <t>
-        非公開の鍵要素を含む JWK の, 非公開情報へのアクセスするための合理的な理由がない
-        アクセスは防止されなくてはならない (MUST).
+        非公開の鍵要素を含む JWK の, 非公開情報へのアクセスするための合理的な理由がないアクセスは防止されなくてはならない (MUST).
         これは, そのような相手からの参照される可能性がある時,
         秘密鍵もしくは対象鍵の値が公開されることを防ぐために,
         JWK を暗号化することにより達成される.
-        この目的には, 暗号化された JWK (UTF-8 エンコードされた JWK をプレーンテキスト
-        の値として持つ JWE) の利用が推奨される.
+        この目的には, 暗号化された JWK (UTF-8 エンコードされた JWK をプレーンテキストの値として持つ JWE) の利用が推奨される.
         暗号化された JWK の処理は, その他の JWE の処理と同一である.
-        <spanx style="verb">jwk+json</spanx> の <spanx style="verb">cty</spanx> (content type) 
-        ヘッダ パラメータの値は, アプリケーションがその暗号化されたコンテンツが
-        別の意味合いや決まりにより JWK であることを知っていて, <spanx style="verb">cty</spanx> 
-        の値が省略されている場合を除き, JWE のコンテンツが JWK であることを示さなければならない (MUST).
+        <spanx style="verb">jwk+json</spanx> の <spanx style="verb">cty</spanx> (content type)
+        ヘッダパラメータの値は, アプリケーションがその暗号化されたコンテンツが別の意味合いや決まりにより JWK であることを知っていて,
+        <spanx style="verb">cty</spanx> の値が省略されている場合を除き, JWE のコンテンツが JWK であることを示さなければならない (MUST).
         <!-- Access to JWKs containing non-public key material
         by parties without legitimate access to the non-public information
         MUST be prevented.
@@ -786,13 +781,11 @@
       </t>
       <t>
         非公開の鍵情報を含む JWK Set もまた, 同様の事情により暗号化される必要がある.
-        この目的には, 暗号化された JWK Set (UTF-8 エンコードされた JWK Set をプレーンテキスト
-        の値として持つ JWE) の利用が推奨される.
+        この目的には, 暗号化された JWK Set (UTF-8 エンコードされた JWK Set をプレーンテキストの値として持つ JWE) の利用が推奨される.
         暗号化された JWK Set の処理は, その他の JWE の処理と同一である.
-        <spanx style="verb">jwk-set+json</spanx> の <spanx style="verb">cty</spanx> (content type) 
-        ヘッダ パラメータの値は, アプリケーションがその暗号化されたコンテンツが
-        別の意味合いや決まりにより JWK Set であることを知っていて, <spanx style="verb">cty</spanx> 
-        の値が省略されている場合を除き, JWE のコンテンツが JWK Set であることを示さなければならない (MUST).
+        <spanx style="verb">jwk-set+json</spanx> の <spanx style="verb">cty</spanx> (content type)
+        ヘッダ パラメータの値は, アプリケーションがその暗号化されたコンテンツが別の意味合いや決まりにより JWK Set であることを知っていて,
+        <spanx style="verb">cty</spanx> の値が省略されている場合を除き, JWE のコンテンツが JWK Set であることを示さなければならない (MUST).
         <!-- JWK Sets containing non-public key material will also need to be encrypted
         under these circumstances.
         The use of an Encrypted JWK Set, which is a JWE with the UTF-8 encoding of a JWK Set
@@ -821,9 +814,9 @@
         registries established by this specification. -->
       </t>
       <t>
-        値は, 1名以上の Designated Experts の勧告に従い, jose&nbhy;reg&nbhy;review@ietf.org 
-        のメーリングリストで2週間の審査期間を経て, Specification Required <xref target="RFC5226"/> 
-        な状態で登録される. しかしながら, 発行に先立ってそれらの値を用いることができるように, 
+        値は, 1名以上の Designated Experts の勧告に従い, jose&nbhy;reg&nbhy;review@ietf.org
+        のメーリングリストで2週間の審査期間を経て, Specification Required <xref target="RFC5226"/>
+        な状態で登録される. しかしながら, 発行に先立ってそれらの値を用いることができるように,
         Designated Experts はそれらの値が公開できる状態になった時点で登録を許可することもありうる.
         <!-- The registration procedure for values is Specification Required
         <xref target="RFC5226"/> after a three-week review period on the
@@ -833,18 +826,15 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
         registration once they are satisfied that such a specification will be published. -->
       </t>
       <t>
-        登録要請は, 適切な件名 (例: "Request to register JWK parameter: example") でメーリングリスト
-        に通知しなければならない.
+        登録要請は, 適切な件名 (例: "Request to register JWK parameter: example") でメーリングリストに通知しなければならない.
         <!-- Registration requests sent to the mailing list for review should use
   an appropriate subject
         (e.g., "Request to register JWK parameter: example"). -->
       </t>
       <t>
-        Designated Experts は審査期間内に登録を承認または拒否し, レビューが行われる
-        メーリングリストおよび IANA へその決定を告げる. 要請が拒否された場合は, その
-        理由が通知され, 可能な場合は承認に向けた提案が行われるべきである.
-        21日以上の期間にわたり未決定な登録要請は, 解決に向け (iesg@ietf.org メーリング
-        リストを用い) IESG の留意事項へ持ち込むことが出来る.
+        Designated Experts は審査期間内に登録を承認または拒否し, レビューが行われるメーリングリストおよび IANA へその決定を告げる.
+        要請が拒否された場合は, その理由が通知され, 可能な場合は承認に向けた提案が行われるべきである.
+        21日以上の期間にわたり未決定な登録要請は, 解決に向け (iesg@ietf.org メーリングリストを用い) IESG の留意事項へ持ち込むことが出来る.
         <!-- Within the review period, the Designated Experts will either approve or
         deny the registration request, communicating this decision to the review list and IANA.
         Denials should include an explanation and, if applicable, suggestions as to how to make
@@ -854,9 +844,8 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
         (using the iesg@ietf.org mailing list) for resolution. -->
       </t>
       <t>
-        審査は提案された登録が, 既存の機能と重複がないことや, 一般的な適用性があるのか, それとも
-        特定のアプリケーションにとってのみ有用なのか, 登録の説明は明確なのかどうか, について検証
-        を含め Designated Experts により承認されるべきである.
+        審査は提案された登録が, 既存の機能と重複がないことや, 一般的な適用性があるのか, それとも特定のアプリケーションにとってのみ有用なのか,
+        登録の説明は明確なのかどうか, について検証を含め Designated Experts により承認されるべきである.
         <!-- Criteria that should be applied by the Designated Experts include
         determining whether the proposed registration duplicates existing functionality,
         whether it is likely to be of general applicability
@@ -864,13 +853,12 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
         and whether the registration description is clear. -->
       </t>
       <t>
-        IANA は, Designated Experts からのレジストリ更新のみを受け付けなければならず, すべての
-        登録要請をレビューメーリングリストに送信しなければならない.
+        IANA は, Designated Experts からのレジストリ更新のみを受け付けなければならず, すべての登録要請をレビューメーリングリストに送信しなければならない.
         <!-- IANA must only accept registry updates from the Designated Experts and should direct
         all requests for registration to the review mailing list. -->
       </t>
       <t>
-        本仕様を使用する異なるアプリケーションの視点を代表することのできる複数の Designated 
+        本仕様を使用する異なるアプリケーションの視点を代表することのできる複数の Designated
         Experts を指名することを提案する. これは登録決定のレビューを広く告知するためである.
         登録決定が特定の Expert の興味分野に対して論争を起こす場合は, 当該の Expert は他の
         Experts の決定に従うべきである.
@@ -885,17 +873,13 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
 
       <section title="JSON Web Key Parameters Registry" anchor="JWKParamReg">
         <t>
-          本セクションは JWK パラメータ名のための IANA "JSON Web Key Parameters" レジストリ
-          を確立する.
-          レジストリはパラメータの名前, パラメータと共に使われる key type, 自身が定義
-          される仕様への参照を記録する.
-          同様にレジストリは当該のパラメータが公開もしくは非公開の情報を伝えるかどうかについても
-          記録する.
+          本セクションは JWK パラメータ名のための IANA "JSON Web Key Parameters" レジストリを確立する.
+          レジストリはパラメータの名前, パラメータと共に使われる key type, 自身が定義される仕様への参照を記録する.
+          同様にレジストリは当該のパラメータが公開もしくは非公開の情報を伝えるかどうかについても記録する.
           本セクションは <xref target="JWKFormat"/> で定義されているパラメータ名を登録する.
           同一の JWK パラメータ名を複数回登録しても良く, 重複するパラメータ登録は
-          key type に特化した JWK パラメータに限った目的のものである. この場合, 重複する
-          パラメータ名の意味は JWK に含まれる <spanx style="verb">kty</spanx> の値により
-          曖昧さをなくされる.
+          key type に特化した JWK パラメータに限った目的のものである. この場合, 重複するパラメータ名の意味は JWK に含まれる
+          <spanx style="verb">kty</spanx> の値により曖昧さをなくされる.
           <!-- This section establishes the
           IANA "JSON Web Key Parameters" registry
           for JWK parameter names.
@@ -918,17 +902,14 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
               <t hangText='Parameter Name:'>
                 <vspace/>
                 要求された名前 (例, "kid").
-                本仕様の中核となる目標は表現の結果をコンパクトにすることであるため, 
-                名前は短くすることを推奨する (RECOMMENDED). -- 特別な理由がない
-                限り 8 文字を超えるべきではない.
+                本仕様の中核となる目標は表現の結果をコンパクトにすることであるため,
+                名前は短くすることを推奨する (RECOMMENDED). -- 特別な理由がない限り 8 文字を超えるべきではない.
                 名前は大文字, 小文字を区別する.
-                名前は Designated Experts が例外を許可する特別な理由があることを宣言
-                した場合を除き, 他の登録された名前と大文字, 小文字の違いで重複させる
-                べきではない.
-                しかしながら, パラメータ名が一緒に使用される <spanx style="verb">kty</spanx> 
+                名前は Designated Experts が例外を許可する特別な理由があることを宣言した場合を除き,
+                他の登録された名前と大文字, 小文字の違いで重複させるべきではない.
+                しかしながら, パラメータ名が一緒に使用される <spanx style="verb">kty</spanx>
                 の値の付随セットが異なる場合においては, 同一の名前を登録してもよい.
-                <spanx style="verb">kty</spanx>の値のマッチングのため, "*" は全ての
-                値にマッチする.
+                <spanx style="verb">kty</spanx>の値のマッチングのため, "*" は全ての値にマッチする.
                 <!-- The name requested (e.g., "kid").
                 Because a core goal of this specification is for the resulting
                 representations to be compact, it is RECOMMENDED that the name be short
@@ -950,12 +931,10 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
               </t>
               <t hangText='Used with "kty" Value(s):'>
                 <vspace/>
-                パラメータの名前が一緒に利用する key type パラメータの値, もしくは
-                パラメータの値がすべての key type で利用される場合は "*".
-                値は, 登録済みのパラメータ名が同一の際, 他の登録済みの <spanx style="verb">kty</spanx> の値と大文字, 小文字
-                の区別をせずにマッチするべきではない (パラメータ名が大文字, 小文字の
-                区別をせずにマッチしている場合を含む). ただし, Designated Experts が例外を
-                許可する特別な理由があることを宣言した場合を除く.
+                パラメータの名前が一緒に利用する key type パラメータの値, もしくはパラメータの値がすべての key type で利用される場合は "*".
+                値は, 登録済みのパラメータ名が同一の際, 他の登録済みの <spanx style="verb">kty</spanx> の値と大文字,
+                小文字の区別をせずにマッチするべきではない (パラメータ名が大文字, 小文字の区別をせずにマッチしている場合を含む).
+                ただし, Designated Experts が例外を許可する特別な理由があることを宣言した場合を除く.
                 <!-- The key type parameter value(s) that the parameter name is to be used with,
                 or the value "*" if the parameter value is used with all key types.
                 Values may not match other registered <spanx style="verb">kty</spanx>
@@ -982,9 +961,8 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
               </t>
               <t hangText='Specification Document(s):'>
                 <vspace/>
-                パラメータ仕様を記載したドキュメントへの参照を記載する. ドキュメントを取得することの
-                できる URI が記載されていることが望ましい. 明確な記載箇所への参照が含まれることが
-                望ましいが必須ではない.
+                パラメータ仕様を記載したドキュメントへの参照を記載する. ドキュメントを取得することのできる URI が記載されていることが望ましい.
+                明確な記載箇所への参照が含まれることが望ましいが必須ではない.
                 <!-- Reference to the document or documents that specify the parameter,
                 preferably including URIs that
                 can be used to retrieve copies of the documents.
@@ -1031,7 +1009,7 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
                 <!-- Parameter Name: <spanx style="verb">use</spanx> -->
               </t>
               <t>
-                パラメータ説明: 公開鍵の使用
+                パラメータ説明: 公開鍵の利用方法
                 <!-- Parameter Description: Public Key Use -->
               </t>
               <t>
@@ -1059,7 +1037,7 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
                 <!-- Parameter Name: <spanx style="verb">key_ops</spanx> -->
               </t>
               <t>
-                パラメータ説明: Key 操作
+                パラメータ説明: Key の利用が想定されるオペレーション
                 <!-- Parameter Description: Key Operations -->
               </t>
               <t>
@@ -1273,13 +1251,11 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
               <t hangText='Use Member Value:'>
                 <vspace/>
                 要求された名前 (例, "sig").
-                本仕様の中核となる目標は表現の結果をコンパクトにすることであるため, 
-                名前は短くすることを推奨する (RECOMMENDED). -- 特別な理由がない
-                限り 8 文字を超えるべきではない.
+                本仕様の中核となる目標は表現の結果をコンパクトにすることであるため,
+                名前は短くすることを推奨する (RECOMMENDED). -- 特別な理由がない限り 8 文字を超えるべきではない.
                 名前は大文字, 小文字を区別する.
-                名前は Designated Experts が例外を許可する特別な理由があることを宣言
-                した場合を除き, 他の登録された名前と大文字, 小文字の違いで重複させる
-                べきではない.
+                名前は Designated Experts が例外を許可する特別な理由があることを宣言した場合を除き,
+                他の登録された名前と大文字, 小文字の違いで重複させるべきではない.
                 <!-- The name requested (e.g., "sig").
                 Because a core goal of this specification is for the resulting
                 representations to be compact, it is RECOMMENDED that the name be short
@@ -1304,9 +1280,9 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
               </t>
               <t hangText='Specification Document(s):'>
                 <vspace/>
-                パラメータ仕様を記載したドキュメントへの参照を記載する. ドキュメントを取得することの
-                できる URI が記載されていることが望ましい. 明確な記載箇所への参照が含まれることが
-                望ましいが必須ではない.
+                パラメータ仕様を記載したドキュメントへの参照を記載する.
+                ドキュメントを取得することのできる URI が記載されていることが望ましい.
+                明確な記載箇所への参照が含まれることが望ましいが必須ではない.
                 <!-- Reference to the document or documents that specify the parameter,
                 preferably including URIs that
                 can be used to retrieve copies of the documents.
@@ -1383,13 +1359,11 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
               <t hangText='Key Operation Value:'>
                 <vspace/>
                 要求された名前 (例, "sign").
-                本仕様の中核となる目標は表現の結果をコンパクトにすることであるため, 
-                名前は短くすることを推奨する (RECOMMENDED). -- 特別な理由がない
-                限り 8 文字を超えるべきではない.
+                本仕様の中核となる目標は表現の結果をコンパクトにすることであるため,
+                名前は短くすることを推奨する (RECOMMENDED). -- 特別な理由がない限り 8 文字を超えるべきではない.
                 名前は大文字, 小文字を区別する.
-                名前は Designated Experts が例外を許可する特別な理由があることを宣言
-                した場合を除き, 他の登録された名前と大文字, 小文字の違いで重複させる
-                べきではない.
+                名前は Designated Experts が例外を許可する特別な理由があることを宣言した場合を除き,
+                他の登録された名前と大文字, 小文字の違いで重複させるべきではない.
                 <!-- The name requested (e.g., "sign").
                 Because a core goal of this specification is for the resulting
                 representations to be compact, it is RECOMMENDED that the name be short
@@ -1414,9 +1388,9 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
               </t>
               <t hangText='Specification Document(s):'>
                 <vspace/>
-                パラメータ仕様を記載したドキュメントへの参照を記載する. ドキュメントを取得することの
-                できる URI が記載されていることが望ましい. 明確な記載箇所への参照が含まれることが
-                望ましいが必須ではない.
+                パラメータ仕様を記載したドキュメントへの参照を記載する.
+                ドキュメントを取得することのできる URI が記載されていることが望ましい.
+                明確な記載箇所への参照が含まれることが望ましいが必須ではない.
                 <!-- Reference to the document or documents that specify the parameter,
                 preferably including URIs that can be used to retrieve
                 copies of the documents.
@@ -1432,11 +1406,11 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
           <t> <?rfc subcompact="yes"?>
             <list style='symbols'>
               <t>
-                鍵運用の値: <spanx style="verb">sign</spanx>
+                鍵の想定利用オペレーション値: <spanx style="verb">sign</spanx>
                 <!-- Key Operation Value: <spanx style="verb">sign</spanx> -->
               </t>
               <t>
-                鍵運用の説明: デジタル署名もしくは MAC を計算する
+                鍵の想定利用オペレーションの説明: デジタル署名もしくは MAC を計算する
                 <!-- Key Operation Description: Compute digital signature or MAC -->
               </t>
               <t>
@@ -1452,11 +1426,11 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
           <t>
             <list style='symbols'>
               <t>
-                鍵運用の値: <spanx style="verb">verify</spanx>
+                鍵の想定利用オペレーション値: <spanx style="verb">verify</spanx>
                 <!-- Key Operation Value: <spanx style="verb">verify</spanx> -->
               </t>
               <t>
-                鍵運用の説明: デジタル署名もしくは MAC を検証する
+                鍵の想定利用オペレーションの説明: デジタル署名もしくは MAC を検証する
                 <!-- Key Operation Description: Verify digital signature or MAC -->
               </t>
               <t>
@@ -1472,11 +1446,11 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
           <t>
             <list style='symbols'>
               <t>
-                鍵運用の値: <spanx style="verb">encrypt</spanx>
+                鍵の想定利用オペレーションの値: <spanx style="verb">encrypt</spanx>
                 <!-- Key Operation Value: <spanx style="verb">encrypt</spanx> -->
               </t>
               <t>
-                鍵運用の説明: コンテンツを暗号化する
+                鍵の想定利用オペレーションの説明: コンテンツを暗号化する
                 <!-- Key Operation Description: Encrypt content -->
               </t>
               <t>
@@ -1492,11 +1466,11 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
           <t>
             <list style='symbols'>
               <t>
-                鍵運用の値: <spanx style="verb">decrypt</spanx>
+                鍵の想定利用オペレーションの値: <spanx style="verb">decrypt</spanx>
                 <!-- Key Operation Value: <spanx style="verb">decrypt</spanx> -->
               </t>
               <t>
-                鍵運用の説明: コンテンツの復号, および適用可能であれば復号の検証
+                鍵の想定利用オペレーションの説明: コンテンツの復号, および適用可能であれば復号の検証
                 <!-- Key Operation Description: Decrypt content and validate decryption, if applicable -->
               </t>
               <t>
@@ -1512,11 +1486,11 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
           <t>
             <list style='symbols'>
               <t>
-                鍵運用の値: <spanx style="verb">wrapKey</spanx>
+                鍵の想定利用オペレーションの値: <spanx style="verb">wrapKey</spanx>
                 <!-- Key Operation Value: <spanx style="verb">wrapKey</spanx> -->
               </t>
               <t>
-                鍵運用の説明: 鍵の暗号化
+                鍵の想定利用オペレーションの説明: 鍵の暗号化
                 <!-- Key Operation Description: Encrypt key -->
               </t>
               <t>
@@ -1532,11 +1506,11 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
           <t>
             <list style='symbols'>
               <t>
-                鍵運用の値: <spanx style="verb">unwrapKey</spanx>
+                鍵の想定利用オペレーションの値: <spanx style="verb">unwrapKey</spanx>
                 <!-- Key Operation Value: <spanx style="verb">unwrapKey</spanx> -->
               </t>
               <t>
-                鍵運用の説明: 鍵の復号, および適用可能であれば復号の検証
+                鍵の想定利用オペレーションの説明: 鍵の復号, および適用可能であれば復号の検証
                 <!-- Key Operation Description: Decrypt key and validate decryption, if applicable -->
               </t>
               <t>
@@ -1552,11 +1526,11 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
           <t>
             <list style='symbols'>
               <t>
-                鍵運用の値: <spanx style="verb">deriveKey</spanx>
+                鍵の想定利用オペレーションの値: <spanx style="verb">deriveKey</spanx>
                 <!-- Key Operation Value: <spanx style="verb">deriveKey</spanx> -->
               </t>
               <t>
-                鍵運用の説明: 鍵を派生する
+                鍵の想定利用オペレーションの説明: 鍵を派生する
                 <!-- Key Operation Description: Derive key -->
               </t>
               <t>
@@ -1572,11 +1546,11 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
           <t>
             <list style='symbols'>
               <t>
-                鍵運用の値: <spanx style="verb">deriveBits</spanx>
+                鍵の想定利用オペレーションの値: <spanx style="verb">deriveBits</spanx>
                 <!-- Key Operation Value: <spanx style="verb">deriveBits</spanx> -->
               </t>
               <t>
-                鍵運用の説明: 鍵としての利用用途ではなく派生する
+                鍵の想定利用オペレーションの説明: 鍵としての利用用途ではなく派生する
                 <!-- Key Operation Description: Derive bits not to be used as a key -->
               </t>
               <t>
@@ -1614,13 +1588,11 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
               <t hangText='Parameter Name:'>
                 <vspace/>
                 要求された名前 (例, "keys").
-                本仕様の中核となる目標は表現の結果をコンパクトにすることであるため, 
-                名前は短くすることを推奨する (RECOMMENDED). -- 特別な理由がない
-                限り 8 文字を超えるべきではない.
+                本仕様の中核となる目標は表現の結果をコンパクトにすることであるため,
+                名前は短くすることを推奨する (RECOMMENDED). -- 特別な理由がない限り 8 文字を超えるべきではない.
                 名前は大文字, 小文字を区別する.
-                名前は Designated Experts が例外を許可する特別な理由があることを宣言
-                した場合を除き, 他の登録された名前と大文字, 小文字の違いで重複させる
-                べきではない.
+                名前は Designated Experts が例外を許可する特別な理由があることを宣言した場合を除き,
+                他の登録された名前と大文字, 小文字の違いで重複させるべきではない.
                 <!-- The name requested (e.g., "keys").
                 Because a core goal of this specification is for the resulting
                 representations to be compact, it is RECOMMENDED that the name be short
@@ -1645,9 +1617,9 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
               </t>
               <t hangText='Specification Document(s):'>
                 <vspace/>
-                パラメータ仕様を記載したドキュメントへの参照を記載する. ドキュメントを取得することの
-                できる URI が記載されていることが望ましい. 明確な記載箇所への参照が含まれることが
-                望ましいが必須ではない.
+                パラメータ仕様を記載したドキュメントへの参照を記載する.
+                ドキュメントを取得することのできる URI が記載されていることが望ましい.
+                明確な記載箇所への参照が含まれることが望ましいが必須ではない.
                 <!-- Reference to the document or documents that specify the parameter,
                 preferably including URIs that can be used to retrieve
                 copies of the documents.
@@ -1687,13 +1659,12 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
       <section title="Media Type Registration" anchor="MediaReg">
         <section title="Registry Contents" anchor="MediaContents">
           <t>
-            本セクションは <xref target="RFC6838">RFC 6838</xref> に記載される様式に
-            従い, "Media タイプ" レジストリ <xref target="IANA.MediaTypes"/> に
+            本セクションは <xref target="RFC6838">RFC 6838</xref> に記載される様式に従い,
+            "Media タイプ" レジストリ <xref target="IANA.MediaTypes"/> に
             <spanx style="verb">application/jwk+json</spanx> と
             <spanx style="verb">application/jwk-set+json</spanx>
             Media タイプを登録する.
-            そしてそれは, コンテンツがそれぞれ JWK もしくは JWK Set であることを示すために
-            利用することができる.
+            そしてそれは, コンテンツがそれぞれ JWK もしくは JWK Set であることを示すために利用することができる.
             <!-- This section registers the
             <spanx style="verb">application/jwk+json</spanx> and
             <spanx style="verb">application/jwk-set+json</spanx>
@@ -1723,7 +1694,7 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
                 <!-- Optional Parameters: n/a -->
               </t>
               <t>
-                エンコーディングの考慮事項: 8ビット
+                エンコーディングの考慮事項: 8ビット;
                 application/jwk+json の値は JSON オブジェクトとして表現される.
                 JSON オブジェクトは UTF-8 エンコードされているべきである (SHOULD).
                 <!-- Encoding considerations: 8bit;
@@ -1813,7 +1784,7 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
                 <!-- Optional Parameters: n/a -->
               </t>
               <t>
-                エンコーディングの考慮事項: 8ビット
+                エンコーディングの考慮事項: 8ビット;
                 application/jwk-set+json の値は JSON オブジェクトとして表現される.
                 JSON オブジェクトは UTF-8 エンコードされているべきである (SHOULD).
                 <!-- Encoding considerations: 8bit;
@@ -1892,10 +1863,9 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
 
     <section title="Security Considerations" anchor="Security">
       <t>
-        JWS/JWE/JWKエージェントは, 暗号化アプリケーションが直面したあらゆるセキュリティ問題
-        に対応しなければならない. これらの問題の中には, ユーザのプライベート鍵および対称鍵を
-        保護し, 様々な攻撃を防ぎ, ユーザが不正な受信者のためにメッセージを不注意に暗号化する
-        ような間違いを避けることを助けることが含まれる.
+        JWS/JWE/JWKエージェントは, 暗号化アプリケーションが直面したあらゆるセキュリティ問題に対応しなければならない.
+        これらの問題の中には, ユーザのプライベート鍵および対称鍵を保護し, 様々な攻撃を防ぎ,
+        ユーザが不正な受信者のためにメッセージを不注意に暗号化するような間違いを避けることを助けることが含まれる.
         <!-- All of the security issues that are pertinent to any cryptographic application
         must be addressed by JWS/JWE/JWK agents.  Among these issues are protecting
         the user's asymmetric private and symmetric secret keys and
@@ -1904,10 +1874,8 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
 
       <section title="Key Provenance and Trust" anchor="KeyTrust">
         <t>
-          信頼できる方法で取得された鍵と関連づけられていない限り, 鍵による暗号化により
-          保護されたデータに信頼を置くべきではない.
-          信頼できない方法で取得された鍵と関連付けられたどんなデータも懐疑的に取り扱う
-          べきである.
+          信頼できる方法で取得された鍵と関連づけられていない限り, 鍵による暗号化により保護されたデータに信頼を置くべきではない.
+          信頼できない方法で取得された鍵と関連付けられたどんなデータも懐疑的に取り扱うべきである.
           鍵の発行元の認証に関するセキュリティ上の考慮事項については <xref target="JWS"/>
           のセクション 10.3 を参照すること.
           <!-- One should place no more trust in the data cryptographically secured by a key
@@ -1919,11 +1887,9 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
           key origin authentication. -->
         </t>
         <t>
-          多くの場合において, アプリケーションは鍵を信頼するかどうかを鍵自身よりも
-          鍵に関連付けられた名前やロールや発行元といった属性に基づき決定する.
-          アプリケーソンが鍵を信頼するかどうかを決定する際, JWK に属性をバインドする
-          複数の方法が存在する. メカニズムの2つの例は PKIX <xref target="RFC5280"/>
-          と JSON Web Token (JWT) <xref target="JWT"/> である.
+          多くの場合において, アプリケーションは鍵を信頼するかどうかを鍵自身よりも鍵に関連付けられた名前やロールや発行元といった属性に基づき決定する.
+          アプリケーソンが鍵を信頼するかどうかを決定する際, JWK に属性をバインドする複数の方法が存在する.
+          メカニズムの2つの例は PKIX <xref target="RFC5280"/> と JSON Web Token (JWT) <xref target="JWT"/> である.
           <!-- In almost all cases, applications make decisions about whether to trust a key
           based on attributes bound to the key, such as names, roles,
           and the key origin, rather than based on the key itself.
@@ -1934,9 +1900,8 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
         <t>
           例えば, JWK の作成者は PKIX 証明書を JWK の <spanx style="verb">x5c</spanx>
           メンバとして含めることが出来る.
-          もしアプリケーションが証明書を確認し, JWK が証明書の中のサブジェクト公開鍵と
-          一致していることの検証を行う場合, サブジェクト名や代替名や拡張用途や
-          署名チェインといった証明書の中の属性と JWK を紐づけることが出来る.
+          もしアプリケーションが証明書を確認し, JWK が証明書の中のサブジェクト公開鍵と一致していることの検証を行う場合,
+          サブジェクト名や代替名や拡張用途や署名チェインといった証明書の中の属性と JWK を紐づけることが出来る.
           <!-- For instance, the creator of a JWK can include a PKIX certificate
           in the JWK's <spanx style="verb">x5c</spanx> member.
           If the application validates the certificate and verifies that
@@ -1948,11 +1913,9 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
         <t>
           他の例として, JWT は, JWK を JWT の中のクレームとして参照することにより
           JWK と属性を関連付けて使用することが出来る.
-          JWK はクレームの値として直接含める もしくは JWK 値を取得するための TLS で
-          保護された URI を JWT に含めることが出来る.
+          JWK はクレームの値として直接含める もしくは JWK 値を取得するための TLS で保護された URI を JWT に含めることが出来る.
           どちらの方法でも, JWT クレームを経由して JWK を取得するアプリケーションは
-          JWT の暗号化プロパティと追加のクレームを鍵を信頼するかどうかを決めるために
-          関連づけることが出来る.
+          JWT の暗号化プロパティと追加のクレームを鍵を信頼するかどうかを決めるために関連づけることが出来る.
           <!-- As another example, a JWT can be used to associate attributes
           with a JWK by referencing the JWK as a claim in the JWT.
           The JWK can be included directly as a claim value
@@ -1971,9 +1934,8 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
           the security chain also apply to this specification. -->
         </t>
         <t>
-          <xref target="JWS" /> のセクション 8 の TLS に関する要求事項は本仕様にも
-          適用される. 例外として <spanx style="verb">x5u</spanx> JWK メンバが本仕様
-          で定義される中で TLS を使用する唯一の機能である場合を除く.
+          <xref target="JWS" /> のセクション 8 の TLS に関する要求事項は本仕様にも適用される.
+          例外として <spanx style="verb">x5u</spanx> JWK メンバが本仕様で定義される中で TLS を使用する唯一の機能である場合を除く.
           <!-- The TLS Requirements in Section 8 of <xref target="JWS" />
           also apply to this specification,
           except that the <spanx style="verb">x5u</spanx> JWK member
@@ -2021,8 +1983,7 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
           をパラメータとして含んでいない.
           そのため RSA 鍵の blinding を有効にするには, それらの表現は避けるべきである.
           Java では RSAPrivateCrtKeySpec API を代替手段として使用することが出来る.
-          適用された暗号 <xref target="HAC"/> のハンドブックのセクション 8.2.2(i) は
-          残る RSA 秘密鍵のパラメータを計算するかについて議論しており, 必要であれば
+          適用された暗号 <xref target="HAC"/> のハンドブックのセクション 8.2.2(i) は残る RSA 秘密鍵のパラメータを計算するかについて議論しており, 必要であれば
           <spanx style="verb">n</spanx>, <spanx style="verb">e</spanx>, と <spanx style="verb">d</spanx>
           のみを使うように指定する.
           <!-- The RSA Key blinding operation <xref target="Kocher"/>, which is a defense
@@ -2048,7 +2009,7 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
       <section title="Key Entropy and Random Values" anchor="KeyEntropy">
         <t>
           キーエントロピーとランダム値に関するセキュリティ上の考慮点については
-　　　　　<xref target="JWS"/> のセクション 10.1 を参照すること.
+          <xref target="JWS"/> のセクション 10.1 を参照すること.
           <!-- See Section 10.1 of <xref target="JWS"/> for security considerations on
           key entropy and random values. -->
         </t>
