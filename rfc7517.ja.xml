@@ -2516,7 +2516,7 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
       <section title='Plaintext RSA Private Key' anchor='example-privkey-plaintext'>
 
         <t>
-          下記の RSA 鍵は JWK として整形された, 認証付き暗号化オペレーションのためのプレーンテキストである (改行は掲載上の都合による).
+          下記の RSA 鍵は JWK として整形された, 認証付き暗号化オペレーションのための平文入力 (プレーンテキスト) である (改行は掲載上の都合による).
           <!-- The following RSA key is the plaintext for the authenticated encryption operation,
           formatted as a JWK
           (with line breaks within values for display purposes only): -->
@@ -2577,20 +2577,20 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
         <t>
           <list style='symbols'>
             <t>
-              Content Encryption Key は JWE Encrypted Key を生成するために PSE2-HS256+A128KW アルゴリズムを用いて受信者に暗号化され,
+              JWE Encrypted Key 生成のため, Content Encryption Key を PSE2-HS256+A128KW アルゴリズムを用いて暗号化する.
               <!-- the Content Encryption Key is encrypted to the recipient using the PSE2-HS256+A128KW algorithm to produce the JWE Encrypted Key, -->
             </t>
             <t>
-              Salt Input (<spanx style="verb">p2s</spanx>) の値は [217, 96, 147, 112, 150, 117, 70, 247, 127, 8, 155, 137, 174, 42, 80, 215] であり,
+              Salt Input (<spanx style="verb">p2s</spanx>) の値は [217, 96, 147, 112, 150, 117, 70, 247, 127, 8, 155, 137, 174, 42, 80, 215] である.
               <!-- the Salt Input (<spanx style="verb">p2s</spanx>) value is
               [217, 96, 147, 112, 150, 117, 70, 247, 127, 8, 155, 137, 174, 42, 80, 215], -->
             </t>
             <t>
-              イテレーション回数 (<spanx style="verb">p2c</spanx>) は 4096 であり,
+              イテレーション回数 (<spanx style="verb">p2c</spanx>) は 4096 である.
               <!-- the Iteration Count (<spanx style="verb">p2c</spanx>) value is 4096, -->
             </t>
             <t>
-              暗号文と Authentication Tag を生成するためプレーンテキストに対して認証付き暗号が AES_128_CBC_HMAC_SHA_256 アルゴリズムを用いて実行され,
+              暗号文と Authentication Tag を生成するため, プレーンテキストに対して AES_128_CBC_HMAC_SHA_256 アルゴリズムを用いて認証付き暗号化を行う.
               <!-- authenticated encryption is performed on the plaintext
               using the AES_128_CBC_HMAC_SHA_256 algorithm
               to produce the ciphertext and the Authentication Tag, and -->
@@ -2645,7 +2645,7 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
       <section title='Key Derivation' anchor='example-privkey-keyderivation'>
 
         <t>
-          PBKDF2 Derived Key を生成するため PBKDF2 algorithm with HMAC SHA-256, 指定されたソルトとイテレーション回数, 128-bit の要求されたキーサイズを用いて共有されたパスフレーズから鍵を取得する.
+          HMAC-SHA-256, 指定されたソルトとイテレーション回数, 128-bit の要求されたキーサイズを用いて PBKDF2 アルゴリズムを適用し, 共有されたパスフレーズから PBKDF2 Derived Key を導出する.
           この例では下記のパスフレーズを用いる.
           <!-- Derive a key from a shared passphrase using the
           PBKDF2 algorithm with HMAC SHA-256
@@ -2754,7 +2754,7 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
       <section title='Content Encryption' anchor='example-privkey-contentencrypt'>
 
         <t>
-          暗号鍵として CEK, JWE Initialization Vector 及び上記の Additional Authenticated Data を用いて AES_128_CBC_HMAC_SHA_256 アルゴリズムでプレーンテキストに対して認証付き暗号化を実行する.
+          暗号鍵 CEK, JWE Initialization Vector 及び上記の Additional Authenticated Data を用いて, AES_128_CBC_HMAC_SHA_256 アルゴリズムでプレーンテキストに対して認証付き暗号化を実行する.
           結果として得られる暗号文は以下の通りである.
           <!-- Perform authenticated encryption on the plaintext
           with the AES_128_CBC_HMAC_SHA_256 algorithm
