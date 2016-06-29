@@ -2359,6 +2359,12 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
 
       <section title="Example Public Keys" anchor="PublicExample">
         <t>
+          下記例の JWK Set は JWK として表現される2つの公開鍵を含む:
+          1つ目は Elliptic Curve アルゴリズムを使用し, 2つ目は RSA アルゴリズムを使用している. 前者は鍵が暗号化のために使用されていることを記している.
+          後者は鍵が <spanx style='verb'>RS256</spanx> アルゴリズムで使用されていることを記している.
+          両者は鍵のマッチングの目的のために key ID を提供する. どちらの場合も, 整数は big-endian 表現の base64url エンコーディングを使用して表現されている.
+          (改行は掲載上の都合による.)
+          <!--
           The following example JWK Set contains two public keys
           represented as JWKs: one
           using an Elliptic Curve algorithm and a second one using an
@@ -2370,6 +2376,7 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
           purposes.  In both cases, integers are represented using the
           base64url encoding of their big-endian representations.
           (Line breaks within values are for display purposes only.)
+          -->
         </t>
 
         <figure><artwork><![CDATA[
@@ -2400,6 +2407,11 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
       <section title="Example Private Keys" anchor="PrivateExample">
 
         <t>
+          下記例の JWK Set は公開鍵と秘密鍵の値の両方を含む JWK として表現されている2つの鍵を含む:
+          1つ目は Elliptic Curve アルゴリズムを使用し, 2つ目は RSA アルゴリズムを使用している.
+          この例は, 秘密鍵の値を追加し, 前のセクションの例を拡張している.
+          (改行は掲載上の都合による.)
+          <!--
           The following example JWK Set contains two keys represented
           as JWKs containing both public and private key values:
           one using an Elliptic Curve algorithm and
@@ -2408,6 +2420,7 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
           the previous section,
           adding private key values.
           (Line breaks within values are for display purposes only.)
+          -->
         </t>
 
         <figure><artwork><![CDATA[
@@ -2460,11 +2473,16 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
       <section title="Example Symmetric Keys" anchor="SymmetricExample">
 
         <t>
+          下記例の JWK Set は JWK として表現された2つの対象鍵を含む:
+          1つ目は AES Key Wrap アルゴリズムで使用されるためのものとして指定され, 2つ目は HMAC key である.
+          (改行は掲載上の都合による.)
+          <!--
           The following example JWK Set contains two symmetric keys represented
           as JWKs:
           one designated as being for use with the AES Key Wrap algorithm and
           a second one that is an HMAC key.
           (Line breaks within values are for display purposes only.)
+          -->
         </t>
 
         <figure><artwork><![CDATA[
@@ -2488,11 +2506,16 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
     <section title='Example Use of "x5c" (X.509 Certificate Chain) Parameter' anchor="x5cExample">
       <t>
         <figure>
-          <preamble>The following is an example of a JWK
+          <preamble>
+          下記は RSA 公開鍵と <spanx style="verb">x5c</spanx> パラメーターを使用している X.509 証明書の両者で表現される RSA 署名鍵を用いた JWK の例である (改行は掲載上の都合による):
+          <!--
+          The following is an example of a JWK
           with a RSA signing key represented both as an RSA public key
           and as an X.509 certificate using the
           <spanx style="verb">x5c</spanx> parameter
-          (with line breaks within values for display purposes only):</preamble>
+          (with line breaks within values for display purposes only):
+          -->
+          </preamble>
           <artwork><![CDATA[
   {"kty":"RSA",
    "use":"sig",
