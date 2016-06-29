@@ -2325,6 +2325,36 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
 
     </references>
 
+    <references title='翻訳プロジェクト' numbered="no">
+      <reference anchor="oidfj">
+        <front>
+          <title>OpenIDファウンデーションジャパン</title>
+          <author>
+            <organization>OpenIDファウンデーションジャパン</organization>
+          </author>
+        </front>
+        <format type='html' target='http://www.openid.or.jp/' />
+      </reference>
+      <reference anchor="oidfj-trans">
+        <front>
+          <title>翻訳・教育ワーキンググループ</title>
+          <author>
+            <organization>OpenIDファウンデーションジャパン</organization>
+          </author>
+        </front>
+        <format type='html' target='http://openid-foundation-japan.github.com/' />
+      </reference>
+      <reference anchor="oidfj-github">
+        <front>
+          <title>Githubレポジトリー</title>
+          <author>
+            <organization>OpenIDファウンデーションジャパン</organization>
+          </author>
+        </front>
+        <format type='html' target='https://github.com/openid-foundation-japan' />
+      </reference>
+    </references>
+
     <section title="Example JSON Web Key Sets" anchor="ExampleJWKSets">
 
       <section title="Example Public Keys" anchor="PublicExample">
@@ -2958,6 +2988,27 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
       </t>
     </section>
 
-
+    <section title="翻訳者" anchor="Translator" numbered="no">
+      <t>
+        本仕様の翻訳は, <xref target='oidfj'>OpenIDファウンデーションジャパン</xref> <xref target='oidfj-trans'>翻訳・教育ワーキンググループ</xref>を主体として, 有志のメンバーによって行われました.
+        質問や修正依頼などについては, <xref target='oidfj-github'>Githubレポジトリー</xref> にご連絡ください.
+      </t>
+      <t>
+        <list style='symbols'>
+          <t>
+            Masaru Kurahayashi (Yahoo! Japan)
+          </t>
+          <t>
+            Naohiro Fujie (Itochu Techno Solutions)
+          </t>
+          <t>
+            Nov Matake (YAuth.jp)
+          </t>
+          <t>
+            Yuya Ito (Yahoo! Japan)
+          </t>
+        </list>
+      </t>
+    </section>
   </back>
 </rfc>
