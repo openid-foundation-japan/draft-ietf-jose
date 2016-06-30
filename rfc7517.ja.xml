@@ -2407,7 +2407,7 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
       <section title="Example Private Keys" anchor="PrivateExample">
 
         <t>
-          下記例の JWK Set は公開鍵と秘密鍵の値の両方を含む JWK として表現されている2つの鍵を含む:
+          下記例の JWK Set は JWK として表現されている2つの鍵を含む. それぞれの JWK は公開鍵と秘密鍵の値の両方を含んでいる.:
           1つ目は Elliptic Curve アルゴリズムを使用し, 2つ目は RSA アルゴリズムを使用している.
           この例は, 秘密鍵の値を追加し, 前のセクションの例を拡張している.
           (改行は掲載上の都合による.)
@@ -2507,7 +2507,7 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
       <t>
         <figure>
           <preamble>
-          下記は RSA 公開鍵と <spanx style="verb">x5c</spanx> パラメーターを使用している X.509 証明書の両者で表現される RSA 署名鍵を用いた JWK の例である (改行は掲載上の都合による):
+          下記は RSA 公開鍵と <spanx style="verb">x5c</spanx> に指定された X.509 証明書の両者で表現される RSA 署名鍵の JWK 表現の例である (改行は掲載上の都合による):
           <!--
           The following is an example of a JWK
           with a RSA signing key represented both as an RSA public key
@@ -2556,7 +2556,7 @@ jose&nbhy;reg&nbhy;review@ietf.org mailing
     <section title="Example Encrypted RSA Private Key" anchor="example-encrypted-jwk">
 
       <t>
-        この例では <spanx style="verb">PBES2-HS256+A128KW</spanx> を鍵の暗号化に, <spanx style="verb">A128CBC+HS256</spanx> をコンテンツの暗号化に用いて RSA 秘密鍵を受信者に暗号化する.
+        この例では <spanx style="verb">PBES2-HS256+A128KW</spanx> を鍵の暗号化に, <spanx style="verb">A128CBC+HS256</spanx> をコンテンツの暗号化に用いて RSA 秘密鍵を暗号化する.
         <!-- This example encrypts an RSA private key to the recipient using
         <spanx style="verb">PBES2-HS256+A128KW</spanx> for key encryption and
         <spanx style="verb">A128CBC+HS256</spanx> for content encryption. -->
