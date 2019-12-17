@@ -48,7 +48,7 @@
     <abstract>
       <t>
         本仕様は JSON Web Key (JWK) のハッシュ値を計算する方法を定める.
-        これには, JWK のどのフィールドをハッシュ計算に使うかや, それらのフィールドの正規化, そして正規化された Unicode 文字列をハッシュ化したバイト列に変換する方法などが含まれる.
+        これには, ハッシュ計算に用いる JWK のフィールド, それらのフィールドの正規化方法, そして正規化後の Unicode 文字列をハッシュ化したバイト列に変換する方法が含まれる.
         生成されたハッシュ値は, JWK の識別のために用いたり, 複数の JWK から適切な JWK を選択する際の手掛かりとして利用できる.
         <!-- This specification defines a method for computing a hash value
         over a JSON Web Key (JWK).
@@ -67,7 +67,7 @@
     <section title="Introduction" anchor="Introduction">
       <t>
         本仕様は JSON Web Key (JWK) <xref target="JWK"/> のハッシュ値 (Digest) を計算する方法を定める.
-        これには, JWK のどのフィールドをハッシュ計算に使うかや, それらのフィールドの正規化, そして正規化された Unicode 文字列をハッシュ化したバイト列に変換する方法などが含まれる.
+        これには, ハッシュ計算に用いる JWK のフィールド, それらのフィールドの正規化方法, そして正規化後の Unicode 文字列をハッシュ化したバイト列に変換する方法などが含まれる.
         生成されたハッシュ値は, JWK の識別のために用いたり, 複数の JWK から適切な JWK を選択する際の手掛かりとして利用できる.
         具体的には base64url-encode した JWK Thumbprint を <spanx style="verb">kid</spanx> (key ID) として用いるなどの方法があげられる.
         <!-- This specification defines a method for computing a hash value (a.k.a. digest)
@@ -129,7 +129,7 @@
 
     <section title="JSON Web Key (JWK) Thumbprint" anchor="jkt">
       <t>
-        JSON Web Key (JWK) の Thumbprint 値の計算方法は以下通りである.
+        JSON Web Key (JWK) の Thumbprint 値の計算方法は以下の通りである.
         <!-- The thumbprint of a JSON Web Key (JWK) is computed as follows: -->
         <list style="numbers">
           <t>
@@ -316,7 +316,7 @@
             秘密鍵を表現する JWK の JWK Thumbprint は, その秘密鍵とペアとなる公開鍵を表現する JWK の JWK Thumbprint とする.
             これは意図的にペアとなる2つの鍵に同じ JWK Thumbprint を持たせ, それぞれの鍵を持つ2者が同じ JWK Thumbprint を計算できるようにということを狙ったものである.
             これにより, JWK Thumbprint はペアとなるどちらの鍵をも指し示すことができる.
-            当該鍵が公開鍵なのか秘密鍵なのかの判定は, Application のコンテキストによって行うこと.
+            当該 JWK Thumbprint が公開鍵と秘密鍵のどちらを指し示しているかは, アプリケーションコンテキストによって決定される.
             <!-- The JWK Thumbprint of a JWK representing a private key is computed as
             the JWK Thumbprint of a JWK representing the corresponding public key.
             This has the intentional benefit that the same JWK Thumbprint value
@@ -327,7 +327,7 @@
             by the JWK Thumbprint. -->
           </t>
           <t>
-            本仕様は秘密鍵の JWK Thumbprint 計算方法を相互接続性を持つ形で定義した.
+            本仕様は秘密鍵の JWK Thumbprint 計算方法を相互接続性を持つ形で定義している.
             よって異なる実装が同じ秘密鍵の JWK Thumbprint を導出できるはずである.
             <!-- This specification defines the method of computing JWK Thumbprints
             of JWKs representing private keys for interoperability reasons
@@ -340,7 +340,7 @@
           <t>
             オプショナルなメンバ要素はあえて JWK Thumbprint 計算対象としていない.
             これはオプショナルなメンバ要素の有無で同じ鍵の JWK Thumbprint が変わることのないように意図したものである.
-            JWK Thumbprint は JWK の必須メンバの Digest であり, その他の付加的メンバの Digest ではないのである.
+            JWK Thumbprint は JWK の必須メンバのダイジェストであり, その他の付加的メンバのダイジェストではないのである.
             <!-- Optional members of JWKs are intentionally not included in
             the JWK Thumbprint computation so that their absence or presence
             in the JWK does not alter the resulting value.
@@ -551,7 +551,7 @@
         are expected to use only numbers that are integers. -->
       </t>
       <t>
-        JWK Thumbprint の計算対象となる JWK の中では, 少数部や指数部を持つ数値表現の利用は避けるべきである.
+        JWK Thumbprint の計算対象となる JWK の中では, 小数部や指数部を持つ数値表現の利用は避けるべきである.
         <!-- Use of number representations containing fraction or exponent parts
         in JWKs for which JWK Thumbprints will be computed should be avoided. -->
       </t>
