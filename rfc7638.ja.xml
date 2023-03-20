@@ -292,7 +292,7 @@
           <?rfc subcompact="no"?>
         </t>
         <t>
-          公開鍵についても以下の通りである.
+          対称鍵についても以下の通りである.
           <!-- The required members for a symmetric key, in lexicographic order, are: -->
         </t>
         <t>
